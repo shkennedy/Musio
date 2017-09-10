@@ -31,7 +31,12 @@ public class SongController
         Song s = new Song()
         s.title = title
         s.album = alb
-        songRepository.save(s)
+        try {
+            songRepository.save(s)
+        } catch (Exception e) {
+            e.printStackTrace()
+            return "Database constraint exception occurred!"
+        }
 
         return "Successfully saved song '${title}' to album '${album}'!"
     }

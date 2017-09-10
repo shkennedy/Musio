@@ -31,7 +31,14 @@ public class AlbumController
         Album a = new Album()
         a.title = title
         a.artist = art
-        albumRepository.save(a)
+
+        try
+        {
+            albumRepository.save(a)
+        } catch (Exception e) {
+            e.printStackTrace()
+            return "Database constraint exception occurred!"
+        }
 
         return "Saved album '${title}' by artist '${artist}'!"
     }

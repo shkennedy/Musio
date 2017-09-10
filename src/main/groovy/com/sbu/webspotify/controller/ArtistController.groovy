@@ -21,7 +21,14 @@ public class ArtistController
     {
         Artist a = new Artist()
         a.name = name
-        artistRepository.save(a)
+
+        try
+        {
+            artistRepository.save(a)
+        } catch (Exception e) {
+            e.printStackTrace()
+            return "Database constraint exception occurred!"
+        }
 
         return "Saved artist '${name}'!"
     }
