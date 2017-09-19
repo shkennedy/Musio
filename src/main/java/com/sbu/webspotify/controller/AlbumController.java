@@ -25,7 +25,7 @@ public class AlbumController
 
         // if artist is null
         if(art == null) {
-            return "Could not find artist '${artist}' in the db.";
+            return "Could not find artist in the db.";
         }
 
         Album a = new Album();
@@ -40,7 +40,7 @@ public class AlbumController
             return "Database constraint exception occurred!";
         }
 
-        return "Saved album '${title}' by artist '${artist}'!";
+        return "Saved album!";
     }
 
     @GetMapping(path="/all")

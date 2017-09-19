@@ -32,7 +32,7 @@ public class ArtistController
             return "Database constraint exception occurred!";
         }
 
-        return "Saved artist '${name}'!";
+        return "Saved artist!";
     }
 
     @GetMapping(path="/all")

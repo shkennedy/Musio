@@ -3,7 +3,6 @@ package com.sbu.webspotify.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import com.sbu.webspotify.domain.*;
@@ -25,7 +24,7 @@ public class SongController
         Album alb = albumRepository.findByTitle(album);
         if(alb == null)
         {
-            return "Album '${album}' not found in db.";
+            return "Album not found in db.";
         }
 
         Song s = new Song();
@@ -38,7 +37,7 @@ public class SongController
             return "Database constraint exception occurred!";
         }
 
-        return "Successfully saved song '${title}' to album '${album}'!";
+        return "Successfully saved song!";
     }
 
     @GetMapping(path="/all")
