@@ -122,6 +122,49 @@ CREATE TABLE `song_playlist_mapping` (
   FOREIGN KEY (playlist_id) REFERENCES playlist(id)
 ) DEFAULT CHARSET=utf8;
 
--- TODO: Concerts, Venues, Listening History etc...
+DROP TABLE IF EXISTS `user_listening_history`;
+CREATE TABLE `user_listening_history` (
+  `user_id` int(11) unsigned NOT NULL,
+  `song_id` int(11) unsigned NOT NULL,
+  `time` TIMESTAMP NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES user(id),
+  FOREIGN KEY (song_id) REFERENCES song(id)
+) DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `geo_location`; -- I think we are going to want a better solution
+CREATE TABLE `geo_location` (        -- this will do for now.
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `latitude` DECIMAL(10,7) NOT NULL,
+  `longitude` DECIMAL(10,7) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `venue`;
+CREATE TABLE `venue` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `location_id` int(11) unsigned NOT NULL,
+  FOREIGN KEY (location_id) REFERENCES geo_location(id),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `concert`;
+CREATE TABLE `concert` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `venue_id` int(11) unsigned NOT NULL,
+  `date` DATETIME NOT NULL,
+  FOREIGN KEY (venue_id) REFERENCES venue(id),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+ 
+DROP TABLE IF EXISTS `artist_concert_mapping`;
+CREATE TABLE `artist_concert_mapping` (
+  `artist_id` int(11) unsigned NOT NULL,
+  `concert_id` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`artist_id`, `concert_id`),
+  FOREIGN KEY (artist_id) REFERENCES artist(id),
+  FOREIGN KEY (concert_id) REFERENCES concert(id)
+) DEFAULT CHARSET=utf8;
 
 commit;
