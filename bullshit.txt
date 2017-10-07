@@ -1,0 +1,73 @@
+<footer class="container-fluid text-center ">
+  <!-- <audio id="audio" preload="auto"></audio> -->
+
+  <div class="col-sm-2 player-buttons-container">
+    <img class="player-buttons" src="assets/images/prev.png">
+    <img class="player-buttons play-button" src="assets/images/play.png">
+    <img class="player-buttons" src="assets/images/next.png">
+
+  </div>
+  <div class="col-sm-7 progress-bar-container text-middle">
+    <!-- <script>
+      $('#draggable-point').draggable({
+        axis: 'x',
+        containment: "#audio-progress"
+      });
+
+      $('#draggable-point').draggable({
+        drag: function () {
+          var offset = $(this).offset();
+          var xPos = (100 * parseFloat($(this).css("left"))) / (parseFloat($(this).parent().css("width"))) + "%";
+
+          $('#audio-progress-bar').css({
+            'width': xPos
+          });
+        }
+      });
+    </script> -->
+
+    <div class="audio-progress" id="audio-progress">
+      <div id="draggable-point" style="left:75%;" class="draggable ui-widget-content">
+        <!-- <div id="audio-progress-handle"></div> -->
+      </div>
+      <div id="audio-progress-bar" class="bar" style="width:25%">
+      </div>
+    </div>
+
+
+    <!-- <div id="posX"></div> -->
+  </div>
+
+  <div class="col-sm-3 player-buttons-container text-left">
+    
+    <div class="col-sm-8">
+      <img class="player-buttons" src="assets/images/shuffle.png">
+      <img class="player-buttons" src="assets/images/media-repeat.png">
+      <img class="player-buttons" src="assets/images/volume.png">
+    </div>
+
+    <div class="col-sm-4" style="padding:0">
+      <div class="volume-progress">
+        <div id="draggable-point" style="left:25%;" class="draggable ui-widget-content">
+          <!-- <div id="audio-progress-handle"></div> -->
+        </div>
+        <div id="volume-progress-bar" class="volume-bar" style="width:50%">
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+
+  <!-- <div class="btn-group">
+        <button onclick="Play('music.mp3','audio');" class="btn btn-custom"><span title="Play" id="play" class="glyphicon glyphicon-play aligned"></span></button>
+        <button onclick="Stop('music.mp3','audio');" class="btn btn-custom"><span title="Stop" id="stop" class="glyphicon glyphicon-stop aligned"></span></button>
+        <button onclick="Restart('music.mp3','audio');" class="btn btn-custom"><span title="Restart" id="restart" class="glyphicon glyphicon-step-backward aligned"></span></button>
+        <button onclick="Backward5('music.mp3','audio');" class="btn btn-custom"><span title="-5 seconds" id="play" class="glyphicon glyphicon-fast-backward aligned"></span></button>
+        <button onclick="Forward5('music.mp3','audio');" class="btn btn-custom"><span title="+5 seconds" id="play" class="glyphicon glyphicon-fast-forward aligned"></span></button>
+        <button onclick="Backward1('music.mp3','audio');" class="btn btn-custom"><span title="-1 second" id="play" class="glyphicon glyphicon-chevron-left aligned"></span></button>
+        <button onclick="Forward1('music.mp3','audio');" class="btn btn-custom"><span title="+1 second" id="play" class="glyphicon glyphicon-chevron-right aligned"></span></button>
+        <button onclick="VolumeUp('music.mp3','audio');" class="btn btn-custom"><span title="Volume Up" id="volumeup" class="glyphicon glyphicon-plus aligned"></span></button>
+        <button onclick="VolumeDown('music.mp3','audio');" class="btn btn-custom"><span title="Volume Down" id="volumedown" class="glyphicon glyphicon-minus aligned"></span></button>
+      </div> -->
+</footer>

@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>SpotifyProject</title>
+  <base href="/">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  
+</head>
+
+<body onresize="setColumnHeight()">
+
+  <app-root></app-root>
+  <script>
+    var screenheight = window.innerHeight;
+    var html = document.getElementsByTagName('html')[0];
+    html.setAttribute("style", "--screen-height: " + (screenheight - 124) + "px");
+
+    function setColumnHeight() {
+      var screenheight = window.innerHeight;
+      var html = document.getElementsByTagName('html')[0];
+      html.setAttribute("style", "--screen-height: " + (screenheight - 124) + "px");
+    }
+    
+
+  </script>
+
+</body>
+
+</html>
