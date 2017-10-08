@@ -10,11 +10,10 @@ export class AppComponent {
   title = 'BLAH';
 
   ngOnInit(){
-    
-    $(document).ready(function () {
-      $('label.tree-toggler').click(function () {
-        $(this).parent().children('ul.tree').toggle(300);
-      });
+    // collapse left bar menu items jquery
+        $(".Collapsable").click(function () {
+        $(this).parent().children().toggle(150);
+        $(this).toggle(20);
     });
   }
 }
