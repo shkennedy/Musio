@@ -16,24 +16,20 @@ public class ArtistController
     private ArtistRepository artistRepository;
 
 
-    @GetMapping(path="/add")
-    public @ResponseBody String addNewArtist (@RequestParam String name)
-    {
-        Artist a = new Artist();
-        a.name = name;
-
-        try
-        {
-            artistRepository.save(a);
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-            return "Database constraint exception occurred!";
-        }
-
-        return "Saved artist!";
+	@RequestMapping(value = "/add", method = RequestMethod.POST, headers = "Accept=application/json")
+	public @ResponseBody Artist addArtist(@RequestBody Artist artist) {
+		return artistRepository.save(artist);
     }
+    
+    @RequestMapping(value = "/add", method = RequestMethod.PUT, headers = "Accept=application/json")
+	public @ResponseBody Artist updateArtist(@RequestBody Artist artist) {
+		return artistRepository.save(artist);
+    }
+    
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE, headers = "Accept=application/json")
+	public @ResponseBody void deleteArtist(@PathVariable("id") int id) {
+        artistRepository.delete(id);
+	}	
 
     @GetMapping(path="/all")
     public @ResponseBody Iterable<Artist> getAllArtists()

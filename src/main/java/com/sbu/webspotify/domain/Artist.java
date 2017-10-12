@@ -13,5 +13,6 @@ public class Artist {
     @Column(unique=true)
     public String name;
 
+    public String bio;
 
 }
