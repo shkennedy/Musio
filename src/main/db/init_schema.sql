@@ -1,68 +1,43 @@
-DROP DATABASE IF EXISTS `webspotify`;
-CREATE DATABASE `webspotify`;
-USE `webspotify`;
+-- Script that drops all tables (if they exist)
+-- then creates the schema.
 
-DROP TABLE IF EXISTS `user_type`;
-CREATE TABLE `user_type` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `description` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+USE `museo`;
 
-DROP TABLE IF EXISTS `user`;
-CREATE TABLE `user` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `user_type_id` int(11) unsigned,
-  `username` varchar(255) NOT NULL,
-  `email` varchar(255) DEFAULT NULL,
-  `password` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`),
-  FOREIGN KEY (user_type_id) REFERENCES user_type(id)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
-
-DROP TABLE IF EXISTS `user_payment_info`;
-CREATE TABLE `user_payment_info` (
-  `user_id` int(11) unsigned NOT NULL,
-  `card_number` varchar(255) NOT NULL,
-  `name_on_card` varchar(255) NOT NULL,
-  `ccv` int(11) unsigned NOT NULL,
-  `expiration_date` DATE NOT NULL,
-  FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE
-) DEFAULT CHARSET=utf8;
-
-DROP TABLE IF EXISTS `friends`;
-CREATE TABLE `friends` (
-  `user_id_1` int(11) unsigned NOT NULL,
-  `user_id_2` int(11) unsigned NOT NULL,
-  FOREIGN KEY (user_id_1) REFERENCES user(id),
-  FOREIGN KEY (user_id_2) REFERENCES user(id)
-) DEFAULT CHARSET=utf8;
-
-DROP TABLE IF EXISTS `artist`;
-CREATE TABLE `artist` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  `bio` varchar(4000),
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
-
+SET FOREIGN_KEY_CHECKS = 0; -- disable foreign key checks while we drop everything
+DROP TABLE IF EXISTS `advertisement_click`;
+DROP TABLE IF EXISTS `advertisement`;
+DROP TABLE IF EXISTS `artist_concert_mapping`;
+DROP TABLE IF EXISTS `artist_genre_mapping`;
+DROP TABLE IF EXISTS `album_genre_mapping`;
+DROP TABLE IF EXISTS `concert`;
+DROP TABLE IF EXISTS `venue`;
+DROP TABLE IF EXISTS `user_listening_history`;
+DROP TABLE IF EXISTS `user_favorite_songs`;
+DROP TABLE IF EXISTS `user_artist_following`;
+DROP TABLE IF EXISTS `user_playlist_following`;
+DROP TABLE IF EXISTS `song_playlist_mapping`;
+DROP TABLE IF EXISTS `playlist`;
+DROP TABLE IF EXISTS `song_album_mapping`;
+DROP TABLE IF EXISTS `song`;
+DROP TABLE IF EXISTS `genre`;
 DROP TABLE IF EXISTS `album`;
-CREATE TABLE `album` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `title` varchar(255) NOT NULL,
-  `artist_id` int(11) unsigned NOT NULL,
-  PRIMARY KEY (`id`),
-  FOREIGN KEY (artist_id) REFERENCES artist(id)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
-
+DROP TABLE IF EXISTS `artist`;
+DROP TABLE IF EXISTS `following`;
+DROP TABLE IF EXISTS `user_payment_info`;
+DROP TABLE IF EXISTS `user`;
+DROP TABLE IF EXISTS `geo_location`;
+DROP TABLE IF EXISTS `user_type`;
+DROP TABLE IF EXISTS `file`;
 DROP TABLE IF EXISTS `mime_type`;
+SET FOREIGN_KEY_CHECKS = 1; -- re enable foreign key checks
+
+
 CREATE TABLE `mime_type` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `description` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS `file`;
 CREATE TABLE `file` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `file_name` varchar(255) NOT NULL,
@@ -72,27 +47,109 @@ CREATE TABLE `file` (
   FOREIGN KEY (mime_type_id) REFERENCES mime_type(id)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS `genre`;
+CREATE TABLE `user_type` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `description` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `geo_location` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `latitude` DECIMAL(10,7) NOT NULL,
+  `longitude` DECIMAL(10,7) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `user` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `user_type_id` int(11) unsigned,
+  `username` varchar(255) NOT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `hashed_pwd` varchar(255) NOT NULL,
+  `profile_image_id` int(11) unsigned NOT NULL,
+  `geo_location_id` int(11) unsigned,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (geo_location_id) REFERENCES geo_location(id),
+  FOREIGN KEY (profile_image_id) REFERENCES file(id),
+  FOREIGN KEY (user_type_id) REFERENCES user_type(id)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8
+;
+CREATE TABLE `user_payment_info` (
+  `user_id` int(11) unsigned NOT NULL,
+  `card_number` varchar(255) NOT NULL,
+  `name_on_card` varchar(255) NOT NULL,
+  `ccv` int(11) unsigned NOT NULL,
+  `expiration_date` DATE NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE
+) DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `following` (
+  `follower` int(11) unsigned NOT NULL,
+  `user_being_followed` int(11) unsigned NOT NULL,
+  FOREIGN KEY (follower) REFERENCES user(id),
+  FOREIGN KEY (user_being_followed) REFERENCES user(id)
+) DEFAULT CHARSET=utf8;
+
+CREATE TABLE `artist` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `bio` varchar(4000),
+  `music_label_user_id` int(11) unsigned,
+  `geo_location_id` int(11) unsigned,
+  FOREIGN KEY (music_label_user_id) REFERENCES user(id),
+  FOREIGN KEY (geo_location_id) REFERENCES geo_location(id),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `album` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) NOT NULL,
+  `artist_id` int(11) unsigned NOT NULL,
+  `album_art_file_id` int(11) unsigned,
+  `release_date` DATE,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (artist_id) REFERENCES artist(id),
+  FOREIGN KEY (album_art_file_id) REFERENCES file(id)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
 CREATE TABLE `genre` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS `song`;
+CREATE TABLE `album_genre_mapping` (
+  `genre_id` int(11) unsigned NOT NULL,
+  `album_id` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`genre_id`, `album_id`),
+  FOREIGN KEY (genre_id) REFERENCES genre(id),
+  FOREIGN KEY (album_id) REFERENCES album(id)
+) DEFAULT CHARSET=utf8;
+
+CREATE TABLE `artist_genre_mapping` (
+  `genre_id` int(11) unsigned NOT NULL,
+  `artist_id` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`genre_id`, `artist_id`),
+  FOREIGN KEY (genre_id) REFERENCES genre(id),
+  FOREIGN KEY (artist_id) REFERENCES artist(id)
+) DEFAULT CHARSET=utf8;
+
 CREATE TABLE `song` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `title` varchar(255) NOT NULL,
   `genre_id` int(11) unsigned NOT NULL,
   `album_id` int(11) unsigned NOT NULL,
   `file_id` int(11) unsigned NOT NULL,
+  `duration` int(11) DEFAULT NULL,
+  `lyrics` varchar(4000) DEFAULT NULL,
   PRIMARY KEY (`id`),
   FOREIGN KEY (genre_id) REFERENCES genre(id) ON DELETE CASCADE,
   FOREIGN KEY (album_id) REFERENCES album(id) ON DELETE CASCADE,
   FOREIGN KEY (file_id) REFERENCES file(id) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS `song_album_mapping`;
 CREATE TABLE `song_album_mapping` (
   `song_id` int(11) unsigned NOT NULL,
   `album_id` int(11) unsigned NOT NULL,
@@ -101,7 +158,6 @@ CREATE TABLE `song_album_mapping` (
   FOREIGN KEY (album_id) REFERENCES album(id)
 ) DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS `playlist`;
 CREATE TABLE `playlist` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -113,7 +169,6 @@ CREATE TABLE `playlist` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS `song_playlist_mapping`;
 CREATE TABLE `song_playlist_mapping` (
   `song_id` int(11) unsigned NOT NULL,
   `playlist_id` int(11) unsigned NOT NULL,
@@ -122,24 +177,39 @@ CREATE TABLE `song_playlist_mapping` (
   FOREIGN KEY (playlist_id) REFERENCES playlist(id)
 ) DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS `user_listening_history`;
 CREATE TABLE `user_listening_history` (
   `user_id` int(11) unsigned NOT NULL,
   `song_id` int(11) unsigned NOT NULL,
-  `time` TIMESTAMP NOT NULL,
+  `timestamp` TIMESTAMP NOT NULL,
   FOREIGN KEY (user_id) REFERENCES user(id),
   FOREIGN KEY (song_id) REFERENCES song(id)
 ) DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS `geo_location`; -- I think we are going to want a better solution
-CREATE TABLE `geo_location` (        -- this will do for now.
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `latitude` DECIMAL(10,7) NOT NULL,
-  `longitude` DECIMAL(10,7) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+-- treat following and favorites as the same thing?
+CREATE TABLE `user_playlist_following` (
+  `user_id` int(11) unsigned NOT NULL,
+  `playlist_id` int(11) unsigned NOT NULL,
+  `time` TIMESTAMP NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES user(id),
+  FOREIGN KEY (playlist_id) REFERENCES playlist(id)
+) DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS `venue`;
+CREATE TABLE `user_artist_following` (
+  `user_id` int(11) unsigned NOT NULL,
+  `artist_id` int(11) unsigned NOT NULL,
+  `timestamp` TIMESTAMP NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES user(id),
+  FOREIGN KEY (artist_id) REFERENCES artist(id)
+) DEFAULT CHARSET=utf8;
+
+CREATE TABLE `user_favorite_songs` (
+  `user_id` int(11) unsigned NOT NULL,
+  `song_id` int(11) unsigned NOT NULL,
+  `timestamp` TIMESTAMP NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES user(id),
+  FOREIGN KEY (song_id) REFERENCES song(id)
+) DEFAULT CHARSET=utf8;
+
 CREATE TABLE `venue` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -148,7 +218,6 @@ CREATE TABLE `venue` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS `concert`;
 CREATE TABLE `concert` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -158,13 +227,27 @@ CREATE TABLE `concert` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
  
-DROP TABLE IF EXISTS `artist_concert_mapping`;
 CREATE TABLE `artist_concert_mapping` (
   `artist_id` int(11) unsigned NOT NULL,
   `concert_id` int(11) unsigned NOT NULL,
-  PRIMARY KEY (`artist_id`, `concert_id`),
   FOREIGN KEY (artist_id) REFERENCES artist(id),
   FOREIGN KEY (concert_id) REFERENCES concert(id)
+) DEFAULT CHARSET=utf8;
+
+CREATE TABLE `advertisement` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `desription` varchar(4000) NOT NULL,
+  `file` int(11) unsigned NOT NULL,
+  FOREIGN KEY (file) REFERENCES file(id),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `advertisement_click` (
+  `advertisement_id` int(11) unsigned NOT NULL,
+  `user_id` int(11) unsigned NOT NULL,
+  `timestamp` TIMESTAMP NOT NULL,
+  FOREIGN KEY (advertisement_id) REFERENCES advertisement(id),
+  FOREIGN KEY (user_id) REFERENCES user(id)
 ) DEFAULT CHARSET=utf8;
 
 commit;
