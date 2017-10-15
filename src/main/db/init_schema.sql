@@ -24,9 +24,10 @@ DROP TABLE IF EXISTS `album`;
 DROP TABLE IF EXISTS `artist`;
 DROP TABLE IF EXISTS `following`;
 DROP TABLE IF EXISTS `user_payment_info`;
+DROP TABLE IF EXISTS `user_role`;
 DROP TABLE IF EXISTS `user`;
 DROP TABLE IF EXISTS `geo_location`;
-DROP TABLE IF EXISTS `user_type`;
+DROP TABLE IF EXISTS `role`;
 DROP TABLE IF EXISTS `file`;
 DROP TABLE IF EXISTS `mime_type`;
 SET FOREIGN_KEY_CHECKS = 1; -- re enable foreign key checks
@@ -47,9 +48,9 @@ CREATE TABLE `file` (
   FOREIGN KEY (mime_type_id) REFERENCES mime_type(id)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
-CREATE TABLE `user_type` (
+CREATE TABLE `role` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `description` varchar(255) NOT NULL,
+  `role` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
@@ -60,21 +61,25 @@ CREATE TABLE `geo_location` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
-
 CREATE TABLE `user` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `user_type_id` int(11) unsigned,
   `username` varchar(255) NOT NULL,
   `email` varchar(255) DEFAULT NULL,
-  `hashed_pwd` varchar(255) NOT NULL,
-  `profile_image_id` int(11) unsigned NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `profile_image_id` int(11) unsigned,
   `geo_location_id` int(11) unsigned,
   PRIMARY KEY (`id`),
   FOREIGN KEY (geo_location_id) REFERENCES geo_location(id),
-  FOREIGN KEY (profile_image_id) REFERENCES file(id),
-  FOREIGN KEY (user_type_id) REFERENCES user_type(id)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8
-;
+  FOREIGN KEY (profile_image_id) REFERENCES file(id)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `user_role` (
+  `user_id` int(11) unsigned NOT NULL,
+  `role_id` int(11) unsigned NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES user(id),
+  FOREIGN KEY (role_id) REFERENCES role(id)
+) DEFAULT CHARSET=utf8;
+
 CREATE TABLE `user_payment_info` (
   `user_id` int(11) unsigned NOT NULL,
   `card_number` varchar(255) NOT NULL,
@@ -83,7 +88,6 @@ CREATE TABLE `user_payment_info` (
   `expiration_date` DATE NOT NULL,
   FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE
 ) DEFAULT CHARSET=utf8;
-
 
 CREATE TABLE `following` (
   `follower` int(11) unsigned NOT NULL,
@@ -249,5 +253,12 @@ CREATE TABLE `advertisement_click` (
   FOREIGN KEY (advertisement_id) REFERENCES advertisement(id),
   FOREIGN KEY (user_id) REFERENCES user(id)
 ) DEFAULT CHARSET=utf8;
+
+commit;
+
+INSERT INTO `role` VALUES (1,'ADMIN');
+INSERT INTO `role` VALUES (2,'BASIC_USER');
+INSERT INTO `role` VALUES (3,'PREMIUM_USER');
+INSERT INTO `role` VALUES (4,'LABEL_USER');
 
 commit;
