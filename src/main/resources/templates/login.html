@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
 	<title>Museo - Login</title>
-	<link rel="stylesheet" type="text/css" th:href="@{/css/login.css}" />
+	<link rel="stylesheet" type="text/css" href="/css/login.css" />
 	<link rel="stylesheet" type="text/css" href="/webjars/bootstrap/3.3.7/css/bootstrap.css" />	
 </head>
 
@@ -19,7 +18,7 @@
 			<br/>
 
 			<div align="center" th:if="${param.logout}">
-				<p style="font-size: 20; color:green;">You have been logged out</p>
+				<p style="font-size: 20; color:green;">You have been logged out.</p>
 			</div>
 			
 			<input type="text" id="username" name="username"  th:placeholder="Username"
@@ -28,7 +27,7 @@
 				id="password" name="password" class="form-control" /> <br /> 
 				
 			<div align="center" th:if="${param.error}">
-				<p style="font-size: 20; color: #FF1C19;">Username or Password invalid, please verify</p>
+				<p style="font-size: 20; color: #FF1C19;">Username or Password invalid, please try again.</p>
 			</div>
 			
 			<button class="btn btn-lg btn-primary btn-block" name="Submit" value="Login" type="Submit" th:text="Login"></button>
