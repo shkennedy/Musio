@@ -1,7 +1,7 @@
 -- Script that drops all tables (if they exist)
 -- then creates the schema.
 
-USE `cse308`;
+USE `museo`;
 
 SET FOREIGN_KEY_CHECKS = 0; -- disable foreign key checks while we drop everything
 DROP TABLE IF EXISTS `advertisement_click`;
@@ -18,6 +18,7 @@ DROP TABLE IF EXISTS `user_playlist_following`;
 DROP TABLE IF EXISTS `song_playlist_mapping`;
 DROP TABLE IF EXISTS `playlist`;
 DROP TABLE IF EXISTS `song_album_mapping`;
+DROP TABLE IF EXISTS `album_artist_mapping`;
 DROP TABLE IF EXISTS `song`;
 DROP TABLE IF EXISTS `genre`;
 DROP TABLE IF EXISTS `album`;
@@ -41,7 +42,7 @@ CREATE TABLE `mime_type` (
 
 CREATE TABLE `file` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `file_name` varchar(255) NOT NULL,
+--  `file_name` varchar(255) NOT NULL,
   `bytes` BLOB NOT NULL,
   `mime_type_id` int(11) unsigned NOT NULL,
   PRIMARY KEY (`id`),
@@ -119,12 +120,12 @@ CREATE TABLE `album` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `mbid` char(36),
   `title` varchar(255) NOT NULL,
-  `artist_id` int(11) unsigned NOT NULL,
+--  `artist_id` int(11) unsigned NOT NULL,
   `album_art_id` int(11) unsigned,
   `album_art_thumbnail_id` int(11) unsigned,
   `release_date` DATE,
   PRIMARY KEY (`id`),
-  FOREIGN KEY (artist_id) REFERENCES artist(id),
+--  FOREIGN KEY (artist_id) REFERENCES artist(id),
   FOREIGN KEY (album_art_id) REFERENCES file(id),
   FOREIGN KEY (album_art_thumbnail_id) REFERENCES file(id)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
@@ -134,14 +135,14 @@ CREATE TABLE `song` (
   `mbid` char(36),
   `title` varchar(255) NOT NULL,
   `artist_id` int(11) unsigned NOT NULL,
-  `album_id` int(11) unsigned NOT NULL,
+--  `album_id` int(11) unsigned NOT NULL,
   `low_bitrate_file_id` int(11) unsigned,
   `high_bitrate_file_id` int(11) unsigned,
   `duration` int(11) DEFAULT NULL,
   `lyrics` varchar(4000) DEFAULT NULL,
   PRIMARY KEY (`id`),
   FOREIGN KEY (artist_id) REFERENCES artist(id) ON DELETE CASCADE,
-  FOREIGN KEY (album_id) REFERENCES album(id) ON DELETE CASCADE,
+--  FOREIGN KEY (album_id) REFERENCES album(id) ON DELETE CASCADE,
   FOREIGN KEY (low_bitrate_file_id) REFERENCES file(id) ON DELETE CASCADE,
   FOREIGN KEY (high_bitrate_file_id) REFERENCES file(id) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
@@ -176,6 +177,14 @@ CREATE TABLE `song_album_mapping` (
   PRIMARY KEY (`song_id`, `album_id`),
   FOREIGN KEY (song_id) REFERENCES song(id),
   FOREIGN KEY (album_id) REFERENCES album(id)
+) DEFAULT CHARSET=utf8;
+
+CREATE TABLE `album_artist_mapping` (
+  `album_id` int(11) unsigned NOT NULL,
+  `artist_id` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`album_id`, `artist_id`),
+  FOREIGN KEY (album_id) REFERENCES album(id),
+  FOREIGN KEY (artist_id) REFERENCES artist(id)
 ) DEFAULT CHARSET=utf8;
 
 CREATE TABLE `playlist` (
