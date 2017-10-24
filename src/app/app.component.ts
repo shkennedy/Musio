@@ -12,8 +12,8 @@ export class AppComponent {
   ngOnInit(){
     // collapse left bar menu items jquery
         $(".Collapsable").click(function () {
-        $(this).parent().children().toggle(150);
-        $(this).toggle(20);
+        $(this).parent().children().toggle(90);
+        $(this).toggle(1);
     });
   }
 }
