@@ -14,18 +14,15 @@
 <body onresize="setColumnHeight()">
 
   <app-root></app-root>
-  <script>
-    var screenheight = window.innerHeight;
-    var html = document.getElementsByTagName('html')[0];
-    html.setAttribute("style", "--screen-height: " + (screenheight - 124) + "px");
 
+  <script>
     function setColumnHeight() {
       var screenheight = window.innerHeight;
       var html = document.getElementsByTagName('html')[0];
-      html.setAttribute("style", "--screen-height: " + (screenheight - 124) + "px");
+      html.setAttribute("style", "--screen-height: " + (screenheight - 108) + "px");
     }
-    
 
+    setColumnHeight();
   </script>
 
 </body>
