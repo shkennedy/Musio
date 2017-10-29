@@ -80,18 +80,17 @@
 	}
 
 	html {
-            height: 100%;
+		height: 100%;
+		background-image:  url("../../../assets/images/bg.png") !important;
             
 	}
 
 	body {
 		height: 100%;
 		
-		background-image: url("/assets/images/bg.png");             
-		background-image:  url("/assets/images/bg.png");
-		background-image:  url("/assets/images/bg.png");
-		background-image:  url("/assets/images/bg.png");
-		background-repeat: repeat,			no-repeat,			no-repeat;
+		background-image: url("../../../assets/images/bg.png") !important;             
+
+		background-repeat: no-repeat;
 		background-size: 100px 100px, cover,				cover;
 		background-position: top left,		center center,		bottom center;
 		background-attachment: fixed,			fixed,				fixed;
@@ -815,22 +814,26 @@
 		-webkit-align-items: center;
 		-ms-align-items: center;
 		align-items: center;
-		-moz-justify-content: space-between;
+		/* -moz-justify-content: space-between;
 		-webkit-justify-content: space-between;
-		-ms-justify-content: space-between;
-		justify-content: space-between;
+		-ms-justify-content: space-between; */
+		/* justify-content: space-between; */
 		-moz-flex-direction: column;
 		-webkit-flex-direction: column;
 		-ms-flex-direction: column;
 		flex-direction: column;
-		-moz-perspective: 1000px;
+		/* -moz-perspective: 1000px;
 		-webkit-perspective: 1000px;
 		-ms-perspective: 1000px;
-		perspective: 1000px;
+		perspective: 1000px; */
 		position: relative;
-		min-height: 100%;
-		padding: 1.5em;
+		/* min-height: 100%; */
+		height: var(--global-screen-height);
+		padding-top: 5%;
 		z-index: 2;
+		background-image: url("../../../assets/images/bg.png") !important;
+		background-repeat: no-repeat;
+		background-color: rgb(29, 29, 29);
 	}
 
 		#wrapper > * {

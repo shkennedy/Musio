@@ -4,7 +4,8 @@
        overflow-y: hidden;
        height: 100%;
        --screen-height: 700px;
-       background: url("assets/images/bg.png");
+       --global-screen-height: 700px;
+       /* background: url("assets/images/bg.png"); */
 
        
  }
