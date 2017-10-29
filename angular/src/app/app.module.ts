@@ -10,6 +10,8 @@ import { ContentContainerComponent } from './components/user-main/content-contai
 import { LeftNavComponent } from './components/user-main/left-nav/left-nav.component';
 import { RightNavComponent } from './components/user-main/right-nav/right-nav.component';
 import { TopMenuComponent } from './components/user-main/top-menu/top-menu.component';
+import { LoginComponent } from './components/login/login.component';
+
 
 
 @NgModule({
@@ -23,6 +25,9 @@ import { TopMenuComponent } from './components/user-main/top-menu/top-menu.compo
     LeftNavComponent,
     RightNavComponent,
     TopMenuComponent,
+    LoginComponent,
+ 
+    // LoginComponent,
 
 
   ],
