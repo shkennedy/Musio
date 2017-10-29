@@ -28,3 +28,6 @@ nbdist/
 
 ### VSCode ###
 .vscode
+
+### Frontend bundled output ###
+src/main/resources/static/
