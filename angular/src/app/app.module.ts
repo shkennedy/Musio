@@ -11,6 +11,9 @@ import { LeftNavComponent } from './components/user-main/left-nav/left-nav.compo
 import { RightNavComponent } from './components/user-main/right-nav/right-nav.component';
 import { TopMenuComponent } from './components/user-main/top-menu/top-menu.component';
 import { LoginComponent } from './components/login/login.component';
+import { AlbumComponent } from './components/user-main/album/album.component';
+import { DummyContentComponent } from './components/user-main/dummy-content/dummy-content.component';
+import { UpgradePageComponent } from './components/user-main/upgrade-page/upgrade-page.component';
 
 
 
@@ -26,6 +29,9 @@ import { LoginComponent } from './components/login/login.component';
     RightNavComponent,
     TopMenuComponent,
     LoginComponent,
+    AlbumComponent,
+    DummyContentComponent,
+    UpgradePageComponent,
  
     // LoginComponent,
 
