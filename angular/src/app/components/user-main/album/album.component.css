@@ -1,0 +1,20 @@
+#album-info{
+      min-width: 280px !important;
+      padding: 5px;
+      
+}
+
+#album-wrapper{
+      /* min-width: 270px !important; */
+}
+
+#artist-name{
+      color: white;
+}
+
+.album-tracklist-table{
+      width: 65%;
+}
+#album-tracklist{
+      /* width: 100%; */
+}
