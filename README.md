@@ -6,37 +6,36 @@ You will need maven, npm, and the angular-cli to build and run this project.
 
 
 ### First build the frontend
-Run:
+In the 'angular/' folder (where '.angular-cli.json' and 'package.json' are), run:
 
 ```
+npm install
 ng build
 ```
 
-in the angular folder (where '.angular-cli.json' is).
-It will create bundled output in the 'angular/dist' folder.
+It will create bundled frontend output in the 'angular/dist' folder.
 
 
 ### Next, start up the backend.
-Run:
+In the directory of pom.xml, run:
 
 ```
 mvn spring-boot:run
 ```
 
-in the directory of pom.xml (the root directory). Maven will look in '/angular/dist' for bundled frontend output and it will copy these files to 'src/main/resources/static'. Look inside the pom.xml to see how we did this.
+Maven will look in '/angular/dist' for bundled frontend output and it will copy these files to 'src/main/resources/static'. Look inside the pom.xml to see how we did this.
+
+The web server will be running on port 8080!
 
 
 
 
-
-Good to know when developing: to view your frontend code changes without restarting the backend server, do:
+**Good to know when developing**: To have your frontend changes automatically reflected in the browser, run:
 
 ```
-ng build --output-path=../src/main/resources/static/
+ng build --watch --output-path=../src/main/resources/static/
 ```
 
-while in the angular folder. The backend will live-reload and serve up the updated resources.
+while in the 'angular/' folder. Passing the '--watch' and '--output-path' flags make tha angular-cli watch for file changes and automatically copy the new bundled output into the backend server's resources.
 
-
-The web server will be running on port 8080.
-
+You can also get the LiveReload chrome extension to make your browser automatically refresh when this happens.
