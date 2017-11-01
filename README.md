@@ -33,9 +33,9 @@ The web server will be running on port 8080!
 **Good to know when developing**: To have your frontend changes automatically reflected in the browser, run:
 
 ```
-ng build --watch --output-path=../src/main/resources/static/
+npm run build:watch:dev
 ```
 
-while in the 'angular/' folder. Passing the '--watch' and '--output-path' flags make the angular-cli watch for file changes and automatically copy the new bundled output into the backend server's resources.
+while in the 'angular/' folder. Passing the '--watch' and '--output-path' flags make the angular-cli watch for file changes and automatically copy the new bundled output into the backend server's resources. You can see what the actual command is in package.json.
 
 You can also get the LiveReload chrome extension to make your browser automatically refresh when this happens.
