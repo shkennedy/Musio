@@ -9,7 +9,7 @@ import com.sbu.webspotify.domain.*;
 import com.sbu.webspotify.repo.*;
 
 @Controller
-@RequestMapping(path = "/song") // This means URL's start with /example (after Application path)
+@RequestMapping(path = "/song")
 public class SongController
 {
     @Autowired
