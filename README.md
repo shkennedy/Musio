@@ -25,13 +25,17 @@ mvn spring-boot:run
 
 in the directory of pom.xml (the root directory). Maven will look in '/angular/dist' for bundled frontend output and it will copy these files to 'src/main/resources/static'. Look inside the pom.xml to see how we did this.
 
-Alternatively, you can also copy over our frontend build files manually by running
+
+
+
+
+Good to know when developing: to view your frontend code changes without restarting the backend server, do:
 
 ```
 ng build --output-path=../src/main/resources/static/
 ```
 
-while in the angular folder. What is nice about this is that the backend will live-reload and serve up the updated resources. This could make development easier.
+while in the angular folder. The backend will live-reload and serve up the updated resources.
 
 
 The web server will be running on port 8080.
