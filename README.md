@@ -36,6 +36,6 @@ The web server will be running on port 8080!
 ng build --watch --output-path=../src/main/resources/static/
 ```
 
-while in the 'angular/' folder. Passing the '--watch' and '--output-path' flags make tha angular-cli watch for file changes and automatically copy the new bundled output into the backend server's resources.
+while in the 'angular/' folder. Passing the '--watch' and '--output-path' flags make the angular-cli watch for file changes and automatically copy the new bundled output into the backend server's resources.
 
 You can also get the LiveReload chrome extension to make your browser automatically refresh when this happens.
