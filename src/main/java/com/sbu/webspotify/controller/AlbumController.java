@@ -18,7 +18,7 @@ public class AlbumController
     @Autowired
     private ArtistRepository artistRepository;
 
-    @GetMapping(value = "/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public @ResponseBody Album getAlbum(@PathVariable("id") int id) {
         return albumRepository.findById(id);
     }

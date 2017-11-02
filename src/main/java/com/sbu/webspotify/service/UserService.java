@@ -1,7 +1,10 @@
 package com.sbu.webspotify.service;
 
+import com.sbu.webspotify.domain.Album;
+
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -38,4 +41,8 @@ public class UserService {
 		userRepository.save(user);
 	}
 
+	public Set<Album> getFavoriteAlbumsById(int userId) {
+		User user = userRepository.findById(userId);
+		return user.getUserFavorites().getFavoriteAlbums();
+	}
 }

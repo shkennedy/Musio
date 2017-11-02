@@ -8,7 +8,7 @@ public class Artist {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    public Integer id;
+    public int id;
 
     @Column(unique=true)
     public String name;

@@ -41,6 +41,8 @@ public class LoginController {
 	public ModelAndView attemptLogin(String username, String password, BindingResult bindingResult) {
 		ModelAndView modelAndView = new ModelAndView();
 		User user = userService.findUserByUsernameAndPassword(username, password);
+
+		//https://docs.spring.io/spring-security/site/docs/3.0.x/reference/technical-overview.html
 		
 		if (user == null) {
 			bindingResult.rejectValue("incorrectLogin", "error.user", "Incorrect username or password");
