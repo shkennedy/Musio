@@ -26,6 +26,11 @@ public class UserService {
 		return userRepository.findByUsername(username);
 	}
 
+	public User findUserByUsernameAndPassword(String username, String password) {
+		String encryptedPassword = bCryptPasswordEncoder.encode(password);
+		return userRepository.findByUsernameAndPassword(username, encryptedPassword);
+	}
+
 	public void saveUser(User user) {
 		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         Role userRole = roleRepository.findByRole("ADMIN");

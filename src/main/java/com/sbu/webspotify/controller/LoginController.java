@@ -24,7 +24,7 @@ public class LoginController {
     private UserService userService;
 
 	@RequestMapping(value={"/login"}, method = RequestMethod.GET)
-	public ModelAndView login(){
+	public ModelAndView checkLoginStatus(){
 
 		// -- if user is already logged in redirect them to the app
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -34,6 +34,23 @@ public class LoginController {
 
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("login");
+		return modelAndView;
+	}
+
+	@RequestMapping(value={"/login"}, method = RequestMethod.POST)
+	public ModelAndView attemptLogin(String username, String password, BindingResult bindingResult) {
+		ModelAndView modelAndView = new ModelAndView();
+		User user = userService.findUserByUsernameAndPassword(username, password);
+		
+		if (user == null) {
+			bindingResult.rejectValue("incorrectLogin", "error.user", "Incorrect username or password");
+			modelAndView.setViewName("login");
+		} else {
+			modelAndView.addObject("successMessage", "User has been logged in successfully");
+			modelAndView.addObject("user", user);
+			modelAndView.setViewName("login");
+		}
+		
 		return modelAndView;
 	}
     
@@ -69,9 +86,8 @@ public class LoginController {
 		} else {
 			userService.saveUser(user);
 			modelAndView.addObject("successMessage", "User has been registered successfully");
-			modelAndView.addObject("user", new User());
-			modelAndView.setViewName("registration");
-			
+			modelAndView.addObject("user", user);
+			modelAndView.setViewName("registration");	
 		}
 		return modelAndView;
 	}
