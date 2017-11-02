@@ -1,5 +1,10 @@
 package com.sbu.webspotify.controller;
 
+import com.sbu.webspotify.domain.Album;
+import com.sbu.webspotify.domain.User;
+
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,6 +28,13 @@ public class UserController {
 		String username = auth.getName();
 
 		return username;
+	}
+
+	@RequestMapping(value={"/favorites/albums"}, method = RequestMethod.GET)
+	public @ResponseBody Set<Album> getFavoriteAlbums() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		User user = userService.findUserByUsername(auth.getName());
+		return userService.getFavoriteAlbumsById(user.getId());
 	}
 
 }

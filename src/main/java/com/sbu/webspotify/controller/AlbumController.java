@@ -18,6 +18,11 @@ public class AlbumController
     @Autowired
     private ArtistRepository artistRepository;
 
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public @ResponseBody Album getAlbum(@PathVariable("id") int id) {
+        return albumRepository.findById(id);
+    }
+
     @GetMapping(path="/add")
     public @ResponseBody String addNewAlbum (@RequestParam String title, @RequestParam String artist)
     {

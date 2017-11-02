@@ -23,8 +23,8 @@ public class LoginController {
     @Autowired
     private UserService userService;
 
-	@RequestMapping(value={"/login"}, method = RequestMethod.GET)
-	public ModelAndView login(){
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	public ModelAndView checkLoginStatus(){
 
 		// -- if user is already logged in redirect them to the app
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -36,8 +36,27 @@ public class LoginController {
 		modelAndView.setViewName("login");
 		return modelAndView;
 	}
+
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	public ModelAndView attemptLogin(String username, String password, BindingResult bindingResult) {
+		ModelAndView modelAndView = new ModelAndView();
+		User user = userService.findUserByUsernameAndPassword(username, password);
+
+		//https://docs.spring.io/spring-security/site/docs/3.0.x/reference/technical-overview.html
+		
+		if (user == null) {
+			bindingResult.rejectValue("incorrectLogin", "error.user", "Incorrect username or password");
+			modelAndView.setViewName("login");
+		} else {
+			modelAndView.addObject("successMessage", "User has been logged in successfully");
+			modelAndView.addObject("user", user);
+			modelAndView.setViewName("login");
+		}
+		
+		return modelAndView;
+	}
     
-    @RequestMapping(value="/logout", method = RequestMethod.GET)
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
     public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null){    
@@ -46,7 +65,7 @@ public class LoginController {
         return "redirect:/login?logout";
     }
 	
-	@RequestMapping(value="/registration", method = RequestMethod.GET)
+	@RequestMapping(value = "/registration", method = RequestMethod.GET)
 	public ModelAndView registration(){
 		ModelAndView modelAndView = new ModelAndView();
 		User user = new User();
@@ -69,9 +88,8 @@ public class LoginController {
 		} else {
 			userService.saveUser(user);
 			modelAndView.addObject("successMessage", "User has been registered successfully");
-			modelAndView.addObject("user", new User());
-			modelAndView.setViewName("registration");
-			
+			modelAndView.addObject("user", user);
+			modelAndView.setViewName("registration");	
 		}
 		return modelAndView;
 	}

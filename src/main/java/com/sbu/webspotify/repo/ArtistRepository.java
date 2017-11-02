@@ -6,4 +6,5 @@ import com.sbu.webspotify.domain.*;
 public interface ArtistRepository extends CrudRepository<Artist, Integer>
 {
     Artist findByName(String name);
+    Artist findById(int id);
 }

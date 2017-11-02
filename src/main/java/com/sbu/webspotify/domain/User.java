@@ -1,5 +1,8 @@
 package com.sbu.webspotify.domain;
 
+import com.sbu.webspotify.domain.Role;
+import com.sbu.webspotify.domain.UserFavorites;
+
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -11,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.Email;
@@ -43,6 +47,10 @@ public class User {
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles;
+
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "user_favorites_id"))	
+	private UserFavorites userFavorites;
 
 	public int getId() {
 		return id;
@@ -84,4 +92,11 @@ public class User {
 		this.roles = roles;
 	}
 
+	public UserFavorites getUserFavorites() {
+		return userFavorites;
+	}
+
+	public void setUserFavorites(UserFavorites userFavorites) {
+		this.userFavorites = userFavorites;
+	}
 }
