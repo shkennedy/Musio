@@ -1,0 +1,32 @@
+<div id="wrapper">
+
+  <!-- Main -->
+  <section id="main">
+    <header>
+      <h1>Log In</h1>
+      <br>
+      <span class="avatar"><img width="100" src="https://seeklogo.com/images/S/spotify-2015-logo-560E071CB7-seeklogo.com.png" alt="" /></span>
+
+
+      <form action="">
+        <div>
+          <input type="text" placeholder="Username" required="" id="username" />
+        </div>
+        <div>
+          <input type="password" placeholder="Password" required="" id="password" />
+        </div>
+        <br>
+        <div>
+          <input type="submit" value="Log in" />
+          <br><br>
+          <a [routerLink]="['/recover-password']">Lost your password?</a>
+          <a [routerLink]="['/registration']">Register</a>
+        </div>
+      </form>
+    </header>
+
+  </section>
+
+
+
+</div>
