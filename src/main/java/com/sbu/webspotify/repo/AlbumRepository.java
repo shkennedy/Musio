@@ -7,4 +7,5 @@ import com.sbu.webspotify.domain.*;
 public interface AlbumRepository extends CrudRepository<Album, Integer>
 {
     Album findByTitle(String title);
+    Album findById(int id);
 }

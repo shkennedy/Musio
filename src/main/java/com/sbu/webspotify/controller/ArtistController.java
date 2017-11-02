@@ -15,6 +15,10 @@ public class ArtistController
     @Autowired
     private ArtistRepository artistRepository;
 
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
+    public @ResponseBody Artist getArtist(@PathVariable("id") int id) {
+        return artistRepository.findById(id);
+    }
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST, headers = "Accept=application/json")
 	public @ResponseBody Artist addArtist(@RequestBody Artist artist) {

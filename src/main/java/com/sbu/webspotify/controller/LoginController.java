@@ -23,7 +23,7 @@ public class LoginController {
     @Autowired
     private UserService userService;
 
-	@RequestMapping(value={"/login"}, method = RequestMethod.GET)
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public ModelAndView checkLoginStatus(){
 
 		// -- if user is already logged in redirect them to the app
@@ -37,7 +37,7 @@ public class LoginController {
 		return modelAndView;
 	}
 
-	@RequestMapping(value={"/login"}, method = RequestMethod.POST)
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public ModelAndView attemptLogin(String username, String password, BindingResult bindingResult) {
 		ModelAndView modelAndView = new ModelAndView();
 		User user = userService.findUserByUsernameAndPassword(username, password);
@@ -54,7 +54,7 @@ public class LoginController {
 		return modelAndView;
 	}
     
-    @RequestMapping(value="/logout", method = RequestMethod.GET)
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
     public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null){    
@@ -63,7 +63,7 @@ public class LoginController {
         return "redirect:/login?logout";
     }
 	
-	@RequestMapping(value="/registration", method = RequestMethod.GET)
+	@RequestMapping(value = "/registration", method = RequestMethod.GET)
 	public ModelAndView registration(){
 		ModelAndView modelAndView = new ModelAndView();
 		User user = new User();
