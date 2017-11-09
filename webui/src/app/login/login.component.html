@@ -17,10 +17,10 @@
         </div>
         <br>
         <div>
-          <input type="submit" value="Log in" / (click)="onLogIn()">
+          <input type="submit" value="Log in" (click)="onLogIn()">
           <br><br>
-          <a href="#">Lost your password?</a>
-          <a href="#">Register</a>
+          <a [routerLink]="['/recover-password']">Lost your password?</a>
+          <a [routerLink]="['/registration']">Register</a>
         </div>
       </form>
     </header>

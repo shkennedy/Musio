@@ -22,4 +22,9 @@ export class LoginComponent implements OnInit {
     setColumnHeight2();
   }
 
+  onLogIn()
+  {
+    console.log("Logged in");
+  }
+
 }
