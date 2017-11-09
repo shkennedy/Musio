@@ -24,22 +24,22 @@ public class AlbumController
     }
 
     @GetMapping(path="/add")
-    public @ResponseBody String addNewAlbum (@RequestParam String title, @RequestParam String artist)
+    public @ResponseBody String addNewAlbum (@RequestParam String title, @RequestParam String artistName)
     {
-        Artist art = artistRepository.findByName(artist);
+        Artist artist = artistRepository.findByName(artistName);
 
         // if artist is null
-        if(art == null) {
+        if(artist == null) {
             return "Could not find artist in the db.";
         }
 
-        Album a = new Album();
-        a.title = title;
-        a.artist = art;
+        Album album = new Album();
+        album.setTitle(title);
+        album.setArtist(artist);
 
         try
         {
-            albumRepository.save(a);
+            albumRepository.save(album);
         } catch (Exception e) {
             e.printStackTrace();
             return "Database constraint exception occurred!";
