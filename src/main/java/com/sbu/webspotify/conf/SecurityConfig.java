@@ -12,6 +12,10 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import com.sbu.webspotify.conf.CustomAuthenticationSuccessHandler;
+
+
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -21,6 +25,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private DataSource dataSource;
+
+	@Autowired
+	CustomAuthenticationSuccessHandler successHandler;
 	
 	@Value("${spring.queries.users-query}")
 	private String usersQuery;
@@ -49,9 +56,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/").hasAnyAuthority("ADMIN", "BASE_USER", "PREMIUM_USER").anyRequest()
                 .authenticated().and().csrf().disable().formLogin()
                 .loginPage("/login").failureUrl("/login?error=true")
-                .defaultSuccessUrl("/")
                 .usernameParameter("username")
                 .passwordParameter("password")
+				.successHandler(successHandler)
                 .and().logout().permitAll()
 				.logoutSuccessUrl("/login?logout=true");
 	}

@@ -2,6 +2,8 @@ package com.sbu.webspotify.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import java.util.List;
 import java.util.Set;
 
@@ -23,15 +25,11 @@ public class User implements Serializable {
 
 	private String password;
 
-	@Column(name="profile_image_id")
-	private int profileImageId;
-
 	private String username;
 
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles;
-
 
 	@ManyToMany
 	@JoinTable(
@@ -52,7 +50,7 @@ public class User implements Serializable {
 			@JoinColumn(name="user_id")
 			}
 		, inverseJoinColumns={
-			@JoinColumn(name="song_id")
+			@JoinColumn(name="playlist_id")
 			}
 	)
 	private Set<Playlist> favoritePlaylists;
@@ -64,7 +62,7 @@ public class User implements Serializable {
 			@JoinColumn(name="user_id")
 			}
 		, inverseJoinColumns={
-			@JoinColumn(name="song_id")
+			@JoinColumn(name="album_id")
 			}
 	)
 	private Set<Album> favoriteAlbums;
@@ -76,7 +74,7 @@ public class User implements Serializable {
 			@JoinColumn(name="user_id")
 			}
 		, inverseJoinColumns={
-			@JoinColumn(name="song_id")
+			@JoinColumn(name="artist_id")
 			}
 	)
 	private Set<Artist> favoriteArtists;
@@ -88,7 +86,7 @@ public class User implements Serializable {
 			@JoinColumn(name="user_id")
 			}
 		, inverseJoinColumns={
-			@JoinColumn(name="song_id")
+			@JoinColumn(name="station_id")
 			}
 	)
 	private Set<Station> favoriteStations;
@@ -100,7 +98,7 @@ public class User implements Serializable {
 			@JoinColumn(name="user_id")
 			}
 		, inverseJoinColumns={
-			@JoinColumn(name="song_id")
+			@JoinColumn(name="genre_id")
 			}
 	)
 	private Set<Genre> favoriteGenres;
@@ -109,10 +107,14 @@ public class User implements Serializable {
 	@OneToMany(mappedBy="user")
 	private List<SupportTicket> supportTickets;
 
-	//bi-directional many-to-one association to GeoLocation
+	//many-to-one association to GeoLocation
 	@ManyToOne
 	@JoinColumn(name="geo_location_id")
 	private GeoLocation geoLocation;
+
+	@ManyToOne
+	@JoinColumn(name="profile_image_id")
+	private File profileImage;
 
 	public User() {
 	}
@@ -141,14 +143,6 @@ public class User implements Serializable {
 		this.password = password;
 	}
 
-	public int getProfileImageId() {
-		return this.profileImageId;
-	}
-
-	public void setProfileImageId(int profileImageId) {
-		this.profileImageId = profileImageId;
-	}
-
 	public Set<Role> getRoles() {
 		return roles;
 	}
@@ -165,8 +159,64 @@ public class User implements Serializable {
 		this.username = username;
 	}
 
+	public File getProfileImage() {
+		return this.profileImage;
+	}
+
+	public void setProfileImage(File profileImage) {
+		this.profileImage = profileImage;
+	}
+
 	public List<SupportTicket> getSupportTickets() {
 		return this.supportTickets;
+	}
+
+	public Set<Song> getFavoriteSongs() {
+		return favoriteSongs;
+	}
+
+	public void setFavoriteSongs(Set<Song> favoriteSongs) {
+		this.favoriteSongs = favoriteSongs;
+	}
+
+	public Set<Playlist> getFavoritePlaylists() {
+		return favoritePlaylists;
+	}
+
+	public void setFavoritePlaylists(Set<Playlist> favoritePlaylists) {
+		this.favoritePlaylists = favoritePlaylists;
+	}
+
+	public Set<Album> getFavoriteAlbums() {
+		return favoriteAlbums;
+	}
+
+	public void setFavoriteAlbums(Set<Album> favoriteAlbums) {
+		this.favoriteAlbums = favoriteAlbums;
+	}
+
+	public Set<Artist> getFavoriteArtists() {
+		return favoriteArtists;
+	}
+
+	public void setFavoriteArtists(Set<Artist> favoriteArtists) {
+		this.favoriteArtists = favoriteArtists;
+	}
+
+	public Set<Station> getFavoriteStations() {
+		return favoriteStations;
+	}
+
+	public void setFavoriteStations(Set<Station> favoriteStations) {
+		this.favoriteStations = favoriteStations;
+	}
+
+	public Set<Genre> getFavoriteGenres() {
+		return favoriteGenres;
+	}
+
+	public void setFavoriteGenres(Set<Genre> favoriteGenres) {
+		this.favoriteGenres = favoriteGenres;
 	}
 
 	public void setSupportTickets(List<SupportTicket> supportTickets) {

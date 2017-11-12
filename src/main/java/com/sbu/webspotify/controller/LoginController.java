@@ -36,25 +36,6 @@ public class LoginController {
 		modelAndView.setViewName("login");
 		return modelAndView;
 	}
-
-	// @RequestMapping(value = "/login", method = RequestMethod.POST)
-	// public ModelAndView attemptLogin(String username, String password, BindingResult bindingResult) {
-	// 	ModelAndView modelAndView = new ModelAndView();
-	// 	User user = userService.findUserByUsernameAndPassword(username, password);
-
-	// 	//https://docs.spring.io/spring-security/site/docs/3.0.x/reference/technical-overview.html
-		
-	// 	if (user == null) {
-	// 		bindingResult.rejectValue("incorrectLogin", "error.user", "Incorrect username or password");
-	// 		modelAndView.setViewName("login");
-	// 	} else {
-	// 		modelAndView.addObject("successMessage", "User has been logged in successfully");
-	// 		modelAndView.addObject("user", user);
-	// 		modelAndView.setViewName("login");
-	// 	}
-		
-	// 	return modelAndView;
-	// }
     
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
     public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
@@ -93,18 +74,5 @@ public class LoginController {
 		}
 		return modelAndView;
 	}
-	
-	// @RequestMapping(value="/admin/home", method = RequestMethod.GET)
-	// public ModelAndView home(){
-	// 	ModelAndView modelAndView = new ModelAndView();
-	// 	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-	// 	User user = userService.findUserByUsername(auth.getName());
-    //     modelAndView.addObject("messageToUser", "You are currently logged in as [" + user.getUsername() + "].");
-        
-    //     // TODO -- FOR NOW WE DON'T HAVE ANY OTHER PAGES
-	// 	modelAndView.setViewName("admin/artistsManager");
-	// 	return modelAndView;
-	// }
-	
 
 }
