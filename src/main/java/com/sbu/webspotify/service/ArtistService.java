@@ -1,6 +1,6 @@
 package com.sbu.webspotify.service;
 
-import com.sbu.webspotify.domain.Artist;
+import com.sbu.webspotify.model.Artist;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

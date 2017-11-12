@@ -46,10 +46,6 @@ public class Artist implements Serializable {
 	@JoinColumn(name="geo_location_id")
 	private GeoLocation geoLocation;
 
-	//bi-directional many-to-one association to ArtistAlia
-	@OneToMany(mappedBy="artist")
-	private List<ArtistAlia> artistAlias;
-
 	//bi-directional many-to-one association to Song
 	@OneToMany(mappedBy="artist")
 	private List<Song> songs;
@@ -135,28 +131,6 @@ public class Artist implements Serializable {
 
 	public void setGeoLocation(GeoLocation geoLocation) {
 		this.geoLocation = geoLocation;
-	}
-
-	public List<ArtistAlia> getArtistAlias() {
-		return this.artistAlias;
-	}
-
-	public void setArtistAlias(List<ArtistAlia> artistAlias) {
-		this.artistAlias = artistAlias;
-	}
-
-	public ArtistAlia addArtistAlia(ArtistAlia artistAlia) {
-		getArtistAlias().add(artistAlia);
-		artistAlia.setArtist(this);
-
-		return artistAlia;
-	}
-
-	public ArtistAlia removeArtistAlia(ArtistAlia artistAlia) {
-		getArtistAlias().remove(artistAlia);
-		artistAlia.setArtist(null);
-
-		return artistAlia;
 	}
 
 	public List<Song> getSongs() {

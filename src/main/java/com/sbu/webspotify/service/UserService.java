@@ -1,6 +1,6 @@
 package com.sbu.webspotify.service;
 
-import com.sbu.webspotify.domain.Album;
+import com.sbu.webspotify.model.Album;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -10,8 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.sbu.webspotify.domain.Role;
-import com.sbu.webspotify.domain.User;
+import com.sbu.webspotify.model.Role;
+import com.sbu.webspotify.model.User;
 import com.sbu.webspotify.repo.RoleRepository;
 import com.sbu.webspotify.repo.UserRepository;
 
@@ -41,8 +41,8 @@ public class UserService {
 		userRepository.save(user);
 	}
 
-	public Set<Album> getFavoriteAlbumsById(int userId) {
-		User user = userRepository.findById(userId);
-		return user.getUserFavorites().getFavoriteAlbums();
-	}
+	// public Set<Album> getFavoriteAlbumsById(int userId) {
+	// 	User user = userRepository.findById(userId);
+	// 	return user.getUserFavorites().getFavoriteAlbums();
+	// }
 }

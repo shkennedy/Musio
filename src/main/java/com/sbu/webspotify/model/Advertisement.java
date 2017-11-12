@@ -22,10 +22,6 @@ public class Advertisement implements Serializable {
 
 	private int file;
 
-	//bi-directional many-to-one association to AdvertisementClick
-	@OneToMany(mappedBy="advertisement")
-	private List<AdvertisementClick> advertisementClicks;
-
 	public Advertisement() {
 	}
 
@@ -51,28 +47,6 @@ public class Advertisement implements Serializable {
 
 	public void setFile(int file) {
 		this.file = file;
-	}
-
-	public List<AdvertisementClick> getAdvertisementClicks() {
-		return this.advertisementClicks;
-	}
-
-	public void setAdvertisementClicks(List<AdvertisementClick> advertisementClicks) {
-		this.advertisementClicks = advertisementClicks;
-	}
-
-	public AdvertisementClick addAdvertisementClick(AdvertisementClick advertisementClick) {
-		getAdvertisementClicks().add(advertisementClick);
-		advertisementClick.setAdvertisement(this);
-
-		return advertisementClick;
-	}
-
-	public AdvertisementClick removeAdvertisementClick(AdvertisementClick advertisementClick) {
-		getAdvertisementClicks().remove(advertisementClick);
-		advertisementClick.setAdvertisement(null);
-
-		return advertisementClick;
 	}
 
 }

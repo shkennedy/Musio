@@ -3,6 +3,7 @@ package com.sbu.webspotify.model;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -27,13 +28,82 @@ public class User implements Serializable {
 
 	private String username;
 
-	//bi-directional many-to-one association to Artist
-	@OneToMany(mappedBy="user")
-	private List<Artist> artists;
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+	private Set<Role> roles;
 
-	//bi-directional many-to-one association to Playlist
-	@OneToMany(mappedBy="user")
-	private List<Playlist> playlists;
+
+	@ManyToMany
+	@JoinTable(
+		name="user_favorite_song"
+		, joinColumns={
+			@JoinColumn(name="user_id")
+			}
+		, inverseJoinColumns={
+			@JoinColumn(name="song_id")
+			}
+	)
+	private Set<Song> favoriteSongs;
+
+	@ManyToMany
+	@JoinTable(
+		name="user_favorite_playlist"
+		, joinColumns={
+			@JoinColumn(name="user_id")
+			}
+		, inverseJoinColumns={
+			@JoinColumn(name="song_id")
+			}
+	)
+	private Set<Playlist> favoritePlaylists;
+
+	@ManyToMany
+	@JoinTable(
+		name="user_favorite_album"
+		, joinColumns={
+			@JoinColumn(name="user_id")
+			}
+		, inverseJoinColumns={
+			@JoinColumn(name="song_id")
+			}
+	)
+	private Set<Album> favoriteAlbums;
+
+	@ManyToMany
+	@JoinTable(
+		name="user_favorite_artist"
+		, joinColumns={
+			@JoinColumn(name="user_id")
+			}
+		, inverseJoinColumns={
+			@JoinColumn(name="song_id")
+			}
+	)
+	private Set<Artist> favoriteArtists;
+
+	@ManyToMany
+	@JoinTable(
+		name="user_favorite_station"
+		, joinColumns={
+			@JoinColumn(name="user_id")
+			}
+		, inverseJoinColumns={
+			@JoinColumn(name="song_id")
+			}
+	)
+	private Set<Station> favoriteStations;
+
+	@ManyToMany
+	@JoinTable(
+		name="user_favorite_genre"
+		, joinColumns={
+			@JoinColumn(name="user_id")
+			}
+		, inverseJoinColumns={
+			@JoinColumn(name="song_id")
+			}
+	)
+	private Set<Genre> favoriteGenres;
 
 	//bi-directional many-to-one association to SupportTicket
 	@OneToMany(mappedBy="user")
@@ -79,56 +149,20 @@ public class User implements Serializable {
 		this.profileImageId = profileImageId;
 	}
 
+	public Set<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
+	}
+
 	public String getUsername() {
 		return this.username;
 	}
 
 	public void setUsername(String username) {
 		this.username = username;
-	}
-
-	public List<Artist> getArtists() {
-		return this.artists;
-	}
-
-	public void setArtists(List<Artist> artists) {
-		this.artists = artists;
-	}
-
-	public Artist addArtist(Artist artist) {
-		getArtists().add(artist);
-		artist.setUser(this);
-
-		return artist;
-	}
-
-	public Artist removeArtist(Artist artist) {
-		getArtists().remove(artist);
-		artist.setUser(null);
-
-		return artist;
-	}
-
-	public List<Playlist> getPlaylists() {
-		return this.playlists;
-	}
-
-	public void setPlaylists(List<Playlist> playlists) {
-		this.playlists = playlists;
-	}
-
-	public Playlist addPlaylist(Playlist playlist) {
-		getPlaylists().add(playlist);
-		playlist.setUser(this);
-
-		return playlist;
-	}
-
-	public Playlist removePlaylist(Playlist playlist) {
-		getPlaylists().remove(playlist);
-		playlist.setUser(null);
-
-		return playlist;
 	}
 
 	public List<SupportTicket> getSupportTickets() {

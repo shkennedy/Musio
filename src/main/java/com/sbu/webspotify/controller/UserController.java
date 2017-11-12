@@ -1,7 +1,7 @@
 package com.sbu.webspotify.controller;
 
-import com.sbu.webspotify.domain.Album;
-import com.sbu.webspotify.domain.User;
+import com.sbu.webspotify.model.Album;
+import com.sbu.webspotify.model.User;
 
 import java.util.Set;
 
@@ -30,11 +30,11 @@ public class UserController {
 		return username;
 	}
 
-	@RequestMapping(value={"/favorites/albums"}, method = RequestMethod.GET)
-	public @ResponseBody Set<Album> getFavoriteAlbums() {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		User user = userService.findUserByUsername(auth.getName());
-		return userService.getFavoriteAlbumsById(user.getId());
-	}
+	// @RequestMapping(value={"/favorites/albums"}, method = RequestMethod.GET)
+	// public @ResponseBody Set<Album> getFavoriteAlbums() {
+	// 	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	// 	User user = userService.findUserByUsername(auth.getName());
+	// 	return userService.getFavoriteAlbumsById(user.getId());
+	// }
 
 }

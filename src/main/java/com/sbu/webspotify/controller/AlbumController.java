@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.web.bind.annotation.*;
 
-import com.sbu.webspotify.domain.*;
+import com.sbu.webspotify.model.*;
 import com.sbu.webspotify.repo.*;
 
 @Controller
@@ -35,7 +35,7 @@ public class AlbumController
 
         Album album = new Album();
         album.setTitle(title);
-        album.setArtist(artist);
+        // album.setArtist(artist);
 
         try
         {
