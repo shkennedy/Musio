@@ -18,7 +18,7 @@ public class Song implements Serializable {
 	private int id;
 
 	@Column(name="audio_id")
-	private int audioId;
+	private Audio audio;
 
 	private int duration;
 
@@ -43,12 +43,12 @@ public class Song implements Serializable {
 		this.id = id;
 	}
 
-	public int getAudioId() {
-		return this.audioId;
+	public Audio getAudioId() {
+		return this.audio;
 	}
 
-	public void setAudioId(int audioId) {
-		this.audioId = audioId;
+	public void setAudioId(Audio audioId) {
+		this.audio = audioId;
 	}
 
 	public int getDuration() {

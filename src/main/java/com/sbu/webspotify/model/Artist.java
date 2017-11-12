@@ -18,12 +18,6 @@ public class Artist implements Serializable {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 
-	@Column(name="artist_art_background_id")
-	private int artistArtBackgroundId;
-
-	@Column(name="artist_art_id")
-	private int artistArtId;
-
 	@Lob
 	private String bio;
 
@@ -36,19 +30,19 @@ public class Artist implements Serializable {
 
 	private String website;
 
-	//bi-directional many-to-one association to User
 	@ManyToOne
 	@JoinColumn(name="music_label_user_id")
 	private User user;
 
-	//bi-directional many-to-one association to GeoLocation
 	@ManyToOne
 	@JoinColumn(name="geo_location_id")
 	private GeoLocation geoLocation;
 
-	//bi-directional many-to-one association to Song
-	@OneToMany(mappedBy="artist")
-	private List<Song> songs;
+	@Column(name="artist_art_id")
+	private File artistImage;
+
+	@Column(name="artist_art_background_id")
+	private File backgroundArt;
 
 	public Artist() {
 	}
@@ -60,23 +54,7 @@ public class Artist implements Serializable {
 	public void setId(int id) {
 		this.id = id;
 	}
-
-	public int getArtistArtBackgroundId() {
-		return this.artistArtBackgroundId;
-	}
-
-	public void setArtistArtBackgroundId(int artistArtBackgroundId) {
-		this.artistArtBackgroundId = artistArtBackgroundId;
-	}
-
-	public int getArtistArtId() {
-		return this.artistArtId;
-	}
-
-	public void setArtistArtId(int artistArtId) {
-		this.artistArtId = artistArtId;
-	}
-
+	
 	public String getBio() {
 		return this.bio;
 	}
@@ -133,26 +111,20 @@ public class Artist implements Serializable {
 		this.geoLocation = geoLocation;
 	}
 
-	public List<Song> getSongs() {
-		return this.songs;
+	public void setBackgroundArt(File backgroundArt) {
+		this.backgroundArt = backgroundArt;
 	}
 
-	public void setSongs(List<Song> songs) {
-		this.songs = songs;
+	public File getBackgroundArt() {
+		return this.backgroundArt;
 	}
 
-	public Song addSong(Song song) {
-		getSongs().add(song);
-		song.setArtist(this);
-
-		return song;
+	public void setArtistImage(File artistImage) {
+		this.artistImage = artistImage;
 	}
 
-	public Song removeSong(Song song) {
-		getSongs().remove(song);
-		song.setArtist(null);
-
-		return song;
+	public File getArtistImage() {
+		return this.artistImage;
 	}
 
 }

@@ -1,5 +1,7 @@
 package com.sbu.webspotify.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import javax.persistence.*;
 import org.hibernate.annotations.LazyCollection;
@@ -31,7 +33,7 @@ public class User implements Serializable {
 	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles;
 
-	@ManyToMany
+	@ManyToMany(fetch=FetchType.EAGER)
 	@JoinTable(
 		name="user_favorite_song"
 		, joinColumns={
@@ -41,9 +43,10 @@ public class User implements Serializable {
 			@JoinColumn(name="song_id")
 			}
 	)
+	@JsonManagedReference
 	private Set<Song> favoriteSongs;
 
-	@ManyToMany
+	@ManyToMany(fetch=FetchType.EAGER)
 	@JoinTable(
 		name="user_favorite_playlist"
 		, joinColumns={
@@ -53,9 +56,10 @@ public class User implements Serializable {
 			@JoinColumn(name="playlist_id")
 			}
 	)
+	@JsonManagedReference
 	private Set<Playlist> favoritePlaylists;
 
-	@ManyToMany
+	@ManyToMany(fetch=FetchType.EAGER)
 	@JoinTable(
 		name="user_favorite_album"
 		, joinColumns={
@@ -65,9 +69,10 @@ public class User implements Serializable {
 			@JoinColumn(name="album_id")
 			}
 	)
+	@JsonManagedReference
 	private Set<Album> favoriteAlbums;
 
-	@ManyToMany
+	@ManyToMany(fetch=FetchType.EAGER)
 	@JoinTable(
 		name="user_favorite_artist"
 		, joinColumns={
@@ -77,9 +82,10 @@ public class User implements Serializable {
 			@JoinColumn(name="artist_id")
 			}
 	)
+	@JsonManagedReference
 	private Set<Artist> favoriteArtists;
 
-	@ManyToMany
+	@ManyToMany(fetch=FetchType.EAGER)
 	@JoinTable(
 		name="user_favorite_station"
 		, joinColumns={
@@ -89,9 +95,10 @@ public class User implements Serializable {
 			@JoinColumn(name="station_id")
 			}
 	)
+	@JsonManagedReference
 	private Set<Station> favoriteStations;
 
-	@ManyToMany
+	@ManyToMany(fetch=FetchType.EAGER)
 	@JoinTable(
 		name="user_favorite_genre"
 		, joinColumns={
@@ -101,6 +108,7 @@ public class User implements Serializable {
 			@JoinColumn(name="genre_id")
 			}
 	)
+	@JsonManagedReference
 	private Set<Genre> favoriteGenres;
 
 	//bi-directional many-to-one association to SupportTicket
