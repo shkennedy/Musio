@@ -32,7 +32,7 @@ public class Artist implements Serializable {
 
 	@ManyToOne
 	@JoinColumn(name="music_label_user_id")
-	private User user;
+	private User musicLabel;
 
 	@ManyToOne
 	@JoinColumn(name="geo_location_id")
@@ -96,11 +96,11 @@ public class Artist implements Serializable {
 	}
 
 	public User getUser() {
-		return this.user;
+		return this.musicLabel;
 	}
 
 	public void setUser(User user) {
-		this.user = user;
+		this.musicLabel = user;
 	}
 
 	public GeoLocation getGeoLocation() {

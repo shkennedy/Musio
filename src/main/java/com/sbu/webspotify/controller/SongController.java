@@ -16,29 +16,25 @@ public class SongController
     @Autowired
     private SongRepository songRepository;
 
-    @Autowired
-    private AlbumRepository albumRepository;
-
-    @GetMapping(path="/add")
-    public @ResponseBody String addNewSong (@RequestParam String title, @RequestParam String album)
-    {
-        Album alb = albumRepository.findByTitle(album);
-        if(alb == null)
-        {
-            return "Album not found in db.";
-        }
-
-        Song s = new Song();
-        s.setTitle(title);
-        try {
-            songRepository.save(s);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "Database constraint exception occurred!";
-        }
-
-        return "Successfully saved song!";
+    @RequestMapping(value = "/get/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
+    public @ResponseBody Song getSong(@PathVariable("id") int id) {
+        return songRepository.findById(id);
     }
+
+	@RequestMapping(value = "/add", method = RequestMethod.POST, headers = "Accept=application/json")
+	public @ResponseBody Song addSong(@RequestBody Song song) {
+		return songRepository.save(song);
+    }
+    
+    @RequestMapping(value = "/add", method = RequestMethod.PUT, headers = "Accept=application/json")
+	public @ResponseBody Song updateSong(@RequestBody Song song) {
+		return songRepository.save(song);
+    }
+    
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE, headers = "Accept=application/json")
+	public @ResponseBody void deleteSong(@PathVariable("id") int id) {
+        songRepository.delete(id);
+	}	
 
     @GetMapping(path="/all")
     public @ResponseBody Iterable<Song> getAllSongs()

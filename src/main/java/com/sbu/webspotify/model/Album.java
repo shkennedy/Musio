@@ -1,8 +1,11 @@
 package com.sbu.webspotify.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
+
 
 
 /**
@@ -28,6 +31,30 @@ public class Album implements Serializable {
 	private Date releaseDate;
 
 	private String title;
+
+	@ManyToMany(cascade = { 
+        CascadeType.PERSIST, 
+        CascadeType.MERGE
+    })
+	@JoinTable(
+		name = "album_artist_mapping",
+		joinColumns = @JoinColumn(name = "album_id"),
+		inverseJoinColumns = @JoinColumn(name = "artist_id")
+	)
+	@JsonManagedReference
+	private Set<Artist> artists;
+
+	@ManyToMany(cascade = { 
+        CascadeType.PERSIST, 
+        CascadeType.MERGE
+    })
+	@JoinTable(
+		name = "song_album_mapping",
+		joinColumns = @JoinColumn(name = "album_id"),
+		inverseJoinColumns = @JoinColumn(name = "song_id")
+	)
+	@JsonManagedReference
+	private Set<Song> songs;
 
 	public Album() {
 	}
@@ -70,6 +97,22 @@ public class Album implements Serializable {
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	public Set<Artist> getArtists() {
+		return this.artists;
+	}
+
+	public void setArtists(Set<Artist> artists) {
+		this.artists = artists;
+	}
+
+	public Set<Song> getSongs() {
+		return this.songs;
+	}
+
+	public void setSongs(Set<Song> songs) {
+		this.songs = songs;
 	}
 
 }

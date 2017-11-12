@@ -15,38 +15,25 @@ public class AlbumController
     @Autowired
     private AlbumRepository albumRepository;
 
-    @Autowired
-    private ArtistRepository artistRepository;
-
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/get/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
     public @ResponseBody Album getAlbum(@PathVariable("id") int id) {
         return albumRepository.findById(id);
     }
 
-    @GetMapping(path="/add")
-    public @ResponseBody String addNewAlbum (@RequestParam String title, @RequestParam String artistName)
-    {
-        Artist artist = artistRepository.findByName(artistName);
-
-        // if artist is null
-        if(artist == null) {
-            return "Could not find artist in the db.";
-        }
-
-        Album album = new Album();
-        album.setTitle(title);
-        // album.setArtist(artist);
-
-        try
-        {
-            albumRepository.save(album);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "Database constraint exception occurred!";
-        }
-
-        return "Saved album!";
+	@RequestMapping(value = "/add", method = RequestMethod.POST, headers = "Accept=application/json")
+	public @ResponseBody Album addAlbum(@RequestBody Album album) {
+		return albumRepository.save(album);
     }
+    
+    @RequestMapping(value = "/add", method = RequestMethod.PUT, headers = "Accept=application/json")
+	public @ResponseBody Album updateAlbum(@RequestBody Album album) {
+		return albumRepository.save(album);
+    }
+    
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE, headers = "Accept=application/json")
+	public @ResponseBody void deleteAlbum(@PathVariable("id") int id) {
+        albumRepository.delete(id);
+	}	
 
     @GetMapping(path="/all")
     public @ResponseBody Iterable<Album> getAllAlbums()

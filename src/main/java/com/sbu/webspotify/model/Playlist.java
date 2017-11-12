@@ -1,6 +1,8 @@
 package com.sbu.webspotify.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.*;
 
 
@@ -32,6 +34,18 @@ public class Playlist implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="owner_id")
 	private User user;
+
+	@ManyToMany(cascade = { 
+        CascadeType.PERSIST, 
+        CascadeType.MERGE
+    })
+	@JoinTable(
+		name = "song_album_mapping",
+		joinColumns = @JoinColumn(name = "album_id"),
+		inverseJoinColumns = @JoinColumn(name = "song_id")
+	)
+	@JsonManagedReference
+	private List<Song> songs;
 
 	public Playlist() {
 	}
@@ -82,6 +96,14 @@ public class Playlist implements Serializable {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public List<Song> getSongs() {
+		return this.songs;
+	}
+
+	public void setSongs(List<Song> songs) {
+		this.songs = songs;
 	}
 
 }
