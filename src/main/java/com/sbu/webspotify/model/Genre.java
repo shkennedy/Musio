@@ -21,7 +21,7 @@ public class Genre implements Serializable {
 	private String description;
 
 	@Column(name="image_id")
-	private int imageId;
+	private Image image;
 
 	private String name;
 
@@ -43,13 +43,12 @@ public class Genre implements Serializable {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
-	public int getImageId() {
-		return this.imageId;
+	public Image getImageId() {
+		return this.image;
 	}
 
-	public void setImageId(int imageId) {
-		this.imageId = imageId;
+	public void setImageId(Image image) {
+		this.image = image;
 	}
 
 	public String getName() {

@@ -12,16 +12,22 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.sbu.webspotify.model.*;
+import com.sbu.webspotify.service.GenreService;
 import com.sbu.webspotify.service.UserService;
+import java.util.Set;
 
 @Controller
 public class LoginController {
 
     @Autowired
-    private UserService userService;
+	private UserService userService;
+	
+	@Autowired 
+	GenreService genreService;
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public ModelAndView checkLoginStatus(){
@@ -50,28 +56,24 @@ public class LoginController {
 	public ModelAndView registration(){
 		ModelAndView modelAndView = new ModelAndView();
 		User user = new User();
+		Set<Genre> genres = genreService.findAll();
 		modelAndView.addObject("user", user);
+		modelAndView.addObject("genres", genres);		
 		modelAndView.setViewName("registration");
 		return modelAndView;
 	}
 	
 	@RequestMapping(value = "/registration", method = RequestMethod.POST)
-	public ModelAndView createNewUser(@Valid User user, BindingResult bindingResult) {
+	public ModelAndView createNewUser(@RequestParam String username, @RequestParam String email, @RequestParam String password) {
+
 		ModelAndView modelAndView = new ModelAndView();
 		User userExists = userService.findUserByUsername(user.getUsername());
-		if (userExists != null) {
-			bindingResult
-					.rejectValue("username", "error.user",
-							"There is already a user registered with the username provided");
-		}
-		if (bindingResult.hasErrors()) {
-			modelAndView.setViewName("registration");
-		} else {
-			userService.createAdminUser(user);
-			modelAndView.addObject("successMessage", "User has been registered successfully");
-			modelAndView.addObject("user", user);
-			modelAndView.setViewName("registration");	
-		}
+		
+		userService.createAdminUser(user);
+		modelAndView.addObject("successMessage", "User has been registered successfully");
+		modelAndView.addObject("user", user);
+		modelAndView.setViewName("registration");	
+		
 		return modelAndView;
 	}
 
