@@ -1,5 +1,6 @@
 package com.sbu.webspotify.service;
 
+import com.sbu.webspotify.conf.AppConfig;
 import com.sbu.webspotify.model.Album;
 
 import java.util.Arrays;
@@ -20,10 +21,15 @@ public class UserService {
 
 	@Autowired
 	private UserRepository userRepository;
+
 	@Autowired
-    private RoleRepository roleRepository;
+	private RoleRepository roleRepository;
+	
     @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
+	
+	@Autowired
+	private AppConfig appConfig;
 	
 	public User findUserByUsername(String username) {
 		return userRepository.findByUsername(username);
@@ -34,9 +40,9 @@ public class UserService {
 		return userRepository.findByUsernameAndPassword(username, encryptedPassword);
 	}
 
-	public void saveUser(User user) {
+	public void createAdminUser(User user) {
 		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        Role userRole = roleRepository.findByRole("ADMIN");
+        Role userRole = roleRepository.findByRole(appConfig.adminUser);
         user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
 		userRepository.save(user);
 	}

@@ -1,0 +1,4 @@
+role.basicUser:   BASIC_USER
+role.adminUser:   ADMIN
+role.premiumUser: PREMIUM_USER
+role.labelUser:   LABEL_USER
