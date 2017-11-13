@@ -895,6 +895,7 @@
 					</div>
 					<div th:if="${param.logout}" style="color:green">You have been signed out</div>
 					<div th:if="${param.error}" style="color:red">Username or password is invalid</div>
+					<div th:if="${registered}" th:text="${registered}" style="color:green;"></div>											
 					<br>
 					<div>
 						<input type="submit" value="Log in" />

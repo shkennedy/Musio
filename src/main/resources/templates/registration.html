@@ -886,7 +886,7 @@
 	<div id="wrapper" style="height:100vh;">
 		
 		<!-- Main -->
-		<section id="main">
+		<section id="main" style="margin-bottom:15px;">
 			<header>
 				<h1>Register</h1>
 				<br>
@@ -905,18 +905,14 @@
 					</div>
 					<br>
 					<div>
-
 						<label>Favorite Genres:</label>
 						<select name="genres" id="genres-multiselect" multiple="multiple">
-							<option value="0">Select favorite genres</option>
 							<option th:each="g : ${genres}" th:value="${g.id}" th:text="${g.name}"></option>
 						</select>
-
-						
 					</div>
 					<br>
+					<div th:if="${errorMessage}" th:text="${errorMessage}" style="color:red;"></div>						
 					<br>
-					
 					<div>
 						<input type="submit" value="Register" />
 						<br><br>

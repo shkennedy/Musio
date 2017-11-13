@@ -18,6 +18,9 @@ import org.springframework.web.servlet.ModelAndView;
 import com.sbu.webspotify.model.*;
 import com.sbu.webspotify.service.GenreService;
 import com.sbu.webspotify.service.UserService;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Controller
@@ -55,24 +58,50 @@ public class LoginController {
 	@RequestMapping(value = "/registration", method = RequestMethod.GET)
 	public ModelAndView registration(){
 		ModelAndView modelAndView = new ModelAndView();
-		User user = new User();
 		Set<Genre> genres = genreService.findAll();
-		modelAndView.addObject("user", user);
 		modelAndView.addObject("genres", genres);		
 		modelAndView.setViewName("registration");
 		return modelAndView;
 	}
 	
 	@RequestMapping(value = "/registration", method = RequestMethod.POST)
-	public ModelAndView createNewUser(@RequestParam String username, @RequestParam String email, @RequestParam String password) {
+	public ModelAndView createNewUser(@RequestParam String username,
+									  @RequestParam String email,
+									  @RequestParam String password,
+									  @RequestParam(required=false) List<Integer> genres) {
 
 		ModelAndView modelAndView = new ModelAndView();
-		User userExists = userService.findUserByUsername(user.getUsername());
+		User userExists = userService.findUserByUsername(username);
 		
-		userService.createAdminUser(user);
-		modelAndView.addObject("successMessage", "User has been registered successfully");
-		modelAndView.addObject("user", user);
-		modelAndView.setViewName("registration");	
+		if(userExists != null) {
+			modelAndView.addObject("errorMessage", "Username ("+username+") is already in use.");
+			modelAndView.setViewName("registration");
+			return modelAndView;
+		}
+
+		if(password.length() == 0) {
+			modelAndView.addObject("errorMessage", "Please provide a password.");
+			modelAndView.setViewName("registration");
+			return modelAndView;
+		}
+
+		HashSet<Genre> favoriteGenres = new HashSet<Genre>();				
+		if(genres != null) {
+			for(Integer genreId : genres) {
+				Genre genre = genreService.getGenreById(genreId);
+				favoriteGenres.add(genre);
+			}
+		}
+
+		User newUser = new User();
+		newUser.setUsername(username);
+		newUser.setEmail(email);
+		newUser.setPassword(password);
+		newUser.setFavoriteGenres(favoriteGenres);
+										
+		userService.createAdminUser(newUser);
+		modelAndView.addObject("registered", "Account has been registered!");
+		modelAndView.setViewName("login");	
 		
 		return modelAndView;
 	}
