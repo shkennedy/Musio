@@ -99,7 +99,7 @@ public class LoginController {
 		newUser.setPassword(password);
 		newUser.setFavoriteGenres(favoriteGenres);
 										
-		userService.createAdminUser(newUser);
+		userService.createBasicUser(newUser);
 		modelAndView.addObject("registered", "Account has been registered!");
 		modelAndView.setViewName("login");	
 		

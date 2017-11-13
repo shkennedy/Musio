@@ -20,4 +20,7 @@ public class AppConfig {
     @Value("${role.labelUser}")
     public String labelUser;
 
+    @Value("${role.artistUser}")
+    public String artistUser;
+
 }

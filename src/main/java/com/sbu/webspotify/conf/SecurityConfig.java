@@ -27,6 +27,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	private DataSource dataSource;
 
 	@Autowired
+	private AppConfig appConfig;
+
+	@Autowired
 	CustomAuthenticationSuccessHandler successHandler;
 	
 	@Value("${spring.queries.users-query}")
@@ -53,7 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             authorizeRequests()
                 .antMatchers("/login", "/logout").permitAll()
                 .antMatchers("/registration").permitAll()
-                .antMatchers("/").hasAnyAuthority("ADMIN", "BASE_USER", "PREMIUM_USER").anyRequest()
+                .antMatchers("/").hasAnyAuthority(appConfig.premiumUser, appConfig.basicUser, appConfig.adminUser, appConfig.labelUser, appConfig.artistUser).anyRequest()
                 .authenticated().and().csrf().disable().formLogin()
                 .loginPage("/login").failureUrl("/login?error=true")
                 .usernameParameter("username")

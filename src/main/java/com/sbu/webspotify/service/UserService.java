@@ -47,8 +47,10 @@ public class UserService {
 		userRepository.save(user);
 	}
 
-	// public Set<Album> getFavoriteAlbumsById(int userId) {
-	// 	User user = userRepository.findById(userId);
-	// 	return user.getUserFavorites().getFavoriteAlbums();
-	// }
+	public void createBasicUser(User user) {
+		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        Role userRole = roleRepository.findByRole(appConfig.basicUser);
+        user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
+		userRepository.save(user);
+	}
 }
