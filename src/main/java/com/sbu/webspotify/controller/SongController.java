@@ -4,7 +4,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import com.sbu.webspotify.model.*;
 import com.sbu.webspotify.repo.*;

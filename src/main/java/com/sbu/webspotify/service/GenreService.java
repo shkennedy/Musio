@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.sbu.webspotify.repo.GenreRepository;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 

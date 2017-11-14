@@ -1,12 +1,8 @@
 package com.sbu.webspotify.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import javax.persistence.*;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
-import java.util.List;
 import java.util.Set;
 
 
@@ -111,10 +107,6 @@ public class User implements Serializable {
 	@JsonManagedReference
 	private Set<Genre> favoriteGenres;
 
-	//bi-directional many-to-one association to SupportTicket
-	@OneToMany(mappedBy="user")
-	private List<SupportTicket> supportTickets;
-
 	//many-to-one association to GeoLocation
 	@ManyToOne
 	@JoinColumn(name="geo_location_id")
@@ -125,6 +117,18 @@ public class User implements Serializable {
 	private File profileImage;
 
 	public User() {
+	}
+
+	public void addSongToFavories(Song s) {
+		this.favoriteSongs.add(s);
+	}
+
+	public void addAlbumToFavories(Album a) {
+		this.favoriteAlbums.add(a);
+	}
+
+	public void addArtistToFavories(Artist a) {
+		this.favoriteArtists.add(a);
 	}
 
 	public int getId() {
@@ -175,10 +179,6 @@ public class User implements Serializable {
 		this.profileImage = profileImage;
 	}
 
-	public List<SupportTicket> getSupportTickets() {
-		return this.supportTickets;
-	}
-
 	public Set<Song> getFavoriteSongs() {
 		return favoriteSongs;
 	}
@@ -225,24 +225,6 @@ public class User implements Serializable {
 
 	public void setFavoriteGenres(Set<Genre> favoriteGenres) {
 		this.favoriteGenres = favoriteGenres;
-	}
-
-	public void setSupportTickets(List<SupportTicket> supportTickets) {
-		this.supportTickets = supportTickets;
-	}
-
-	public SupportTicket addSupportTicket(SupportTicket supportTicket) {
-		getSupportTickets().add(supportTicket);
-		supportTicket.setUser(this);
-
-		return supportTicket;
-	}
-
-	public SupportTicket removeSupportTicket(SupportTicket supportTicket) {
-		getSupportTickets().remove(supportTicket);
-		supportTicket.setUser(null);
-
-		return supportTicket;
 	}
 
 	public GeoLocation getGeoLocation() {

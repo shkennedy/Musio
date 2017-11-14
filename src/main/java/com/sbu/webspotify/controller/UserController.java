@@ -5,14 +5,13 @@ import com.sbu.webspotify.model.*;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.sbu.webspotify.service.UserService;
 
 import javax.servlet.http.HttpSession;
@@ -22,7 +21,7 @@ import javax.servlet.http.HttpSession;
 public class UserController {
 
     @Autowired
-    private UserService userService;
+	private UserService userService;
 
 	@RequestMapping(value={"/getUsername"}, method = RequestMethod.GET)
 	public @ResponseBody String getMyUsername(HttpSession session){
@@ -36,6 +35,11 @@ public class UserController {
 	public @ResponseBody User getAUser(@PathVariable String var)
 	{
 		return userService.findUserByUsername(var);
+	}
+
+	@GetMapping(path="/whoami")
+	public @ResponseBody User whoAmI(HttpSession session) {
+		return (User) session.getAttribute("user");
 	}
 
 	@RequestMapping(value={"/favorites/albums"}, method = RequestMethod.GET)
@@ -72,6 +76,24 @@ public class UserController {
 	public @ResponseBody Set<Station> getFavoriteStations(HttpSession session) {
 		User user = (User) session.getAttribute("user");
 		return user.getFavoriteStations();
+	}
+
+	@RequestMapping(value={"/favorites/add/song/{songId}"})
+	public @ResponseBody boolean addFavoriteSong(HttpSession session, @PathVariable Integer songId) {
+		User user = (User) session.getAttribute("user");
+		return userService.addFavoriteSong(user, songId);
+	}
+
+	@RequestMapping(value={"/favorites/add/album/{albumId}"})
+	public @ResponseBody boolean addFavoriteAlbum(HttpSession session, @PathVariable Integer albumId) {
+		User user = (User) session.getAttribute("user");
+		return userService.addFavoriteAlbum(user, albumId);
+	}
+
+	@RequestMapping(value={"/favorites/add/artist/{artistId}"})
+	public @ResponseBody boolean addFavoriteArtist(HttpSession session, @PathVariable Integer artistId) {
+		User user = (User) session.getAttribute("user");
+		return userService.addFavoriteArtist(user, artistId);
 	}
 
 }

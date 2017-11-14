@@ -7,8 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.sbu.webspotify.repo.ArtistRepository;
 
-import java.util.Set;
-
 @Service("artistService")
 public class ArtistService {
 
