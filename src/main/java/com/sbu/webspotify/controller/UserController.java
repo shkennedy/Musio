@@ -42,6 +42,16 @@ public class UserController {
 		return (User) session.getAttribute("user");
 	}
 
+	/**
+	 * Re-query the user stored in the session from the database.
+	 */
+	@RequestMapping(value={"/refreshCurrentUser"}, method = RequestMethod.GET)
+	public @ResponseBody boolean refreshUser(HttpSession session) {
+		User user = (User) session.getAttribute("user");
+		session.setAttribute("user", userService.findUserByUsername(user.getUsername()));
+		return true;
+	}
+
 	@RequestMapping(value={"/favorites/albums"}, method = RequestMethod.GET)
 	public @ResponseBody Set<Album> getFavoriteAlbums(HttpSession session) {
 		User user = (User) session.getAttribute("user");
@@ -76,6 +86,18 @@ public class UserController {
 	public @ResponseBody Set<Station> getFavoriteStations(HttpSession session) {
 		User user = (User) session.getAttribute("user");
 		return user.getFavoriteStations();
+	}
+
+	@RequestMapping(value={"/favorites/add/genre/{genreId}"})
+	public @ResponseBody boolean addFavoriteGenre(HttpSession session, @PathVariable Integer genreId) {
+		User user = (User) session.getAttribute("user");
+		return userService.addFavoriteGenre(user, genreId);
+	}
+
+	@RequestMapping(value={"/favorites/remove/genre/{genreId}"})
+	public @ResponseBody boolean removeFavoriteGenre(HttpSession session, @PathVariable Integer genreId) {
+		User user = (User) session.getAttribute("user");
+		return userService.removeFavoriteGenre(user, genreId);
 	}
 
 	@RequestMapping(value={"/favorites/add/song/{songId}"})

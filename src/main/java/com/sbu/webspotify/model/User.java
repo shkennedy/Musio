@@ -148,6 +148,17 @@ public class User implements Serializable {
 	public User() {
 	}
 
+	public void addGenreToFavories(Genre g) {
+		// if(this.favoriteGenres.contains(g)){
+		// 	return;
+		// }
+		this.favoriteGenres.add(g);
+	}
+
+	public boolean removeGenreFromFavorites(Genre g) {
+		return this.favoriteGenres.remove(g);
+	}
+
 	public void addSongToFavories(Song s) {
 		this.favoriteSongs.add(s);
 	}
@@ -314,7 +325,5 @@ public class User implements Serializable {
 	public int hashCode() {
         return Objects.hash(this.id);
     }
-
-	
 
 }

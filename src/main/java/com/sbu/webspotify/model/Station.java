@@ -1,6 +1,7 @@
 package com.sbu.webspotify.model;
 
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.*;
 
 
@@ -48,5 +49,20 @@ public class Station implements Serializable {
 	public void setNumSongs(int numSongs) {
 		this.numSongs = numSongs;
 	}
+
+	@Override
+	public boolean equals(Object other) {
+        boolean result = false;
+        if (other instanceof Station) {
+            Station that = (Station) other;
+            result = (this.getId() == that.getId());
+        }
+        return result;
+    }
+
+	@Override
+	public int hashCode() {
+        return Objects.hash(this.id);
+    }
 
 }

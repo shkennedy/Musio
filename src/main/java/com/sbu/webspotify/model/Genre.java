@@ -1,6 +1,7 @@
 package com.sbu.webspotify.model;
 
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.*;
 
 
@@ -58,5 +59,20 @@ public class Genre implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	@Override
+	public boolean equals(Object other) {
+        boolean result = false;
+        if (other instanceof Genre) {
+            Genre that = (Genre) other;
+            result = (this.getId() == that.getId());
+        }
+        return result;
+    }
+
+	@Override
+	public int hashCode() {
+        return Objects.hash(this.id);
+    }
 
 }

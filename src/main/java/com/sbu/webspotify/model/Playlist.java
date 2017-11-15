@@ -31,7 +31,7 @@ public class Playlist implements Serializable {
 	//bi-directional many-to-one association to User
 	@ManyToOne
 	@JoinColumn(name="owner_id")
-	private User user;
+	private User owner;
 
 	@ManyToMany(fetch=FetchType.EAGER,
 	cascade = { 
@@ -81,12 +81,12 @@ public class Playlist implements Serializable {
 		this.name = name;
 	}
 
-	public User getUser() {
-		return this.user;
+	public User getOwner() {
+		return this.owner;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setOwner(User owner) {
+		this.owner = owner;
 	}
 
 	public List<Song> getSongs() {

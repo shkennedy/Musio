@@ -3,6 +3,7 @@ package com.sbu.webspotify.service;
 import com.sbu.webspotify.conf.AppConfig;
 import com.sbu.webspotify.model.Album;
 import com.sbu.webspotify.model.Artist;
+import com.sbu.webspotify.model.Genre;
 import com.sbu.webspotify.model.Playlist;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -15,6 +16,7 @@ import com.sbu.webspotify.model.User;
 import com.sbu.webspotify.model.Song;
 import com.sbu.webspotify.repo.AlbumRepository;
 import com.sbu.webspotify.repo.ArtistRepository;
+import com.sbu.webspotify.repo.GenreRepository;
 import com.sbu.webspotify.repo.PlaylistRepository;
 import com.sbu.webspotify.repo.RoleRepository;
 import com.sbu.webspotify.repo.SongRepository;
@@ -40,6 +42,9 @@ public class UserService {
 
 	@Autowired
 	private PlaylistRepository playlistRepository;
+
+	@Autowired
+	private GenreRepository genreRepository;
 	
     @Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -82,13 +87,9 @@ public class UserService {
 
 	public boolean removeFavoriteSong(User user, Integer songId) {
 		Song s = songRepository.findById(songId);
-		if(s == null) {
-			System.out.println("~~~~~~~~~~~~~~ song was null");
-			
+		if(s == null) {			
 			return false;
 		}
-		System.out.println("~~~~~~~~~~~~~~ song was not null");
-		
 		boolean returnValue = user.removeSongFromFavorites(s);
 		persistUser(user);
 		return returnValue;
@@ -174,6 +175,26 @@ public class UserService {
 			return false;
 		}
 		boolean returnValue = user.removePlaylistFromFavorites(p);
+		persistUser(user);
+		return returnValue;
+	}
+
+	public boolean addFavoriteGenre(User user, Integer genreId) {
+		Genre g = genreRepository.findById(genreId);
+		if(g == null) {
+			return false;
+		}
+		user.addGenreToFavories(g);
+		persistUser(user);
+		return true;
+	}
+
+	public boolean removeFavoriteGenre(User user, Integer genreId) {
+		Genre g = genreRepository.findById(genreId);
+		if(g == null) {
+			return false;
+		}
+		boolean returnValue = user.removeGenreFromFavorites(g);
 		persistUser(user);
 		return returnValue;
 	}
