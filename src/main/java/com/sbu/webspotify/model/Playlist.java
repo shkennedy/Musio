@@ -3,6 +3,7 @@ package com.sbu.webspotify.model;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.*;
 
 
@@ -27,21 +28,19 @@ public class Playlist implements Serializable {
 
 	private String name;
 
-	@Column(name="num_songs")
-	private int numSongs;
-
 	//bi-directional many-to-one association to User
 	@ManyToOne
 	@JoinColumn(name="owner_id")
 	private User user;
 
-	@ManyToMany(cascade = { 
+	@ManyToMany(fetch=FetchType.EAGER,
+	cascade = { 
         CascadeType.PERSIST, 
         CascadeType.MERGE
     })
 	@JoinTable(
-		name = "song_album_mapping",
-		joinColumns = @JoinColumn(name = "album_id"),
+		name = "song_playlist_mapping",
+		joinColumns = @JoinColumn(name = "playlist_id"),
 		inverseJoinColumns = @JoinColumn(name = "song_id")
 	)
 	@JsonManagedReference
@@ -82,14 +81,6 @@ public class Playlist implements Serializable {
 		this.name = name;
 	}
 
-	public int getNumSongs() {
-		return this.numSongs;
-	}
-
-	public void setNumSongs(int numSongs) {
-		this.numSongs = numSongs;
-	}
-
 	public User getUser() {
 		return this.user;
 	}
@@ -105,5 +96,20 @@ public class Playlist implements Serializable {
 	public void setSongs(List<Song> songs) {
 		this.songs = songs;
 	}
+
+	@Override
+	public boolean equals(Object other) {
+        boolean result = false;
+        if (other instanceof Playlist) {
+            Playlist that = (Playlist) other;
+            result = (this.getId() == that.getId());
+        }
+        return result;
+    }
+
+	@Override
+	public int hashCode() {
+        return Objects.hash(this.id);
+    }
 
 }

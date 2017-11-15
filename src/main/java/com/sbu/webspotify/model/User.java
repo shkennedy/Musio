@@ -1,13 +1,23 @@
 package com.sbu.webspotify.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import java.io.Serializable;
-import javax.persistence.*;
+import com.fasterxml.jackson.annotation.JsonManagedReference;import java.io.Serializable;
 
 import org.springframework.data.annotation.Transient;
-
+import java.util.Objects;
 import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 
 
 /**
@@ -113,6 +123,19 @@ public class User implements Serializable {
 	@JsonManagedReference
 	private Set<Genre> favoriteGenres;
 
+	@ManyToMany(fetch=FetchType.EAGER)
+	@JoinTable(
+		name="user_following_user"
+		, joinColumns={
+			@JoinColumn(name="follower")
+			}
+		, inverseJoinColumns={
+			@JoinColumn(name="user_being_followed")
+			}
+	)
+	@JsonManagedReference
+	private Set<User> followedUsers;
+
 	//many-to-one association to GeoLocation
 	@ManyToOne
 	@JoinColumn(name="geo_location_id")
@@ -129,12 +152,40 @@ public class User implements Serializable {
 		this.favoriteSongs.add(s);
 	}
 
+	public boolean removeSongFromFavorites(Song s) {
+		return this.favoriteSongs.remove(s);
+	}
+
 	public void addAlbumToFavories(Album a) {
 		this.favoriteAlbums.add(a);
 	}
 
+	public boolean removeAlbumFromFavorites(Album a) {
+		return this.favoriteAlbums.remove(a);
+	}
+
 	public void addArtistToFavories(Artist a) {
 		this.favoriteArtists.add(a);
+	}
+
+	public boolean removeArtistFromFavorites(Artist a) {
+		return this.favoriteArtists.remove(a);
+	}
+
+	public void addPlaylistToFavories(Playlist p) {
+		this.favoritePlaylists.add(p);
+	}
+
+	public boolean removePlaylistFromFavorites(Playlist p) {
+		return this.favoritePlaylists.remove(p);
+	}
+
+	public void followUser(User u) {
+		this.followedUsers.add(u);
+	}
+
+	public boolean unfollowUser(User u) {
+		return this.followedUsers.remove(u);
 	}
 
 	public int getId() {
@@ -233,6 +284,14 @@ public class User implements Serializable {
 		this.favoriteGenres = favoriteGenres;
 	}
 
+	public Set<User> getFollowedUsers() {
+		return this.followedUsers;
+	}
+
+	public void setFollowedUsers(Set<User> followedUsers) { 
+		this.followedUsers = followedUsers;
+	}
+
 	public GeoLocation getGeoLocation() {
 		return this.geoLocation;
 	}
@@ -240,5 +299,22 @@ public class User implements Serializable {
 	public void setGeoLocation(GeoLocation geoLocation) {
 		this.geoLocation = geoLocation;
 	}
+
+	@Override
+	public boolean equals(Object other) {
+        boolean result = false;
+        if (other instanceof User) {
+            User that = (User) other;
+            result = (this.getId() == that.getId());
+        }
+        return result;
+    }
+
+	@Override
+	public int hashCode() {
+        return Objects.hash(this.id);
+    }
+
+	
 
 }

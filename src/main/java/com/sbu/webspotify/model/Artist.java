@@ -1,6 +1,7 @@
 package com.sbu.webspotify.model;
 
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.*;
 
 
@@ -125,5 +126,20 @@ public class Artist implements Serializable {
 	public File getArtistImage() {
 		return this.artistImage;
 	}
+
+	@Override
+	public boolean equals(Object other) {
+        boolean result = false;
+        if (other instanceof Artist) {
+            Artist that = (Artist) other;
+            result = (this.getId() == that.getId());
+        }
+        return result;
+    }
+
+	@Override
+	public int hashCode() {
+        return Objects.hash(this.id);
+    }
 
 }

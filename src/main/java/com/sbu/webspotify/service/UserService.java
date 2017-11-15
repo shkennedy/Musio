@@ -3,6 +3,7 @@ package com.sbu.webspotify.service;
 import com.sbu.webspotify.conf.AppConfig;
 import com.sbu.webspotify.model.Album;
 import com.sbu.webspotify.model.Artist;
+import com.sbu.webspotify.model.Playlist;
 import java.util.Arrays;
 import java.util.HashSet;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import com.sbu.webspotify.model.User;
 import com.sbu.webspotify.model.Song;
 import com.sbu.webspotify.repo.AlbumRepository;
 import com.sbu.webspotify.repo.ArtistRepository;
+import com.sbu.webspotify.repo.PlaylistRepository;
 import com.sbu.webspotify.repo.RoleRepository;
 import com.sbu.webspotify.repo.SongRepository;
 import com.sbu.webspotify.repo.UserRepository;
@@ -35,6 +37,9 @@ public class UserService {
 
 	@Autowired
 	private RoleRepository roleRepository;
+
+	@Autowired
+	private PlaylistRepository playlistRepository;
 	
     @Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -75,6 +80,20 @@ public class UserService {
 		return true;
 	}
 
+	public boolean removeFavoriteSong(User user, Integer songId) {
+		Song s = songRepository.findById(songId);
+		if(s == null) {
+			System.out.println("~~~~~~~~~~~~~~ song was null");
+			
+			return false;
+		}
+		System.out.println("~~~~~~~~~~~~~~ song was not null");
+		
+		boolean returnValue = user.removeSongFromFavorites(s);
+		persistUser(user);
+		return returnValue;
+	}
+
 	public boolean addFavoriteAlbum(User user, Integer albumId) {
 		Album a = albumRepository.findById(albumId);
 		if(a == null) {
@@ -83,6 +102,16 @@ public class UserService {
 		user.addAlbumToFavories(a);
 		persistUser(user);
 		return true;
+	}
+
+	public boolean removeFavoriteAlbum(User user, Integer albumId) {
+		Album a = albumRepository.findById(albumId);
+		if(a == null) {
+			return false;
+		}
+		boolean returnValue = user.removeAlbumFromFavorites(a);
+		persistUser(user);
+		return returnValue;
 	}
 
 	public boolean addFavoriteArtist(User user, Integer artistId) {
@@ -95,7 +124,58 @@ public class UserService {
 		return true;
 	}
 
+	public boolean removeFavoriteArtist(User user, Integer artistId) {
+		Artist a = artistRepository.findById(artistId);
+		if(a == null) {
+			return false;
+		}
+		boolean returnValue = user.removeArtistFromFavorites(a);
+		persistUser(user);
+		return returnValue;
+	}
+
+	public boolean addFollowedUser(User user, Integer userId) {
+		User u = userRepository.findById(userId);
+		if(u == null) {
+			return false;
+		}
+		user.followUser(u);
+		persistUser(user);
+		return true;
+	}
+
+	public boolean removeFollowedUser(User user, Integer userId) {
+		User u = userRepository.findById(userId);
+		if(u == null) {
+			return false;
+		}
+		boolean returnValue = user.unfollowUser(u);
+		persistUser(user);
+		return returnValue;
+	}
+
 	public void persistUser(User user) {
 		userRepository.save(user);
 	}
+
+	public boolean addFavoritePlaylist(User user, Integer playlistId) {
+		Playlist p = playlistRepository.findById(playlistId);
+		if(p == null) {
+			return false;
+		}
+		user.addPlaylistToFavories(p);
+		persistUser(user);
+		return true;
+	}
+
+	public boolean removeFavoritePlaylist(User user, Integer playlistId) {
+		Playlist p = playlistRepository.findById(playlistId);
+		if(p == null) {
+			return false;
+		}
+		boolean returnValue = user.removePlaylistFromFavorites(p);
+		persistUser(user);
+		return returnValue;
+	}
+
 }

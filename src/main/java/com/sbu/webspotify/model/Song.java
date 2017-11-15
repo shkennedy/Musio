@@ -1,13 +1,8 @@
 package com.sbu.webspotify.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.JsonTypeId;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.*;
-
 
 /**
  * The persistent class for the song database table.
@@ -96,4 +91,18 @@ public class Song implements Serializable {
 		this.artist = artist;
 	}
 
+	@Override
+	public boolean equals(Object other) {
+        boolean result = false;
+        if (other instanceof Song) {
+            Song that = (Song) other;
+            result = (this.getId() == that.getId());
+        }
+        return result;
+    }
+
+	@Override
+	public int hashCode() {
+        return Objects.hash(this.id);
+    }
 }
