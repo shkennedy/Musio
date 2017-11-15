@@ -1,5 +1,10 @@
 package com.sbu.webspotify.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonTypeId;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
 import javax.persistence.*;
 
@@ -9,7 +14,7 @@ import javax.persistence.*;
  * 
  */
 @Entity
-@NamedQuery(name="Song.findAll", query="SELECT s FROM Song s")
+@NamedQuery(name="Song.findAll", query="SELECT s FROM Song s")	
 public class Song implements Serializable {
 	private static final long serialVersionUID = 1L;
 

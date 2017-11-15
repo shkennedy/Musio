@@ -32,9 +32,10 @@ public class Album implements Serializable {
 
 	private String title;
 
-	@ManyToMany(cascade = { 
-        CascadeType.PERSIST, 
-        CascadeType.MERGE
+	@ManyToMany(fetch = FetchType.EAGER,
+		cascade = { 
+			CascadeType.PERSIST, 
+			CascadeType.MERGE
     })
 	@JoinTable(
 		name = "album_artist_mapping",
@@ -44,9 +45,10 @@ public class Album implements Serializable {
 	@JsonManagedReference
 	private Set<Artist> artists;
 
-	@ManyToMany(cascade = { 
-        CascadeType.PERSIST, 
-        CascadeType.MERGE
+	@ManyToMany(fetch = FetchType.EAGER,
+		cascade = { 
+			CascadeType.PERSIST, 
+			CascadeType.MERGE
     })
 	@JoinTable(
 		name = "song_album_mapping",
