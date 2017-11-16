@@ -39,7 +39,21 @@ public class PlaylistController
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE, headers = "Accept=application/json")
 	public @ResponseBody void deletePlaylist(@PathVariable("id") int id) {
         playlistRepository.delete(id);
-	}	
+    }	
+
+    @RequestMapping(value = "/addSong", headers = "Accept=application/json")
+    public @ResponseBody boolean addSongToPlaylist(@RequestParam("playlistId") int playlistId, @RequestParam("songId") int songId,
+                                                HttpSession session) {
+        User user = (User) session.getAttribute("user");        
+        return playlistService.addSongToPlaylist(user, playlistId, songId);
+    }	
+
+    @RequestMapping(value = "/removeSong", headers = "Accept=application/json")
+    public @ResponseBody boolean removeSongFromPlaylist(@RequestParam("playlistId") int playlistId, @RequestParam("songId") int songId,
+                                                HttpSession session) {
+        User user = (User) session.getAttribute("user");        
+        return playlistService.removeSongFromPlaylist(user, playlistId, songId);
+    }	
 
     @GetMapping(path="/all")
     public @ResponseBody Iterable<Playlist> getAllPlaylists()

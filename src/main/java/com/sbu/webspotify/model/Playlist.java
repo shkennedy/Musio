@@ -21,10 +21,10 @@ public class Playlist implements Serializable {
 	private int id;
 
 	@Column(name="is_collaborative")
-	private byte isCollaborative;
+	private boolean isCollaborative;
 
 	@Column(name="is_private")
-	private byte isPrivate;
+	private boolean isPrivate;
 
 	private String name;
 
@@ -57,19 +57,19 @@ public class Playlist implements Serializable {
 		this.id = id;
 	}
 
-	public byte getIsCollaborative() {
+	public boolean getIsCollaborative() {
 		return this.isCollaborative;
 	}
 
-	public void setIsCollaborative(byte isCollaborative) {
+	public void setIsCollaborative(boolean isCollaborative) {
 		this.isCollaborative = isCollaborative;
 	}
 
-	public byte getIsPrivate() {
+	public boolean getIsPrivate() {
 		return this.isPrivate;
 	}
 
-	public void setIsPrivate(byte isPrivate) {
+	public void setIsPrivate(boolean isPrivate) {
 		this.isPrivate = isPrivate;
 	}
 
@@ -111,5 +111,13 @@ public class Playlist implements Serializable {
 	public int hashCode() {
         return Objects.hash(this.id);
     }
+
+	public void addSong(Song s) {
+		this.songs.add(s);
+	}
+
+	public boolean removeSong(Song s) {
+		return this.songs.remove(s);
+	}
 
 }
