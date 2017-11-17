@@ -5,8 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.web.bind.annotation.*;
 
+import com.sbu.webspotify.dto.ApiResponseObject;
 import com.sbu.webspotify.model.*;
 import com.sbu.webspotify.repo.*;
+import com.sbu.webspotify.service.SongService;
 
 @Controller
 @RequestMapping(path = "/song")
@@ -15,9 +17,22 @@ public class SongController
     @Autowired
     private SongRepository songRepository;
 
+    @Autowired
+    private SongService songService;
+
     @RequestMapping(value = "/get/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
-    public @ResponseBody Song getSong(@PathVariable("id") int id) {
-        return songRepository.findById(id);
+    public @ResponseBody ApiResponseObject getSong(@PathVariable("id") int id) {
+        Song song = songService.getSongById(id);
+        ApiResponseObject response = new ApiResponseObject();
+        if(song == null){
+            response.setSuccess(false);
+            response.setMessage("No song found with ID "+id+".");
+        }
+        else {
+            response.setSuccess(true);
+            response.setResponseData(song);
+        }
+        return response;
     }
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST, headers = "Accept=application/json")

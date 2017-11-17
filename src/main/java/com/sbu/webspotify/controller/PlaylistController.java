@@ -1,14 +1,22 @@
 package com.sbu.webspotify.controller;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import org.springframework.web.bind.annotation.*;
-
-import com.sbu.webspotify.model.*;
-import com.sbu.webspotify.repo.*;
-import com.sbu.webspotify.service.PlaylistService;
 import javax.servlet.http.HttpSession;
+
+import com.sbu.webspotify.dto.ApiResponseObject;
+import com.sbu.webspotify.model.Playlist;
+import com.sbu.webspotify.model.User;
+import com.sbu.webspotify.repo.PlaylistRepository;
+import com.sbu.webspotify.service.PlaylistService;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping(path = "/playlist") // This means URL's start with /example (after Application path)
@@ -21,8 +29,18 @@ public class PlaylistController
     private PlaylistService playlistService;
 
     @RequestMapping(value = "/get/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
-    public @ResponseBody Playlist getPlaylist(@PathVariable("id") int id) {
-        return playlistRepository.findById(id);
+    public @ResponseBody ApiResponseObject getPlaylist(@PathVariable("id") int id) {
+        Playlist playlist = playlistService.getPlaylistById(id);
+        ApiResponseObject response = new ApiResponseObject();
+        if(playlist == null){
+            response.setSuccess(false);
+            response.setMessage("No playlist found with ID "+id+".");
+        }
+        else {
+            response.setSuccess(true);
+            response.setResponseData(playlist);
+        }
+        return response;
     }
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST, headers = "Accept=application/json")

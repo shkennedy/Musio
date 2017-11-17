@@ -1,12 +1,18 @@
 package com.sbu.webspotify.controller;
 
-import org.springframework.stereotype.Controller;
+import com.sbu.webspotify.dto.ApiResponseObject;
+import com.sbu.webspotify.model.Artist;
+import com.sbu.webspotify.repo.ArtistRepository;
+import com.sbu.webspotify.service.ArtistService;
+
 import org.springframework.beans.factory.annotation.Autowired;
-
-import org.springframework.web.bind.annotation.*;
-
-import com.sbu.webspotify.model.*;
-import com.sbu.webspotify.repo.*;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping(path = "/artist") // This means URL's start with /example (after Application path)
@@ -15,9 +21,22 @@ public class ArtistController
     @Autowired
     private ArtistRepository artistRepository;
 
+    @Autowired
+    private ArtistService artistService;
+
     @RequestMapping(value = "/get/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
-    public @ResponseBody Artist getArtist(@PathVariable("id") int id) {
-        return artistRepository.findById(id);
+    public @ResponseBody ApiResponseObject getArtist(@PathVariable("id") int id) {
+        Artist artist = artistService.getArtistById(id);
+        ApiResponseObject response = new ApiResponseObject();
+        if(artist == null){
+            response.setSuccess(false);
+            response.setMessage("No artist found with ID "+id+".");
+        }
+        else {
+            response.setSuccess(true);
+            response.setResponseData(artist);
+        }
+        return response;
     }
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST, headers = "Accept=application/json")
