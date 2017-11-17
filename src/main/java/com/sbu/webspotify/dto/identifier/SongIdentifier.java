@@ -1,6 +1,6 @@
 package com.sbu.webspotify.dto.identifier;
 
 public interface SongIdentifier {
-    String getId();
+    int getId();
     String getTitle();
 }
