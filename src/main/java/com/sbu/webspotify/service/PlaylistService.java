@@ -1,15 +1,16 @@
 package com.sbu.webspotify.service;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import com.sbu.webspotify.dto.identifier.PlaylistIdentifier;
 import com.sbu.webspotify.model.Playlist;
 import com.sbu.webspotify.model.Song;
 import com.sbu.webspotify.model.User;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.sbu.webspotify.repo.PlaylistRepository;
 
-import java.util.HashSet;
-import java.util.Set;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service("playlistService")
 public class PlaylistService {
@@ -73,5 +74,9 @@ public class PlaylistService {
     public void persistPlaylist(Playlist p) {
         playlistRepository.save(p);
     }
+
+	public Set<PlaylistIdentifier> searchByName(String query) {
+		return playlistRepository.findByNameContaining(query);
+	}
 
 }

@@ -1,5 +1,6 @@
 package com.sbu.webspotify.service;
 
+import com.sbu.webspotify.dto.identifier.AlbumIdentifier;
 import com.sbu.webspotify.model.Album;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,5 +24,9 @@ public class AlbumService {
     public Set<Album> findAll() {
         return new HashSet<Album>(albumRepository.findAll());
     }
+
+	public Set<AlbumIdentifier> searchByTitle(String query) {
+		return albumRepository.findByNameContaining(query);
+	}
 
 }

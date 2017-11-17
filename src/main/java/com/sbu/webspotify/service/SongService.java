@@ -1,5 +1,6 @@
 package com.sbu.webspotify.service;
 
+import com.sbu.webspotify.dto.identifier.SongIdentifier;
 import com.sbu.webspotify.model.Song;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,5 +24,9 @@ public class SongService {
     public Set<Song> findAll() {
         return new HashSet<Song>(songRepository.findAll());
     }
+
+	public Set<SongIdentifier> searchByTitle(String query) {
+		return songRepository.findByNameContaining(query);
+	}
 
 }

@@ -29,8 +29,6 @@ public class UserController {
 		return user.getUsername();
 	}
 
-	// TODO -- remove this
-	// for testing (http://localhost:8080/user/get/test_admin) to see what it returns
 	@GetMapping(path = "/get/{var}")
 	public @ResponseBody User getAUser(@PathVariable String var)
 	{
