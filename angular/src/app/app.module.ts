@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import * as $ from 'jquery';
 import { AppComponent } from './app.component';
-import { UserComponent } from './components/user/user.component';
+// import { UserComponent } from './components/user/user.component';
 import { UserMainComponent } from './components/user-main/user-main.component';
 import { AudioPlayerComponent } from './components/user-main/audio-player/audio-player.component';
 import { ContainerComponent } from './components/user-main/container/container.component';
@@ -15,13 +15,14 @@ import { LoginComponent } from './components/login/login.component';
 import { AlbumComponent } from './components/user-main/album/album.component';
 import { DummyContentComponent } from './components/user-main/dummy-content/dummy-content.component';
 import { UpgradePageComponent } from './components/user-main/upgrade-page/upgrade-page.component';
+import { ArtistComponent } from './components/user-main/artist/artist.component';
 
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    UserComponent,
+    // UserComponent,
     UserMainComponent,
     AudioPlayerComponent,
     ContainerComponent,
@@ -33,6 +34,7 @@ import { UpgradePageComponent } from './components/user-main/upgrade-page/upgrad
     AlbumComponent,
     DummyContentComponent,
     UpgradePageComponent,
+    ArtistComponent,
  
     // LoginComponent,
 
