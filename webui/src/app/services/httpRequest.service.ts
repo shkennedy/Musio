@@ -5,6 +5,12 @@ import { Router } from '@angular/router';
 import { Observable, ReplaySubject, Subject } from 'rxjs';
 import { SessionService } from './session.service';
 
+export interface ApiResponse {
+    success: boolean,
+    message: string,
+    data: any
+}
+
 @Injectable()
 export class HttpRequestService {
 
@@ -15,8 +21,8 @@ export class HttpRequestService {
         private sessionService: SessionService
     ) { }
 
-    public get(url: string, urlParams?: HttpParams): Observable<any> {
-        return this.http.get(this.appConfig.baseApiPath + url, {headers: this.getHeaders(), params: urlParams})
+    public get(url: string, urlParams?: HttpParams): Observable<ApiResponse> {
+        return this.http.get(this.appConfig.baseApiPath + url, { headers: this.getHeaders(), params: urlParams })
             .catch(function (error: any) {
                 if (error.status === 401 || error.status === 403) {
                     this.router.navigate(['/login']);
@@ -25,8 +31,8 @@ export class HttpRequestService {
             });
     }
 
-    public post(url: string, body: Object): Observable<any> {
-        return this.http.post(this.appConfig.baseApiPath + url, JSON.stringify(body), {headers: this.getHeaders()})
+    public post(url: string, body: Object): Observable<ApiResponse> {
+        return this.http.post(this.appConfig.baseApiPath + url, JSON.stringify(body), { headers: this.getHeaders() })
             .catch(function (error: any) {
                 if (error.status === 401) {
                     this.router.navigate(['/login']);
@@ -35,8 +41,8 @@ export class HttpRequestService {
             });
     }
 
-    public put(url: string, body: Object): Observable<any> {
-        return this.http.put(this.appConfig.baseApiPath + url, JSON.stringify(body), {headers: this.getHeaders()})
+    public put(url: string, body: Object): Observable<ApiResponse> {
+        return this.http.put(this.appConfig.baseApiPath + url, JSON.stringify(body), { headers: this.getHeaders() })
             .catch(function (error: any) {
                 if (error.status === 401) {
                     this.router.navigate(['/login']);
@@ -45,8 +51,8 @@ export class HttpRequestService {
             });
     }
 
-    public delete(url: string): Observable<any> {
-        return this.http.delete(this.appConfig.baseApiPath + url, {headers: this.getHeaders()})
+    public delete(url: string): Observable<ApiResponse> {
+        return this.http.delete(this.appConfig.baseApiPath + url, { headers: this.getHeaders() })
             .catch(function (error: any) {
                 if (error.status === 401) {
                     this.router.navigate(['/login']);

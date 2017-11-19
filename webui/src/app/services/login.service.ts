@@ -1,83 +1,67 @@
 import { Injectable, Inject } from '@angular/core';
 import { Router } from '@angular/router';
+
 import { UserInfoService, LoginInfoInStorage } from '../user-info.service';
-import { HttpRequestService } from './httpRequest.service';
+import { HttpRequestService, ApiResponse } from './httpRequest.service';
+import { SessionService } from './session.service';
 
 export interface LoginRequestParam {
     username: string;
     password: string;
 }
 
+export interface RegisterRequestParam {
+    username: string;
+    password: string;
+    email:    string    
+}
+
 @Injectable()
 export class LoginService {
 
-    private static LOGIN_URL: string = '/login';
-    private static LOGOUT_URL: string = '/logout';
+    private static LOGIN_URL: string    = '/login';
+    private static LOGOUT_URL: string   = '/logout';
     private static REGISTER_URL: string = '/register';
 
     constructor(
         private router: Router,
-        private userInfoService: UserInfoService,
+        private sessionService: SessionService,
         private httpRequest: HttpRequestService
     ) { }
 
-    private tryLogin(username: string, password: string): boolean {
+    public tryLogin(username: string, password: string): boolean {
         let body: LoginRequestParam = {
-            "username": username,
-            "password": password,
+            'username': username,
+            'password': password,
         }
-        this.httpRequest.post(LoginService.LOGIN_URL, body);
+        return this.httpRequest.post(LoginService.LOGIN_URL, body)
+        .subscribe((response: ApiResponse) => {
+            if (response.success) {
+                this.sessionService.storeSessionInfo(response.data, 'tokenStr'); // TODO token string
+            }
+            return response.success;
+        });
     }
 
-    getToken(username: string, password: string): Observable<any> {
-
-        let bodyData: LoginRequestParam = {
-            "username": username,
-            "password": password,
-        }
-        let loginDataSubject: Subject<any> = new Subject<any>(); // Will use this subject to emit data that we want after ajax login attempt
-        let loginInfoReturn: LoginInfoInStorage; // Object that we want to send back to Login Page
-
-        this.httpRequest.post('login', bodyData)
-            .subscribe(jsonResp => {
-                if (jsonResp !== undefined && jsonResp !== null && jsonResp.operationStatus === "SUCCESS") {
-                    //Create a success object that we want to send back to login page
-                    loginInfoReturn = {
-                        "success": true,
-                        "message": jsonResp.operationMessage,
-                        "landingPage": this.landingPage,
-                        "user": {
-                            "userId": jsonResp.item.userId,
-                            "email": jsonResp.item.emailAddress,
-                            "displayName": jsonResp.item.firstName + " " + jsonResp.item.lastName,
-                            "token": jsonResp.item.token,
-                        }
-                    };
-
-                    // store username and jwt token in session storage to keep user logged in between page refreshes
-                    this.userInfoService.storeUserInfo(JSON.stringify(loginInfoReturn.user));
-                }
-                else {
-                    //Create a faliure object that we want to send back to login page
-                    loginInfoReturn = {
-                        "success": false,
-                        "message": jsonResp.msgDesc,
-                        "landingPage": "/login"
-                    };
-                }
-                loginDataSubject.next(loginInfoReturn);
-            });
-
-        return loginDataSubject;
+    public logout(navigatetoLogout: boolean = true): boolean {
+        return this.httpRequest.get(LoginService.LOGOUT_URL)
+        .subscribe((response: ApiResponse) => {
+            if (response.success) { 
+                this.sessionService.removeSessionInfo();
+            }
+            return response.success;
+        });
     }
 
-    logout(navigatetoLogout = true): void {
-        // clear token remove user from local storage to log user out
-        this.apiRequest
-
-        this.userInfoService.removeUserInfo();
-        if (navigatetoLogout) {
-            this.router.navigate(["logout"]);
+    public register(username: string, password: string, email: string): boolean {
+        let body: RegisterRequestParam = {
+            'username': username,
+            'password': password,
+            'email':    email
         }
+        return this.httpRequest.post(LoginService.REGISTER_URL, body)
+        .subscribe((response: ApiResponse) => {
+            return response.success;
+        });
     }
 }

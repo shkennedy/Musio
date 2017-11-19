@@ -1,172 +1,128 @@
 import { Injectable, Inject } from '@angular/core';
 import { Router } from '@angular/router';
+
 import { UserInfoService, LoginInfoInStorage } from '../user-info.service';
-import { HttpRequestService } from './httpRequest.service';
+import { HttpRequestService, ApiResponse } from './httpRequest.service';
+
+import { Album } from '../models/album.model';
+import { Artist } from '../models/artist.model';
+import { Genre } from '../models/genre.model';
+import { Playlist } from '../models/playlist.model';
+import { Song } from '../models/song.model';
+import { Station } from '../models/station.model';
 
 @Injectable()
 export class FavoritesService {
 
-    private static FAVORITES_URL: string 	= '/favorites';
-	private static ALBUM_URL: string 		= FAVORITES_URL + '/albums';
-	private static ARTIST_URL: string 		= FAVORITES_URL + '/artists';
-	private static GENRE_URL: string	 	= FAVORITES_URL + '/genres';
-	private static PLAYLIST_URL: string 	= FAVORITES_URL + '/playlists';
-	private static SONG_URL: string 		= FAVORITES_URL + '/songs';
-	private static STATION_URL: string	 	= FAVORITES_URL + '/stations';
+	private static FAVORITES_URL: string = '/favorites';
+	private static ADD_URL: string		 = FavoritesService.FAVORITES_URL + '/add';
+	private static REMOVE_URL: string	 = FavoritesService.FAVORITES_URL + '/remove';
+	private static ALBUM_URL: string 	 = '/albums';
+	private static ARTIST_URL: string 	 = '/artists';
+	private static GENRE_URL: string	 = '/genres';
+	private static PLAYLIST_URL: string  = '/playlists';
+	private static SONG_URL: string 	 = '/songs';
+	private static STATION_URL: string	 = '/stations';
 
     constructor(
         private router: Router,
         private userInfoService: UserInfoService,
         private httpRequest: HttpRequestService
-    ) { }
+	) { }
+	
+	private getFavoritesByUrl(url: string): any {
+		return this.httpRequest.get(FavoritesService.FAVORITES_URL + url)
+		.subscribe((response: ApiResponse) => {
+			if (response.success) {
+				return response.data;
+			}
+			return null;
+		});
+	}
 
-    public getUser(): User {
-        userInfoService.
-        httpRequest.get(USER_URL, {"userId": userId});
-    }
-    
-    public getUserPaymentInfo(userId: number): {
-        httpRequest.get(PAYMENT_INFO_URL, {"userId": userId});
-    }
+	private addFavoriteByUrlAndId(url: string, id: number): boolean {
+		return this.httpRequest.get(FavoritesService.ADD_URL + url)
+		.subscribe((response: ApiResponse) => {
+			return response.success;
+		});
+	}
 
-	public getUserPaymentInfo(userId: number): {
-        httpRequest.get(PAYMENT_INFO_URL, {"userId": userId});
-    }
+	private removeFavoriteByUrlAndId(url: string, id: number): boolean {
+		return this.httpRequest.get(FavoritesService.REMOVE_URL + url)
+		.subscribe((response: ApiResponse) => {
+			return response.success;
+		});
+	}
+
+    public getFavoriteAlbums(): Album[] {
+		return this.getFavoritesByUrl(FavoritesService.ALBUM_URL);
+	}
+	
+	public addFavoriteAlbumById(albumId: number): boolean {
+		return this.addFavoriteByUrlAndId(FavoritesService.ALBUM_URL, albumId);
+	}
+
+	public removeFavoriteAlbumById(albumId: number): boolean {
+		return this.removeFavoriteByUrlAndId(FavoritesService.ALBUM_URL, albumId);
+	}
+
+	public getFavoriteArtists(): Artist[] {
+	    return this.getFavoritesByUrl(FavoritesService.ARTIST_URL);
+	}
+
+	public addFavoriteArtistById(artistId: number): boolean {
+		return this.addFavoriteByUrlAndId(FavoritesService.ALBUM_URL, artistId);
+	}
+
+	public removeFavoriteArtistById(artistId: number): boolean {
+		return this.removeFavoriteByUrlAndId(FavoritesService.ALBUM_URL, artistId);
+	}
+
+	public getFavoriteGenres(): Genre[] {
+		return this.getFavoritesByUrl(FavoritesService.GENRE_URL);
+	}
+
+	public addFavoriteGenreById(genreId: number): boolean {
+		return this.addFavoriteByUrlAndId(FavoritesService.GENRE_URL, genreId);
+	}
+
+	public removeFavoriteGenreById(genreId: number): boolean {
+		return this.removeFavoriteByUrlAndId(FavoritesService.GENRE_URL, genreId);
+	}
+
+	public getFavoritePlaylists(): Playlist[] {
+		return this.getFavoritesByUrl(FavoritesService.PLAYLIST_URL);
+	}
+
+	public addFavoritePlaylistById(playlistId: number): boolean {
+		return this.addFavoriteByUrlAndId(FavoritesService.PLAYLIST_URL, playlistId);
+	}
+
+	public removeFavoritePlaylistById(playlistId: number): boolean {
+		return this.removeFavoriteByUrlAndId(FavoritesService.PLAYLIST_URL, playlistId);
+	}
+
+	public getFavoriteSongs(): Song[] {
+		return this.getFavoritesByUrl(FavoritesService.SONG_URL);
+	}
+
+	public addFavoriteSongById(songId: number): boolean {
+		return this.addFavoriteByUrlAndId(FavoritesService.SONG_URL, songId);
+	}
+
+	public removeFavoriteSongById(songId: number): boolean {
+		return this.removeFavoriteByUrlAndId(FavoritesService.SONG_URL, songId);
+	}
+
+	public getFavoriteStations(): Station[] {
+		return this.getFavoritesByUrl(FavoritesService.STATION_URL);
+	}
+
+	public addFavoriteStationById(stationId: number): boolean {
+		return this.addFavoriteByUrlAndId(FavoritesService.STATION_URL, stationId);
+	}
+
+	public removeFavoriteStationById(stationId: number): boolean {
+		return this.addFavoriteByUrlAndId(FavoritesService.STATION_URL, stationId);
+	}
 }
-
-@RequestMapping(value={"/getUsername"}, method = RequestMethod.GET)
-	public @ResponseBody String getMyUsername(HttpSession session){
-		User user = (User) session.getAttribute("user");
-		return user.getUsername();
-	}
-
-	// TODO -- remove this
-	// for testing (http://localhost:8080/user/get/test_admin) to see what it returns
-	@GetMapping(path = "/get/{var}")
-	public @ResponseBody User getAUser(@PathVariable String var)
-	{
-		return userService.findUserByUsername(var);
-	}
-
-	@GetMapping(path="/whoami")
-	public @ResponseBody User whoAmI(HttpSession session) {
-		return (User) session.getAttribute("user");
-	}
-
-	/**
-	 * Re-query the user stored in the session from the database.
-	 */
-	@RequestMapping(value={"/refreshCurrentUser"}, method = RequestMethod.GET)
-	public @ResponseBody boolean refreshUser(HttpSession session) {
-		User user = (User) session.getAttribute("user");
-		session.setAttribute("user", userService.findUserByUsername(user.getUsername()));
-		return true;
-	}
-
-	@RequestMapping(value={"/favorites/albums"}, method = RequestMethod.GET)
-	public @ResponseBody Set<Album> getFavoriteAlbums(HttpSession session) {
-		User user = (User) session.getAttribute("user");
-		return user.getFavoriteAlbums();
-	}
-
-	@RequestMapping(value={"/favorites/songs"}, method = RequestMethod.GET)
-	public @ResponseBody Set<Song> getFavoriteSongs(HttpSession session) {
-		User user = (User) session.getAttribute("user");
-		return user.getFavoriteSongs();
-	}
-
-	@RequestMapping(value={"/favorites/playlists"}, method = RequestMethod.GET)
-	public @ResponseBody Set<Playlist> getFavoritePlaylists(HttpSession session) {
-		User user = (User) session.getAttribute("user");
-		return user.getFavoritePlaylists();
-	}
-
-	@RequestMapping(value={"/favorites/artists"}, method = RequestMethod.GET)
-	public @ResponseBody Set<Artist> getFavoriteArtists(HttpSession session) {
-		User user = (User) session.getAttribute("user");
-		return user.getFavoriteArtists();
-	}
-
-	@RequestMapping(value={"/favorites/genres"}, method = RequestMethod.GET)
-	public @ResponseBody Set<Genre> getFavoriteGenres(HttpSession session) {
-		User user = (User) session.getAttribute("user");
-		return user.getFavoriteGenres();
-	}
-
-	@RequestMapping(value={"/favorites/stations"}, method = RequestMethod.GET)
-	public @ResponseBody Set<Station> getFavoriteStations(HttpSession session) {
-		User user = (User) session.getAttribute("user");
-		return user.getFavoriteStations();
-	}
-
-	@RequestMapping(value={"/favorites/add/genre/{genreId}"})
-	public @ResponseBody boolean addFavoriteGenre(HttpSession session, @PathVariable Integer genreId) {
-		User user = (User) session.getAttribute("user");
-		return userService.addFavoriteGenre(user, genreId);
-	}
-
-	@RequestMapping(value={"/favorites/remove/genre/{genreId}"})
-	public @ResponseBody boolean removeFavoriteGenre(HttpSession session, @PathVariable Integer genreId) {
-		User user = (User) session.getAttribute("user");
-		return userService.removeFavoriteGenre(user, genreId);
-	}
-
-	@RequestMapping(value={"/favorites/add/song/{songId}"})
-	public @ResponseBody boolean addFavoriteSong(HttpSession session, @PathVariable Integer songId) {
-		User user = (User) session.getAttribute("user");
-		return userService.addFavoriteSong(user, songId);
-	}
-
-	@RequestMapping(value={"/favorites/remove/song/{songId}"})
-	public @ResponseBody boolean removeFavoriteSong(HttpSession session, @PathVariable Integer songId) {
-		User user = (User) session.getAttribute("user");
-		return userService.removeFavoriteSong(user, songId);
-	}
-
-	@RequestMapping(value={"/favorites/add/album/{albumId}"})
-	public @ResponseBody boolean addFavoriteAlbum(HttpSession session, @PathVariable Integer albumId) {
-		User user = (User) session.getAttribute("user");
-		return userService.addFavoriteAlbum(user, albumId);
-	}
-
-	@RequestMapping(value={"/favorites/remove/album/{albumId}"})
-	public @ResponseBody boolean removeFavoriteAlbum(HttpSession session, @PathVariable Integer albumId) {
-		User user = (User) session.getAttribute("user");
-		return userService.removeFavoriteAlbum(user, albumId);
-	}
-
-	@RequestMapping(value={"/favorites/add/artist/{artistId}"})
-	public @ResponseBody boolean addFavoriteArtist(HttpSession session, @PathVariable Integer artistId) {
-		User user = (User) session.getAttribute("user");
-		return userService.addFavoriteArtist(user, artistId);
-	}
-
-	@RequestMapping(value={"/favorites/remove/artist/{artistId}"})
-	public @ResponseBody boolean removeFavoriteArtist(HttpSession session, @PathVariable Integer artistId) {
-		User user = (User) session.getAttribute("user");
-		return userService.removeFavoriteArtist(user, artistId);
-	}
-
-	@RequestMapping(value={"/favorites/add/playlist/{playlistId}"})
-	public @ResponseBody boolean addFavoritePlaylist(HttpSession session, @PathVariable Integer playlistId) {
-		User user = (User) session.getAttribute("user");
-		return userService.addFavoritePlaylist(user, playlistId);
-	}
-
-	@RequestMapping(value={"/favorites/remove/playlist/{playlistId}"})
-	public @ResponseBody boolean removeFavoritePlaylist(HttpSession session, @PathVariable Integer playlistId) {
-		User user = (User) session.getAttribute("user");
-		return userService.removeFavoritePlaylist(user, playlistId);
-	}
-
-	@RequestMapping(value={"/followUser/{userId}"})
-	public @ResponseBody boolean addFollowedUser(HttpSession session, @PathVariable Integer userId) {
-		User user = (User) session.getAttribute("user");
-		return userService.addFollowedUser(user, userId);
-	}
-
-	@RequestMapping(value={"/unfollowUser/{userId}"})
-	public @ResponseBody boolean unfollowedUser(HttpSession session, @PathVariable Integer userId) {
-		User user = (User) session.getAttribute("user");
-		return userService.removeFollowedUser(user, userId);
-	}

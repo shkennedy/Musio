@@ -5,7 +5,7 @@ import { User } from '../models/user.model';
 
 export interface SessionInfo {
     token: string,
-    user: User
+    userId: number
 }
 
 @Injectable()
@@ -16,10 +16,8 @@ export class SessionService {
 
     constructor() {}
 
-    public storeSessionInfo(user: User, token: string) {
-        let sessionInfo: SessionInfo;
-        sessionInfo.token = token;
-        sessionInfo.user = user;
+    public storeSessionInfo(userId: number, token: string) {
+        let sessionInfo: SessionInfo = {'userId': userId, 'token': token};
         this.storage.setItem(SessionService.sessionInfoKey, sessionInfo.toString());
     }
 
@@ -46,18 +44,8 @@ export class SessionService {
         return sessionInfo.token;
     }
 
-    public getUser(): User {
-        let sessionInfo: SessionInfo = this.getSessionInfo();
-        return sessionInfo.user;
-    }
-
     public getUserId(): number {
-        let user: User = this.getUser();
-        return user.user_id;
-    }
-
-    public getUsername(): string {
-        let user: User = this.getUser();
-        return user.user_name;
+        let sessionInfo: SessionInfo = this.getSessionInfo();
+        return sessionInfo.userId;
     }
 }

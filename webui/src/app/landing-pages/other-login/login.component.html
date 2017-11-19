@@ -1,0 +1,22 @@
+<section class="s-login">
+  <section id="s-login-form">
+    <header class="s-login-header">
+      <h1>Log In</h1>
+    </header>
+      <br>
+      <span class="avatar">
+        <img width="100" src="https://seeklogo.com/images/S/spotify-2015-logo-560E071CB7-seeklogo.com.png" alt="" />
+      </span>
+      <form class="s-login-form" name="form" (ngSubmit)="tryLogin()" #f="ngForm" novalidate>
+        <input type="text"     placeholder="Username" name="username" [(ngModel)]="model.username" #username="ngModel" required/>
+        <input type="password" placeholder="Password" name="password" [(ngModel)]="model.password" #password="ngModel" required/>
+        <button type="submit" class="btn btn-primary">LOG IN</button>
+      </form>
+      <div *ngIf="errMsg" class="s-login-error" >{{errMsg}}</div>
+      <br><br>
+      <div>
+        <a [routerLink]="['/recover-password']">Lost your password?</a>
+        <a [routerLink]="['/registration']">Register</a>
+      </div>
+  </section>
+</section>

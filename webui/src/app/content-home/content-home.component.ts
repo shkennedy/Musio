@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
 import { AudioPlayerComponent } from './audio-player/audio-player.component'
 import { TopNavComponent } from './top-nav/top-nav.component'
 import { LeftNavComponent } from './left-nav/left-nav.component'
 import { RightNavComponent } from './right-nav/right-nav.component'
+
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-content-home',
@@ -11,9 +15,12 @@ import { RightNavComponent } from './right-nav/right-nav.component'
 })
 export class ContentHomeComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private router: Router,
+    private userService: UserService) { }
 
   ngOnInit() {
+
   }
 
 }

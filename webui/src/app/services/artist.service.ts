@@ -5,6 +5,7 @@ import { HttpRequestService } from './httpRequest.service';
 
 import { Album } from '../models/album.model';
 import { Artist } from '../models/artist.model';
+import { ApiResponse } from './httpRequest.service';
 
 @Injectable()
 export class ArtistService {
@@ -18,29 +19,32 @@ export class ArtistService {
 
     public getArtistById(artistId: number): Artist {
         return this.httpRequest.get(ArtistService.ARTIST_URL, {"artistId": artistId})
-        .subscribe((artist: Artist) => {
-            return artist;
+        .subscribe((response: ApiResponse) => {
+            if (response.success) {
+                return response.data;
+            }
+            return null;
         });
     }
 
     public addArtist(artist: Artist): boolean {
         return this.httpRequest.post(ArtistService.ARTIST_URL, artist)
-        .subscribe((success: boolean) => {
-            return success;
+        .subscribe((response: ApiResponse) => {
+            return response.success;
         });
     }
 
     public updateArtist(artist: Artist): boolean {
         return this.httpRequest.put(ArtistService.ARTIST_URL, artist)
-        .subscribe((success: boolean) => {
-            return success;
+        .subscribe((response: ApiResponse) => {
+            return response.success;
         });
     }
 
     public deleteArtist(artistId: number): boolean {
         return this.httpRequest.delete(ArtistService.ARTIST_URL + "/" + artistId)
-        .subscribe((success: boolean) => {
-            return success;
+        .subscribe((response: ApiResponse) => {
+            return response.success;
         });
     }
 }
