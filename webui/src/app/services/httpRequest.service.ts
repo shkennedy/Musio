@@ -2,7 +2,8 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse, HttpRequest, HttpParams } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { Observable, ReplaySubject, Subject } from 'rxjs';
+import { Observable } from 'rxjs';
+
 import { SessionService } from './session.service';
 
 export interface ApiResponse {
@@ -23,9 +24,9 @@ export class HttpRequestService {
         private sessionService: SessionService
     ) { }
 
-    public get(url: string, urlParams: {}): Observable<ApiResponse> {
+    public get(url: string, urlParams: {} = null): Observable<ApiResponse> {
         // Construct http params from map
-        let httpParams: HttpParams = HttpParams();
+        let httpParams: HttpParams = new HttpParams();
         Object.keys(urlParams).forEach((key: any) => {
             httpParams.append(key, urlParams[key]);
         });

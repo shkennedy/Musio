@@ -1,11 +1,10 @@
 import { Injectable, Inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserInfoService, LoginInfoInStorage } from '../user-info.service';
-import { HttpRequestService } from './httpRequest.service';
+
+import { HttpRequestService, ApiResponse } from './httpRequest.service';
 
 import { Album } from '../models/album.model';
 import { Artist } from '../models/artist.model';
-import { ApiResponse } from './httpRequest.service';
 
 @Injectable()
 export class ArtistService {

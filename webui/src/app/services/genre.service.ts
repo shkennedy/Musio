@@ -1,7 +1,7 @@
 import { Injectable, Inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserInfoService, LoginInfoInStorage } from '../user-info.service';
-import { HttpRequestService } from './httpRequest.service';
+
+import { HttpRequestService, ApiResponse } from './httpRequest.service';
 
 import { Album } from '../models/album.model';
 import { Artist } from '../models/artist.model';
@@ -25,8 +25,8 @@ export class GenreService {
 
     public getTopAlbumsByGenreId(id: number): Album[] {
         return this.httpRequest.get(GenreService.TOP_URL, {genreId: id})
-        .subscribe((albums: Album[]) => {
-            return albums;
+        .subscribe((response: ApiResponse) => {
+            return response.success;
         });
     }
 

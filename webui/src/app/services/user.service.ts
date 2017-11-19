@@ -1,6 +1,7 @@
 import { Injectable, Inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpRequestService } from './httpRequest.service';
+
+import { HttpRequestService, ApiResponse } from './httpRequest.service';
 import { SessionService } from './session.service';
 
 // import { PaymentInfo } from '../models/paymentInfo.model';
@@ -23,22 +24,25 @@ export class UserService {
     public getUser(): User {
         let userId: number = this.sessionService.getUserId();
         return this.httpRequest.get(UserService.USER_URL, {'userId': userId})
-        .subscribe((user: User) => {
-            return user;
+        .subscribe((response: ApiResponse) => {
+            if (response.success) {
+                return response.data;
+            }
+            return null;
         });
     }
 
     public followUser(userId: number): boolean {
         return this.httpRequest.get(UserService.FOLLOW_URL, {'userId': userId})
-        .subscribe((success: boolean) => {
-            return success;
+        .subscribe((response: ApiResponse) => {
+            return response.success;
         });
     }
 
     public unfollowUser(userId: number): boolean {
         return this.httpRequest.get(UserService.UNFOLLOW_URL, {'userId': userId})
-        .subscribe((success: boolean) => {
-            return success;
+        .subscribe((response: ApiResponse) => {
+            return response.success;
         });
     }
     

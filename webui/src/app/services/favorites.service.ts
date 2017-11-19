@@ -1,7 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { UserInfoService, LoginInfoInStorage } from '../user-info.service';
 import { HttpRequestService, ApiResponse } from './httpRequest.service';
 
 import { Album } from '../models/album.model';
