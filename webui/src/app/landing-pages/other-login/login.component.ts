@@ -15,7 +15,8 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private loginService: LoginService) { }
+    private loginService: LoginService
+  ) { }
 
   ngOnInit() {}
 
@@ -23,16 +24,16 @@ export class LoginComponent implements OnInit {
     let username: string = this.model.username;
     let password: string = this.model.password;
 
-    if (!username || !password) {
-      this.errMsg = 'Please enter username and password.';
-    }
+    // if (!username || !password) {
+    //   this.errMsg = 'Please enter username and password.';
+    // }
 
-    let success: boolean = this.loginService.tryLogin(username, password);
-    if (success) {
-      this.router.navigate(['']);
-    } else {
-      this.errMsg = 'Invalid username or password.';
-    }
+    // let success: boolean = this.loginService.tryLogin(username, password);
+    // if (success) {
+    //   this.router.navigate(['']);
+    // } else {
+    //   this.errMsg = 'Invalid username or password.';
+    // }
   }
 
 }

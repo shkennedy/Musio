@@ -1,5 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 import { HttpRequestService, ApiResponse } from './httpRequest.service';
 import { SessionService } from './session.service';
@@ -28,7 +29,7 @@ export class LoginService {
         private httpRequest: HttpRequestService
     ) { }
 
-    public tryLogin(username: string, password: string): boolean {
+    public tryLogin(username: string, password: string): Observable<boolean> {
         let body: LoginRequestParam = {
             'username': username,
             'password': password,
@@ -42,7 +43,7 @@ export class LoginService {
         });
     }
 
-    public logout(navigatetoLogout: boolean = true): boolean {
+    public logout(navigatetoLogout: boolean = true): Observable<boolean> {
         return this.httpRequest.get(LoginService.LOGOUT_URL)
         .subscribe((response: ApiResponse) => {
             if (response.success) { 
@@ -52,7 +53,7 @@ export class LoginService {
         });
     }
 
-    public register(username: string, password: string, email: string): boolean {
+    public register(username: string, password: string, email: string): Observable<boolean> {
         let body: RegisterRequestParam = {
             'username': username,
             'password': password,

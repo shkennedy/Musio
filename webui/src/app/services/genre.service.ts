@@ -1,5 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 import { HttpRequestService, ApiResponse } from './httpRequest.service';
 
@@ -23,21 +24,21 @@ export class GenreService {
         private httpRequest: HttpRequestService
     ) { }
 
-    public getTopAlbumsByGenreId(id: number): Album[] {
+    public getTopAlbumsByGenreId(id: number): Observable<Album[]> {
         return this.httpRequest.get(GenreService.TOP_URL, {genreId: id})
         .subscribe((response: ApiResponse) => {
             return response.success;
         });
     }
 
-    public getTopArtistsByGenreId(id: number): Artist[] {
+    public getTopArtistsByGenreId(id: number): Observable<Artist[]> {
         return this.httpRequest.get(GenreService.TOP_URL, {genreId: id})
         .subscribe((artists: Artist[]) => {
             return artists;
         });
     }
 
-    public getTopSongsGenreId(id: number): Song[] {
+    public getTopSongsGenreId(id: number): Observable<Song[]> {
         return this.httpRequest.get(GenreService.TOP_URL, {genreId: id})
         .subscribe((songs: Song[]) => {
             return songs;

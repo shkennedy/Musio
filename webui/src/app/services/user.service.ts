@@ -1,5 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 import { HttpRequestService, ApiResponse } from './httpRequest.service';
 import { SessionService } from './session.service';
@@ -21,7 +22,7 @@ export class UserService {
         private httpRequest: HttpRequestService
     ) { }
 
-    public getUser(): User {
+    public getUser(): Observable<User> {
         let userId: number = this.sessionService.getUserId();
         return this.httpRequest.get(UserService.USER_URL, {'userId': userId})
         .subscribe((response: ApiResponse) => {
@@ -32,14 +33,14 @@ export class UserService {
         });
     }
 
-    public followUser(userId: number): boolean {
+    public followUser(userId: number): Observable<boolean> {
         return this.httpRequest.get(UserService.FOLLOW_URL, {'userId': userId})
         .subscribe((response: ApiResponse) => {
             return response.success;
         });
     }
 
-    public unfollowUser(userId: number): boolean {
+    public unfollowUser(userId: number): Observable<boolean> {
         return this.httpRequest.get(UserService.UNFOLLOW_URL, {'userId': userId})
         .subscribe((response: ApiResponse) => {
             return response.success;

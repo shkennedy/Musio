@@ -15,7 +15,7 @@ export interface ApiResponse {
 @Injectable()
 export class HttpRequestService {
 
-    private static BASE_URL: string = 'localhost:4200';
+    private static BASE_URL: string = 'localhost:4200'; // TODO set in config file
 
     constructor(
         // private appConfig: AppConfig,
@@ -31,7 +31,7 @@ export class HttpRequestService {
             httpParams.append(key, urlParams[key]);
         });
 
-        return this.http.get(HttpRequestService.BASE_URL + url, { headers: this.getHeaders(), params: urlParams })
+        return this.http.get(HttpRequestService.BASE_URL + url, {headers: this.getHeaders(), params: urlParams})
             .catch(function (error: any) {
                 if (error.status === 401 || error.status === 403) {
                     this.router.navigate(['/login']);
@@ -41,7 +41,7 @@ export class HttpRequestService {
     }
 
     public post(url: string, body: Object): Observable<ApiResponse> {
-        return this.http.post(HttpRequestService.BASE_URL + url, JSON.stringify(body), { headers: this.getHeaders() })
+        return this.http.post(HttpRequestService.BASE_URL + url, JSON.stringify(body), {headers: this.getHeaders()})
             .catch(function (error: any) {
                 if (error.status === 401) {
                     this.router.navigate(['/login']);
@@ -51,7 +51,7 @@ export class HttpRequestService {
     }
 
     public put(url: string, body: Object): Observable<ApiResponse> {
-        return this.http.put(HttpRequestService.BASE_URL + url, JSON.stringify(body), { headers: this.getHeaders() })
+        return this.http.put(HttpRequestService.BASE_URL + url, JSON.stringify(body), {headers: this.getHeaders()})
             .catch(function (error: any) {
                 if (error.status === 401) {
                     this.router.navigate(['/login']);
@@ -61,7 +61,7 @@ export class HttpRequestService {
     }
 
     public delete(url: string): Observable<ApiResponse> {
-        return this.http.delete(HttpRequestService.BASE_URL + url, { headers: this.getHeaders() })
+        return this.http.delete(HttpRequestService.BASE_URL + url, {headers: this.getHeaders()})
             .catch(function (error: any) {
                 if (error.status === 401) {
                     this.router.navigate(['/login']);

@@ -1,5 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 import { HttpRequestService, ApiResponse } from './httpRequest.service';
 
@@ -15,28 +16,28 @@ export class AlbumService {
         private httpRequest: HttpRequestService
     ) { }
 
-    public getAlbumById(albumId: number): Album {
+    public getAlbumById(albumId: number): Observable<Album> {
         return this.httpRequest.get(AlbumService.ALBUM_URL, {"albumId": albumId})
         .subscribe((response: ApiResponse) => {
             return response.data;
         });
     }
 
-    public addAlbum(album: Album): boolean {
+    public addAlbum(album: Album): Observable<boolean> {
         return this.httpRequest.post(AlbumService.ALBUM_URL, album)
         .subscribe((response: ApiResponse) => {
             return response.success;
         });
     }
 
-    public updateAlbum(album: Album): boolean {
+    public updateAlbum(album: Album): Observable<boolean> {
         return this.httpRequest.put(AlbumService.ALBUM_URL, album)
         .subscribe((response: ApiResponse) => {
             return response.success;
         });
     }
 
-    public deleteAlbum(albumId: number): boolean {
+    public deleteAlbum(albumId: number): Observable<boolean> {
         return this.httpRequest.delete(AlbumService.ALBUM_URL + "/" + albumId)
         .subscribe((response: ApiResponse) => {
             return response.success;
