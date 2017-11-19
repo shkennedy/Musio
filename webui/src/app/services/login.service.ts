@@ -35,7 +35,7 @@ export class LoginService {
             'password': password,
         }
         return this.httpRequest.post(LoginService.LOGIN_URL, body)
-        .subscribe((response: ApiResponse) => {
+        .map((response: ApiResponse) => {
             if (response.success) {
                 this.sessionService.storeSessionInfo(response.data, 'tokenStr'); // TODO token string
             }
@@ -45,7 +45,7 @@ export class LoginService {
 
     public logout(navigatetoLogout: boolean = true): Observable<boolean> {
         return this.httpRequest.get(LoginService.LOGOUT_URL)
-        .subscribe((response: ApiResponse) => {
+        .map((response: ApiResponse) => {
             if (response.success) { 
                 this.sessionService.removeSessionInfo();
             }
@@ -60,7 +60,7 @@ export class LoginService {
             'email':    email
         }
         return this.httpRequest.post(LoginService.REGISTER_URL, body)
-        .subscribe((response: ApiResponse) => {
+        .map((response: ApiResponse) => {
             return response.success;
         });
     }

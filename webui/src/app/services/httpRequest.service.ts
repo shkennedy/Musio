@@ -31,7 +31,7 @@ export class HttpRequestService {
             httpParams.append(key, urlParams[key]);
         });
 
-        return this.http.get(HttpRequestService.BASE_URL + url, {headers: this.getHeaders(), params: urlParams})
+        return this.http.get(HttpRequestService.BASE_URL + url, {headers: this.getHeaders(), params: httpParams})
             .catch(function (error: any) {
                 if (error.status === 401 || error.status === 403) {
                     this.router.navigate(['/login']);

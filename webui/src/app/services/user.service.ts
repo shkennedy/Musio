@@ -25,7 +25,7 @@ export class UserService {
     public getUser(): Observable<User> {
         let userId: number = this.sessionService.getUserId();
         return this.httpRequest.get(UserService.USER_URL, {'userId': userId})
-        .subscribe((response: ApiResponse) => {
+        .map((response: ApiResponse) => {
             if (response.success) {
                 return response.data;
             }
@@ -35,14 +35,14 @@ export class UserService {
 
     public followUser(userId: number): Observable<boolean> {
         return this.httpRequest.get(UserService.FOLLOW_URL, {'userId': userId})
-        .subscribe((response: ApiResponse) => {
+        .map((response: ApiResponse) => {
             return response.success;
         });
     }
 
     public unfollowUser(userId: number): Observable<boolean> {
         return this.httpRequest.get(UserService.UNFOLLOW_URL, {'userId': userId})
-        .subscribe((response: ApiResponse) => {
+        .map((response: ApiResponse) => {
             return response.success;
         });
     }

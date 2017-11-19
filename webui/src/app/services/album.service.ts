@@ -18,28 +18,28 @@ export class AlbumService {
 
     public getAlbumById(albumId: number): Observable<Album> {
         return this.httpRequest.get(AlbumService.ALBUM_URL, {"albumId": albumId})
-        .subscribe((response: ApiResponse) => {
+        .map((response: ApiResponse) => {
             return response.data;
         });
     }
 
     public addAlbum(album: Album): Observable<boolean> {
         return this.httpRequest.post(AlbumService.ALBUM_URL, album)
-        .subscribe((response: ApiResponse) => {
+        .map((response: ApiResponse) => {
             return response.success;
         });
     }
 
     public updateAlbum(album: Album): Observable<boolean> {
         return this.httpRequest.put(AlbumService.ALBUM_URL, album)
-        .subscribe((response: ApiResponse) => {
+        .map((response: ApiResponse) => {
             return response.success;
         });
     }
 
     public deleteAlbum(albumId: number): Observable<boolean> {
         return this.httpRequest.delete(AlbumService.ALBUM_URL + "/" + albumId)
-        .subscribe((response: ApiResponse) => {
+        .map((response: ApiResponse) => {
             return response.success;
         });
     }

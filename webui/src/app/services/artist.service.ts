@@ -1,5 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 import { HttpRequestService, ApiResponse } from './httpRequest.service';
 
@@ -16,9 +17,9 @@ export class ArtistService {
         private httpRequest: HttpRequestService
     ) { }
 
-    public getArtistById(artistId: number): Artist {
+    public getArtistById(artistId: number): Observable<Artist> {
         return this.httpRequest.get(ArtistService.ARTIST_URL, {"artistId": artistId})
-        .subscribe((response: ApiResponse) => {
+        .map((response: ApiResponse) => {
             if (response.success) {
                 return response.data;
             }
@@ -26,23 +27,23 @@ export class ArtistService {
         });
     }
 
-    public addArtist(artist: Artist): boolean {
+    public addArtist(artist: Artist): Observable<boolean> {
         return this.httpRequest.post(ArtistService.ARTIST_URL, artist)
-        .subscribe((response: ApiResponse) => {
+        .map((response: ApiResponse) => {
             return response.success;
         });
     }
 
-    public updateArtist(artist: Artist): boolean {
+    public updateArtist(artist: Artist): Observable<boolean> {
         return this.httpRequest.put(ArtistService.ARTIST_URL, artist)
-        .subscribe((response: ApiResponse) => {
+        .map((response: ApiResponse) => {
             return response.success;
         });
     }
 
-    public deleteArtist(artistId: number): boolean {
+    public deleteArtist(artistId: number): Observable<boolean> {
         return this.httpRequest.delete(ArtistService.ARTIST_URL + "/" + artistId)
-        .subscribe((response: ApiResponse) => {
+        .map((response: ApiResponse) => {
             return response.success;
         });
     }
