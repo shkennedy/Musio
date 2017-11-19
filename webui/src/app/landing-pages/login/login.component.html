@@ -3,15 +3,12 @@
   <!-- Main -->
   <section id="main">
     <header>
-      <h1>Registration</h1>
+      <h1>Log In</h1>
       <br>
+      <span class="avatar"><img width="100" src="assets/images/musioLogo3.png" alt="" /></span>
 
-      <form action="">
-        <div>
-          Email
-          <input type="email" placeholder="" required="" id="email" />
-        </div>
-        <br>
+
+      <form>
         <div>
           Username
           <input type="text" placeholder="" required="" id="username" />
@@ -23,9 +20,13 @@
         </div>
         <br>
         <div>
-          <input type="submit" value="Get Started" />
+          <input type="submit" value="Log in" (click)="onLogIn()">
+          <br><br>
+          <a [routerLink]="['/recover-password']">Lost your password?</a>
+          <a [routerLink]="['/registration']">Register</a>
         </div>
       </form>
+
     </header>
 
   </section>

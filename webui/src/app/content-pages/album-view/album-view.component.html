@@ -1,0 +1,16 @@
+<div *ngFor="let album of albums">
+  <!-- Put image here -->
+  <h3>Album</h3>
+  <h1>{{album.album_name}}</h1>
+  By <b>{{album.artist_name}}</b>
+  {{album.release_date}} • {{(album.songs).length+" songs, "+album.album_duration}}
+  <table>
+    <tr>
+      <th>#</th>
+      <th>Title</th>
+      <th>Duration</th>
+    </tr>
+    <!--  Creates table rows for each track in an album -->
+    <album-item *ngFor="let song of album.song_names; let i = index" [song]="song" [track_number]="i"></album-item>
+  </table>
+</div>

@@ -31,11 +31,7 @@ const appRoutes: Routes = [
           { path: ':id',  component: PlaylistViewComponent}
         ]
       },
-      { path: 'songs', component: SongViewComponent, children:
-        [
-          { path: ':id',  component: SongViewComponent}
-        ]
-      }
+      { path: 'songs', component: SongViewComponent}
     ]
   },
   { path: 'login', component: LoginComponent },

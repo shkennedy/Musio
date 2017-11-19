@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Artist } from '../../models/artist.model'
 
 @Component({
   selector: 'app-artist-view',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ArtistViewComponent implements OnInit {
 
-  constructor() { }
+  constructor(private artists:Artist[]) { }
 
   ngOnInit() {
   }

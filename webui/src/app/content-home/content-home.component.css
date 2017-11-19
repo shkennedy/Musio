@@ -1,0 +1,19 @@
+.top_bar{
+  height:10%;
+  background-color:#ffffff;
+  padding: 10px;
+}
+
+.bottom_bar{
+  height:10%;
+  background-color:#e0e0e0;
+}
+.wrapper_horizontal{
+  display:grid;
+  height:80%;
+  grid-template-columns: 10% 75% 15%;
+}
+
+.bottom_pad{
+  border-bottom:1pt solid #e0e0e0;
+}

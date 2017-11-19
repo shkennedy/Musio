@@ -1,0 +1,12 @@
+<div>
+  <table>
+    <tr>
+      <th>Title</th>
+      <th>Artist</th>
+      <th>Album</th>
+      <th>Duration</th>
+    </tr>
+    <!--  Will return all table rows-->
+    <song-item *ngFor="let song of songs" [song]="song"></song-item>
+  </table>
+</div>
