@@ -1,0 +1,5 @@
+.wrapper_horizontal{
+  display:grid;
+  height:80%;
+  grid-template-columns: 10% 75% 15%;
+}

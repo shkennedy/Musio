@@ -5,4 +5,5 @@ export class User{
   public user_banner: File;
   public following: User[];
   public followers: User[];
+  public is_premium: boolean;
 }

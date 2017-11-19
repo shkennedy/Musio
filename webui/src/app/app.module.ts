@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms'
 import { HttpModule } from '@angular/http'
 import { AppRoutingModule} from './app-routing.module'
 
-import { AuthGuard } from './auth-guard.service'
+//import { AuthGuard } from './auth-guard.service'
 
 import { AppComponent } from './app.component'
 import { LoginComponent } from './landing-pages/login/login.component'
@@ -20,7 +20,9 @@ import { AudioPlayerComponent } from './content-home/audio-player/audio-player.c
 import { ContentHomeComponent } from './content-home/content-home.component'
 import { PlaylistViewComponent } from './content-pages/playlist-view/playlist-view.component'
 import { SongViewComponent } from './content-pages/song-view/song-view.component'
-import { BrowseComponent } from './content-pages/browse/browse.component'
+import { BrowseComponent } from './content-pages/browse/browse.component';
+import { SongItemComponent } from './content-pages/song-view/song-item/song-item.component';
+import { AlbumItemComponent } from './content-pages/album-view/album-item/album-item.component'
 
 @NgModule({
   declarations: [
@@ -38,7 +40,9 @@ import { BrowseComponent } from './content-pages/browse/browse.component'
     ContentHomeComponent,
     PlaylistViewComponent,
     SongViewComponent,
-    BrowseComponent
+    BrowseComponent,
+    SongItemComponent,
+    AlbumItemComponent
   ],
   imports: [
     BrowserModule,
@@ -46,7 +50,8 @@ import { BrowseComponent } from './content-pages/browse/browse.component'
     HttpModule,
     AppRoutingModule
   ],
-  providers: [AuthGuard],
+  //providers: [AuthGuard],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

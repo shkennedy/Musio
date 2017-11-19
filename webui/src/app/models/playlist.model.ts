@@ -4,8 +4,8 @@ export class Playlist{
   public playlist_id: number;
   public playlist_name: string;
   public owner: User;
-  public isPrivate: boolean;
-  public isCollaborative: boolean;
+  public is_private: boolean;
+  public is_collaborative: boolean;
   public songs: Song[];
   public date_created: Date;
 }
