@@ -6,8 +6,6 @@ import { TopNavComponent } from './top-nav/top-nav.component'
 import { LeftNavComponent } from './left-nav/left-nav.component'
 import { RightNavComponent } from './right-nav/right-nav.component'
 
-import { UserService } from '../services/user.service';
-
 @Component({
   selector: 'app-content-home',
   templateUrl: './content-home.component.html',
@@ -16,8 +14,7 @@ import { UserService } from '../services/user.service';
 export class ContentHomeComponent implements OnInit {
 
   constructor(
-    private router: Router,
-    private userService: UserService) { }
+    private router: Router) { }
 
   ngOnInit() {
 
