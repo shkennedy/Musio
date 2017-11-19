@@ -31,7 +31,7 @@ export class FavoritesService {
 	
 	private getFavoritesByUrl(url: string): Observable<any> {
 		return this.httpRequest.get(FavoritesService.FAVORITES_URL + url)
-		.subscribe((response: ApiResponse) => {
+		.map((response: ApiResponse) => {
 			if (response.success) {
 				return response.data;
 			}
@@ -41,14 +41,14 @@ export class FavoritesService {
 
 	private addFavoriteByUrlAndId(url: string, id: number): Observable<boolean> {
 		return this.httpRequest.get(FavoritesService.ADD_URL + url)
-		.subscribe((response: ApiResponse) => {
+		.map((response: ApiResponse) => {
 			return response.success;
 		});
 	}
 
 	private removeFavoriteByUrlAndId(url: string, id: number): Observable<boolean> {
 		return this.httpRequest.get(FavoritesService.REMOVE_URL + url)
-		.subscribe((response: ApiResponse) => {
+		.map((response: ApiResponse) => {
 			return response.success;
 		});
 	}
