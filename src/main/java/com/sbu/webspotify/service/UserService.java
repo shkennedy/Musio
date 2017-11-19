@@ -273,4 +273,10 @@ public class UserService {
 		return response;
 	}
 
+	public ApiResponseObject getBrowseContent(User user) {
+		// TODO -- implement browse logic.
+		
+		return null;
+	}
+
 }

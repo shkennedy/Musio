@@ -160,9 +160,9 @@ public class UserController {
 	}
 
 	@RequestMapping(value={"/browse"})
-	public @ResponseBody ApiResponseObject getBrowseData(HttpSession session, @PathVariable Integer userId) {
+	public @ResponseBody ApiResponseObject getBrowseData(HttpSession session) {
 		User user = (User) session.getAttribute("user");
-		return userService.removeFollowedUser(user, userId);
+		return userService.getBrowseContent(user);
 	}
 
 }
