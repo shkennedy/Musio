@@ -1,5 +1,6 @@
 package com.sbu.webspotify.controller;
 
+import com.sbu.webspotify.dto.ApiResponseObject;
 import com.sbu.webspotify.model.*;
 
 import java.util.Set;
@@ -87,73 +88,79 @@ public class UserController {
 	}
 
 	@RequestMapping(value={"/favorites/add/genre/{genreId}"})
-	public @ResponseBody boolean addFavoriteGenre(HttpSession session, @PathVariable Integer genreId) {
+	public @ResponseBody ApiResponseObject addFavoriteGenre(HttpSession session, @PathVariable Integer genreId) {
 		User user = (User) session.getAttribute("user");
 		return userService.addFavoriteGenre(user, genreId);
 	}
 
 	@RequestMapping(value={"/favorites/remove/genre/{genreId}"})
-	public @ResponseBody boolean removeFavoriteGenre(HttpSession session, @PathVariable Integer genreId) {
+	public @ResponseBody ApiResponseObject removeFavoriteGenre(HttpSession session, @PathVariable Integer genreId) {
 		User user = (User) session.getAttribute("user");
 		return userService.removeFavoriteGenre(user, genreId);
 	}
 
 	@RequestMapping(value={"/favorites/add/song/{songId}"})
-	public @ResponseBody boolean addFavoriteSong(HttpSession session, @PathVariable Integer songId) {
+	public @ResponseBody ApiResponseObject addFavoriteSong(HttpSession session, @PathVariable Integer songId) {
 		User user = (User) session.getAttribute("user");
 		return userService.addFavoriteSong(user, songId);
 	}
 
 	@RequestMapping(value={"/favorites/remove/song/{songId}"})
-	public @ResponseBody boolean removeFavoriteSong(HttpSession session, @PathVariable Integer songId) {
+	public @ResponseBody ApiResponseObject removeFavoriteSong(HttpSession session, @PathVariable Integer songId) {
 		User user = (User) session.getAttribute("user");
 		return userService.removeFavoriteSong(user, songId);
 	}
 
 	@RequestMapping(value={"/favorites/add/album/{albumId}"})
-	public @ResponseBody boolean addFavoriteAlbum(HttpSession session, @PathVariable Integer albumId) {
+	public @ResponseBody ApiResponseObject addFavoriteAlbum(HttpSession session, @PathVariable Integer albumId) {
 		User user = (User) session.getAttribute("user");
 		return userService.addFavoriteAlbum(user, albumId);
 	}
 
 	@RequestMapping(value={"/favorites/remove/album/{albumId}"})
-	public @ResponseBody boolean removeFavoriteAlbum(HttpSession session, @PathVariable Integer albumId) {
+	public @ResponseBody ApiResponseObject removeFavoriteAlbum(HttpSession session, @PathVariable Integer albumId) {
 		User user = (User) session.getAttribute("user");
 		return userService.removeFavoriteAlbum(user, albumId);
 	}
 
 	@RequestMapping(value={"/favorites/add/artist/{artistId}"})
-	public @ResponseBody boolean addFavoriteArtist(HttpSession session, @PathVariable Integer artistId) {
+	public @ResponseBody ApiResponseObject addFavoriteArtist(HttpSession session, @PathVariable Integer artistId) {
 		User user = (User) session.getAttribute("user");
 		return userService.addFavoriteArtist(user, artistId);
 	}
 
 	@RequestMapping(value={"/favorites/remove/artist/{artistId}"})
-	public @ResponseBody boolean removeFavoriteArtist(HttpSession session, @PathVariable Integer artistId) {
+	public @ResponseBody ApiResponseObject removeFavoriteArtist(HttpSession session, @PathVariable Integer artistId) {
 		User user = (User) session.getAttribute("user");
 		return userService.removeFavoriteArtist(user, artistId);
 	}
 
 	@RequestMapping(value={"/favorites/add/playlist/{playlistId}"})
-	public @ResponseBody boolean addFavoritePlaylist(HttpSession session, @PathVariable Integer playlistId) {
+	public @ResponseBody ApiResponseObject addFavoritePlaylist(HttpSession session, @PathVariable Integer playlistId) {
 		User user = (User) session.getAttribute("user");
 		return userService.addFavoritePlaylist(user, playlistId);
 	}
 
 	@RequestMapping(value={"/favorites/remove/playlist/{playlistId}"})
-	public @ResponseBody boolean removeFavoritePlaylist(HttpSession session, @PathVariable Integer playlistId) {
+	public @ResponseBody ApiResponseObject removeFavoritePlaylist(HttpSession session, @PathVariable Integer playlistId) {
 		User user = (User) session.getAttribute("user");
 		return userService.removeFavoritePlaylist(user, playlistId);
 	}
 
 	@RequestMapping(value={"/followUser/{userId}"})
-	public @ResponseBody boolean addFollowedUser(HttpSession session, @PathVariable Integer userId) {
+	public @ResponseBody ApiResponseObject addFollowedUser(HttpSession session, @PathVariable Integer userId) {
 		User user = (User) session.getAttribute("user");
 		return userService.addFollowedUser(user, userId);
 	}
 
 	@RequestMapping(value={"/unfollowUser/{userId}"})
-	public @ResponseBody boolean unfollowedUser(HttpSession session, @PathVariable Integer userId) {
+	public @ResponseBody ApiResponseObject unfollowedUser(HttpSession session, @PathVariable Integer userId) {
+		User user = (User) session.getAttribute("user");
+		return userService.removeFollowedUser(user, userId);
+	}
+
+	@RequestMapping(value={"/browse"})
+	public @ResponseBody ApiResponseObject getBrowseData(HttpSession session, @PathVariable Integer userId) {
 		User user = (User) session.getAttribute("user");
 		return userService.removeFollowedUser(user, userId);
 	}

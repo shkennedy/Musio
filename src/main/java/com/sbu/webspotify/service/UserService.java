@@ -1,19 +1,17 @@
 package com.sbu.webspotify.service;
 
+import java.util.Arrays;
+import java.util.HashSet;
+
 import com.sbu.webspotify.conf.AppConfig;
+import com.sbu.webspotify.dto.ApiResponseObject;
 import com.sbu.webspotify.model.Album;
 import com.sbu.webspotify.model.Artist;
 import com.sbu.webspotify.model.Genre;
 import com.sbu.webspotify.model.Playlist;
-import java.util.Arrays;
-import java.util.HashSet;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Service;
-
 import com.sbu.webspotify.model.Role;
-import com.sbu.webspotify.model.User;
 import com.sbu.webspotify.model.Song;
+import com.sbu.webspotify.model.User;
 import com.sbu.webspotify.repo.AlbumRepository;
 import com.sbu.webspotify.repo.ArtistRepository;
 import com.sbu.webspotify.repo.GenreRepository;
@@ -21,6 +19,10 @@ import com.sbu.webspotify.repo.PlaylistRepository;
 import com.sbu.webspotify.repo.RoleRepository;
 import com.sbu.webspotify.repo.SongRepository;
 import com.sbu.webspotify.repo.UserRepository;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
 
 @Service("userService")
 public class UserService {
@@ -75,128 +77,200 @@ public class UserService {
 		userRepository.save(user);
 	}
 
-	public boolean addFavoriteSong(User user, Integer songId) {
+	public ApiResponseObject addFavoriteSong(User user, Integer songId) {
+		ApiResponseObject response = new ApiResponseObject();
 		Song s = songRepository.findById(songId);
 		if(s == null) {
-			return false;
+			response.setSuccess(false);
+			response.setMessage("No song with id "+songId+" found.");
+			return response;
 		}
 		user.addSongToFavories(s);
 		persistUser(user);
-		return true;
+		response.setSuccess(true);
+		return response;
 	}
 
-	public boolean removeFavoriteSong(User user, Integer songId) {
+	public ApiResponseObject removeFavoriteSong(User user, Integer songId) {
+		ApiResponseObject response = new ApiResponseObject();
 		Song s = songRepository.findById(songId);
-		if(s == null) {			
-			return false;
+		if(s == null) {
+			response.setSuccess(false);
+			response.setMessage("No song with id "+songId+" found.");
+			return response;
 		}
-		boolean returnValue = user.removeSongFromFavorites(s);
+		if(user.removeSongFromFavorites(s) == false) {
+			response.setSuccess(false);
+			response.setMessage("Song with id "+songId+" was not in your favorites list.");
+			return response;
+		}
 		persistUser(user);
-		return returnValue;
+		response.setSuccess(true);
+		return response;
 	}
 
-	public boolean addFavoriteAlbum(User user, Integer albumId) {
+	public ApiResponseObject addFavoriteAlbum(User user, Integer albumId) {
+		ApiResponseObject response = new ApiResponseObject();
 		Album a = albumRepository.findById(albumId);
 		if(a == null) {
-			return false;
+			response.setSuccess(false);
+			response.setMessage("No album with id "+albumId+" found.");
+			return response;
 		}
 		user.addAlbumToFavories(a);
 		persistUser(user);
-		return true;
+		response.setSuccess(true);
+		return response;
 	}
 
-	public boolean removeFavoriteAlbum(User user, Integer albumId) {
+	public ApiResponseObject removeFavoriteAlbum(User user, Integer albumId) {
+		ApiResponseObject response = new ApiResponseObject();
 		Album a = albumRepository.findById(albumId);
 		if(a == null) {
-			return false;
+			response.setSuccess(false);
+			response.setMessage("No album with id "+albumId+" found.");
+			return response;
 		}
-		boolean returnValue = user.removeAlbumFromFavorites(a);
+		if(user.removeAlbumFromFavorites(a) == false) {
+			response.setSuccess(false);
+			response.setMessage("Album with id "+albumId+" was not in your favorites list.");
+			return response;
+		}
 		persistUser(user);
-		return returnValue;
+		response.setSuccess(true);
+		return response;
 	}
 
-	public boolean addFavoriteArtist(User user, Integer artistId) {
+	public ApiResponseObject addFavoriteArtist(User user, Integer artistId) {
+		ApiResponseObject response = new ApiResponseObject();
 		Artist a = artistRepository.findById(artistId);
 		if(a == null) {
-			return false;
+			response.setSuccess(false);
+			response.setMessage("No artist with id "+artistId+" found.");
+			return response;
 		}
 		user.addArtistToFavories(a);
 		persistUser(user);
-		return true;
+		response.setSuccess(true);
+		return response;
 	}
 
-	public boolean removeFavoriteArtist(User user, Integer artistId) {
-		Artist a = artistRepository.findById(artistId);
-		if(a == null) {
-			return false;
+	public ApiResponseObject removeFavoriteArtist(User user, Integer artistId) {
+		ApiResponseObject response = new ApiResponseObject();
+		Artist p = artistRepository.findById(artistId);
+		if(p == null) {
+			response.setSuccess(false);
+			response.setMessage("No artist with id "+artistId+" found.");
+			return response;
 		}
-		boolean returnValue = user.removeArtistFromFavorites(a);
+		if(user.removeArtistFromFavorites(p) == false) {
+			response.setSuccess(false);
+			response.setMessage("Artist with id "+artistId+" was not in your favorites list.");
+			return response;
+		}
 		persistUser(user);
-		return returnValue;
+		response.setSuccess(true);
+		return response;
 	}
 
-	public boolean addFollowedUser(User user, Integer userId) {
+	public ApiResponseObject addFollowedUser(User user, Integer userId) {
+		ApiResponseObject response = new ApiResponseObject();
 		User u = userRepository.findById(userId);
 		if(u == null) {
-			return false;
+			response.setSuccess(false);
+			response.setMessage("No user with id "+userId+" found.");
+			return response;
 		}
 		user.followUser(u);
 		persistUser(user);
-		return true;
+		response.setSuccess(true);
+		return response;
 	}
 
-	public boolean removeFollowedUser(User user, Integer userId) {
+	public ApiResponseObject removeFollowedUser(User user, Integer userId) {
+		ApiResponseObject response = new ApiResponseObject();
 		User u = userRepository.findById(userId);
 		if(u == null) {
-			return false;
+			response.setSuccess(false);
+			response.setMessage("No user with id "+userId+" found.");
+			return response;
 		}
-		boolean returnValue = user.unfollowUser(u);
+		if(user.unfollowUser(u) == false) {
+			response.setSuccess(false);
+			response.setMessage("User with id "+userId+" was not in your following list.");
+			return response;
+		}
 		persistUser(user);
-		return returnValue;
+		response.setSuccess(true);
+		return response;
 	}
 
 	public void persistUser(User user) {
 		userRepository.save(user);
 	}
 
-	public boolean addFavoritePlaylist(User user, Integer playlistId) {
+	public ApiResponseObject addFavoritePlaylist(User user, Integer playlistId) {
+		ApiResponseObject response = new ApiResponseObject();
 		Playlist p = playlistRepository.findById(playlistId);
 		if(p == null) {
-			return false;
+			response.setSuccess(false);
+			response.setMessage("No playlist with id "+playlistId+" found.");
+			return response;
 		}
 		user.addPlaylistToFavories(p);
 		persistUser(user);
-		return true;
+		response.setSuccess(true);
+		return response;
 	}
 
-	public boolean removeFavoritePlaylist(User user, Integer playlistId) {
+	public ApiResponseObject removeFavoritePlaylist(User user, Integer playlistId) {
+		ApiResponseObject response = new ApiResponseObject();
 		Playlist p = playlistRepository.findById(playlistId);
 		if(p == null) {
-			return false;
+			response.setSuccess(false);
+			response.setMessage("No playlist with id "+playlistId+" found.");
+			return response;
 		}
-		boolean returnValue = user.removePlaylistFromFavorites(p);
+		if(user.removePlaylistFromFavorites(p) == false) {
+			response.setSuccess(false);
+			response.setMessage("Playlist with id "+playlistId+" was not in your favorites list.");
+			return response;
+		}
 		persistUser(user);
-		return returnValue;
+		response.setSuccess(true);
+		return response;
 	}
 
-	public boolean addFavoriteGenre(User user, Integer genreId) {
+	public ApiResponseObject addFavoriteGenre(User user, Integer genreId) {
+		ApiResponseObject response = new ApiResponseObject();
 		Genre g = genreRepository.findById(genreId);
 		if(g == null) {
-			return false;
+			response.setSuccess(false);
+			response.setMessage("No genre with id "+genreId+" found.");
+			return response;
 		}
 		user.addGenreToFavories(g);
 		persistUser(user);
-		return true;
+		response.setSuccess(true);
+		return response;
 	}
 
-	public boolean removeFavoriteGenre(User user, Integer genreId) {
-		Genre g = genreRepository.findById(genreId);
-		if(g == null) {
-			return false;
+	public ApiResponseObject removeFavoriteGenre(User user, Integer genreId) {
+		ApiResponseObject response = new ApiResponseObject();
+		Genre p = genreRepository.findById(genreId);
+		if(p == null) {
+			response.setSuccess(false);
+			response.setMessage("No genre with id "+genreId+" found.");
+			return response;
 		}
-		boolean returnValue = user.removeGenreFromFavorites(g);
+		if(user.removeGenreFromFavorites(p) == false) {
+			response.setSuccess(false);
+			response.setMessage("Genre with id "+genreId+" was not in your favorites list.");
+			return response;
+		}
 		persistUser(user);
-		return returnValue;
+		response.setSuccess(true);
+		return response;
 	}
 
 }
