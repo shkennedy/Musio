@@ -1,6 +1,5 @@
 import { Injectable, Inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserInfoService, LoginInfoInStorage } from '../user-info.service';
 import { HttpRequestService } from './httpRequest.service';
 import { SessionService } from './session.service';
 
