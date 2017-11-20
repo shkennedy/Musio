@@ -126,7 +126,7 @@
                             <outputDirectory>${project.basedir}/src/main/resources/static</outputDirectory>
                             <resources>
                                 <resource>
-                                    <directory>${project.basedir}/angular/dist</directory>
+                                    <directory>${project.basedir}/webui/dist</directory>
                                     <excludes>
                 	                    <exclude>*.gz</exclude>
             			            </excludes>
