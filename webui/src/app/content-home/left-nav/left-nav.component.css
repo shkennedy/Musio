@@ -1,5 +1,25 @@
-td{
-  padding:30px;
-  border:1pt solid #e0e0e0;
+th{
   text-align: center;
+  padding-top:3vh;
+  padding-bottom:3vh;
+  align:middle;
+}
+
+td{
+  text-align: center;
+  padding-top:3vh;
+  padding-bottom:3vh;
+  max-width: 10vw;
+  align:middle;
+}
+
+div{
+  overflow-y:auto;
+  overflow-x:hidden;
+}
+
+.long_playlist{
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
