@@ -11,6 +11,9 @@ import { Artist } from '../models/artist.model';
 export class ArtistService {
 
     private static ARTIST_URL: string = '/artist';
+    private static GET_URL: string = '/get';
+    private static ADD_URL: string = '/add';
+    private static DELETE_URL: string = '/delete';
 
     constructor(
         private router: Router,
@@ -18,7 +21,7 @@ export class ArtistService {
     ) { }
 
     public getArtistById(artistId: number): Observable<Artist> {
-        return this.httpRequest.get(ArtistService.ARTIST_URL, {"artistId": artistId})
+        return this.httpRequest.get(ArtistService.ARTIST_URL + ArtistService.GET_URL, artistId)
         .map((response: ApiResponse) => {
             if (response.success) {
                 return response.data;
@@ -28,21 +31,21 @@ export class ArtistService {
     }
 
     public addArtist(artist: Artist): Observable<boolean> {
-        return this.httpRequest.post(ArtistService.ARTIST_URL, artist)
+        return this.httpRequest.post(ArtistService.ARTIST_URL + ArtistService.ADD_URL, artist)
         .map((response: ApiResponse) => {
             return response.success;
         });
     }
 
     public updateArtist(artist: Artist): Observable<boolean> {
-        return this.httpRequest.put(ArtistService.ARTIST_URL, artist)
+        return this.httpRequest.put(ArtistService.ARTIST_URL + ArtistService.ADD_URL, artist)
         .map((response: ApiResponse) => {
             return response.success;
         });
     }
 
     public deleteArtist(artistId: number): Observable<boolean> {
-        return this.httpRequest.delete(ArtistService.ARTIST_URL + "/" + artistId)
+        return this.httpRequest.delete(ArtistService.ARTIST_URL + ArtistService.DELETE_URL, artistId)
         .map((response: ApiResponse) => {
             return response.success;
         });

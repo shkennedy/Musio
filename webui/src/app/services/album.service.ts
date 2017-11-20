@@ -10,6 +10,9 @@ import { Album } from '../models/album.model';
 export class AlbumService {
 
     private static ALBUM_URL: string = '/album';
+    private static GET_URL: string = '/get';
+    private static ADD_URL: string = '/add';
+    private static DELETE_URL: string = '/delete';
 
     constructor(
         private router: Router,
@@ -17,28 +20,28 @@ export class AlbumService {
     ) { }
 
     public getAlbumById(albumId: number): Observable<Album> {
-        return this.httpRequest.get(AlbumService.ALBUM_URL, {"albumId": albumId})
+        return this.httpRequest.get(AlbumService.ALBUM_URL + AlbumService.GET_URL, albumId)
         .map((response: ApiResponse) => {
             return response.data;
         });
     }
 
     public addAlbum(album: Album): Observable<boolean> {
-        return this.httpRequest.post(AlbumService.ALBUM_URL, album)
+        return this.httpRequest.post(AlbumService.ALBUM_URL + AlbumService.ADD_URL, album)
         .map((response: ApiResponse) => {
             return response.success;
         });
     }
 
     public updateAlbum(album: Album): Observable<boolean> {
-        return this.httpRequest.put(AlbumService.ALBUM_URL, album)
+        return this.httpRequest.put(AlbumService.ALBUM_URL + AlbumService.ADD_URL, album)
         .map((response: ApiResponse) => {
             return response.success;
         });
     }
 
     public deleteAlbum(albumId: number): Observable<boolean> {
-        return this.httpRequest.delete(AlbumService.ALBUM_URL + "/" + albumId)
+        return this.httpRequest.delete(AlbumService.ALBUM_URL + AlbumService.DELETE_URL, albumId)
         .map((response: ApiResponse) => {
             return response.success;
         });

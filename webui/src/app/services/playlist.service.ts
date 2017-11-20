@@ -20,7 +20,7 @@ export class PlaylistService {
     ) { }
 
     public getPlaylistById(playlistId: number): Observable<Playlist> {
-        return this.httpRequest.get(PlaylistService.PLAYLIST_URL, {'playlistId': playlistId})
+        return this.httpRequest.get(PlaylistService.PLAYLIST_URL, playlistId)
         .map((response: ApiResponse) => {
             return response.data;
         });
@@ -41,7 +41,7 @@ export class PlaylistService {
     }
 
     public deletePlaylist(playlistId: number): Observable<boolean> {
-        return this.httpRequest.delete(PlaylistService.PLAYLIST_URL + '/' + playlistId)
+        return this.httpRequest.delete(PlaylistService.PLAYLIST_URL, playlistId)
         .map((response: ApiResponse) => {
             return response.success;
         });

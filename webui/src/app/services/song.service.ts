@@ -17,7 +17,7 @@ export class SongService {
     ) { }
 
     public getSongById(songId: number): Observable<Song> {
-        return this.httpRequest.get(SongService.SONG_URL, {'songId': songId})
+        return this.httpRequest.get(SongService.SONG_URL, songId)
         .map((response: ApiResponse) => {
             return response.data;
         });
@@ -31,7 +31,7 @@ export class SongService {
     }
 
     public deleteSong(songId: number): Observable<boolean> {
-        return this.httpRequest.delete(SongService.SONG_URL + "/" + songId)
+        return this.httpRequest.delete(SongService.SONG_URL, songId)
         .map((response: ApiResponse) => {
             return response.success;
         });
