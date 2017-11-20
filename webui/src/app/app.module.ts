@@ -32,7 +32,6 @@ import { FavoritesService } from './services/favorites.service';
 import { GenreService } from './services/genre.service';
 import { HttpRequestService } from './services/httpRequest.service';
 import { PlaylistService } from './services/playlist.service';
-import { SessionService } from './services/session.service';
 import { SongService } from './services/song.service';
 import { UserService } from './services/user.service';
 
@@ -73,7 +72,6 @@ import { UserService } from './services/user.service';
     GenreService,
     HttpRequestService,
     PlaylistService,
-    SessionService,
     SongService,
     UserService
   ],

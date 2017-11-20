@@ -3,8 +3,6 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
 import { HttpRequestService, ApiResponse } from './httpRequest.service';
-import { SessionService } from './session.service';
-
 // import { PaymentInfo } from '../models/paymentInfo.model';
 import { User } from '../models/user.model';
 
@@ -18,7 +16,6 @@ export class UserService {
 
     constructor(
         private router: Router,
-        private sessionService: SessionService,
         private httpRequest: HttpRequestService
     ) { }
 
@@ -45,7 +42,7 @@ export class UserService {
             return response.success;
         });
     }
-    
+
     // public getUserPaymentInfo(userId: number): PaymentInfo {
     //     return this.httpRequest.get(UserService.PAYMENT_INFO_URL + "/" + userId)
     //     .subscribe((paymentInfo: PaymentInfo) => {
@@ -62,4 +59,4 @@ export class UserService {
 	// 	session.setAttribute("user", userService.findUserByUsername(user.getUsername()));
 	// 	return true;
 	// }
-}	
+}

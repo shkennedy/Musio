@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
 import { HttpRequestService, ApiResponse } from './httpRequest.service';
-import { SessionService } from './session.service';
 
 export interface LoginRequestParam {
     username: string;
@@ -25,7 +24,6 @@ export class LoginService {
 
     constructor(
         private router: Router,
-        private sessionService: SessionService,
         private httpRequest: HttpRequestService
     ) { }
 
@@ -37,7 +35,7 @@ export class LoginService {
         return this.httpRequest.post(LoginService.LOGIN_URL, body)
         .map((response: ApiResponse) => {
             if (response.success) {
-                this.sessionService.storeSessionInfo(response.data, 'tokenStr'); // TODO token string
+                // this.sessionService.storeSessionInfo(response.data, 'tokenStr'); // TODO token string
             }
             return response.success;
         });
@@ -46,8 +44,8 @@ export class LoginService {
     public logout(navigatetoLogout: boolean = true): Observable<boolean> {
         return this.httpRequest.get(LoginService.LOGOUT_URL)
         .map((response: ApiResponse) => {
-            if (response.success) { 
-                this.sessionService.removeSessionInfo();
+            if (response.success) {
+                // this.sessionService.removeSessionInfo();
             }
             return response.success;
         });
