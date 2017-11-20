@@ -5,8 +5,8 @@ import { LoginComponent } from './landing-pages/login/login.component'
 import { RegistrationComponent } from './landing-pages/registration/registration.component';
 import { PageNotFoundComponent } from './landing-pages/page-not-found/page-not-found.component';
 import { RecoverPasswordComponent } from './landing-pages/recover-password/recover-password.component';
-import { AlbumViewComponent } from './content-pages/album-view/album-view.component';
-import { ArtistViewComponent } from './content-pages/artist-view/artist-view.component';
+import { AlbumsViewComponent } from './content-pages/album-views/album-collection-view/albums-view.component';
+import { ArtistsViewComponent } from './content-pages/artist-views/artist-collection-view/artists-view.component';
 import { PlaylistViewComponent } from './content-pages/playlist-view/playlist-view.component';
 import { SongViewComponent } from './content-pages/song-view/song-view.component';
 import { BrowseComponent } from './content-pages/browse/browse.component';
@@ -16,14 +16,14 @@ const appRoutes: Routes = [
   { path: '', component: ContentHomeComponent, children:
     [
       { path: '', component: BrowseComponent },
-      { path: 'albums', component: AlbumViewComponent, children:
+      { path: 'albums', component: AlbumsViewComponent, children:
         [
-          { path: ':id', component: AlbumViewComponent }
+          { path: ':id', component: AlbumsViewComponent }
         ]
       },
-      { path: 'artists', component: ArtistViewComponent, children:
+      { path: 'artists', component: ArtistsViewComponent, children:
         [
-          { path: ':id', component: ArtistViewComponent }
+          { path: ':id', component: ArtistsViewComponent }
         ]
       },
       { path: 'playlists', component: PlaylistViewComponent, children:
