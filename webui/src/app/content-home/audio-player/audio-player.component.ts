@@ -9,7 +9,8 @@ import { SongService } from '../../services/song.service';
 @Component({
   selector: 'app-audio-player',
   templateUrl: './audio-player.component.html',
-  styleUrls: ['./audio-player.component.css']
+  styleUrls: ['./audio-player.component.css'],
+  providers: [SongService]
 })
 export class AudioPlayerComponent implements OnInit {
 
@@ -109,7 +110,7 @@ export class AudioPlayerComponent implements OnInit {
     }
     this.model.isPlaying = !this.model.isPlaying;
   }
-  
+
   public muteOrUnmute(): void {
     this.model.isMuted = !this.model.isMuted;
     this.audio.mute(this.model.isMuted);

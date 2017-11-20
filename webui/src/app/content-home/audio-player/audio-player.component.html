@@ -1,8 +1,9 @@
-<section class="s-audio-player">
-    <input type="image" class="s-button" src="../../../assets/prev.png">
-    <input type="image" class="s-button" src="../../../assets/play.png">
-    <input type="image" class="s-button" src="../../../assets/next.png">
-    <input type="image" class="s-button" src="../../../assets/shuffle.png">
+<section class="s-audio-player center">
+    <button class="glyphicon glyphicon-random"></button>
+    <button class="glyphicon glyphicon-step-backward"></button>
+    <button class="glyphicon glyphicon-play"></button>
+    <button class="glyphicon glyphicon-step-forward"></button>
+    <button class="glyphicon glyphicon-refresh"></button>
     <!-- <div name="time" [(ngModel)]="model.currentSong." #username="ngModel"></div> -->
     <div *ngIf="errMsg" class="s-login-error">{{errMsg}}</div>
 </section>

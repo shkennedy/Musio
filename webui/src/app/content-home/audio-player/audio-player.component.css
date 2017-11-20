@@ -1,10 +1,20 @@
 .s-audio-player {
-    width: 100%; 
+    width: 100%;
     height: 100%;
+    padding-top:1vh;
+    padding-bottom:1vh;
 }
 
-.s-button {
-    float: left; /* Float links side by side */
-    width: 20%; /* Equal width (5 icons with 20% width each = 100%) */
-    padding: 12px 0; /* Some top and bottom padding */
+button{
+  border: none;
+  background: none;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+}
+
+.top_border{
+  border-top: 1px solid #e0e0e0;
 }
