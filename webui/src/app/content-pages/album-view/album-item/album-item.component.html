@@ -1,5 +1,10 @@
-<tr>
-  <td>{{i}}</td>
-  <td>{{song.song_name}}</td>
-  <td>{{song.duration}}</td>
-</tr>
+<div>
+  <!-- Currently set to the default picture -->
+
+  <img *ngIf="fake;else default_image" class="sized" src="" alt="">
+  <ng-template #default_image>
+    <img class="sized" src="../../../assets/images/no_artist_picture.png" alt="">
+  </ng-template>
+  <h1>{{album.album_name}}</h1>
+  <h2>{{album.artist_name}}</h2>
+</div>

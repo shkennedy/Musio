@@ -1,13 +1,14 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Song } from '../../../models/song.model'
+import { Album } from '../../../models/album.model'
 @Component({
   selector: 'album-item',
   templateUrl: './album-item.component.html',
   styleUrls: ['./album-item.component.css']
 })
 export class AlbumItemComponent implements OnInit {
-  @Input() song: Song;
-  @Input() track_number: number;
+  @Input() album: Album;
+  //remove this later
+  private fake:boolean = false;
   constructor() { }
 
   ngOnInit() {

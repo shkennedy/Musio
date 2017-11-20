@@ -33,6 +33,8 @@ import { HttpRequestService } from './services/httpRequest.service';
 import { SessionService } from './services/session.service';
 import { SongService } from './services/song.service';
 import { UserService } from './services/user.service';
+import { AlbumDetailComponent } from './content-pages/album-view/album-detail/album-detail.component';
+import { AlbumSongComponent } from './content-pages/album-view/album-detail/album-song/album-song.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +54,9 @@ import { UserService } from './services/user.service';
     SongViewComponent,
     BrowseComponent,
     SongItemComponent,
-    AlbumItemComponent
+    AlbumItemComponent,
+    AlbumDetailComponent,
+    AlbumSongComponent
   ],
   imports: [
     BrowserModule,
