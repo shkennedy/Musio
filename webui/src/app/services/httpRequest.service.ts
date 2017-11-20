@@ -7,15 +7,15 @@ import { Observable } from 'rxjs';
 import { SessionService } from './session.service';
 
 export interface ApiResponse {
-    success: boolean,
-    message: string,
-    data: any
+    success: boolean;
+    message: string;
+    data: any;
 }
 
 @Injectable()
 export class HttpRequestService {
 
-    private static BASE_URL: string = 'localhost:4200'; // TODO set in config file
+    private static BASE_URL = 'localhost:4200'; // TODO set in config file
 
     constructor(
         // private appConfig: AppConfig,
@@ -26,7 +26,7 @@ export class HttpRequestService {
 
     public get(url: string, urlParams: {} = null): Observable<ApiResponse> {
         // Construct http params from map
-        let httpParams: HttpParams = new HttpParams();
+        const httpParams: HttpParams = new HttpParams();
         Object.keys(urlParams).forEach((key: any) => {
             httpParams.append(key, urlParams[key]);
         });
@@ -72,10 +72,10 @@ export class HttpRequestService {
 
     private getHeaders(): HttpHeaders {
         let headers = new HttpHeaders();
-        let token = this.sessionService.getStoredToken();
+        const token = this.sessionService.getStoredToken();
         headers = headers.append('Content-Type', 'application/json');
         if (token !== null) {
-            headers = headers.append("Authorization", token);
+            headers = headers.append('Authorization', token);
         }
         return headers;
     }

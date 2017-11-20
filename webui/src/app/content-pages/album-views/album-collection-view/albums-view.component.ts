@@ -13,16 +13,16 @@ import { Album } from '../../../models/album.model';
 })
 export class AlbumsViewComponent implements OnInit {
 
-  public albums: Album[];
+  private albums: Album[];
 
   constructor(
     private router: Router,
     private favoritesSevice: FavoritesService
   ) {
-    const a = new Album();
-    a.album_name = 'cool album';
-    a.artist_name = 'another bingus hinguson';
-    this.albums = [a];
+    // const a = new Album();
+    // a.album_name = 'cool album';
+    // a.artist_name = 'another bingus hinguson';
+    // this.albums = [a];
   }
 
   ngOnInit() {

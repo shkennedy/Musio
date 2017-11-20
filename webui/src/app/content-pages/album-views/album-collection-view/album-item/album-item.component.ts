@@ -1,10 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { FavoritesService } from '../../../services/favorites.service';
+import { FavoritesService } from '../../../../services/favorites.service';
+import { SongService } from '../../../../services/song.service';
+import { Song } from '../../../../models/song.model';
 
-
-import { Album } from '../../../models/album.model'
 @Component({
   selector: 'album-item',
   templateUrl: './album-item.component.html',
@@ -12,13 +12,10 @@ import { Album } from '../../../models/album.model'
   providers: [SongService, FavoritesService]
 })
 export class AlbumItemComponent implements OnInit {
-  @Input() album: Album;
-  //remove this later
-  private fake:boolean = false;
-  constructor() { }
+
+  @Input() song: Song;
 
   model: {
-    song: Song
   };
 
   constructor(

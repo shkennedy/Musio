@@ -15,10 +15,12 @@ import { Song } from '../../../models/song.model';
   styleUrls: ['./artist-view.component.css'],
   providers: [ArtistService, FavoritesService]
 })
-export class ArtistsViewComponent implements OnInit {
+export class ArtistDetailComponent implements OnInit {
+
+  @Input() artistId: number;
 
   model: {
-    artists: Artist[]
+    artist: Artist
   };
 
   constructor(
@@ -28,9 +30,9 @@ export class ArtistsViewComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.favoritesService.getFavoriteArtists()
-    .subscribe((artists: Artist[]) => {
-      this.model.artists = artists;
+    this.artistService.getArtistById(this.artistId)
+    .subscribe((artist: Artist) => {
+      this.model.artist = artist;
     });
   }
 }
