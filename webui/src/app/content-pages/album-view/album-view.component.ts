@@ -1,13 +1,30 @@
-import { Component, OnInit } from '@angular/core'
-import { Album } from '../../models/album.model'
+import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
+import { AlbumService } from '../../services/album.service';
+import { FavoritesService } from '../../services/favorites.service';
+
+import { Album } from '../../models/album.model';
+
 @Component({
   selector: 'app-album-view',
   templateUrl: './album-view.component.html',
-  styleUrls: ['./album-view.component.css']
+  styleUrls: ['./album-view.component.css'],
+  providers: [AlbumService, FavoritesService]
 })
 export class AlbumViewComponent implements OnInit {
-  public albums:Album[]
-  constructor() {
+
+  @Input() albumId: number;
+
+  model: {
+    album: Album
+  };
+
+  constructor(
+    private router: Router,
+    private albumService: AlbumService,
+    private favoritesService: FavoritesService
+  ) {
     /*this.albums=
     [
       {album_id:1,
@@ -35,9 +52,13 @@ export class AlbumViewComponent implements OnInit {
       release_date:new Date()
       }
     ]*/
-    this.albums=[]
-  }
-  ngOnInit() {
+    // this.albums=[]
   }
 
+  ngOnInit() {
+    this.albumService.getAlbumById(this.albumId)
+    .subscribe((album: Album) => {
+      this.model.album = album;
+    });
+  }
 }
