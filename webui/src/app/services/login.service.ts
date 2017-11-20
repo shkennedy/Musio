@@ -13,15 +13,15 @@ export interface LoginRequestParam {
 export interface RegisterRequestParam {
     username: string;
     password: string;
-    email:    string    
+    email:    string;
 }
 
 @Injectable()
 export class LoginService {
 
-    private static LOGIN_URL: string    = '/login';
-    private static LOGOUT_URL: string   = '/logout';
-    private static REGISTER_URL: string = '/register';
+    private static LOGIN_URL    = '/login';
+    private static LOGOUT_URL   = '/logout';
+    private static REGISTER_URL = '/register';
 
     constructor(
         private router: Router,
