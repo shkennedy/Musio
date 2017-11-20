@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser'
 import { NgModule } from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import { HttpModule } from '@angular/http'
+import {HttpClientModule} from '@angular/common/http';
 import { AppRoutingModule} from './app-routing.module'
 
 //import { AuthGuard } from './auth-guard.service'
@@ -57,9 +58,10 @@ import { UserService } from './services/user.service';
     BrowserModule,
     FormsModule,
     HttpModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
-  //providers: [AuthGuard],
+  //services go here
   providers: [
     AlbumService,
     ArtistService,
