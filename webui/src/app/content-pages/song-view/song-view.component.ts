@@ -13,9 +13,7 @@ import { Song } from '../../models/song.model';
 })
 export class SongViewComponent implements OnInit {
 
-  model: {
-    songs: Song[]
-  };
+  private songs:Song[];
 
   constructor(
     private router: Router,
@@ -48,7 +46,7 @@ export class SongViewComponent implements OnInit {
   ngOnInit() {
     this.favoritesService.getFavoriteSongs()
     .subscribe((songs: Song[]) => {
-      this.model.songs = songs;
+      this.songs = songs;
     });
   }
 

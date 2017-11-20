@@ -8,15 +8,13 @@ import { Playlist } from '../../../models/playlist.model';
 import { Song } from '../../../models/song.model';
 
 @Component({
-  selector: 'app-playlist-view',
-  templateUrl: './playlist-view.component.html',
-  styleUrls: ['./playlist-view.component.css']
+  selector: 'app-playlists-view',
+  templateUrl: './playlists-view.component.html',
+  styleUrls: ['./playlists-view.component.css']
 })
 export class PlaylistsViewComponent implements OnInit {
 
-  model: {
-    playlists: Playlist[]
-  };
+  private playlists:Playlist[];
 
   constructor(
     private router: Router,
@@ -27,7 +25,7 @@ export class PlaylistsViewComponent implements OnInit {
   ngOnInit() {
     this.favoritesService.getFavoritePlaylists()
     .subscribe((playlists: Playlist[]) => {
-      this.model.playlists = playlists;
+      this.playlists = playlists;
     });
   }
 }

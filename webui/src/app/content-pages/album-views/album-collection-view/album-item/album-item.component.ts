@@ -2,26 +2,23 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { FavoritesService } from '../../../../services/favorites.service';
-import { SongService } from '../../../../services/song.service';
-import { Song } from '../../../../models/song.model';
+import { AlbumService } from '../../../../services/album.service';
+import { Album } from '../../../../models/album.model';
 
 @Component({
   selector: 'album-item',
   templateUrl: './album-item.component.html',
   styleUrls: ['./album-item.component.css'],
-  providers: [SongService, FavoritesService]
+  providers: [AlbumService, FavoritesService]
 })
 export class AlbumItemComponent implements OnInit {
 
-  @Input() song: Song;
-
-  model: {
-  };
+  @Input() album: Album;
 
   constructor(
     private router: Router,
     private favoritesService: FavoritesService,
-    private songService: SongService
+    private albumService: AlbumService
   ) { }
 
   ngOnInit() {

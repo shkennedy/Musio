@@ -10,18 +10,16 @@ import { Genre } from '../../../models/genre.model';
 import { Song } from '../../../models/song.model';
 
 @Component({
-  selector: 'app-artist-view',
-  templateUrl: './artist-view.component.html',
-  styleUrls: ['./artist-view.component.css'],
+  selector: 'artist-detail',
+  templateUrl: './artist-detail.component.html',
+  styleUrls: ['./artist-detail.component.css'],
   providers: [ArtistService, FavoritesService]
 })
 export class ArtistDetailComponent implements OnInit {
 
   @Input() artistId: number;
 
-  model: {
-    artist: Artist
-  };
+  private artist:Artist;
 
   constructor(
     private router: Router,
@@ -32,7 +30,7 @@ export class ArtistDetailComponent implements OnInit {
   ngOnInit() {
     this.artistService.getArtistById(this.artistId)
     .subscribe((artist: Artist) => {
-      this.model.artist = artist;
+      this.artist = artist;
     });
   }
 }

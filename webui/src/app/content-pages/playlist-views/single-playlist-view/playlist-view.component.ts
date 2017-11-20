@@ -1,10 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { PlaylistService } from '../../services/playlist.service';
+import { PlaylistService } from '../../../services/playlist.service';
 
-import { Playlist } from '../../models/playlist.model';
-import { Song } from '../../models/song.model';
+import { Playlist } from '../../../models/playlist.model';
+import { Song } from '../../../models/song.model';
 
 @Component({
   selector: 'app-playlist-view',
@@ -15,9 +15,7 @@ export class PlaylistViewComponent implements OnInit {
 
   @Input() playlistId: number;
 
-  model: {
-    playlist: Playlist
-  };
+  private playlist:Playlist;
 
   constructor(
     private router: Router,
@@ -27,7 +25,7 @@ export class PlaylistViewComponent implements OnInit {
   ngOnInit() {
     this.playlistService.getPlaylistById(this.playlistId)
     .subscribe((playlist: Playlist) => {
-      this.model.playlist = playlist;
+      this.playlist = playlist;
     });
   }
 }

@@ -20,7 +20,7 @@ import { LeftNavComponent } from './content-home/left-nav/left-nav.component';
 import { RightNavComponent } from './content-home/right-nav/right-nav.component';
 import { AudioPlayerComponent } from './content-home/audio-player/audio-player.component';
 import { ContentHomeComponent } from './content-home/content-home.component';
-import { PlaylistViewComponent } from './content-pages/playlist-view/playlist-view.component';
+import { PlaylistsViewComponent } from './content-pages/playlist-views/playlist-collection-view/playlists-view.component';
 import { SongViewComponent } from './content-pages/song-view/song-view.component';
 import { BrowseComponent } from './content-pages/browse/browse.component';
 import { SongItemComponent } from './content-pages/song-view/song-item/song-item.component';
@@ -51,7 +51,7 @@ import { UserService } from './services/user.service';
     RightNavComponent,
     AudioPlayerComponent,
     ContentHomeComponent,
-    PlaylistViewComponent,
+    PlaylistsViewComponent,
     SongViewComponent,
     BrowseComponent,
     SongItemComponent,

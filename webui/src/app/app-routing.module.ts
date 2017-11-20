@@ -7,7 +7,7 @@ import { PageNotFoundComponent } from './landing-pages/page-not-found/page-not-f
 import { RecoverPasswordComponent } from './landing-pages/recover-password/recover-password.component';
 import { AlbumsViewComponent } from './content-pages/album-views/album-collection-view/albums-view.component';
 import { ArtistsViewComponent } from './content-pages/artist-views/artist-collection-view/artists-view.component';
-import { PlaylistViewComponent } from './content-pages/playlist-view/playlist-view.component';
+import { PlaylistsViewComponent } from './content-pages/playlist-views/playlist-collection-view/playlists-view.component';
 import { SongViewComponent } from './content-pages/song-view/song-view.component';
 import { BrowseComponent } from './content-pages/browse/browse.component';
 import { ContentHomeComponent } from './content-home/content-home.component';
@@ -26,9 +26,9 @@ const appRoutes: Routes = [
           { path: ':id', component: ArtistsViewComponent }
         ]
       },
-      { path: 'playlists', component: PlaylistViewComponent, children:
+      { path: 'playlists', component: PlaylistsViewComponent, children:
         [
-          { path: ':id',  component: PlaylistViewComponent}
+          { path: ':id',  component: PlaylistsViewComponent}
         ]
       },
       { path: 'songs', component: SongViewComponent}

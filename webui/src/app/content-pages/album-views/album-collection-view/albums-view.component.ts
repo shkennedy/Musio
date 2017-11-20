@@ -6,9 +6,9 @@ import { FavoritesService } from '../../../services/favorites.service';
 import { Album } from '../../../models/album.model';
 
 @Component({
-  selector: 'app-album-view',
-  templateUrl: './album-view.component.html',
-  styleUrls: ['./album-view.component.css'],
+  selector: 'albums-view',
+  templateUrl: './albums-view.component.html',
+  styleUrls: ['./albums-view.component.css'],
   providers: [FavoritesService]
 })
 export class AlbumsViewComponent implements OnInit {

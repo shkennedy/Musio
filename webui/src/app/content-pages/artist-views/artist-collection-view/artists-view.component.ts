@@ -10,16 +10,14 @@ import { Genre } from '../../../models/genre.model';
 import { Song } from '../../../models/song.model';
 
 @Component({
-  selector: 'app-artist-view',
-  templateUrl: './artist-view.component.html',
-  styleUrls: ['./artist-view.component.css'],
+  selector: 'artists-view',
+  templateUrl: './artists-view.component.html',
+  styleUrls: ['./artists-view.component.css'],
   providers: [ArtistService, FavoritesService]
 })
 export class ArtistsViewComponent implements OnInit {
 
-  model: {
-    artists: Artist[]
-  };
+  private artists:Artist[];
 
   constructor(
     private router: Router,
@@ -30,7 +28,7 @@ export class ArtistsViewComponent implements OnInit {
   ngOnInit() {
     this.favoritesService.getFavoriteArtists()
     .subscribe((artists: Artist[]) => {
-      this.model.artists = artists;
+      this.artists = artists;
     });
   }
 }

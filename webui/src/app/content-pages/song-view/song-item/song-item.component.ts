@@ -8,17 +8,13 @@ import { Song } from '../../../models/song.model';
 
 @Component({
   selector: 'song-item',
-  templateUrl: './album-item.component.html',
-  styleUrls: ['./album-item.component.css'],
+  templateUrl: './song-item.component.html',
+  styleUrls: ['./song-item.component.css'],
   providers: [SongService, FavoritesService]
 })
 export class SongItemComponent implements OnInit {
 
   @Input() song: Song;
-
-  model: {
-    song: Song
-  };
 
   constructor(
     private router: Router,
@@ -27,8 +23,6 @@ export class SongItemComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.model.song = this.song;
-
     // this.albumService.getAlbumById(this.albumId)
     // .subscribe((album: Album) => {
     //   this.model.album = album;
