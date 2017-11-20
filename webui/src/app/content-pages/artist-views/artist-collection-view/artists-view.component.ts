@@ -1,13 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { ArtistService } from '../../services/artist.service';
-import { FavoritesService } from '../../services/favorites.service';
+import { ArtistService } from '../../../services/artist.service';
+import { FavoritesService } from '../../../services/favorites.service';
 
-import { Artist } from '../../models/artist.model';
-import { Album } from '../../models/album.model';
-import { Genre } from '../../models/genre.model';
-import { Song } from '../../models/song.model';
+import { Artist } from '../../../models/artist.model';
+import { Album } from '../../../models/album.model';
+import { Genre } from '../../../models/genre.model';
+import { Song } from '../../../models/song.model';
 
 @Component({
   selector: 'app-artist-view',
@@ -15,7 +15,7 @@ import { Song } from '../../models/song.model';
   styleUrls: ['./artist-view.component.css'],
   providers: [ArtistService, FavoritesService]
 })
-export class ArtistViewComponent implements OnInit {
+export class ArtistsViewComponent implements OnInit {
 
   @Input() artistId: number;
 

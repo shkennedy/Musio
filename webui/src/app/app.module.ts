@@ -5,15 +5,13 @@ import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 
-//import { AuthGuard } from './auth-guard.service'
-
 import { AppComponent } from './app.component';
 import { LoginComponent } from './landing-pages/login/login.component';
 import { RegistrationComponent } from './landing-pages/registration/registration.component';
 import { PageNotFoundComponent } from './landing-pages/page-not-found/page-not-found.component';
 import { RecoverPasswordComponent } from './landing-pages/recover-password/recover-password.component';
-import { AlbumViewComponent } from './content-pages/album-view/album-view.component';
-import { ArtistViewComponent } from './content-pages/artist-view/artist-view.component';
+import { AlbumsViewComponent } from './content-pages/album-views/album-collection-view/albums-view.component';
+import { ArtistsViewComponent } from './content-pages/artist-views/artist-collection-view/artists-view.component';
 import { TopNavComponent } from './content-home/top-nav/top-nav.component';
 import { LeftNavComponent } from './content-home/left-nav/left-nav.component';
 import { RightNavComponent } from './content-home/right-nav/right-nav.component';
@@ -23,7 +21,7 @@ import { PlaylistViewComponent } from './content-pages/playlist-view/playlist-vi
 import { SongViewComponent } from './content-pages/song-view/song-view.component';
 import { BrowseComponent } from './content-pages/browse/browse.component';
 import { SongItemComponent } from './content-pages/song-view/song-item/song-item.component';
-import { AlbumItemComponent } from './content-pages/album-view/album-item/album-item.component';
+import { AlbumItemComponent } from './content-pages/album-views/album-collection-view/album-item/album-item.component';
 
 import { AlbumService } from './services/album.service';
 import { ArtistService } from './services/artist.service';
@@ -34,8 +32,8 @@ import { PlaylistService } from './services/playlist.service';
 import { SessionService } from './services/session.service';
 import { SongService } from './services/song.service';
 import { UserService } from './services/user.service';
-import { AlbumDetailComponent } from './content-pages/album-view/album-detail/album-detail.component';
-import { AlbumSongComponent } from './content-pages/album-view/album-detail/album-song/album-song.component';
+import { AlbumDetailComponent } from './content-pages/album-views/single-album-view/album-detail.component';
+import { AlbumSongComponent } from './content-pages/album-views/single-album-view/album-song/album-song.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +42,7 @@ import { AlbumSongComponent } from './content-pages/album-view/album-detail/albu
     RegistrationComponent,
     PageNotFoundComponent,
     RecoverPasswordComponent,
-    AlbumViewComponent,
+    AlbumsViewComponent,
     ArtistViewComponent,
     TopNavComponent,
     LeftNavComponent,
