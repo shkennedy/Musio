@@ -3,3 +3,31 @@
   height:80%;
   grid-template-columns: 10% 75% 15%;
 }
+
+.allign{
+  vertical-align: middle;
+}
+
+.round{
+  border-radius: 25px;
+}
+
+
+/* enable absolute positioning */
+.inner-addon {
+  position: relative;
+}
+
+/* style icon */
+.inner-addon .glyphicon {
+position: absolute;
+padding: 10px;
+pointer-events: none;
+}
+
+.left-addon .glyphicon  { left:  0px;}
+.left-addon input  { padding-left:  30px; }
+
+.greyd{
+  background-color:#f8f8f8
+}

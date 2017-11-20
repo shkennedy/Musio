@@ -1,8 +1,15 @@
-<div class="wrapper_horizontal">
-  <div><img style="max-width:50px;" src="assets/images/musioLogo3.png"></div>
+<div class="wrapper_horizontal allign">
+  <div><img style="max-height:50px; padding-left:3vw;" src="assets/images/musioLogo3.png"></div>
   <!-- Change this to if the user is premium -->
+
+  <form>
+    <div class="inner-addon left-addon">
+      <i class="glyphicon glyphicon-search"></i>
+      <input class="round" style=" min-width:200px; max-width:15vw;" type="text" placeholder="Search">
+    </div>
+  </form>
+
   <div *ngIf="button">
-    <button style="float:right;" (click)="goPremium()">Go Premium</button>
+    <button class="round greyd" (click)="goPremium()">Go Premium</button>
   </div>
-  <div></div>
 </div>

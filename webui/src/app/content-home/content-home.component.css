@@ -2,6 +2,7 @@
   height:10%;
   background-color:#ffffff;
   padding: 10px;
+  resize:none;
 }
 
 .bottom_bar{
@@ -10,10 +11,14 @@
 }
 .wrapper_horizontal{
   display:grid;
-  height:80%;
+  height:80vh;
   grid-template-columns: 10% 75% 15%;
 }
 
 .bottom_pad{
-  border-bottom:1pt solid #e0e0e0;
+  border-bottom:2pt solid #e0e0e0;
+}
+
+.left_nav{
+  border:1pt solid #e0e0e0;
 }
