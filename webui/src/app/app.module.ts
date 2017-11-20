@@ -1,9 +1,9 @@
-import { BrowserModule } from '@angular/platform-browser'
-import { NgModule } from '@angular/core'
-import { FormsModule } from '@angular/forms'
-import { HttpModule } from '@angular/http'
-import {HttpClientModule} from '@angular/common/http';
-import { AppRoutingModule} from './app-routing.module'
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
+import { AppRoutingModule } from './app-routing.module';
 
 //import { AuthGuard } from './auth-guard.service'
 
@@ -30,6 +30,7 @@ import { ArtistService } from './services/artist.service';
 import { FavoritesService } from './services/favorites.service';
 import { GenreService } from './services/genre.service';
 import { HttpRequestService } from './services/httpRequest.service';
+import { PlaylistService } from './services/playlist.service';
 import { SessionService } from './services/session.service';
 import { SongService } from './services/song.service';
 import { UserService } from './services/user.service';
@@ -72,6 +73,7 @@ import { AlbumSongComponent } from './content-pages/album-view/album-detail/albu
     FavoritesService,
     GenreService,
     HttpRequestService,
+    PlaylistService,
     SessionService,
     SongService,
     UserService

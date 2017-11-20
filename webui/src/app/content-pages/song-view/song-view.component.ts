@@ -1,14 +1,28 @@
 import { Component, OnInit } from '@angular/core';
-import { Song } from '../../models/song.model'
+import { Router } from '@angular/router';
+
+import { SongService } from '../../services/song.service';
+import { FavoritesService } from '../../services/favorites.service';
+
+import { Song } from '../../models/song.model';
+
 @Component({
   selector: 'app-song-view',
   templateUrl: './song-view.component.html',
   styleUrls: ['./song-view.component.css']
 })
 export class SongViewComponent implements OnInit {
-  private songs:Song[]
-  constructor()
-  {
+
+  model: {
+    songs: Song[]
+  };
+
+  constructor(
+    private router: Router,
+    private songService: SongService,
+    private favoritesService: FavoritesService
+  ) {}
+
     let s=new Song();
     s.song_name="song one";
     s.artist_name="singer boi";
@@ -31,7 +45,14 @@ export class SongViewComponent implements OnInit {
     s4.duration="2:34";
     this.songs=[s,s2,s3,s4];
   }
+  {
+  constructor()
+  private songs:Song[]
   ngOnInit() {
+    this.favoritesService.getFavoriteSongs()
+    .subscribe((songs: Song[]) => {
+      this.model.songs = songs;
+    });
   }
 
 }
