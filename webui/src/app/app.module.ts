@@ -6,23 +6,32 @@ import { AppRoutingModule} from './app-routing.module'
 
 //import { AuthGuard } from './auth-guard.service'
 
-import { AppComponent } from './app.component'
-import { LoginComponent } from './landing-pages/login/login.component'
-import { RegistrationComponent } from './landing-pages/registration/registration.component'
-import { PageNotFoundComponent } from './landing-pages/page-not-found/page-not-found.component'
-import { RecoverPasswordComponent } from './landing-pages/recover-password/recover-password.component'
-import { AlbumViewComponent } from './content-pages/album-view/album-view.component'
-import { ArtistViewComponent } from './content-pages/artist-view/artist-view.component'
-import { TopNavComponent } from './content-home/top-nav/top-nav.component'
-import { LeftNavComponent } from './content-home/left-nav/left-nav.component'
-import { RightNavComponent } from './content-home/right-nav/right-nav.component'
-import { AudioPlayerComponent } from './content-home/audio-player/audio-player.component'
-import { ContentHomeComponent } from './content-home/content-home.component'
-import { PlaylistViewComponent } from './content-pages/playlist-view/playlist-view.component'
-import { SongViewComponent } from './content-pages/song-view/song-view.component'
+import { AppComponent } from './app.component';
+import { LoginComponent } from './landing-pages/login/login.component';
+import { RegistrationComponent } from './landing-pages/registration/registration.component';
+import { PageNotFoundComponent } from './landing-pages/page-not-found/page-not-found.component';
+import { RecoverPasswordComponent } from './landing-pages/recover-password/recover-password.component';
+import { AlbumViewComponent } from './content-pages/album-view/album-view.component';
+import { ArtistViewComponent } from './content-pages/artist-view/artist-view.component';
+import { TopNavComponent } from './content-home/top-nav/top-nav.component';
+import { LeftNavComponent } from './content-home/left-nav/left-nav.component';
+import { RightNavComponent } from './content-home/right-nav/right-nav.component';
+import { AudioPlayerComponent } from './content-home/audio-player/audio-player.component';
+import { ContentHomeComponent } from './content-home/content-home.component';
+import { PlaylistViewComponent } from './content-pages/playlist-view/playlist-view.component';
+import { SongViewComponent } from './content-pages/song-view/song-view.component';
 import { BrowseComponent } from './content-pages/browse/browse.component';
 import { SongItemComponent } from './content-pages/song-view/song-item/song-item.component';
-import { AlbumItemComponent } from './content-pages/album-view/album-item/album-item.component'
+import { AlbumItemComponent } from './content-pages/album-view/album-item/album-item.component';
+
+import { AlbumService } from './services/album.service';
+import { ArtistService } from './services/artist.service';
+import { FavoritesService } from './services/favorites.service';
+import { GenreService } from './services/genre.service';
+import { HttpRequestService } from './services/httpRequest.service';
+import { SessionService } from './services/session.service';
+import { SongService } from './services/song.service';
+import { UserService } from './services/user.service';
 
 @NgModule({
   declarations: [
@@ -50,8 +59,17 @@ import { AlbumItemComponent } from './content-pages/album-view/album-item/album-
     HttpModule,
     AppRoutingModule
   ],
-  //services go here
-  providers: [],
+  //providers: [AuthGuard],
+  providers: [
+    AlbumService,
+    ArtistService,
+    FavoritesService,
+    GenreService,
+    HttpRequestService,
+    SessionService,
+    SongService,
+    UserService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
