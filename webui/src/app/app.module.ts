@@ -50,7 +50,7 @@ import { AlbumItemComponent } from './content-pages/album-view/album-item/album-
     HttpModule,
     AppRoutingModule
   ],
-  //providers: [AuthGuard],
+  //services go here
   providers: [],
   bootstrap: [AppComponent]
 })
