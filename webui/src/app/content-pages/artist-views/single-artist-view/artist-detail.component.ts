@@ -18,7 +18,7 @@ import { Song } from '../../../models/song.model';
 export class ArtistDetailComponent implements OnInit {
 
   //@Input() artistId: number;
-
+  private followed:boolean=false;
   private artist:Artist;
 
   constructor(
@@ -33,4 +33,5 @@ export class ArtistDetailComponent implements OnInit {
     //   this.artist = artist;
     // });
   }
+
 }

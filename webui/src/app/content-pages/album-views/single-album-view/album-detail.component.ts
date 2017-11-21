@@ -17,6 +17,7 @@ export class AlbumDetailComponent implements OnInit {
 
   //@Input() albumId: number;
   private fake:boolean = false;
+  private isFavorited:boolean;
   private album: Album;
 
   constructor(
@@ -41,5 +42,47 @@ export class AlbumDetailComponent implements OnInit {
     .subscribe((album: Album) => {
       this.album = album;
     });
-  }
+
+    this.favoritesService.getFavoriteAlbums()
+     .subscribe(
+     (albums: Album[]) => {
+       if (albums) {
+         this.isFavorited = albums.includes(this.album);
+       }
+     },
+     (error: any) => {
+       console.log(error);
+     });
+ }
+
+
+    favoriteAlbum() {
+      console.log("peanut");
+   this.favoritesService.addFavoriteAlbumById(this.album.id)
+     .subscribe(
+     (success: boolean) => {
+       this.isFavorited = true;
+       console.log("butter");
+     },
+     (error: any) => {
+       console.log(error);
+     }
+     );
+ }
+
+ unfavoriteAlbum() {
+   console.log("and");
+   this.favoritesService.removeFavoriteAlbumById(this.album.id)
+     .subscribe(
+     (success: boolean) => {
+       this.isFavorited = false;
+       console.log("plumbus");
+     },
+     (error: any) => {
+       console.log(error);
+     }
+     );
+ }
+
+
 }

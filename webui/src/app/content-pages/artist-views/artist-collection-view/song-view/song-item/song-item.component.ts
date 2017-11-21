@@ -1,10 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { SongService } from '../../../services/song.service';
-import { FavoritesService } from '../../../services/favorites.service';
+import { SongService } from '../../../../../services/song.service';
+import { FavoritesService } from '../../../../../services/favorites.service';
 
-import { Song } from '../../../models/song.model';
+import { Song } from '../../../../../models/song.model';
 
 @Component({
   selector: 'song-item',

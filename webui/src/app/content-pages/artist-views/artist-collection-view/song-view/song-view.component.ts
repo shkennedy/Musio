@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { SongService } from '../../services/song.service';
-import { FavoritesService } from '../../services/favorites.service';
+import { SongService } from '../../../../services/song.service';
+import { FavoritesService } from '../../../../services/favorites.service';
 
-import { Song } from '../../models/song.model';
-import { Artist } from '../../models/artist.model';
+import { Song } from '../../../../models/song.model';
+import { Artist } from '../../../../models/artist.model';
 
 @Component({
   selector: 'app-song-view',
