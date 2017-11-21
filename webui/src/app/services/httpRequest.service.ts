@@ -25,6 +25,7 @@ export class HttpRequestService {
         const url = HttpRequestService.BASE_URL + route + (id != -1)? '' : '/' + id;
         return this.http.get(url)
             .catch(function (error: any) {
+                console.log('error: ' + error);
                 return Observable.throw(error || 'Server error')
             });
     }
@@ -33,6 +34,7 @@ export class HttpRequestService {
         const url = HttpRequestService.BASE_URL + route + (id != -1)? '' : '/' + id;
         return this.http.post(url, JSON.stringify(body), {headers: this.getHeaders()})
             .catch(function (error: any) {
+                console.log('error: ' + error);
                 return Observable.throw(error || 'Server error')
             });
     }
@@ -41,6 +43,7 @@ export class HttpRequestService {
         const url = HttpRequestService.BASE_URL + route + (id != -1)? '' : '/' + id;
         return this.http.put(HttpRequestService.BASE_URL + url + '/' + id, JSON.stringify(body), {headers: this.getHeaders()})
             .catch(function (error: any) {
+                console.log('error: ' + error);
                 return Observable.throw(error || 'Server error')
             });
     }
@@ -49,6 +52,7 @@ export class HttpRequestService {
         const url = HttpRequestService.BASE_URL + route + (id != -1)? '' : '/' + id;
         return this.http.delete(HttpRequestService.BASE_URL + url + '/' + id, {headers: this.getHeaders()})
             .catch(function (error: any) {
+                console.log('error: ' + error);
                 return Observable.throw(error || 'Server error')
             });
     }

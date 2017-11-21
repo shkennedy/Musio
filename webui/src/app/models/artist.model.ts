@@ -1,17 +1,17 @@
-import { Album } from './album.model'
-import { Genre } from './genre.model'
-import { RelatedArtist } from './related_artist.model'
+import { Album } from './album.model';
+import { Genre } from './genre.model';
+import { GeoLocation } from './geoLocation.model';
+import { RelatedArtist } from './related_artist.model';
 
-export class Artist{
-  public artist_id: number;
-  public artist_name: string;
+export class Artist {
+  public id: number;
   public bio: string;
-  public albums: Album[];
-  public genres: Genre[];
-  public artist_banner: File;
-  //additional pictures for the bio section
-  public artist_pictures: File[];
-  public related_artists: RelatedArtist[];
-  public location: string;
-  public followers: number;
+  public mbid: string;
+  public name: string;
+  public sortName: string;
+  public website: string;
+  public musicLabel: User;
+  public geoLocation: GeoLocation;
+  public artistImage: File;
+  public backgroundArt: File;
 }

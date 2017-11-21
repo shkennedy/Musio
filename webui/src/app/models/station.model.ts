@@ -1,11 +1,5 @@
-import { User } from './user.model'
-import { Song } from './song.model'
 export class Station {
-  public playlist_id: number;
-  public playlist_name: string;
-  public owner: User;
-  public isPrivate: boolean;
-  public isCollaborative: boolean;
-  public songs: Song[];
-  public date_created: Date;
+  public id: number;
+  public name: string;
+  public numSongs: number;
 }

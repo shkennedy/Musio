@@ -1,4 +1,6 @@
-export class Genre{
-  public genre_id: number;
-  public genre_name: string;
+export class Genre {
+  public id: number;
+  public description: string;
+  public image: Image;
+  public name: string;
 }
