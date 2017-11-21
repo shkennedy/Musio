@@ -68,14 +68,25 @@ public class LoginController {
 									  @RequestParam(required=false) List<Integer> genres) {
 
 		ModelAndView modelAndView = new ModelAndView();
-		User userExists = userService.findUserByUsername(username);
-		
+
+		if(username.length() == 0) {
+			modelAndView.addObject("errorMessage", "Please provide a username.");
+			modelAndView.setViewName("registration");
+			return modelAndView;
+		}
+
+		User userExists = userService.findUserByUsername(username);		
 		if(userExists != null) {
 			modelAndView.addObject("errorMessage", "Username ("+username+") is already in use.");
 			modelAndView.setViewName("registration");
 			return modelAndView;
 		}
 
+		if(email.length() == 0) {
+			modelAndView.addObject("errorMessage", "Please provide an email.");
+			modelAndView.setViewName("registration");
+			return modelAndView;
+		}
 		if(password.length() == 0) {
 			modelAndView.addObject("errorMessage", "Please provide a password.");
 			modelAndView.setViewName("registration");
@@ -99,7 +110,6 @@ public class LoginController {
 		userService.createBasicUser(newUser);
 		modelAndView.addObject("registered", "Account has been registered!");
 		modelAndView.setViewName("login");	
-		
 		return modelAndView;
 	}
 
