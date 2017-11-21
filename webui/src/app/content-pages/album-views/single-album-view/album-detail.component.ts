@@ -14,8 +14,8 @@ import { Album } from '../../../models/album.model';
 })
 export class AlbumDetailComponent implements OnInit {
 
-  @Input() albumId: number;
-
+  //@Input() albumId: number;
+  private fake:boolean=true;
   private album: Album;
 
   constructor(
@@ -25,9 +25,9 @@ export class AlbumDetailComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.albumService.getAlbumById(this.albumId)
-    .subscribe((album: Album) => {
-      this.album = album;
-    });
+    // this.albumService.getAlbumById(this.albumId)
+    // .subscribe((album: Album) => {
+    //   this.album = album;
+    // });
   }
 }

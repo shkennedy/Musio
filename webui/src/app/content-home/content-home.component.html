@@ -1,33 +1,18 @@
-<div class="top_bar bottom_pad">
-  <app-top-nav></app-top-nav>
-</div>
-<div class="wrapper_horizontal">
-  <div><app-left-nav></app-left-nav></div>
-  <div><router-outlet></router-outlet></div>
-  <div><app-right-nav></app-right-nav></div>
-</div>
-<div class="bottom_bar" style="padding-top:15px;"><app-audio-player></app-audio-player></div>
+<app-top-nav></app-top-nav>
 
-<!-- <div class="wrapperVertical">
-  <div>
-    <app-top-nav></app-top-nav>
-  </div>
+<div class="container-fluid text-center main-container">
+  <div class="row main-row" style="max-width:100%">
 
-  <div class="wrapperHorizontal">
-    <div>
       <app-left-nav></app-left-nav>
-    </div>
 
-    <div>
-      <router-outlet></router-outlet>
-    </div>
+      <div class="col-sm-8 text-left content-container style-1">
+        <router-outlet></router-outlet>
+      </div>
 
-    <div>
       <app-right-nav></app-right-nav>
-    </div>
+
   </div>
 
-  <div>
-    <app-audio-player></app-audio-player>
-  </div>
-</div> -->
+<app-audio-player></app-audio-player>
+
+</div>

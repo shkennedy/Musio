@@ -1,0 +1,321 @@
+.tabs1 {
+      left: 50%;
+      -webkit-transform: translateX(-50%);
+      transform: translateX(-50%);
+      position: relative;
+      background: none;
+      padding: 20px;
+      padding-bottom: 80px;
+      width: 100%;
+      height: 100%;
+      box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+      border-radius: 5px;
+      min-width: 240px;
+    }
+
+    .tabs1 input[name="tab-control"] { display: none; }
+
+    .tabs1 .content section h2, .tabs1 ul li label {
+      font-weight: bold;
+      font-size: 14px;
+      color: #FFFFFF;
+      margin: 0;
+
+    }
+
+    .tabs1 ul {
+      list-style-type: none;
+      padding-left: 0;
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-orient: horizontal;
+      -webkit-box-direction: normal;
+      -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+      flex-direction: row;
+      margin-bottom: 10px;
+      -webkit-box-pack: justify;
+      -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+      justify-content: space-between;
+      -webkit-box-align: end;
+      -webkit-align-items: flex-end;
+      -ms-flex-align: end;
+      align-items: flex-end;
+      -webkit-flex-wrap: wrap;
+      -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+    }
+
+    .tabs1 ul li {
+      box-sizing: border-box;
+      -webkit-box-flex: 1;
+      -webkit-flex: 1;
+      -ms-flex: 1;
+      flex: 1;
+      width: 25%;
+      padding: 0 10px;
+      text-align: center;
+    }
+
+    .tabs1 ul li label {
+      -webkit-transition: all 0.3s ease-in-out;
+      transition: all 0.3s ease-in-out;
+      color: #CACACA;
+      padding: 5px auto;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: block;
+      cursor: pointer;
+      -webkit-transition: all 0.2s ease-in-out;
+      transition: all 0.2s ease-in-out;
+      white-space: nowrap;
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      text-transform: uppercase;
+    }
+
+    .tabs1 ul li label br { display: none; }
+
+    .tabs1 ul li label svg {
+      fill: #929daf;
+      height: 1.2em;
+      vertical-align: bottom;
+      margin-right: 0.2em;
+      -webkit-transition: all 0.2s ease-in-out;
+      transition: all 0.2s ease-in-out;
+    }
+
+    .tabs1 ul li label:hover, .tabs1 ul li label:focus, .tabs1 ul li label:active {
+      outline: 0;
+      color: #bec5cf;
+    }
+
+    .tabs1 ul li label:hover svg, .tabs1 ul li label:focus svg, .tabs1 ul li label:active svg { fill: #bec5cf; }
+
+    .tabs1 .slider {
+      position: relative;
+      width: 33.33%;
+      -webkit-transition: all 0.33s cubic-bezier(0.38, 0.8, 0.32, 1.07);
+      transition: all 0.33s cubic-bezier(0.38, 0.8, 0.32, 1.07);
+    }
+
+    .tabs1 .slider .indicator {
+      /* position: relative; */
+      width: 50px;
+      max-width: 100%;
+      margin: 0 auto;
+      height: 2px;
+      background: #1db954;
+      border-radius: 1px;
+    }
+
+    .tabs1 .content { margin-top: 30px; }
+
+    .tabs1 .content section {
+      display: none;
+      -webkit-animation-name: content;
+      animation-name: content;
+      -webkit-animation-direction: normal;
+      animation-direction: normal;
+      -webkit-animation-duration: 0.3s;
+      animation-duration: 0.3s;
+      -webkit-animation-timing-function: ease-in-out;
+      animation-timing-function: ease-in-out;
+      -webkit-animation-iteration-count: 1;
+      animation-iteration-count: 1;
+      line-height: 1.4;
+    }
+
+    .tabs1 .content section h2 {
+      color: #FFFFFF;
+      display: none;
+    }
+
+    .tabs1 .content section h2::after {
+      content: "";
+      position: relative;
+      display: block;
+      width: 30px;
+      height: 3px;
+      background: #FFFFFF;
+      margin-top: 5px;
+      left: 1px;
+    }
+
+    .tabs1 input[name="tab-control"]:nth-of-type(1):checked ~ ul > li:nth-child(1) > label {
+      cursor: default;
+      color: #FFFFFF;
+    }
+
+    .tabs1 input[name="tab-control"]:nth-of-type(1):checked ~ ul > li:nth-child(1) > label svg { fill: #FFFFFF; }
+    @media (max-width: 600px) {
+
+    .tabs1 input[name="tab-control"]:nth-of-type(1):checked ~ ul > li:nth-child(1) > label { background: rgba(0, 0, 0, 0.08); }
+    }
+
+    .tabs1 input[name="tab-control"]:nth-of-type(1):checked ~ .slider {
+      -webkit-transform: translateX(0%);
+      transform: translateX(0%);
+    }
+
+    .tabs1 input[name="tab-control"]:nth-of-type(1):checked ~ .content > section:nth-child(1) { display: block; }
+
+    .tabs1 input[name="tab-control"]:nth-of-type(2):checked ~ ul > li:nth-child(2) > label {
+      cursor: default;
+      color: #FFFFFF;
+    }
+
+    .tabs1 input[name="tab-control"]:nth-of-type(2):checked ~ ul > li:nth-child(2) > label svg { fill: #FFFFFF; }
+    @media (max-width: 600px) {
+
+    .tabs1 input[name="tab-control"]:nth-of-type(2):checked ~ ul > li:nth-child(2) > label { background: rgba(0, 0, 0, 0.08); }
+    }
+
+    .tabs1 input[name="tab-control"]:nth-of-type(2):checked ~ .slider {
+      -webkit-transform: translateX(100%);
+      transform: translateX(100%);
+    }
+
+    .tabs1 input[name="tab-control"]:nth-of-type(2):checked ~ .content > section:nth-child(2) { display: block; }
+
+    .tabs1 input[name="tab-control"]:nth-of-type(3):checked ~ ul > li:nth-child(3) > label {
+      cursor: default;
+      color: #FFFFFF;
+    }
+
+    .tabs1 input[name="tab-control"]:nth-of-type(3):checked ~ ul > li:nth-child(3) > label svg { fill: #FFFFFF; }
+    @media (max-width: 600px) {
+
+    .tabs1 input[name="tab-control"]:nth-of-type(3):checked ~ ul > li:nth-child(3) > label { background: rgba(0, 0, 0, 0.08); }
+    }
+
+    .tabs1 input[name="tab-control"]:nth-of-type(3):checked ~ .slider {
+      -webkit-transform: translateX(200%);
+      transform: translateX(200%);
+    }
+
+    .tabs1 input[name="tab-control"]:nth-of-type(3):checked ~ .content > section:nth-child(3) { display: block; }
+
+    .tabs1 input[name="tab-control"]:nth-of-type(4):checked ~ ul > li:nth-child(4) > label {
+      cursor: default;
+      color: #FFFFFF;
+    }
+
+    .tabs1 input[name="tab-control"]:nth-of-type(4):checked ~ ul > li:nth-child(4) > label svg { fill: #FFFFFF; }
+    @media (max-width: 600px) {
+
+    .tabs1 input[name="tab-control"]:nth-of-type(4):checked ~ ul > li:nth-child(4) > label { background: rgba(0, 0, 0, 0.08); }
+    }
+
+    .tabs1 input[name="tab-control"]:nth-of-type(4):checked ~ .slider {
+      -webkit-transform: translateX(300%);
+      transform: translateX(300%);
+    }
+
+    .tabs1 input[name="tab-control"]:nth-of-type(4):checked ~ .content > section:nth-child(4) { display: block; }
+    @-webkit-keyframes
+    content {  from {
+     opacity: 0;
+     -webkit-transform: translateY(5%);
+     transform: translateY(5%);
+    }
+
+    to {
+      opacity: 1;
+      -webkit-transform: translateY(0%);
+      transform: translateY(0%);
+    }
+    }
+    @keyframes
+    content {  from {
+     opacity: 0;
+     -webkit-transform: translateY(5%);
+     transform: translateY(5%);
+    }
+
+    to {
+      opacity: 1;
+      -webkit-transform: translateY(0%);
+      transform: translateY(0%);
+    }
+    }
+    @media (max-width: 1000px) {
+
+    .tabs1 ul li label { white-space: initial; }
+
+    .tabs1 ul li label br { display: initial; }
+
+    .tabs1 ul li label svg { height: 1.5em; }
+    }
+    @media (max-width: 600px) {
+
+    .tabs1 ul li label {
+      padding: 5px;
+      border-radius: 5px;
+    }
+
+    .tabs1 ul li label span { display: none; }
+
+    .tabs1 .slider { display: none; }
+
+    .tabs1 .content { margin-top: 20px; }
+
+    .tabs1 .content section h2 { display: block; }
+    }
+
+    .popular-song-table{
+      color: #f1f2f2;
+      font-weight: lighter;
+
+     }
+
+     .popular-song-table > thead > tr > th{
+       padding-left: 60px;
+       text-transform: uppercase;
+       font-size: 15px;
+       font-weight: lighter;
+       border-bottom: none !important;
+     }
+     .popular-song-table > tbody > tr > td, .popular-song-table > tbody > tr > th{
+       padding: 10px 0 10px 60px;
+      /* text-align: center; */
+
+       border-top: 1px solid #282828 !important;
+       font-weight: lighter;
+     }
+
+     .cover-box-right{
+       padding: 30px 20px 20px 20px;
+       text-align: center;
+       /* width: 100%; */
+       /* min-width: 400px !important; */
+     }
+     .cover-box-left{
+      min-width: 250px;
+    }
+
+    .artist-card{
+      text-align: center;
+      margin: 15px;
+      width: 200px;
+
+    }
+    .artist-card > img{
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+    }
+
+    .artist-card > p{
+      width: 200px;
+      text-align: center;
+      text-transform: uppercase;
+      font-weight: 400;
+      padding-top: 15px;
+    }

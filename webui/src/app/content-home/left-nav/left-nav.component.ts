@@ -20,12 +20,17 @@ export class LeftNavComponent implements OnInit {
     private playlistService: PlaylistService
   ) {
     // sample data
-    // let p=new Playlist();
-    // p.name="playlist1";
-    // p.id=1;
-    // this.playlists=[p];
+    let p=new Playlist();
+    p.name="playlist1";
+    p.id=1;
+    this.playlists=[p];
   }
 
   ngOnInit() {
+  }
+
+  navigatePlaylist(playlistId:number)
+  {
+    this.router.navigate(['/playlist',playlistId]);
   }
 }

@@ -2,6 +2,7 @@ import { Album } from './album.model';
 import { Genre } from './genre.model';
 import { GeoLocation } from './geoLocation.model';
 import { RelatedArtist } from './related_artist.model';
+import { User } from './user.model'
 
 export class Artist {
   public id: number;

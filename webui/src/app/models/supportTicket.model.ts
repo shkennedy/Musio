@@ -1,4 +1,4 @@
-import { User } from './user.model.ts';
+import { User } from './user.model';
 
 export class SupportTicket {
     public id: number;

@@ -23,9 +23,9 @@ export class PlaylistsViewComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.favoritesService.getFavoritePlaylists()
-    .subscribe((playlists: Playlist[]) => {
-      this.playlists = playlists;
-    });
+    // this.favoritesService.getFavoritePlaylists()
+    // .subscribe((playlists: Playlist[]) => {
+    //   this.playlists = playlists;
+    // });
   }
 }

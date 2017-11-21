@@ -22,10 +22,11 @@ export class HttpRequestService {
     ) { }
 
     public get(route: string, id: number = -1): Observable<ApiResponse> {
+      console.log(route);
         const url = HttpRequestService.BASE_URL + route + (id != -1)? '' : '/' + id;
+        console.log(url);
         return this.http.get(url)
             .catch(function (error: any) {
-                console.log('error: ' + error);
                 return Observable.throw(error || 'Server error')
             });
     }

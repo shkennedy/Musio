@@ -1,3 +1,4 @@
+import * as $ from 'jquery';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -21,10 +22,13 @@ import { RightNavComponent } from './content-home/right-nav/right-nav.component'
 import { AudioPlayerComponent } from './content-home/audio-player/audio-player.component';
 import { ContentHomeComponent } from './content-home/content-home.component';
 import { PlaylistsViewComponent } from './content-pages/playlist-views/playlist-collection-view/playlists-view.component';
+import { PlaylistViewComponent } from './content-pages/playlist-views/single-playlist-view/playlist-view.component';
 import { SongViewComponent } from './content-pages/song-view/song-view.component';
 import { BrowseComponent } from './content-pages/browse/browse.component';
 import { SongItemComponent } from './content-pages/song-view/song-item/song-item.component';
 import { AlbumItemComponent } from './content-pages/album-views/album-collection-view/album-item/album-item.component';
+import { RadioViewComponent } from './content-pages/radio-view/radio-view.component';
+import { GoPremiumComponent } from './content-pages/go-premium/go-premium.component';
 
 import { AlbumService } from './services/album.service';
 import { ArtistService } from './services/artist.service';
@@ -51,12 +55,15 @@ import { UserService } from './services/user.service';
     AudioPlayerComponent,
     ContentHomeComponent,
     PlaylistsViewComponent,
+    PlaylistViewComponent,
     SongViewComponent,
     BrowseComponent,
     SongItemComponent,
     AlbumItemComponent,
     AlbumDetailComponent,
-    AlbumSongComponent
+    AlbumSongComponent,
+    RadioViewComponent,
+    GoPremiumComponent
   ],
   imports: [
     BrowserModule,

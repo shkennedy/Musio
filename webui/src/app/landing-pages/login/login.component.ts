@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { NgForm } from '@angular/forms';
 
+import { SongService } from '../../services/song.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -8,7 +10,9 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router,
+    private songService: SongService
+  ) { }
 
   ngOnInit() {
     //previous function
@@ -17,9 +21,12 @@ export class LoginComponent implements OnInit {
     html.setAttribute("style", "--global-screen-height: " + (screenheight) + "px");
   }
 
-  onLogIn() {
-    console.log("No DB exists. Log in accepted");
-    this.router.navigate(['/']);
+  onLogIn(form:NgForm) {
+    const value=form.value;
+    this.songService.getSongById(2)
+    .subscribe((song: any) => {
+      console.log('worked');
+    });
   }
 
 }

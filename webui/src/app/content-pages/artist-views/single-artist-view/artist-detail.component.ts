@@ -17,7 +17,7 @@ import { Song } from '../../../models/song.model';
 })
 export class ArtistDetailComponent implements OnInit {
 
-  @Input() artistId: number;
+  //@Input() artistId: number;
 
   private artist:Artist;
 
@@ -28,9 +28,9 @@ export class ArtistDetailComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.artistService.getArtistById(this.artistId)
-    .subscribe((artist: Artist) => {
-      this.artist = artist;
-    });
+    // this.artistService.getArtistById(this.artistId)
+    // .subscribe((artist: Artist) => {
+    //   this.artist = artist;
+    // });
   }
 }

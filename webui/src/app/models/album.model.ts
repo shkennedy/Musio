@@ -7,7 +7,7 @@ export class Album {
   public title: string;
   public artists: Artist[];
   public songs: Song[];
-  public albumArtId: int;
+  public albumArtId: number;
   private mbid: string;
   public releaseDate: Date;
 }

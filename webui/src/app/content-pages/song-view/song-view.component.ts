@@ -20,11 +20,6 @@ export class SongViewComponent implements OnInit {
     private songService: SongService,
     private favoritesService: FavoritesService
   ) {
-    // let s=new Song();
-    // s.song_name="song one";
-    // s.artist_name="singer boi";
-    // s.album_name="greatest hit";
-    // s.duration="2:34";
   }
 
   ngOnInit() {

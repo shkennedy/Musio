@@ -1,3 +1,4 @@
+import { Image } from './image.model'
 export class Genre {
   public id: number;
   public description: string;

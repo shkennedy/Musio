@@ -17,7 +17,17 @@ export class TopNavComponent implements OnInit {
   }
 
   goPremium() {
-    
+
+  }
+
+  clickedAbout()
+  {
+    console.log("clicked About");
+  }
+
+  clickedContact()
+  {
+    console.log("clicked contact");
   }
 
 }

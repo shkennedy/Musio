@@ -10,5 +10,19 @@
 </head>
 <body>
   <app-root></app-root>
+
+  <script>
+    function setColumnHeight() {
+      var screenheight = window.innerHeight;
+      var html = document.getElementsByTagName('html')[0];
+      console.log( document.getElementsByTagName('html')[0]);
+      html.setAttribute("style", "--screen-height: " + (screenheight - 108) + "px");
+      // html.setAtribute("style", "--global-screen-height: " + (screenheight) + "px");
+    }
+
+
+    setColumnHeight();
+
+  </script>
 </body>
 </html>
