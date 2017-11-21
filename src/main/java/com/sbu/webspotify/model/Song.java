@@ -13,28 +13,19 @@ import javax.persistence.*;
 public class Song implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int id;
-
-	@Column(name="audio_id")
-	private Audio audio;
-
-	private int duration;
-
+	private int    id;
+	private Audio  audio;
+	private int    duration;
 	private String lyrics;
-
 	private String mbid;
-
 	private String title;
-
-	//bi-directional many-to-one association to Artist
-	@ManyToOne
 	private Artist artist;
 
 	public Song() {
 	}
 
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	public int getId() {
 		return this.id;
 	}
@@ -43,11 +34,12 @@ public class Song implements Serializable {
 		this.id = id;
 	}
 
-	public Audio getAudioId() {
+	@Column(name="audio_id")
+	public Audio getAudio() {
 		return this.audio;
 	}
 
-	public void setAudioId(Audio audioId) {
+	public void setAudio(Audio audioId) {
 		this.audio = audioId;
 	}
 
@@ -83,6 +75,7 @@ public class Song implements Serializable {
 		this.title = title;
 	}
 
+	@ManyToOne
 	public Artist getArtist() {
 		return this.artist;
 	}

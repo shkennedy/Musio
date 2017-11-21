@@ -19,8 +19,8 @@ public class SearchController
 
     @RequestMapping(value = "/search", method = RequestMethod.GET, headers = "Accept=application/json")
     public @ResponseBody ApiResponseObject getSong(@RequestParam("query") String query) {
-        SearchResults r = searchService.executeSearch(query);
-        return new ApiResponseObject(true, null, r);
+        SearchResults results = searchService.executeSearch(query);
+        return new ApiResponseObject(true, null, results);
     }
 
 }

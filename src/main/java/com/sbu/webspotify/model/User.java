@@ -29,129 +29,25 @@ import javax.persistence.NamedQuery;
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int id;
-
-	private String email;
-
-	@Transient
-	@JsonIgnore
-	private String password;
-
-	private String username;
-
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-	private Set<Role> roles;
-
-	@ManyToMany(fetch=FetchType.EAGER)
-	@JoinTable(
-		name="user_favorite_song"
-		, joinColumns={
-			@JoinColumn(name="user_id")
-			}
-		, inverseJoinColumns={
-			@JoinColumn(name="song_id")
-			}
-	)
-	@JsonManagedReference
-	private Set<Song> favoriteSongs;
-
-	@ManyToMany(fetch=FetchType.EAGER)
-	@JoinTable(
-		name="user_favorite_playlist"
-		, joinColumns={
-			@JoinColumn(name="user_id")
-			}
-		, inverseJoinColumns={
-			@JoinColumn(name="playlist_id")
-			}
-	)
-	@JsonManagedReference
+	private int           id;
+	private String        email;
+	private String        password;
+	private String        username;
+	private Set<Role>     roles;
+	private Set<Song>     favoriteSongs;
 	private Set<Playlist> favoritePlaylists;
-
-	@ManyToMany(fetch=FetchType.EAGER)
-	@JoinTable(
-		name="user_favorite_album"
-		, joinColumns={
-			@JoinColumn(name="user_id")
-			}
-		, inverseJoinColumns={
-			@JoinColumn(name="album_id")
-			}
-	)
-	@JsonManagedReference
-	private Set<Album> favoriteAlbums;
-
-	@ManyToMany(fetch=FetchType.EAGER)
-	@JoinTable(
-		name="user_favorite_artist"
-		, joinColumns={
-			@JoinColumn(name="user_id")
-			}
-		, inverseJoinColumns={
-			@JoinColumn(name="artist_id")
-			}
-	)
-	@JsonManagedReference
-	private Set<Artist> favoriteArtists;
-
-	@ManyToMany(fetch=FetchType.EAGER)
-	@JoinTable(
-		name="user_favorite_station"
-		, joinColumns={
-			@JoinColumn(name="user_id")
-			}
-		, inverseJoinColumns={
-			@JoinColumn(name="station_id")
-			}
-	)
-	@JsonManagedReference
-	private Set<Station> favoriteStations;
-
-	@ManyToMany(fetch=FetchType.EAGER)
-	@JoinTable(
-		name="user_favorite_genre"
-		, joinColumns={
-			@JoinColumn(name="user_id")
-			}
-		, inverseJoinColumns={
-			@JoinColumn(name="genre_id")
-			}
-	)
-	@JsonManagedReference
-	private Set<Genre> favoriteGenres;
-
-	@ManyToMany(fetch=FetchType.EAGER)
-	@JoinTable(
-		name="user_following_user"
-		, joinColumns={
-			@JoinColumn(name="follower")
-			}
-		, inverseJoinColumns={
-			@JoinColumn(name="user_being_followed")
-			}
-	)
-	@JsonManagedReference
-	private Set<User> followedUsers;
-
-	//many-to-one association to GeoLocation
-	@ManyToOne
-	@JoinColumn(name="geo_location_id")
-	private GeoLocation geoLocation;
-
-	@ManyToOne
-	@JoinColumn(name="profile_image_id")
-	private File profileImage;
+	private Set<Album>    favoriteAlbums;
+	private Set<Artist>   favoriteArtists;
+	private Set<Station>  favoriteStations;
+	private Set<Genre>    favoriteGenres;
+	private Set<User>     followedUsers;
+    private GeoLocation   geoLocation;
+	private File 		  profileImage;
 
 	public User() {
 	}
 
-	public void addGenreToFavories(Genre g) {
-		// if(this.favoriteGenres.contains(g)){
-		// 	return;
-		// }
+	public void addGenreToFavorites(Genre g) {
 		this.favoriteGenres.add(g);
 	}
 
@@ -159,7 +55,7 @@ public class User implements Serializable {
 		return this.favoriteGenres.remove(g);
 	}
 
-	public void addSongToFavories(Song s) {
+	public void addSongToFavorites(Song s) {
 		this.favoriteSongs.add(s);
 	}
 
@@ -167,7 +63,7 @@ public class User implements Serializable {
 		return this.favoriteSongs.remove(s);
 	}
 
-	public void addAlbumToFavories(Album a) {
+	public void addAlbumToFavorites(Album a) {
 		this.favoriteAlbums.add(a);
 	}
 
@@ -175,7 +71,7 @@ public class User implements Serializable {
 		return this.favoriteAlbums.remove(a);
 	}
 
-	public void addArtistToFavories(Artist a) {
+	public void addArtistToFavorites(Artist a) {
 		this.favoriteArtists.add(a);
 	}
 
@@ -183,7 +79,7 @@ public class User implements Serializable {
 		return this.favoriteArtists.remove(a);
 	}
 
-	public void addPlaylistToFavories(Playlist p) {
+	public void addPlaylistToFavorites(Playlist p) {
 		this.favoritePlaylists.add(p);
 	}
 
@@ -199,6 +95,8 @@ public class User implements Serializable {
 		return this.followedUsers.remove(u);
 	}
 
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	public int getId() {
 		return this.id;
 	}
@@ -215,6 +113,8 @@ public class User implements Serializable {
 		this.email = email;
 	}
 
+	@Transient
+	@JsonIgnore
 	public String getPassword() {
 		return this.password;
 	}
@@ -223,6 +123,8 @@ public class User implements Serializable {
 		this.password = password;
 	}
 
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	public Set<Role> getRoles() {
 		return roles;
 	}
@@ -239,6 +141,8 @@ public class User implements Serializable {
 		this.username = username;
 	}
 
+	@ManyToOne
+	@JoinColumn(name="profile_image_id")
 	public File getProfileImage() {
 		return this.profileImage;
 	}
@@ -247,6 +151,17 @@ public class User implements Serializable {
 		this.profileImage = profileImage;
 	}
 
+	@ManyToMany(fetch=FetchType.EAGER)
+	@JoinTable(
+		name="user_favorite_song"
+		, joinColumns={
+			@JoinColumn(name="user_id")
+			}
+		, inverseJoinColumns={
+			@JoinColumn(name="song_id")
+			}
+	)
+	@JsonManagedReference
 	public Set<Song> getFavoriteSongs() {
 		return favoriteSongs;
 	}
@@ -255,6 +170,17 @@ public class User implements Serializable {
 		this.favoriteSongs = favoriteSongs;
 	}
 
+	@ManyToMany(fetch=FetchType.EAGER)
+	@JoinTable(
+		name="user_favorite_playlist"
+		, joinColumns={
+			@JoinColumn(name="user_id")
+			}
+		, inverseJoinColumns={
+			@JoinColumn(name="playlist_id")
+			}
+	)
+	@JsonManagedReference
 	public Set<Playlist> getFavoritePlaylists() {
 		return favoritePlaylists;
 	}
@@ -263,6 +189,17 @@ public class User implements Serializable {
 		this.favoritePlaylists = favoritePlaylists;
 	}
 
+	@ManyToMany(fetch=FetchType.EAGER)
+	@JoinTable(
+		name="user_favorite_album"
+		, joinColumns={
+			@JoinColumn(name="user_id")
+			}
+		, inverseJoinColumns={
+			@JoinColumn(name="album_id")
+			}
+	)
+	@JsonManagedReference
 	public Set<Album> getFavoriteAlbums() {
 		return favoriteAlbums;
 	}
@@ -271,6 +208,17 @@ public class User implements Serializable {
 		this.favoriteAlbums = favoriteAlbums;
 	}
 
+	@ManyToMany(fetch=FetchType.EAGER)
+	@JoinTable(
+		name="user_favorite_artist"
+		, joinColumns={
+			@JoinColumn(name="user_id")
+			}
+		, inverseJoinColumns={
+			@JoinColumn(name="artist_id")
+			}
+	)
+	@JsonManagedReference
 	public Set<Artist> getFavoriteArtists() {
 		return favoriteArtists;
 	}
@@ -279,6 +227,17 @@ public class User implements Serializable {
 		this.favoriteArtists = favoriteArtists;
 	}
 
+	@ManyToMany(fetch=FetchType.EAGER)
+	@JoinTable(
+		name="user_favorite_station"
+		, joinColumns={
+			@JoinColumn(name="user_id")
+			}
+		, inverseJoinColumns={
+			@JoinColumn(name="station_id")
+			}
+	)
+	@JsonManagedReference
 	public Set<Station> getFavoriteStations() {
 		return favoriteStations;
 	}
@@ -287,6 +246,17 @@ public class User implements Serializable {
 		this.favoriteStations = favoriteStations;
 	}
 
+	@ManyToMany(fetch=FetchType.EAGER)
+	@JoinTable(
+		name="user_favorite_genre"
+		, joinColumns={
+			@JoinColumn(name="user_id")
+			}
+		, inverseJoinColumns={
+			@JoinColumn(name="genre_id")
+			}
+	)
+	@JsonManagedReference
 	public Set<Genre> getFavoriteGenres() {
 		return favoriteGenres;
 	}
@@ -295,6 +265,17 @@ public class User implements Serializable {
 		this.favoriteGenres = favoriteGenres;
 	}
 
+	@ManyToMany(fetch=FetchType.EAGER)
+	@JoinTable(
+		name="user_following_user"
+		, joinColumns={
+			@JoinColumn(name="follower")
+			}
+		, inverseJoinColumns={
+			@JoinColumn(name="user_being_followed")
+			}
+	)
+	@JsonManagedReference
 	public Set<User> getFollowedUsers() {
 		return this.followedUsers;
 	}
@@ -303,6 +284,8 @@ public class User implements Serializable {
 		this.followedUsers = followedUsers;
 	}
 
+	@ManyToOne
+	@JoinColumn(name="geo_location_id")
 	public GeoLocation getGeoLocation() {
 		return this.geoLocation;
 	}

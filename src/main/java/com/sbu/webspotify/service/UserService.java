@@ -85,7 +85,7 @@ public class UserService {
 			response.setMessage("No song with id "+songId+" found.");
 			return response;
 		}
-		user.addSongToFavories(s);
+		user.addSongToFavorites(s);
 		persistUser(user);
 		response.setSuccess(true);
 		return response;
@@ -117,7 +117,7 @@ public class UserService {
 			response.setMessage("No album with id "+albumId+" found.");
 			return response;
 		}
-		user.addAlbumToFavories(a);
+		user.addAlbumToFavorites(a);
 		persistUser(user);
 		response.setSuccess(true);
 		return response;
@@ -149,7 +149,7 @@ public class UserService {
 			response.setMessage("No artist with id "+artistId+" found.");
 			return response;
 		}
-		user.addArtistToFavories(a);
+		user.addArtistToFavorites(a);
 		persistUser(user);
 		response.setSuccess(true);
 		return response;
@@ -217,7 +217,7 @@ public class UserService {
 			response.setMessage("No playlist with id "+playlistId+" found.");
 			return response;
 		}
-		user.addPlaylistToFavories(p);
+		user.addPlaylistToFavorites(p);
 		persistUser(user);
 		response.setSuccess(true);
 		return response;
@@ -249,7 +249,7 @@ public class UserService {
 			response.setMessage("No genre with id "+genreId+" found.");
 			return response;
 		}
-		user.addGenreToFavories(g);
+		user.addGenreToFavorites(g);
 		persistUser(user);
 		response.setSuccess(true);
 		return response;

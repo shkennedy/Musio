@@ -14,39 +14,22 @@ import javax.persistence.*;
 public class Artist implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int id;
-
-	@Lob
-	private String bio;
-
-	private String mbid;
-
-	private String name;
-
-	@Column(name="sort_name")
-	private String sortName;
-
-	private String website;
-
-	@ManyToOne
-	@JoinColumn(name="music_label_user_id")
-	private User musicLabel;
-
-	@ManyToOne
-	@JoinColumn(name="geo_location_id")
+	private int         id;
+	private String      bio;
+	private String      mbid;
+	private String 	    name;
+	private String 	    sortName;
+	private String	    website;
+	private User 		musicLabel;
 	private GeoLocation geoLocation;
-
-	@Column(name="artist_art_id")
-	private File artistImage;
-
-	@Column(name="artist_art_background_id")
-	private File backgroundArt;
+	private File 		artistImage;
+	private File 		backgroundArt;
 
 	public Artist() {
 	}
 
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	public int getId() {
 		return this.id;
 	}
@@ -55,6 +38,7 @@ public class Artist implements Serializable {
 		this.id = id;
 	}
 	
+	@Lob
 	public String getBio() {
 		return this.bio;
 	}
@@ -79,6 +63,7 @@ public class Artist implements Serializable {
 		this.name = name;
 	}
 
+	@Column(name="sort_name")
 	public String getSortName() {
 		return this.sortName;
 	}
@@ -95,14 +80,18 @@ public class Artist implements Serializable {
 		this.website = website;
 	}
 
-	public User getUser() {
+	@ManyToOne
+	@JoinColumn(name="music_label_user_id")
+	public User getMusicLabel() {
 		return this.musicLabel;
 	}
 
-	public void setUser(User user) {
+	public void setMusicLabel(User user) {
 		this.musicLabel = user;
 	}
 
+	@ManyToOne
+	@JoinColumn(name="geo_location_id")
 	public GeoLocation getGeoLocation() {
 		return this.geoLocation;
 	}
@@ -115,6 +104,7 @@ public class Artist implements Serializable {
 		this.backgroundArt = backgroundArt;
 	}
 
+	@Column(name="artist_art_background_id")
 	public File getBackgroundArt() {
 		return this.backgroundArt;
 	}
@@ -123,6 +113,7 @@ public class Artist implements Serializable {
 		this.artistImage = artistImage;
 	}
 
+	@Column(name="artist_art_id")
 	public File getArtistImage() {
 		return this.artistImage;
 	}

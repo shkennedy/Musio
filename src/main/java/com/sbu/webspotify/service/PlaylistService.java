@@ -34,7 +34,7 @@ public class PlaylistService {
 
 	public Playlist createPlaylist(Playlist playlist, User user) {
         playlist.setOwner(user);
-        user.addPlaylistToFavories(playlist);
+        user.addPlaylistToFavorites(playlist);
         userService.persistUser(user);
         return playlist;
 	}

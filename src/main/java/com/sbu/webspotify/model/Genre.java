@@ -14,21 +14,16 @@ import javax.persistence.*;
 public class Genre implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int id;
-
-	@Lob
+	private int    id;
 	private String description;
-
-	@Column(name="image_id")
-	private Image image;
-
+	private Image  image;
 	private String name;
 
 	public Genre() {
 	}
 
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	public int getId() {
 		return this.id;
 	}
@@ -37,6 +32,7 @@ public class Genre implements Serializable {
 		this.id = id;
 	}
 
+	@Lob
 	public String getDescription() {
 		return this.description;
 	}
@@ -44,11 +40,13 @@ public class Genre implements Serializable {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public Image getImageId() {
+	
+	@Column(name="image_id")
+	public Image getImage() {
 		return this.image;
 	}
 
-	public void setImageId(Image image) {
+	public void setImage(Image image) {
 		this.image = image;
 	}
 

@@ -16,39 +16,19 @@ import javax.persistence.*;
 public class Playlist implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int id;
-
-	@Column(name="is_collaborative")
+	private int     id;
 	private boolean isCollaborative;
-
-	@Column(name="is_private")
 	private boolean isPrivate;
+	private String  name;
+	private User    owner;
 
-	private String name;
-
-	//bi-directional many-to-one association to User
-	@ManyToOne
-	@JoinColumn(name="owner_id")
-	private User owner;
-
-	@ManyToMany(fetch=FetchType.EAGER,
-	cascade = { 
-        CascadeType.PERSIST, 
-        CascadeType.MERGE
-    })
-	@JoinTable(
-		name = "song_playlist_mapping",
-		joinColumns = @JoinColumn(name = "playlist_id"),
-		inverseJoinColumns = @JoinColumn(name = "song_id")
-	)
-	@JsonManagedReference
 	private List<Song> songs;
 
 	public Playlist() {
 	}
 
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	public int getId() {
 		return this.id;
 	}
@@ -57,6 +37,7 @@ public class Playlist implements Serializable {
 		this.id = id;
 	}
 
+	@Column(name="is_collaborative")
 	public boolean getIsCollaborative() {
 		return this.isCollaborative;
 	}
@@ -65,6 +46,7 @@ public class Playlist implements Serializable {
 		this.isCollaborative = isCollaborative;
 	}
 
+	@Column(name="is_private")
 	public boolean getIsPrivate() {
 		return this.isPrivate;
 	}
@@ -81,6 +63,8 @@ public class Playlist implements Serializable {
 		this.name = name;
 	}
 
+	@ManyToOne
+	@JoinColumn(name="owner_id")
 	public User getOwner() {
 		return this.owner;
 	}
@@ -89,6 +73,17 @@ public class Playlist implements Serializable {
 		this.owner = owner;
 	}
 
+	@ManyToMany(fetch=FetchType.EAGER,
+	cascade = { 
+        CascadeType.PERSIST, 
+        CascadeType.MERGE
+    })
+	@JoinTable(
+		name = "song_playlist_mapping",
+		joinColumns = @JoinColumn(name = "playlist_id"),
+		inverseJoinColumns = @JoinColumn(name = "song_id")
+	)
+	@JsonManagedReference
 	public List<Song> getSongs() {
 		return this.songs;
 	}
