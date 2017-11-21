@@ -13,8 +13,6 @@ export interface ApiResponse {
 @Injectable()
 export class HttpRequestService {
 
-    private static BASE_URL = 'localhost:8080'; // TODO set in config file
-
     constructor(
         // private appConfig: AppConfig,
         private http: HttpClient,
@@ -22,8 +20,12 @@ export class HttpRequestService {
     ) { }
 
     public get(route: string, id: number = -1): Observable<ApiResponse> {
-      console.log(route);
-        const url = HttpRequestService.BASE_URL + route + (id != -1)? '' : '/' + id;
+        console.log(route);
+        let url = route;
+        if (id != -1) {
+          url += '/' + id.toString();
+        }
+        // const url = 'beep';
         console.log(url);
         return this.http.get(url)
             .catch(function (error: any) {
@@ -32,8 +34,11 @@ export class HttpRequestService {
     }
 
     public post(route: string, body: Object, id: number = -1): Observable<ApiResponse> {
-        const url = HttpRequestService.BASE_URL + route + (id != -1)? '' : '/' + id;
-        return this.http.post(url, JSON.stringify(body), {headers: this.getHeaders()})
+      let url = route;
+      if (id != -1) {
+        url += '/' + id.toString();
+      }
+      return this.http.post(url, JSON.stringify(body), {headers: this.getHeaders()})
             .catch(function (error: any) {
                 console.log('error: ' + error);
                 return Observable.throw(error || 'Server error')
@@ -41,8 +46,11 @@ export class HttpRequestService {
     }
 
     public put(route: string, body: Object, id: number = -1): Observable<ApiResponse> {
-        const url = HttpRequestService.BASE_URL + route + (id != -1)? '' : '/' + id;
-        return this.http.put(HttpRequestService.BASE_URL + url + '/' + id, JSON.stringify(body), {headers: this.getHeaders()})
+        let url = route;
+        if (id != -1) {
+            url += '/' + id.toString();
+        }
+        return this.http.put(url, JSON.stringify(body), {headers: this.getHeaders()})
             .catch(function (error: any) {
                 console.log('error: ' + error);
                 return Observable.throw(error || 'Server error')
@@ -50,8 +58,11 @@ export class HttpRequestService {
     }
 
     public delete(route: string, id: number = -1): Observable<ApiResponse> {
-        const url = HttpRequestService.BASE_URL + route + (id != -1)? '' : '/' + id;
-        return this.http.delete(HttpRequestService.BASE_URL + url + '/' + id, {headers: this.getHeaders()})
+        let url = route;
+        if (id != -1) {
+            url += '/' + id.toString();
+        }
+        return this.http.delete(url, {headers: this.getHeaders()})
             .catch(function (error: any) {
                 console.log('error: ' + error);
                 return Observable.throw(error || 'Server error')

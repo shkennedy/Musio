@@ -21,8 +21,9 @@ export class AlbumService {
 
     public getAlbumById(albumId: number): Observable<Album> {
         return this.httpRequest.get(AlbumService.ALBUM_URL + AlbumService.GET_URL, albumId)
-        .map((response: ApiResponse) => {
-            return response.data;
+        .map((response: any) => {
+          console.log(response);
+            return response.responseData;
         });
     }
 

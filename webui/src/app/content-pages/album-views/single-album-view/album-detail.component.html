@@ -1,20 +1,43 @@
-<!-- <div>
-  <h3>Album</h3>
-  <h1>{{album.album_name}}</h1>
-  By <b>{{album.artist_name}}</b>
-  {{album.release_date}} • {{(album.songs).length+" songs, "+album.album_duration}}
-  <table>
-    <tr>
-      <th>#</th>
-      <th>Title</th>
-      <th>Duration</th>
-    </tr>
-    <album-song *ngFor="let song of album.song_names; let i = index" [song]="song" [track_number]="i"></album-song>
-  </table>
-</div> -->
-
 
 <div id="album-wrapper">
+  <div id="album-info" class="col-sm-4">
+    <div class="col-sm-12">
+      <img *ngIf="fake;else default_art" src="">
+      <ng-template #default_art>
+        <img src="assets/images/default_art.png" alt="">
+      </ng-template>
+    </div>
+    <div class="col-sm-12">
+      <h3 class="album-title">{{album.title}}</h3>
+
+      <h5>By <span id="artist-name">{{album.artists[0].name}}</span></h5>
+    </div>
+    <button class="btn btn-green">PLAY</button>
+    <button class="btn btn-yellow">FAVORITE</button>
+
+  </div>
+
+  <div id="album-tracklist" class="col-sm-8"></div>
+  <table class="table table-inverse song-table album-tracklist-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Song</th>
+          <th>Runtime</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let song of album.songs; let i = index">
+          <th>{{i}}</th>
+          <td>{{song.title}}</td>
+          <td>{{song.duration}}</td>
+        </tr>
+      </tbody>
+    </table>
+</div>
+
+
+<!-- <div id="album-wrapper">
   <div id="album-info" class="col-sm-4">
     <div class="col-sm-12">
       <div *ngIf="fake;else default_image">
@@ -56,4 +79,4 @@
         </tr>
         </tbody>
     </table>
-</div>
+</div> -->

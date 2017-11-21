@@ -22,11 +22,12 @@ export class LoginComponent implements OnInit {
   }
 
   onLogIn(form:NgForm) {
-    const value=form.value;
-    this.songService.getSongById(2)
-    .subscribe((song: any) => {
-      console.log('worked');
-    });
+    // const value=form.value;
+    // this.songService.getSongById(2)
+    // .subscribe((song: any) => {
+    //   console.log('worked');
+    //});
+    this.router.navigate(['']);
   }
 
 }

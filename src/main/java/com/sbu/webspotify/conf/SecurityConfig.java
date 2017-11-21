@@ -31,10 +31,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	CustomAuthenticationSuccessHandler successHandler;
-	
+
 	@Value("${spring.queries.users-query}")
 	private String usersQuery;
-	
+
 	@Value("${spring.queries.roles-query}")
 	private String rolesQuery;
 
@@ -65,7 +65,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().logout().permitAll()
 				.logoutSuccessUrl("/login?logout=true");
 	}
-	
+
 	@Override
 	public void configure(WebSecurity web) throws Exception {
 	    web

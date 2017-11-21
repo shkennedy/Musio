@@ -31,4 +31,5 @@ export class ArtistsViewComponent implements OnInit {
       this.artists = artists;
     });
   }
+  
 }

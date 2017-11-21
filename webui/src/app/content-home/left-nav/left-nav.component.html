@@ -11,7 +11,7 @@
     <li class="sidenav-li" [routerLink]="['/artists']"><img class="nav-icon" src="assets/images/artists-icon.png">Artists</li>
   </ul>
   <ul class="sidenav-list">
-    <li class="sidenav-li list-header Collapsable">Playlists</li>
+    <li class="sidenav-li list-header Collapsable" (click)="getSong()">Playlists</li>
 
     <li class="sidenav-li" *ngFor="let playlist of playlists" (click)="navigatePlaylist(playlist.id)">
       <img class="nav-icon" src="assets/images/star-icon.png">{{playlist.name}}

@@ -10,22 +10,28 @@ import { Genre } from '../models/genre.model';
 import { Playlist } from '../models/playlist.model';
 import { Song } from '../models/song.model';
 import { Station } from '../models/station.model';
+import { HttpClient, HttpHeaders, HttpResponse, HttpRequest, HttpParams } from '@angular/common/http';
 
 @Injectable()
 export class FavoritesService {
 
-	private static FAVORITES_URL: string = '/favorites';
+	private static FAVORITES_URL: string = '/user/favorites';
 	private static ADD_URL: string		 = FavoritesService.FAVORITES_URL + '/add';
 	private static REMOVE_URL: string	 = FavoritesService.FAVORITES_URL + '/remove';
-	private static ALBUM_URL: string 	 = '/albums';
-	private static ARTIST_URL: string 	 = '/artists';
+	private static ALBUMS_URL: string 	 = '/albums';
+	private static ALBUM_URL: string   = '/album';
+	private static ARTISTS_URL: string 	 = '/artists';
+	private static ARTIST_URL: string   = '/artist';
 	private static GENRE_URL: string	 = '/genres';
-	private static PLAYLIST_URL: string  = '/playlists';
-	private static SONG_URL: string 	 = '/songs';
+	private static PLAYLISTS_URL: string  = '/playlists';
+	private static PLAYLIST_URL: string  = '/playlist';
+	private static SONGS_URL: string 	 = '/songs';
+	private static SONG_URL: string 	 = '/song';
 	private static STATION_URL: string	 = '/stations';
 
     constructor(
         private router: Router,
+        private http: HttpClient,
         private httpRequest: HttpRequestService
 	) { }
 
@@ -54,9 +60,10 @@ export class FavoritesService {
 	}
 
     public getFavoriteAlbums(): Observable<Album[]> {
-		return this.getFavoritesByUrl(FavoritesService.ALBUM_URL);
+		// return this.getFavoritesByUrl(FavoritesService.ALBUMS_URL);
+		return this.http.get(FavoritesService.FAVORITES_URL + FavoritesService.ALBUMS_URL);
 	}
-	
+
 	public addFavoriteAlbumById(albumId: number): Observable<boolean> {
 		return this.addFavoriteByUrlAndId(FavoritesService.ALBUM_URL, albumId);
 	}
@@ -66,7 +73,7 @@ export class FavoritesService {
 	}
 
 	public getFavoriteArtists(): Observable<Artist[]> {
-	    return this.getFavoritesByUrl(FavoritesService.ARTIST_URL);
+	    return this.getFavoritesByUrl(FavoritesService.ARTISTS_URL);
 	}
 
 	public addFavoriteArtistById(artistId: number): Observable<boolean> {
@@ -90,7 +97,7 @@ export class FavoritesService {
 	}
 
 	public getFavoritePlaylists(): Observable<Playlist[]> {
-		return this.getFavoritesByUrl(FavoritesService.PLAYLIST_URL);
+		return this.getFavoritesByUrl(FavoritesService.PLAYLISTS_URL);
 	}
 
 	public addFavoritePlaylistById(playlistId: number): Observable<boolean> {
@@ -102,7 +109,7 @@ export class FavoritesService {
 	}
 
 	public getFavoriteSongs(): Observable<Song[]> {
-		return this.getFavoritesByUrl(FavoritesService.SONG_URL);
+		return this.getFavoritesByUrl(FavoritesService.SONGS_URL);
 	}
 
 	public addFavoriteSongById(songId: number): Observable<boolean> {

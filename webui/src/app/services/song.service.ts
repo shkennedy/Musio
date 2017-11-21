@@ -10,6 +10,7 @@ import { Song } from '../models/song.model';
 export class SongService {
 
     private static SONG_URL: string = '/song';
+    private static GET_URL: string = '/get';
 
     constructor(
         private router: Router,
@@ -17,7 +18,7 @@ export class SongService {
     ) { }
 
     public getSongById(songId: number): Observable<Song> {
-        return this.httpRequest.get(SongService.SONG_URL, songId)
+        return this.httpRequest.get(SongService.SONG_URL + SongService.GET_URL, songId)
         .map((response: ApiResponse) => {
             return response.data;
         });

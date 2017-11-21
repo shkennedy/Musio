@@ -21,21 +21,12 @@ const appRoutes: Routes = [
   { path: '', component: ContentHomeComponent, children:
     [
       { path: '', component: BrowseComponent },
-      { path: 'albums', component: AlbumsViewComponent, children:
-        [
-          { path: ':id', component: AlbumDetailComponent }
-        ]
-      },
-      { path: 'artists', component: ArtistsViewComponent, children:
-        [
-          { path: ':id', component: ArtistDetailComponent }
-        ]
-      },
-      { path: 'playlists', component: PlaylistsViewComponent, children:
-        [
-          { path: ':id',  component: PlaylistViewComponent}
-        ]
-      },
+      { path: 'albums', component: AlbumsViewComponent },
+      { path: 'albums/:id', component: AlbumDetailComponent },
+      { path: 'artists', component: ArtistsViewComponent },
+      { path: 'artists/:id', component: ArtistDetailComponent },
+      { path: 'playlists', component: PlaylistsViewComponent },
+      { path: 'playlists/:id', component: PlaylistViewComponent },
       { path: 'songs', component: SongViewComponent },
       { path: 'radio', component: RadioViewComponent },
       { path: 'go-premium', component: GoPremiumComponent}

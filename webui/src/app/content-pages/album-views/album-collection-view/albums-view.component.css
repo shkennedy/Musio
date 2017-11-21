@@ -1,0 +1,28 @@
+.artist-card{
+      display: table;
+      margin: 0 auto;
+      text-align: center;
+
+      width: 240px;
+      display: inline-block;
+      float: none;
+      padding: 20px;
+
+    }
+.artist-card > img{
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+    }
+
+.artist-card > p{
+      width: 200px;
+      text-align: center;
+      text-transform: uppercase;
+      font-weight: 400;
+      padding-top: 15px;
+    }
+
+.album-collection-container{
+      text-align: center;
+    }

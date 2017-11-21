@@ -13,6 +13,7 @@ import { Album } from '../../../models/album.model';
 })
 export class AlbumsViewComponent implements OnInit {
 
+  private fake: boolean=false;
   private albums: Album[];
 
   constructor(
@@ -20,15 +21,27 @@ export class AlbumsViewComponent implements OnInit {
     private favoritesSevice: FavoritesService
   ) {
     // const a = new Album();
-    // a.album_name = 'cool album';
-    // a.artist_name = 'another bingus hinguson';
+    // a.title = 'cool album';
     // this.albums = [a];
   }
 
   ngOnInit() {
+
+    // this.favoritesSevice.addFavoriteAlbumById(1)
+    // .subscribe((success: boolean) => {
+    // });this.favoritesSevice.addFavoriteAlbumById(2)
+    // .subscribe((success: boolean) => {
+    // });this.favoritesSevice.addFavoriteAlbumById(3)
+    // .subscribe((success: boolean) => {
+    // });this.favoritesSevice.addFavoriteAlbumById(4)
+    // .subscribe((success: boolean) => {
+    // });this.favoritesSevice.addFavoriteAlbumById(5)
+    // .subscribe((success: boolean) => {
+    // });
     this.favoritesSevice.getFavoriteAlbums()
     .subscribe((albums: Album[]) => {
       this.albums = albums;
+      console.log(this.albums[0].title);
     });
   }
 }
