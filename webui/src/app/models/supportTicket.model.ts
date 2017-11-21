@@ -4,7 +4,7 @@ export class SupportTicket {
     public id: number;
     public assignedTo: number;
     public message: string;
-    public status: byte;
+    public status: number;
     public timestamp: Date;
     public user: User;
 }

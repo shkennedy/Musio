@@ -14,7 +14,8 @@ import { RightNavComponent } from './right-nav/right-nav.component'
 export class ContentHomeComponent implements OnInit {
 
   constructor(
-    private router: Router) { }
+      private router: Router
+  ) { }
 
   ngOnInit() {
 

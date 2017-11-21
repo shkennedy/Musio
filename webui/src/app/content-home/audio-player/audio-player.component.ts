@@ -75,7 +75,7 @@ export class AudioPlayerComponent implements OnInit {
     const nextSong: Song = this.model.songQueue.shift();
     this.model.history.push(this.model.currentSong);
     if (nextSong) {
-      this.playSong(nextSong.song_id);
+      this.playSong(nextSong.id);
     }
   }
 
@@ -94,7 +94,7 @@ export class AudioPlayerComponent implements OnInit {
     this.model.songQueue[0] = this.model.currentSong;
 
     if (lastSong) {
-      this.playSong(lastSong.song_id);
+      this.playSong(lastSong.id);
     }
   }
 

@@ -49,14 +49,4 @@ export class UserService {
     //         return paymentInfo;
     //     });
     // }
-
-    /**
-	 * Re-query the user stored in the session from the database.
-	 */
-	// @RequestMapping(value={"/refreshCurrentUser"}, method = RequestMethod.GET)
-	// public @ResponseBody boolean refreshUser(HttpSession session) {
-	// 	User user = (User) session.getAttribute("user");
-	// 	session.setAttribute("user", userService.findUserByUsername(user.getUsername()));
-	// 	return true;
-	// }
 }
