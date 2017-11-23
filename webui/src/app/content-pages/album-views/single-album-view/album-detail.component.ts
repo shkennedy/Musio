@@ -16,8 +16,8 @@ import { Artist } from '../../../models/artist.model';
 export class AlbumDetailComponent implements OnInit {
 
   //@Input() albumId: number;
-  private fake:boolean = false;
-  private isFavorited:boolean;
+  private imageExists: boolean = false;
+  private isFavorited: boolean = true;
   private album: Album;
 
   constructor(
@@ -27,37 +27,31 @@ export class AlbumDetailComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    // let album=new Album();
-    // let a=new Artist();
-    // a.name="Drake";
-    // album.artists=[a];
-    // album.title="The Black Album";
-    // let s=new Song();
-    // s.title="song1";
-    // s.duration="2:22";
-    // album.songs=[s,s,s,s,s,s,s,s,s];
-    // this.album=album;
     let url:string[]=this.router.url.split("/");
     this.albumService.getAlbumById(Number(url[url.length-1]))
     .subscribe((album: Album) => {
       this.album = album;
     });
 
-    this.favoritesService.getFavoriteAlbums()
-     .subscribe(
-     (albums: Album[]) => {
-       if (albums) {
-         this.isFavorited = albums.includes(this.album);
-       }
-     },
-     (error: any) => {
-       console.log(error);
-     });
+    // this.favoritesService.getFavoriteAlbums()
+    //  .subscribe(
+    //  (albums: Album[]) => {
+    //    console.log(albums);
+    //    if (albums) {
+    //      for (let i = 0; i < albums.length; ++i) {
+    //        if (albums[i].id == this.album.id) {
+    //          this.isFavorited = true;
+    //        }
+    //      }
+    //     }
+    //  },
+    //  (error: any) => {
+    //    console.log(error);
+    //  });
  }
 
 
     favoriteAlbum() {
-      console.log("peanut");
    this.favoritesService.addFavoriteAlbumById(this.album.id)
      .subscribe(
      (success: boolean) => {
@@ -71,7 +65,6 @@ export class AlbumDetailComponent implements OnInit {
  }
 
  unfavoriteAlbum() {
-   console.log("and");
    this.favoritesService.removeFavoriteAlbumById(this.album.id)
      .subscribe(
      (success: boolean) => {

@@ -41,7 +41,7 @@ export class AlbumsViewComponent implements OnInit {
     this.favoritesSevice.getFavoriteAlbums()
     .subscribe((albums: Album[]) => {
       this.albums = albums;
-      console.log(this.albums[0].title);
+      // console.log(this.albums[0].title);
     });
   }
 }

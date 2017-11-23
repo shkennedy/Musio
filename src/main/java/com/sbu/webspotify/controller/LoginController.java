@@ -93,7 +93,7 @@ public class LoginController {
 			return modelAndView;
 		}
 
-		HashSet<Genre> favoriteGenres = new HashSet<Genre>();				
+		Set<Genre> favoriteGenres = new HashSet<Genre>();				
 		if(genres != null) {
 			for(Integer genreId : genres) {
 				Genre genre = genreService.getGenreById(genreId);

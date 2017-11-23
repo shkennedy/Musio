@@ -1,7 +1,7 @@
 <div id="album-wrapper col-sm-12">
   <div id="album-info" class="col-sm-4">
     <div class="col-sm-12">
-      <img *ngIf="fake;else default_art" src="">
+      <img *ngIf="imageExists; else default_art" src="">
       <ng-template #default_art>
         <img width=300 src="assets/images/default_art.png" alt="">
       </ng-template>
