@@ -52,6 +52,21 @@ public class ArtistController
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE, headers = "Accept=application/json")
 	public @ResponseBody void deleteArtist(@PathVariable("id") int id) {
         artistRepository.delete(id);
+    }	
+    
+    @RequestMapping(value = "/favoritesCount/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
+	public @ResponseBody ApiResponseObject getFavoriteCount(@PathVariable("id") int id) {
+        Artist artist = artistService.getArtistById(id);
+        ApiResponseObject response = new ApiResponseObject();
+        if(artist == null){
+            response.setSuccess(false);
+            response.setMessage("No artist found with ID "+id+".");
+        }
+        else {
+            response.setSuccess(true);
+            response.setResponseData(artistService.getFavoritesCountForArtist(id));
+        }
+        return response;
 	}	
 
     @GetMapping(path="/all")

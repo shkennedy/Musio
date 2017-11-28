@@ -13,8 +13,10 @@ public interface ArtistRepository extends JpaRepository<Artist, Integer>
 {
     Artist findByName(String name);
     Artist findById(int id);
-
     
     @Query("SELECT a.id as id, a.name as name FROM Artist a WHERE a.name LIKE CONCAT('%', :queryString, '%')")
     Set<ArtistIdentifier> findByNameContaining(@Param("queryString") String queryString);
+    
+    @Query(value = "SELECT COUNT(ufs.artist_id) FROM user_favorite_artist ufs WHERE ufs.artist_id = :queryId", nativeQuery = true)    
+	int findFavoriteCountForArtist(@Param("queryId") int queryId);
 }

@@ -11,16 +11,20 @@ import java.util.Set;
 
 @Service("artistService")
 public class ArtistService {
-
-	@Autowired
-	private ArtistRepository artistRepository;
-
-	public Artist getArtistById(int id) {
-        return artistRepository.findById(id);
+	
+    @Autowired
+    private ArtistRepository artistRepository;
+	
+    public Artist getArtistById(int id) {
+	return artistRepository.findById(id);
     }
-
-	public Set<ArtistIdentifier> searchByName(String query) {
+	
+    public Set<ArtistIdentifier> searchByName(String query) {
         return artistRepository.findByNameContaining(query);
-	}
-
+    }
+	
+    public int getFavoritesCountForArtist(int artistId) { 
+        return artistRepository.findFavoriteCountForArtist(artistId);
+    }
+	
 }
