@@ -26,5 +26,9 @@ public class ArtistService {
     public int getFavoritesCountForArtist(int artistId) { 
         return artistRepository.findFavoriteCountForArtist(artistId);
     }
+
+	public boolean artistExists(int id) {
+		return artistRepository.exists(id);
+	}
 	
 }

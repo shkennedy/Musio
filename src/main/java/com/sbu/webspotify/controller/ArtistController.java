@@ -67,9 +67,8 @@ public class ArtistController
     
     @RequestMapping(value = "/favoritesCount/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public @ResponseBody ApiResponseObject getFavoriteCount(@PathVariable("id") int id) {
-        Artist artist = artistService.getArtistById(id);
         ApiResponseObject response = new ApiResponseObject();
-        if(artist == null){
+        if(artistService.artistExists(id) == false){
             response.setSuccess(false);
             response.setMessage("No artist found with ID "+id+".");
         }

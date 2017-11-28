@@ -279,4 +279,8 @@ public class UserService {
 		return null;
 	}
 
+	public boolean userExists(String username) {
+		return userRepository.existsByUsername(username);
+	}
+
 }

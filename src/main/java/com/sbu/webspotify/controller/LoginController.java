@@ -74,14 +74,11 @@ public class LoginController {
 			modelAndView.setViewName("registration");
 			return modelAndView;
 		}
-
-		User userExists = userService.findUserByUsername(username);		
-		if(userExists != null) {
+		if(userService.userExists(username)) {
 			modelAndView.addObject("errorMessage", "Username ("+username+") is already in use.");
 			modelAndView.setViewName("registration");
 			return modelAndView;
 		}
-
 		if(email.length() == 0) {
 			modelAndView.addObject("errorMessage", "Please provide an email.");
 			modelAndView.setViewName("registration");
@@ -97,7 +94,9 @@ public class LoginController {
 		if(genres != null) {
 			for(Integer genreId : genres) {
 				Genre genre = genreService.getGenreById(genreId);
-				favoriteGenres.add(genre);
+				if(genre != null) {
+					favoriteGenres.add(genre);
+				}
 			}
 		}
 
