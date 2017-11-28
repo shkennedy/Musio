@@ -44,33 +44,73 @@ public class PlaylistController
     }
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST, headers = "Accept=application/json")
-	public @ResponseBody Playlist addPlaylist(@RequestBody Playlist playlist, HttpSession session) {
+	public @ResponseBody ApiResponseObject addPlaylist(@RequestBody Playlist playlist, HttpSession session) {
         User user = (User) session.getAttribute("user");
-        return playlistService.createPlaylist(playlist, user);
+        Playlist newPlaylist = playlistService.createPlaylist(playlist, user);
+        ApiResponseObject response = new ApiResponseObject();
+        if (newPlaylist != null) {
+            response.setSuccess(true);
+            response.setResponseData(newPlaylist);
+        } else {
+            response.setSuccess(false);
+            response.setMessage("Unable to create new playlist.");
+        }
+        return response;
     }
     
     @RequestMapping(value = "/update", method = RequestMethod.PUT, headers = "Accept=application/json")
-	public @ResponseBody Playlist updatePlaylist(@RequestBody Playlist playlist) {
-		return playlistRepository.save(playlist);
+	public @ResponseBody ApiResponseObject updatePlaylist(@RequestBody Playlist playlist) {
+		Playlist updatedPlaylist = playlistRepository.save(playlist);
+        ApiResponseObject response = new ApiResponseObject();
+        if (updatedPlaylist != null) {
+            response.setSuccess(true);
+            response.setResponseData(updatedPlaylist);
+        } else {
+            response.setSuccess(false);
+            response.setMessage("Unable to update playlist.");
+        }
+        return response;
     }
     
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE, headers = "Accept=application/json")
-	public @ResponseBody void deletePlaylist(@PathVariable("id") int id) {
+	public @ResponseBody ApiResponseObject deletePlaylist(@PathVariable("id") int id) {
+        // Need check for ownership of playlist
         playlistRepository.delete(id);
+        ApiResponseObject response = new ApiResponseObject();
+        response.setSuccess(true);
+        return response;
     }	
 
     @RequestMapping(value = "/addSong", headers = "Accept=application/json")
-    public @ResponseBody boolean addSongToPlaylist(@RequestParam("playlistId") int playlistId, @RequestParam("songId") int songId,
+    public @ResponseBody ApiResponseObject addSongToPlaylist(@RequestParam("playlistId") int playlistId, @RequestParam("songId") int songId,
                                                 HttpSession session) {
         User user = (User) session.getAttribute("user");        
-        return playlistService.addSongToPlaylist(user, playlistId, songId);
+        Playlist updatedPlaylist = playlistService.addSongToPlaylist(user, playlistId, songId);
+        ApiResponseObject response = new ApiResponseObject();
+        if (updatedPlaylist != null) {
+            response.setSuccess(true);
+            response.setResponseData(updatedPlaylist);
+        } else {
+            response.setSuccess(false);
+            response.setMessage("Unable to add song to playlist.");
+        }
+        return response;
     }	
 
     @RequestMapping(value = "/removeSong", headers = "Accept=application/json")
-    public @ResponseBody boolean removeSongFromPlaylist(@RequestParam("playlistId") int playlistId, @RequestParam("songId") int songId,
+    public @ResponseBody ApiResponseObject removeSongFromPlaylist(@RequestParam("playlistId") int playlistId, @RequestParam("songId") int songId,
                                                 HttpSession session) {
         User user = (User) session.getAttribute("user");        
-        return playlistService.removeSongFromPlaylist(user, playlistId, songId);
+        Playlist updatedPlaylist = playlistService.removeSongFromPlaylist(user, playlistId, songId);
+        ApiResponseObject response = new ApiResponseObject();
+        if (updatedPlaylist != null) {
+            response.setSuccess(true);
+            response.setResponseData(updatedPlaylist);
+        } else {
+            response.setSuccess(false);
+            response.setMessage("Unable to remove song from playlist.");
+        }
+        return response;
     }	
 
     @GetMapping(path="/all")

@@ -39,36 +39,39 @@ public class PlaylistService {
         return playlist;
 	}
 
-	public boolean addSongToPlaylist(User user, int playlistId, int songId) {
+	public Playlist addSongToPlaylist(User user, int playlistId, int songId) {
         Playlist p = playlistRepository.findById(playlistId);
         Song s = songService.getSongById(songId);
 
         if(p == null || s == null) {
-            return false;
+            return null;
         }
         if(!p.getIsCollaborative() && !p.getOwner().equals(user)){
-            return false;
+            return null;
         }
 
         p.addSong(s);
         persistPlaylist(p);
-        return true;
+        return p;
     }
 
-    public boolean removeSongFromPlaylist(User user, int playlistId, int songId) {
+    public Playlist removeSongFromPlaylist(User user, int playlistId, int songId) {
         Playlist p = playlistRepository.findById(playlistId);
         Song s = songService.getSongById(songId);
 
         if(p == null || s == null) {
-            return false;
+            return null;
         }
         if(!p.getIsCollaborative() && !p.getOwner().equals(user)){
-            return false;
+            return null;
         }
 
         boolean retValue = p.removeSong(s);
+        if (!retValue) {
+            return null;
+        }
         persistPlaylist(p);
-        return retValue;
+        return p;
     }
     
     public void persistPlaylist(Playlist p) {

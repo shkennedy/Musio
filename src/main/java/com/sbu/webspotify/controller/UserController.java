@@ -25,9 +25,12 @@ public class UserController {
 	private UserService userService;
 
 	@RequestMapping(value={"/getUsername"}, method = RequestMethod.GET)
-	public @ResponseBody String getMyUsername(HttpSession session){
+	public @ResponseBody ApiResponseObject getMyUsername(HttpSession session){
 		User user = (User) session.getAttribute("user");
-		return user.getUsername();
+		ApiResponseObject response = new ApiResponseObject();
+		response.setResponseData(user.getUsername());
+		response.setSuccess(true);
+		return response;
 	}
 
 	@GetMapping(path = "/get/{var}")
@@ -52,39 +55,63 @@ public class UserController {
 	}
 
 	@RequestMapping(value={"/favorites/albums"}, method = RequestMethod.GET)
-	public @ResponseBody Set<Album> getFavoriteAlbums(HttpSession session) {
+	public @ResponseBody ApiResponseObject getFavoriteAlbums(HttpSession session) {
 		User user = (User) session.getAttribute("user");
-		return user.getFavoriteAlbums();
+		Set<Album> albums = user.getFavoriteAlbums();
+		ApiResponseObject response = new ApiResponseObject();
+		response.setSuccess(true);
+		response.setResponseData(albums);
+		return response;
 	}
 
 	@RequestMapping(value={"/favorites/songs"}, method = RequestMethod.GET)
-	public @ResponseBody Set<Song> getFavoriteSongs(HttpSession session) {
+	public @ResponseBody ApiResponseObject getFavoriteSongs(HttpSession session) {
 		User user = (User) session.getAttribute("user");
-		return user.getFavoriteSongs();
+		Set<Song> songs = user.getFavoriteSongs();
+		ApiResponseObject response = new ApiResponseObject();
+		response.setSuccess(true);
+		response.setResponseData(songs);
+		return response;
 	}
 
 	@RequestMapping(value={"/favorites/playlists"}, method = RequestMethod.GET)
-	public @ResponseBody Set<Playlist> getFavoritePlaylists(HttpSession session) {
+	public @ResponseBody ApiResponseObject getFavoritePlaylists(HttpSession session) {
 		User user = (User) session.getAttribute("user");
-		return user.getFavoritePlaylists();
+		Set<Playlist> playlists = user.getFavoritePlaylists();
+		ApiResponseObject response = new ApiResponseObject();
+		response.setSuccess(true);
+		response.setResponseData(playlists);
+		return response;
 	}
 
 	@RequestMapping(value={"/favorites/artists"}, method = RequestMethod.GET)
-	public @ResponseBody Set<Artist> getFavoriteArtists(HttpSession session) {
+	public @ResponseBody ApiResponseObject getFavoriteArtists(HttpSession session) {
 		User user = (User) session.getAttribute("user");
-		return user.getFavoriteArtists();
+		Set<Artist> artists = user.getFavoriteArtists();
+		ApiResponseObject response = new ApiResponseObject();
+		response.setSuccess(true);
+		response.setResponseData(artists);
+		return response;
 	}
 
 	@RequestMapping(value={"/favorites/genres"}, method = RequestMethod.GET)
-	public @ResponseBody Set<Genre> getFavoriteGenres(HttpSession session) {
+	public @ResponseBody ApiResponseObject getFavoriteGenres(HttpSession session) {
 		User user = (User) session.getAttribute("user");
-		return user.getFavoriteGenres();
+		Set<Genre> genres = user.getFavoriteGenres();
+		ApiResponseObject response = new ApiResponseObject();
+		response.setSuccess(true);
+		response.setResponseData(genres);
+		return response;
 	}
 
 	@RequestMapping(value={"/favorites/stations"}, method = RequestMethod.GET)
-	public @ResponseBody Set<Station> getFavoriteStations(HttpSession session) {
+	public @ResponseBody ApiResponseObject getFavoriteStations(HttpSession session) {
 		User user = (User) session.getAttribute("user");
-		return user.getFavoriteStations();
+		Set<Station> stations = user.getFavoriteStations();
+		ApiResponseObject response = new ApiResponseObject();
+		response.setSuccess(true);
+		response.setResponseData(stations);
+		return response;
 	}
 
 	@RequestMapping(value={"/favorites/add/genre/{genreId}"})

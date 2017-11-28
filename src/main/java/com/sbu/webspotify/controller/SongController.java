@@ -24,30 +24,51 @@ public class SongController
     public @ResponseBody ApiResponseObject getSong(@PathVariable("id") int id) {
         Song song = songService.getSongById(id);
         ApiResponseObject response = new ApiResponseObject();
-        if(song == null){
-            response.setSuccess(false);
-            response.setMessage("No song found with ID "+id+".");
-        }
-        else {
+        if(song != null){
             response.setSuccess(true);
             response.setResponseData(song);
+        }
+        else {
+            response.setSuccess(false);
+            response.setMessage("No song found with ID "+id+".");
         }
         return response;
     }
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST, headers = "Accept=application/json")
-	public @ResponseBody Song addSong(@RequestBody Song song) {
-		return songRepository.save(song);
+	public @ResponseBody ApiResponseObject addSong(@RequestBody Song song) {
+        Song newSong = songRepository.save(song);
+        ApiResponseObject response = new ApiResponseObject();
+        if (newSong != null) {
+            response.setSuccess(true);
+            response.setResponseData(newSong);
+        } else {
+            response.setSuccess(false);
+            response.setMessage("Unable to create new song");
+        }
+        return response;
     }
     
     @RequestMapping(value = "/add", method = RequestMethod.PUT, headers = "Accept=application/json")
-	public @ResponseBody Song updateSong(@RequestBody Song song) {
-		return songRepository.save(song);
+	public @ResponseBody ApiResponseObject updateSong(@RequestBody Song song) {
+        Song updatedSong = songRepository.save(song);
+        ApiResponseObject response = new ApiResponseObject();
+        if (updatedSong != null) {
+            response.setSuccess(true);
+            response.setResponseData(updatedSong);
+        } else {
+            response.setSuccess(false);
+            response.setMessage("Unable to updated song");
+        }
+        return response;
     }
     
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE, headers = "Accept=application/json")
-	public @ResponseBody void deleteSong(@PathVariable("id") int id) {
+	public @ResponseBody ApiResponseObject deleteSong(@PathVariable("id") int id) {
         songRepository.delete(id);
+        ApiResponseObject response = new ApiResponseObject();
+        response.setSuccess(true);
+        return response;
 	}	
 
     @GetMapping(path="/all")

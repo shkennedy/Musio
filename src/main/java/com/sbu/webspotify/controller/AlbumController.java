@@ -40,18 +40,29 @@ public class AlbumController
     }
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST, headers = "Accept=application/json")
-	public @ResponseBody Album addAlbum(@RequestBody Album album) {
-		return albumRepository.save(album);
+	public @ResponseBody ApiResponseObject addAlbum(@RequestBody Album album) {
+        Album newAlbum = albumRepository.save(album);
+        ApiResponseObject response = new ApiResponseObject();
+        response.setSuccess(newAlbum != null);
+        response.setResponseData(newAlbum);
+        return response;
     }
     
     @RequestMapping(value = "/add", method = RequestMethod.PUT, headers = "Accept=application/json")
-	public @ResponseBody Album updateAlbum(@RequestBody Album album) {
-		return albumRepository.save(album);
+	public @ResponseBody ApiResponseObject updateAlbum(@RequestBody Album album) {
+		Album newAlbum = albumRepository.save(album);
+        ApiResponseObject response = new ApiResponseObject();
+        response.setSuccess(newAlbum != null);
+        response.setResponseData(newAlbum);
+        return response;
     }
     
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE, headers = "Accept=application/json")
-	public @ResponseBody void deleteAlbum(@PathVariable("id") int id) {
+	public @ResponseBody ApiResponseObject deleteAlbum(@PathVariable("id") int id) {
         albumRepository.delete(id);
+        ApiResponseObject response = new ApiResponseObject();
+        response.setSuccess(true);
+        return response;
 	}	
 
     @GetMapping(path="/all")

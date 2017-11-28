@@ -40,18 +40,29 @@ public class ArtistController
     }
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST, headers = "Accept=application/json")
-	public @ResponseBody Artist addArtist(@RequestBody Artist artist) {
-		return artistRepository.save(artist);
+	public @ResponseBody ApiResponseObject addArtist(@RequestBody Artist artist) {
+        Artist newArtist = artistRepository.save(artist);
+        ApiResponseObject response = new ApiResponseObject();
+        response.setSuccess(newArtist != null);
+        response.setResponseData(newArtist);
+        return response;
     }
     
     @RequestMapping(value = "/add", method = RequestMethod.PUT, headers = "Accept=application/json")
-	public @ResponseBody Artist updateArtist(@RequestBody Artist artist) {
-		return artistRepository.save(artist);
+	public @ResponseBody ApiResponseObject updateArtist(@RequestBody Artist artist) {
+		Artist newArtist = artistRepository.save(artist);
+        ApiResponseObject response = new ApiResponseObject();
+        response.setSuccess(newArtist != null);
+        response.setResponseData(newArtist);
+        return response;
     }
     
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE, headers = "Accept=application/json")
-	public @ResponseBody void deleteArtist(@PathVariable("id") int id) {
+	public @ResponseBody ApiResponseObject deleteArtist(@PathVariable("id") int id) {
         artistRepository.delete(id);
+        ApiResponseObject response = new ApiResponseObject();
+        response.setSuccess(true);
+        return response;
     }	
     
     @RequestMapping(value = "/favoritesCount/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
