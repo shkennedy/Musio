@@ -1,20 +1,25 @@
 package com.sbu.webspotify.dto;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 import com.sbu.webspotify.dto.identifier.AlbumIdentifier;
 import com.sbu.webspotify.dto.identifier.ArtistIdentifier;
+import com.sbu.webspotify.dto.identifier.GenreIdentifier;
+import com.sbu.webspotify.dto.identifier.InstrumentIdentifier;
 import com.sbu.webspotify.dto.identifier.PlaylistIdentifier;
 import com.sbu.webspotify.dto.identifier.SongIdentifier;
 
 public class SearchResults implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-    private Set<SongIdentifier> songs;
-    private Set<ArtistIdentifier> artists;
-    private Set<AlbumIdentifier> albums;
-	private Set<PlaylistIdentifier> playlists;
+    private Set<SongIdentifier> songs = new HashSet<SongIdentifier>();
+    private Set<ArtistIdentifier> artists = new HashSet<ArtistIdentifier>();
+    private Set<AlbumIdentifier> albums = new HashSet<AlbumIdentifier>();
+	private Set<PlaylistIdentifier> playlists = new HashSet<PlaylistIdentifier>();
+	private Set<InstrumentIdentifier> instruments = new HashSet<InstrumentIdentifier>();
+	private Set<GenreIdentifier> genres = new HashSet<GenreIdentifier>();
 	
 	public SearchResults() {
 
@@ -50,6 +55,22 @@ public class SearchResults implements Serializable {
 	
 	public void setSongs(Set<SongIdentifier> songs) {
 		this.songs = songs;
+	}
+
+	public Set<InstrumentIdentifier> getInstruments() {
+		return instruments;
+	}
+
+	public void setInstruments(Set<InstrumentIdentifier> instruments) {
+		this.instruments = instruments;
+	}
+
+	public Set<GenreIdentifier> getGenres() {
+		return genres;
+	}
+
+	public void setGenres(Set<GenreIdentifier> genres) {
+		this.genres = genres;
 	}    
 
 }

@@ -1,5 +1,6 @@
 package com.sbu.webspotify.service;
 
+import com.sbu.webspotify.dto.identifier.GenreIdentifier;
 import com.sbu.webspotify.model.Genre;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,5 +24,9 @@ public class GenreService {
     public Set<Genre> findAll() {
         return new HashSet<Genre>(genreRepository.findAll());
     }
+
+    public Set<GenreIdentifier> searchByName(String query) {
+		return genreRepository.findByNameContaining(query);
+	}
 
 }
