@@ -39,7 +39,7 @@ export class FavoritesService {
 		return this.httpRequest.get(FavoritesService.FAVORITES_URL + url)
 		.map((response: ApiResponse) => {
 			if (response.success) {
-				return response.data;
+				return response.responseData;
 			}
 			return null;
 		});

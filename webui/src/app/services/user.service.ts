@@ -23,7 +23,7 @@ export class UserService {
         return this.httpRequest.get(UserService.USER_URL)
         .map((response: ApiResponse) => {
             if (response.success) {
-                return response.data;
+                return response.responseData;
             }
             return null;
         });

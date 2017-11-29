@@ -24,7 +24,7 @@ export class ArtistService {
         return this.httpRequest.get(ArtistService.ARTIST_URL + ArtistService.GET_URL, artistId)
         .map((response: ApiResponse) => {
             if (response.success) {
-                return response.data;
+                return response.responseData;
             }
             return null;
         });

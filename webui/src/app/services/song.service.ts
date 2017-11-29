@@ -20,7 +20,7 @@ export class SongService {
     public getSongById(songId: number): Observable<Song> {
         return this.httpRequest.get(SongService.SONG_URL + SongService.GET_URL, songId)
         .map((response: ApiResponse) => {
-            return response.data;
+            return response.responseData;
         });
     }
 

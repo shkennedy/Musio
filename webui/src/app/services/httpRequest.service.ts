@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 export interface ApiResponse {
     success: boolean;
     message: string;
-    data: any;
+    responseData: any;
 }
 
 @Injectable()

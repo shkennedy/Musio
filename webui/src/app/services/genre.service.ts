@@ -27,7 +27,7 @@ export class GenreService {
     public getTopAlbumsByGenreId(id: number): Observable<Album[]> {
         return this.httpRequest.get(GenreService.TOP_URL, id)
         .map((response: ApiResponse) => {
-            return response.data;
+            return response.responseData;
         });
     }
 
@@ -35,7 +35,7 @@ export class GenreService {
         return this.httpRequest.get(GenreService.TOP_URL, id)
         .map((response: ApiResponse) => {
             if (response.success) {
-				return response.data;
+				return response.responseData;
 			}
 			return null; 
         });
@@ -45,7 +45,7 @@ export class GenreService {
         return this.httpRequest.get(GenreService.TOP_URL, id)
         .map((response: ApiResponse) => {
             if (response.success) {
-				return response.data;
+				return response.responseData;
 			}
 			return null; 
         });

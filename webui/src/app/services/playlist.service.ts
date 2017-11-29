@@ -22,7 +22,7 @@ export class PlaylistService {
     public getPlaylistById(playlistId: number): Observable<Playlist> {
         return this.httpRequest.get(PlaylistService.PLAYLIST_URL, playlistId)
         .map((response: ApiResponse) => {
-            return response.data;
+            return response.responseData;
         });
     }
 
@@ -36,7 +36,7 @@ export class PlaylistService {
     public updatePlaylist(playlist: Playlist): Observable<Playlist> {
         return this.httpRequest.post(PlaylistService.PLAYLIST_URL, playlist)
         .map((response: ApiResponse) => {
-            return response.data;
+            return response.responseData;
         });
     }
 
@@ -54,7 +54,7 @@ export class PlaylistService {
         };
         return this.httpRequest.post(PlaylistService.ADD_SONG_URL, body)
         .map((response: ApiResponse) => {
-            return response.data;
+            return response.responseData;
         });
     }
 
@@ -65,7 +65,7 @@ export class PlaylistService {
         };
         return this.httpRequest.post(PlaylistService.REMOVE_SONG_URL, body)
         .map((response: ApiResponse) => {
-            return response.data;
+            return response.responseData;
         });
     }
 }
