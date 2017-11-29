@@ -8,24 +8,33 @@ import { Playlist } from '../../../models/playlist.model';
 import { Song } from '../../../models/song.model';
 
 @Component({
-  selector: 'app-playlists-view',
-  templateUrl: './playlists-view.component.html',
-  styleUrls: ['./playlists-view.component.css']
+    selector: 'app-playlists-view',
+    templateUrl: './playlists-view.component.html',
+    styleUrls: ['./playlists-view.component.css']
 })
 export class PlaylistsViewComponent implements OnInit {
 
-  private playlists:Playlist[];
+    private playlists: Playlist[];
+    private isEmpty: boolean = true;
 
-  constructor(
-    private router: Router,
-    private favoritesService: FavoritesService,
-    private playlistService: PlaylistService
-  ) {}
+    private errorMessage: string;
 
-  ngOnInit() {
-    // this.favoritesService.getFavoritePlaylists()
-    // .subscribe((playlists: Playlist[]) => {
-    //   this.playlists = playlists;
-    // });
-  }
+    constructor(
+        private router: Router,
+        private favoritesService: FavoritesService,
+        private playlistService: PlaylistService
+    ) { }
+
+    ngOnInit() {
+        this.favoritesService.getFavoritePlaylists()
+        .subscribe(
+            (playlists: Playlist[]) => {
+                this.playlists = playlists;
+                this.isEmpty = false;
+            },
+            (error: any) => {
+                this.errorMessage = error;
+            }
+        );
+    }
 }

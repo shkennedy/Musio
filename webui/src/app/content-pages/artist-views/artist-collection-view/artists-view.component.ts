@@ -10,26 +10,33 @@ import { Genre } from '../../../models/genre.model';
 import { Song } from '../../../models/song.model';
 
 @Component({
-  selector: 'artists-view',
-  templateUrl: './artists-view.component.html',
-  styleUrls: ['./artists-view.component.css'],
-  providers: [ArtistService, FavoritesService]
+    selector: 'artists-view',
+    templateUrl: './artists-view.component.html',
+    styleUrls: ['./artists-view.component.css'],
+    providers: [ArtistService, FavoritesService]
 })
 export class ArtistsViewComponent implements OnInit {
 
-  private artists:Artist[];
+    private artists: Artist[];
+    private isEmpty: boolean = true;
 
-  constructor(
-    private router: Router,
-    private artistService: ArtistService,
-    private favoritesService: FavoritesService
-  ) { }
+    constructor(
+        private router: Router,
+        private artistService: ArtistService,
+        private favoritesService: FavoritesService
+    ) { }
 
-  ngOnInit() {
-    this.favoritesService.getFavoriteArtists()
-    .subscribe((artists: Artist[]) => {
-      this.artists = artists;
-    });
-  }
-  
+    ngOnInit() {
+        this.favoritesService.getFavoriteArtists()
+        .subscribe(
+            (artists: Artist[]) => {
+                this.artists = artists;
+                this.isEmpty = false;
+            },
+            (error: any) => {
+                console.log(error);
+            }
+        );
+    }
+
 }

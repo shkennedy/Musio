@@ -6,25 +6,33 @@ import { AlbumService } from '../../../../services/album.service';
 import { Album } from '../../../../models/album.model';
 
 @Component({
-  selector: 'album-item',
-  templateUrl: './album-item.component.html',
-  styleUrls: ['./album-item.component.css'],
-  providers: [AlbumService, FavoritesService]
+    selector: 'album-item',
+    templateUrl: './album-item.component.html',
+    styleUrls: ['./album-item.component.css'],
+    providers: [AlbumService, FavoritesService]
 })
 export class AlbumItemComponent implements OnInit {
 
-  @Input() album: Album;
+    @Input() albumId: number;
 
-  constructor(
-    private router: Router,
-    private favoritesService: FavoritesService,
-    private albumService: AlbumService
-  ) { }
+    public album: Album;
+    public errMsg: string;
 
-  ngOnInit() {
-    // this.albumService.getAlbumById(this.albumId)
-    // .subscribe((album: Album) => {
-    //   this.model.album = album;
-    // });
-  }
+    constructor(
+        private router: Router,
+        private favoritesService: FavoritesService,
+        private albumService: AlbumService
+    ) { }
+
+    ngOnInit() {
+        this.albumService.getAlbumById(this.albumId)
+            .subscribe(
+                (album: Album) => {
+                    this.album = album;
+                },
+                (error: any) => {
+                    this.errMsg = error;
+                }
+            );
+    }
 }

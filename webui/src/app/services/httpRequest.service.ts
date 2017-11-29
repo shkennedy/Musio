@@ -20,13 +20,10 @@ export class HttpRequestService {
     ) { }
 
     public get(route: string, id: number = -1): Observable<ApiResponse> {
-        console.log(route);
         let url = route;
         if (id != -1) {
-          url += '/' + id.toString();
+            url += '/' + id.toString();
         }
-        // const url = 'beep';
-        console.log(url);
         return this.http.get(url)
             .catch(function (error: any) {
                 return Observable.throw(error || 'Server error')
@@ -34,11 +31,11 @@ export class HttpRequestService {
     }
 
     public post(route: string, body: Object, id: number = -1): Observable<ApiResponse> {
-      let url = route;
-      if (id != -1) {
-        url += '/' + id.toString();
-      }
-      return this.http.post(url, JSON.stringify(body), {headers: this.getHeaders()})
+        let url = route;
+        if (id != -1) {
+            url += '/' + id.toString();
+        }
+        return this.http.post(url, JSON.stringify(body), { headers: this.getHeaders() })
             .catch(function (error: any) {
                 console.log('error: ' + error);
                 return Observable.throw(error || 'Server error')
@@ -50,7 +47,7 @@ export class HttpRequestService {
         if (id != -1) {
             url += '/' + id.toString();
         }
-        return this.http.put(url, JSON.stringify(body), {headers: this.getHeaders()})
+        return this.http.put(url, JSON.stringify(body), { headers: this.getHeaders() })
             .catch(function (error: any) {
                 console.log('error: ' + error);
                 return Observable.throw(error || 'Server error')
@@ -62,7 +59,7 @@ export class HttpRequestService {
         if (id != -1) {
             url += '/' + id.toString();
         }
-        return this.http.delete(url, {headers: this.getHeaders()})
+        return this.http.delete(url, { headers: this.getHeaders() })
             .catch(function (error: any) {
                 console.log('error: ' + error);
                 return Observable.throw(error || 'Server error')

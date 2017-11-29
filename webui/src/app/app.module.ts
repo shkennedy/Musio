@@ -27,6 +27,7 @@ import { SongViewComponent } from './content-pages/song-view/song-view.component
 import { BrowseComponent } from './content-pages/browse/browse.component';
 import { SongItemComponent } from './content-pages/song-view/song-item/song-item.component';
 import { AlbumItemComponent } from './content-pages/album-views/album-collection-view/album-item/album-item.component';
+import { ArtistItemComponent } from './content-pages/artist-views/artist-collection-view/artist-item/artist-item.component';
 import { RadioViewComponent } from './content-pages/radio-view/radio-view.component';
 import { GoPremiumComponent } from './content-pages/go-premium/go-premium.component';
 
@@ -36,52 +37,55 @@ import { FavoritesService } from './services/favorites.service';
 import { GenreService } from './services/genre.service';
 import { HttpRequestService } from './services/httpRequest.service';
 import { PlaylistService } from './services/playlist.service';
+import { SearchService } from './services/search.service';
 import { SongService } from './services/song.service';
 import { UserService } from './services/user.service';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    LoginComponent,
-    RegistrationComponent,
-    PageNotFoundComponent,
-    RecoverPasswordComponent,
-    AlbumsViewComponent,
-    ArtistsViewComponent,
-    ArtistDetailComponent,
-    TopNavComponent,
-    LeftNavComponent,
-    RightNavComponent,
-    AudioPlayerComponent,
-    ContentHomeComponent,
-    PlaylistsViewComponent,
-    PlaylistViewComponent,
-    SongViewComponent,
-    BrowseComponent,
-    SongItemComponent,
-    AlbumItemComponent,
-    AlbumDetailComponent,
-    AlbumSongComponent,
-    RadioViewComponent,
-    GoPremiumComponent
-  ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    HttpModule,
-    AppRoutingModule,
-    HttpClientModule
-  ],
-  providers: [
-    AlbumService,
-    ArtistService,
-    FavoritesService,
-    GenreService,
-    HttpRequestService,
-    PlaylistService,
-    SongService,
-    UserService
-  ],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        LoginComponent,
+        RegistrationComponent,
+        PageNotFoundComponent,
+        RecoverPasswordComponent,
+        AlbumsViewComponent,
+        ArtistsViewComponent,
+        ArtistItemComponent,
+        ArtistDetailComponent,
+        TopNavComponent,
+        LeftNavComponent,
+        RightNavComponent,
+        AudioPlayerComponent,
+        ContentHomeComponent,
+        PlaylistsViewComponent,
+        PlaylistViewComponent,
+        SongViewComponent,
+        BrowseComponent,
+        SongItemComponent,
+        AlbumItemComponent,
+        AlbumDetailComponent,
+        AlbumSongComponent,
+        RadioViewComponent,
+        GoPremiumComponent
+    ],
+    imports: [
+        BrowserModule,
+        FormsModule,
+        HttpModule,
+        AppRoutingModule,
+        HttpClientModule
+    ],
+    providers: [
+        AlbumService,
+        ArtistService,
+        FavoritesService,
+        GenreService,
+        HttpRequestService,
+        PlaylistService,
+        SongService,
+        SearchService,
+        UserService
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }

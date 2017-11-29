@@ -7,25 +7,30 @@ import { Playlist } from '../../../models/playlist.model';
 import { Song } from '../../../models/song.model';
 
 @Component({
-  selector: 'app-playlist-view',
-  templateUrl: './playlist-view.component.html',
-  styleUrls: ['./playlist-view.component.css']
+    selector: 'app-playlist-view',
+    templateUrl: './playlist-view.component.html',
+    styleUrls: ['./playlist-view.component.css']
 })
 export class PlaylistViewComponent implements OnInit {
 
-  @Input() playlistId: number;
+    @Input() playlistId: number;
 
-  private playlist:Playlist;
+    private playlist: Playlist;
 
-  constructor(
-    private router: Router,
-    private playlistService: PlaylistService
-  ) {}
+    constructor(
+        private router: Router,
+        private playlistService: PlaylistService
+    ) { }
 
-  ngOnInit() {
-    this.playlistService.getPlaylistById(this.playlistId)
-    .subscribe((playlist: Playlist) => {
-      this.playlist = playlist;
-    });
-  }
+    ngOnInit() {
+        this.playlistService.getPlaylistById(this.playlistId)
+            .subscribe(
+                (playlist: Playlist) => {
+                    this.playlist = playlist;
+                },
+                (error: any) => {
+                    console.log(error);
+                }
+        );
+    }
 }
