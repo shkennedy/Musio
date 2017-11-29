@@ -21,5 +21,8 @@ public interface ArtistRepository extends JpaRepository<Artist, Integer>
     int findFavoriteCountForArtist(@Param("queryId") int queryId);
     
     @Query(value = "SELECT a.id as id, a.name as name FROM user_favorite_album ufa, artist a WHERE ufa.album_id = a.id and ufa.user_id = :userId ORDER BY timestamp DESC LIMIT :numElements", nativeQuery = true)    
-	Set<ArtistIdentifier> findRecentlyFavoritedArtistsByUser(@Param("userId") int userId, @Param("numElements") int numElements);
+    Set<ArtistIdentifier> findRecentlyFavoritedArtistsByUser(@Param("userId") int userId, @Param("numElements") int numElements);
+    
+    @Query(value = "SELECT a2.id as id, a2.name as name FROM artist_artist_relation aar, artist a1, artist a2 WHERE a1.id = :artistId AND aar.artist1_id = a1.id AND aar.artist2_id = a2.id AND aar.artist1_id <> aar.artist2_id ORDER BY score DESC LIMIT :numElements", nativeQuery = true)    
+    Set<ArtistIdentifier> findMostRelatedArtists(@Param("artistId") int artistId, @Param("numElements") int numElements);
 }
