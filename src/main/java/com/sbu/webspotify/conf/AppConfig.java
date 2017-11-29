@@ -23,4 +23,7 @@ public class AppConfig {
     @Value("${role.artistUser}")
     public String artistUser;
 
+    @Value("${query.recentFavoritesToQuery}")
+    public int recentFavoritesToQuery;
+
 }

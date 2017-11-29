@@ -2,9 +2,14 @@ package com.sbu.webspotify.service;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Set;
 
 import com.sbu.webspotify.conf.AppConfig;
 import com.sbu.webspotify.dto.ApiResponseObject;
+import com.sbu.webspotify.dto.identifier.AlbumIdentifier;
+import com.sbu.webspotify.dto.identifier.ArtistIdentifier;
+import com.sbu.webspotify.dto.identifier.PlaylistIdentifier;
+import com.sbu.webspotify.dto.identifier.SongIdentifier;
 import com.sbu.webspotify.model.Album;
 import com.sbu.webspotify.model.Artist;
 import com.sbu.webspotify.model.Genre;
@@ -281,6 +286,22 @@ public class UserService {
 
 	public boolean userExists(String username) {
 		return userRepository.existsByUsername(username);
+	}
+
+	public Set<SongIdentifier> getMostRecentlyFavoritedSongs(int userId, int numElements) {
+		return songRepository.findRecentlyFavoritedSongsByUser(userId, numElements);
+	}
+
+	public Set<AlbumIdentifier> getMostRecentlyFavoritedAlbums(int userId, int numElements) {
+		return albumRepository.findRecentlyFavoritedAlbumsByUser(userId, numElements);
+	}
+
+	public Set<ArtistIdentifier> getMostRecentlyFavoritedArtists(int userId, int numElements) {
+		return artistRepository.findRecentlyFavoritedArtistsByUser(userId, numElements);
+	}
+
+	public Set<PlaylistIdentifier> getMostRecentlyFavoritedPlaylists(int userId, int numElements) {
+		return playlistRepository.findRecentlyFavoritedPlaylistsByUser(userId, numElements);
 	}
 
 }

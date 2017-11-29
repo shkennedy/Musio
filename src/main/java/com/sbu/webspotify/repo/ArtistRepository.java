@@ -18,5 +18,8 @@ public interface ArtistRepository extends JpaRepository<Artist, Integer>
     Set<ArtistIdentifier> findByNameContaining(@Param("queryString") String queryString);
     
     @Query(value = "SELECT COUNT(ufs.artist_id) FROM user_favorite_artist ufs WHERE ufs.artist_id = :queryId", nativeQuery = true)    
-	int findFavoriteCountForArtist(@Param("queryId") int queryId);
+    int findFavoriteCountForArtist(@Param("queryId") int queryId);
+    
+    @Query(value = "SELECT a.id as id, a.name as name FROM user_favorite_album ufa, artist a WHERE ufa.album_id = a.id and ufa.user_id = :userId ORDER BY timestamp DESC LIMIT :numElements", nativeQuery = true)    
+	Set<ArtistIdentifier> findRecentlyFavoritedArtistsByUser(@Param("userId") int userId, @Param("numElements") int numElements);
 }
