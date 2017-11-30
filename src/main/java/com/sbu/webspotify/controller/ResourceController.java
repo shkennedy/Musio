@@ -2,12 +2,14 @@ package com.sbu.webspotify.controller;
 
 import com.sbu.webspotify.dto.ApiResponseObject;
 import com.sbu.webspotify.model.Album;
+import com.sbu.webspotify.model.Artist;
 import com.sbu.webspotify.model.Audio;
 import com.sbu.webspotify.model.File;
 import com.sbu.webspotify.model.Image;
 import com.sbu.webspotify.model.Song;
 import com.sbu.webspotify.repo.FileRepository;
 import com.sbu.webspotify.service.AlbumService;
+import com.sbu.webspotify.service.ArtistService;
 import com.sbu.webspotify.service.SongService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,9 @@ public class ResourceController
 
     @Autowired
     AlbumService albumService;
+
+    @Autowired
+    ArtistService artistService;
 
     @RequestMapping(value = "/get/{fileId}", method = RequestMethod.GET)
     public @ResponseBody ApiResponseObject getResource(@PathVariable("fileId") int fileId) {
@@ -153,6 +158,64 @@ public class ResourceController
         if(file == null) {
             response.setSuccess(false);
             response.setMessage("Could not retrieve album art data for album with id "+albumId+".");
+        }
+        else {
+            response.setSuccess(true);
+            response.setResponseData(file);
+        }
+        return response;
+    }
+
+    @RequestMapping(value = "/artistImageFullFile/{artistId}", method = RequestMethod.GET)
+    public @ResponseBody ApiResponseObject getArtistFullArtwork(@PathVariable("artistId") int artistId) {
+        ApiResponseObject response = new ApiResponseObject();
+        Artist artist = artistService.getArtistById(artistId);
+        if(artist == null) {
+            response.setSuccess(false);
+            response.setMessage("No artist found with id "+artistId+".");
+            return response;
+        }
+
+        Image image = artist.getArtistImage();
+        if(image == null) {
+            response.setSuccess(false);
+            response.setMessage("Could not retrieve artist image data for artist with id "+artistId+".");
+            return response;
+        }
+
+        File file = fileRepository.findById(image.getFullFileId());
+        if(file == null) {
+            response.setSuccess(false);
+            response.setMessage("Could not retrieve artist image data for artist with id "+artistId+".");
+        }
+        else {
+            response.setSuccess(true);
+            response.setResponseData(file);
+        }
+        return response;
+    }
+
+    @RequestMapping(value = "/artistImageThumbnailFile/{artistId}", method = RequestMethod.GET)
+    public @ResponseBody ApiResponseObject getArtistThumbnailArtwork(@PathVariable("artistId") int artistId) {
+        ApiResponseObject response = new ApiResponseObject();
+        Artist artist = artistService.getArtistById(artistId);
+        if(artist == null) {
+            response.setSuccess(false);
+            response.setMessage("No artist found with id "+artistId+".");
+            return response;
+        }
+
+        Image image = artist.getArtistImage();
+        if(image == null) {
+            response.setSuccess(false);
+            response.setMessage("Could not retrieve artist image data for artist with id "+artistId+".");
+            return response;
+        }
+
+        File file = fileRepository.findById(image.getThumbFileId());
+        if(file == null) {
+            response.setSuccess(false);
+            response.setMessage("Could not retrieve artist image data for artist with id "+artistId+".");
         }
         else {
             response.setSuccess(true);
