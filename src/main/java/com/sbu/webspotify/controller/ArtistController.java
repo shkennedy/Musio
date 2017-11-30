@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-@RequestMapping(path = "/artist") // This means URL's start with /example (after Application path)
+@RequestMapping(path = "/artist")
 public class ArtistController
 {
     @Autowired
