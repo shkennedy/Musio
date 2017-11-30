@@ -19,7 +19,7 @@ public class Album implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private int         id;
-	private int         albumArtId;
+	private Image       albumArt;
 	private String      mbid;
 	private Date        releaseDate;
 	private String      title;
@@ -39,13 +39,14 @@ public class Album implements Serializable {
 		this.id = id;
 	}
 
-	@Column(name="album_art_id")
-	public int getAlbumArtId() {
-		return this.albumArtId;
+	@ManyToOne
+	@JoinColumn(name="album_art_id")
+	public Image getAlbumArt() {
+		return this.albumArt;
 	}
 
-	public void setAlbumArtId(int albumArtId) {
-		this.albumArtId = albumArtId;
+	public void setAlbumArt(Image albumArt) {
+		this.albumArt = albumArt;
 	}
 
 	public String getMbid() {

@@ -20,8 +20,9 @@ public class File implements Serializable {
 	@Lob
 	private byte[] bytes;
 
-	@Column(name="mime_type_id")
-	private int mimeTypeId;
+	@ManyToOne
+	@JoinColumn(name="mime_type_id")
+	private MimeType mimeType;
 
 	public File() {
 	}
@@ -42,12 +43,12 @@ public class File implements Serializable {
 		this.bytes = bytes;
 	}
 
-	public int getMimeTypeId() {
-		return this.mimeTypeId;
+	public MimeType getMimeType() {
+		return this.mimeType;
 	}
 
-	public void setMimeTypeId(int mimeTypeId) {
-		this.mimeTypeId = mimeTypeId;
+	public void setMimeType(MimeType mimeType) {
+		this.mimeType = mimeType;
 	}
 
 }

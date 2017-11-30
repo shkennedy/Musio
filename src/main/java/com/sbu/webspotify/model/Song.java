@@ -34,7 +34,8 @@ public class Song implements Serializable {
 		this.id = id;
 	}
 
-	@Column(name="audio_id")
+	@ManyToOne
+	@JoinColumn(name="audio_id")
 	public Audio getAudio() {
 		return this.audio;
 	}

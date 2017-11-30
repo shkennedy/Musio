@@ -22,8 +22,8 @@ public class Artist implements Serializable {
 	private String	    website;
 	private User 		musicLabel;
 	private GeoLocation geoLocation;
-	private File 		artistImage;
-	private File 		backgroundArt;
+	private Image 		artistImage;
+	private Image 		backgroundArt;
 
 	public Artist() {
 	}
@@ -100,21 +100,23 @@ public class Artist implements Serializable {
 		this.geoLocation = geoLocation;
 	}
 
-	public void setBackgroundArt(File backgroundArt) {
+	public void setBackgroundArt(Image backgroundArt) {
 		this.backgroundArt = backgroundArt;
 	}
 
-	@Column(name="artist_art_background_id")
-	public File getBackgroundArt() {
+	@ManyToOne
+	@JoinColumn(name="artist_art_background_id")
+	public Image getBackgroundArt() {
 		return this.backgroundArt;
 	}
 
-	public void setArtistImage(File artistImage) {
+	public void setArtistImage(Image artistImage) {
 		this.artistImage = artistImage;
 	}
 
-	@Column(name="artist_art_id")
-	public File getArtistImage() {
+	@ManyToOne
+	@JoinColumn(name="artist_art_id")
+	public Image getArtistImage() {
 		return this.artistImage;
 	}
 
