@@ -5,3 +5,4 @@ role.labelUser:   LABEL_USER
 role.artistUser:  ARTIST_USER
 
 query.recentFavoritesToQuery: 3
+query.listeningHistoryToQuery: 25

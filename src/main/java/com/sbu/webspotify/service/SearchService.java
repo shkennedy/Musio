@@ -91,6 +91,7 @@ public class SearchService {
                     albums.add(album);
                 }
             }
+            
             Set<ArtistIdentifier> queriedArtists = userService.getMostRecentlyFavoritedArtists(friend.getId(), appConfig.recentFavoritesToQuery);
             for(ArtistIdentifier artist : queriedArtists) {
                 if(artist.getId() != null) {

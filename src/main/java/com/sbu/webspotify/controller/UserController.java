@@ -1,6 +1,7 @@
 package com.sbu.webspotify.controller;
 
 import com.sbu.webspotify.dto.ApiResponseObject;
+import com.sbu.webspotify.dto.identifier.SongIdentifier;
 import com.sbu.webspotify.model.*;
 
 import java.util.Set;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.sbu.webspotify.service.SongService;
 import com.sbu.webspotify.service.UserService;
 
 import javax.servlet.http.HttpSession;
@@ -23,6 +25,9 @@ public class UserController {
 
     @Autowired
 	private UserService userService;
+
+	@Autowired
+	private SongService songService;
 
 	@RequestMapping(value={"/getUsername"}, method = RequestMethod.GET)
 	public @ResponseBody ApiResponseObject getMyUsername(HttpSession session){
@@ -190,6 +195,40 @@ public class UserController {
 	public @ResponseBody ApiResponseObject getBrowseData(HttpSession session) {
 		User user = (User) session.getAttribute("user");
 		return userService.getBrowseContent(user);
+	}
+
+	@RequestMapping(value={"/addSongToHistory/{songId}"})
+	public @ResponseBody ApiResponseObject addSongToHistory(@PathVariable int songId, HttpSession session) {
+		ApiResponseObject response = new ApiResponseObject();		
+		User user = (User) session.getAttribute("user");
+
+		if(songService.songExists(songId) == false) {
+			response.setSuccess(false);
+			response.setMessage("No song found with id "+songId+".");
+		}
+		else{
+			userService.addSongToHistory(user.getId(), songId);			
+			response.setSuccess(true);
+		}
+
+		return response;
+	}
+
+	@RequestMapping(value={"/getListeningHistory"})
+	public @ResponseBody ApiResponseObject addSongToHistory(HttpSession session) {
+		ApiResponseObject response = new ApiResponseObject();
+		User user = (User) session.getAttribute("user");
+		Set<SongIdentifier> songs = userService.getListeningHistory(user.getId());
+		if(songs == null) {
+			response.setSuccess(false);
+			response.setMessage("Could not fetch listening for user with id "+user.getId()+".");
+		}
+		else{
+			response.setSuccess(true);
+			response.setResponseData(songs);
+		}
+
+		return response;
 	}
 
 }

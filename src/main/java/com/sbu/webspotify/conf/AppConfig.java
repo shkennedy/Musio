@@ -26,4 +26,8 @@ public class AppConfig {
     @Value("${query.recentFavoritesToQuery}")
     public int recentFavoritesToQuery;
 
+    @Value("${query.listeningHistoryToQuery}")
+    public int listeningHistoryToQuery;
+    
+
 }

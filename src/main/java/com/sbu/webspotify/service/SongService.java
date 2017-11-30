@@ -29,4 +29,8 @@ public class SongService {
 		return songRepository.findByNameContaining(query);
 	}
 
+	public boolean songExists(int songId) {
+		return songRepository.exists(songId);
+	}
+
 }

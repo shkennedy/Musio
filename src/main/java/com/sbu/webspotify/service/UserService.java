@@ -304,4 +304,12 @@ public class UserService {
 		return playlistRepository.findRecentlyFavoritedPlaylistsByUser(userId, numElements);
 	}
 
+	public void addSongToHistory(int userId, int songId) {
+		userRepository.addSongToUserHistory(userId, songId);
+	}
+
+	public Set<SongIdentifier> getListeningHistory(int userId) {
+		return songRepository.getListeningHistoryForUser(userId, appConfig.listeningHistoryToQuery);
+	}
+
 }
