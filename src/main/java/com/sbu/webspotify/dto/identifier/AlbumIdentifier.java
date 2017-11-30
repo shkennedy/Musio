@@ -1,9 +1,9 @@
 package com.sbu.webspotify.dto.identifier;
 
 public interface AlbumIdentifier {
-    int getId();
+    Integer getId();
     String getTitle();
-    int getArtistId();
+    Integer getArtistId();
     String getArtistName();
-    int getThumbnailFileId();
+    Integer getThumbnailFileId();
 }

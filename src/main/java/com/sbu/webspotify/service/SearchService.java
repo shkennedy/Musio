@@ -77,25 +77,32 @@ public class SearchService {
 
         // Go through the user's friends list and get some most recently favorited items.
         for(User friend : user.getFollowedUsers())
-        {
+        {            
             Set<SongIdentifier> queriedSongs = userService.getMostRecentlyFavoritedSongs(friend.getId(), appConfig.recentFavoritesToQuery);
             for(SongIdentifier song : queriedSongs) {
-                songs.add(song);
+                if(song.getId() != null) {
+                    songs.add(song);
+                }
             }
 
             Set<AlbumIdentifier> queriedAlbums = userService.getMostRecentlyFavoritedAlbums(friend.getId(), appConfig.recentFavoritesToQuery);
             for(AlbumIdentifier album : queriedAlbums) {
-                albums.add(album);
+                if(album.getId() != null) {
+                    albums.add(album);
+                }
             }
-
             Set<ArtistIdentifier> queriedArtists = userService.getMostRecentlyFavoritedArtists(friend.getId(), appConfig.recentFavoritesToQuery);
             for(ArtistIdentifier artist : queriedArtists) {
-                artists.add(artist);
+                if(artist.getId() != null) {
+                    artists.add(artist);
+                }
             }
 
             Set<PlaylistIdentifier> queriedPlaylists = userService.getMostRecentlyFavoritedPlaylists(friend.getId(), appConfig.recentFavoritesToQuery);
             for(PlaylistIdentifier playlist : queriedPlaylists) {
-                playlists.add(playlist);
+                if(playlist.getId() != null) {
+                    playlists.add(playlist);
+                }
             }
         }
 
