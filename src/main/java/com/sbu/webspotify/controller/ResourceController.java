@@ -1,10 +1,13 @@
 package com.sbu.webspotify.controller;
 
 import com.sbu.webspotify.dto.ApiResponseObject;
+import com.sbu.webspotify.model.Album;
 import com.sbu.webspotify.model.Audio;
 import com.sbu.webspotify.model.File;
+import com.sbu.webspotify.model.Image;
 import com.sbu.webspotify.model.Song;
 import com.sbu.webspotify.repo.FileRepository;
+import com.sbu.webspotify.service.AlbumService;
 import com.sbu.webspotify.service.SongService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +26,9 @@ public class ResourceController
 
     @Autowired
     SongService songService;
+
+    @Autowired
+    AlbumService albumService;
 
     @RequestMapping(value = "/get/{fileId}", method = RequestMethod.GET)
     public @ResponseBody ApiResponseObject getResource(@PathVariable("fileId") int fileId) {
@@ -89,6 +95,64 @@ public class ResourceController
         if(file == null) {
             response.setSuccess(false);
             response.setMessage("Could not retrieve low bitrate data for song with id "+songId+".");
+        }
+        else {
+            response.setSuccess(true);
+            response.setResponseData(file);
+        }
+        return response;
+    }
+
+    @RequestMapping(value = "/albumArtworkFullFile/{albumId}", method = RequestMethod.GET)
+    public @ResponseBody ApiResponseObject getAlbumArtwork(@PathVariable("albumId") int albumId) {
+        ApiResponseObject response = new ApiResponseObject();
+        Album album = albumService.getAlbumById(albumId);
+        if(album == null) {
+            response.setSuccess(false);
+            response.setMessage("No album found with id "+albumId+".");
+            return response;
+        }
+
+        Image image = album.getAlbumArt();
+        if(image == null) {
+            response.setSuccess(false);
+            response.setMessage("Could not retrieve album art data for album with id "+albumId+".");
+            return response;
+        }
+
+        File file = fileRepository.findById(image.getFullFileId());
+        if(file == null) {
+            response.setSuccess(false);
+            response.setMessage("Could not retrieve album art data for album with id "+albumId+".");
+        }
+        else {
+            response.setSuccess(true);
+            response.setResponseData(file);
+        }
+        return response;
+    }
+
+    @RequestMapping(value = "/albumArtworkThumbnailFile/{albumId}", method = RequestMethod.GET)
+    public @ResponseBody ApiResponseObject getAlbumArtworkThumbnail(@PathVariable("albumId") int albumId) {
+        ApiResponseObject response = new ApiResponseObject();
+        Album album = albumService.getAlbumById(albumId);
+        if(album == null) {
+            response.setSuccess(false);
+            response.setMessage("No album found with id "+albumId+".");
+            return response;
+        }
+
+        Image image = album.getAlbumArt();
+        if(image == null) {
+            response.setSuccess(false);
+            response.setMessage("Could not retrieve album art data for album with id "+albumId+".");
+            return response;
+        }
+
+        File file = fileRepository.findById(image.getThumbFileId());
+        if(file == null) {
+            response.setSuccess(false);
+            response.setMessage("Could not retrieve album art data for album with id "+albumId+".");
         }
         else {
             response.setSuccess(true);
