@@ -288,6 +288,10 @@ public class UserService {
 		return userRepository.existsByUsername(username);
 	}
 
+	public boolean userExists(int id) {
+		return userRepository.existsById(id);
+	}
+
 	public Set<SongIdentifier> getMostRecentlyFavoritedSongs(int userId, int numElements) {
 		return songRepository.findRecentlyFavoritedSongsByUser(userId, numElements);
 	}

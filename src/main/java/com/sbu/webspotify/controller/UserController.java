@@ -1,6 +1,7 @@
 package com.sbu.webspotify.controller;
 
 import com.sbu.webspotify.dto.ApiResponseObject;
+import com.sbu.webspotify.dto.BrowsingMode;
 import com.sbu.webspotify.dto.identifier.SongIdentifier;
 import com.sbu.webspotify.model.*;
 
@@ -214,8 +215,8 @@ public class UserController {
 		return response;
 	}
 
-	@RequestMapping(value={"/getListeningHistory"})
-	public @ResponseBody ApiResponseObject addSongToHistory(HttpSession session) {
+	@RequestMapping(value={"/myListeningHistory"})
+	public @ResponseBody ApiResponseObject getMyListeningHistory(HttpSession session) {
 		ApiResponseObject response = new ApiResponseObject();
 		User user = (User) session.getAttribute("user");
 		Set<SongIdentifier> songs = userService.getListeningHistory(user.getId());
@@ -230,5 +231,56 @@ public class UserController {
 
 		return response;
 	}
+
+	@RequestMapping(value={"/listeningHistoryForUser/{userId}"})
+	public @ResponseBody ApiResponseObject getUsersHistory(@PathVariable int userId) {
+		ApiResponseObject response = new ApiResponseObject();
+
+		if(userService.userExists(userId) == false) {
+			response.setSuccess(false);
+			response.setMessage("No user found with id "+userId+".");
+			return response;
+		}
+
+		Set<SongIdentifier> songs = userService.getListeningHistory(userId);
+		if(songs == null) {
+			response.setSuccess(false);
+			response.setMessage("Could not fetch listening for user with id "+userId+".");
+		}
+		else{
+			response.setSuccess(true);
+			response.setResponseData(songs);
+		}
+
+		return response;
+	}
+
+	/**
+	 * set the current listening session to private
+	 */
+	@RequestMapping(value={"/enablePrivateMode"})
+	public @ResponseBody ApiResponseObject enablePrivateMode(HttpSession session) {
+		session.setAttribute("privateMode", true);
+		return new ApiResponseObject(true, null, "Private mode is now ON.");
+	}
+
+	/**
+	 * set the current listening session to public
+	 */
+	@RequestMapping(value={"/disablePrivateMode"})
+	public @ResponseBody ApiResponseObject disablePrivateMode(HttpSession session) {
+		session.setAttribute("privateMode", false);
+		return new ApiResponseObject(true, null, "Private mode is now OFF.");
+	}
+
+	/**
+	 * returns whether or not the current session is private
+	 */
+	@RequestMapping(value={"/getBrowsingMode"})
+	public @ResponseBody ApiResponseObject checkBrowsingMode(HttpSession session) {
+		boolean browsingMode = (boolean) session.getAttribute("privateMode");
+		return new ApiResponseObject(true, null, new BrowsingMode(browsingMode));
+	}
+
 
 }
