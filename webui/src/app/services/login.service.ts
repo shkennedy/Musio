@@ -12,14 +12,14 @@ export interface LoginRequestParam {
 export interface RegisterRequestParam {
     username: string;
     password: string;
-    email:    string;
+    email: string;
 }
 
 @Injectable()
 export class LoginService {
 
-    private static LOGIN_URL    = '/login';
-    private static LOGOUT_URL   = '/logout';
+    private static LOGIN_URL = '/login';
+    private static LOGOUT_URL = '/logout';
     private static REGISTER_URL = '/register';
 
     constructor(
@@ -28,38 +28,38 @@ export class LoginService {
     ) { }
 
     public tryLogin(username: string, password: string): Observable<boolean> {
-        let body: LoginRequestParam = {
+        const body: LoginRequestParam = {
             'username': username,
             'password': password,
-        }
+        };
         return this.httpRequest.post(LoginService.LOGIN_URL, body)
-        .map((response: ApiResponse) => {
-            if (response.success) {
-                // this.sessionService.storeSessionInfo(response.data, 'tokenStr'); // TODO token string
-            }
-            return response.success;
-        });
+            .map((response: ApiResponse) => {
+                if (response.success) {
+                    // this.sessionService.storeSessionInfo(response.data, 'tokenStr'); // TODO token string
+                }
+                return response.success;
+            });
     }
 
     public logout(navigatetoLogout: boolean = true): Observable<boolean> {
         return this.httpRequest.get(LoginService.LOGOUT_URL)
-        .map((response: ApiResponse) => {
-            if (response.success) {
-                // this.sessionService.removeSessionInfo();
-            }
-            return response.success;
-        });
+            .map((response: ApiResponse) => {
+                if (response.success) {
+                    // this.sessionService.removeSessionInfo();
+                }
+                return response.success;
+            });
     }
 
     public register(username: string, password: string, email: string): Observable<boolean> {
-        let body: RegisterRequestParam = {
+        const body: RegisterRequestParam = {
             'username': username,
             'password': password,
-            'email':    email
-        }
+            'email': email
+        };
         return this.httpRequest.post(LoginService.REGISTER_URL, body)
-        .map((response: ApiResponse) => {
-            return response.success;
-        });
+            .map((response: ApiResponse) => {
+                return response.success;
+            });
     }
 }

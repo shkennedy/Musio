@@ -27,7 +27,7 @@ export interface BrowseResponse {
     albums: Album[];
     playlists: Playlist[];
     instruments: Instrument[];
-	genres: Genre[];
+    genres: Genre[];
 }
 
 @Injectable()
@@ -50,8 +50,8 @@ export class SearchService {
 
     public getBrowse(): Observable<BrowseResponse> {
         return this.httpRequest.get(SearchService.BROWSE_URL)
-        .map((response: ApiResponse) => {
-            return response.responseData;
-        });
+            .map((response: ApiResponse) => {
+                return response.responseData;
+            });
     }
 }

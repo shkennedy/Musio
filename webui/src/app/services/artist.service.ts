@@ -12,7 +12,7 @@ export class ArtistService {
 
     private static ARTIST_URL: string = '/artist';
     private static GET_URL: string = '/get';
-    private static FOLLOWER_COUNT_URL: string = '/favoritesCount'
+    private static FOLLOWER_COUNT_URL: string = '/favoritesCount';
     private static RELATED_URL: string = '/related';
     private static ADD_URL: string = '/add';
     private static DELETE_URL: string = '/delete';

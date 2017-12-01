@@ -21,48 +21,48 @@ export class HttpRequestService {
 
     public get(route: string, id: number = -1): Observable<ApiResponse> {
         let url = route;
-        if (id != -1) {
+        if (id !== -1) {
             url += '/' + id.toString();
         }
         return this.http.get(url)
             .catch(function (error: any) {
-                return Observable.throw(error || 'Server error')
+                return Observable.throw(error || 'Server error');
             });
     }
 
     public post(route: string, body: Object, id: number = -1): Observable<ApiResponse> {
         let url = route;
-        if (id != -1) {
+        if (id !== -1) {
             url += '/' + id.toString();
         }
         return this.http.post(url, JSON.stringify(body), { headers: this.getHeaders() })
             .catch(function (error: any) {
                 console.log('error: ' + error);
-                return Observable.throw(error || 'Server error')
+                return Observable.throw(error || 'Server error');
             });
     }
 
     public put(route: string, body: Object, id: number = -1): Observable<ApiResponse> {
         let url = route;
-        if (id != -1) {
+        if (id !== -1) {
             url += '/' + id.toString();
         }
         return this.http.put(url, JSON.stringify(body), { headers: this.getHeaders() })
             .catch(function (error: any) {
                 console.log('error: ' + error);
-                return Observable.throw(error || 'Server error')
+                return Observable.throw(error || 'Server error');
             });
     }
 
     public delete(route: string, id: number = -1): Observable<ApiResponse> {
         let url = route;
-        if (id != -1) {
+        if (id !== -1) {
             url += '/' + id.toString();
         }
         return this.http.delete(url, { headers: this.getHeaders() })
             .catch(function (error: any) {
                 console.log('error: ' + error);
-                return Observable.throw(error || 'Server error')
+                return Observable.throw(error || 'Server error');
             });
     }
 

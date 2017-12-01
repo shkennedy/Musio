@@ -12,8 +12,8 @@ import { Genre } from '../models/genre.model';
 @Injectable()
 export class GenreService {
 
-    private static GENRE_URL: string    = '/genre';
-    private static TOP_URL: string      = '/top';
+    private static GENRE_URL: string = '/genre';
+    private static TOP_URL: string = '/top';
     private static TOP_ALBUMS_URL: string = GenreService.GENRE_URL + '/albums' + GenreService.TOP_URL;
     private static TOP_ARTISTS_URL: string = GenreService.GENRE_URL + '/artists' + GenreService.TOP_URL;
     private static TOP_PLAYLISTS_URL: string = GenreService.GENRE_URL + '/playlists' + GenreService.TOP_URL;
@@ -26,28 +26,28 @@ export class GenreService {
 
     public getTopAlbumsByGenreId(id: number): Observable<Album[]> {
         return this.httpRequest.get(GenreService.TOP_URL, id)
-        .map((response: ApiResponse) => {
-            return response.responseData;
-        });
+            .map((response: ApiResponse) => {
+                return response.responseData;
+            });
     }
 
     public getTopArtistsByGenreId(id: number): Observable<Artist[]> {
         return this.httpRequest.get(GenreService.TOP_URL, id)
-        .map((response: ApiResponse) => {
-            if (response.success) {
-				return response.responseData;
-			}
-			return null; 
-        });
+            .map((response: ApiResponse) => {
+                if (response.success) {
+                    return response.responseData;
+                }
+                return null;
+            });
     }
 
     public getTopSongsGenreId(id: number): Observable<Song[]> {
         return this.httpRequest.get(GenreService.TOP_URL, id)
-        .map((response: ApiResponse) => {
-            if (response.success) {
-				return response.responseData;
-			}
-			return null; 
-        });
+            .map((response: ApiResponse) => {
+                if (response.success) {
+                    return response.responseData;
+                }
+                return null;
+            });
     }
 }

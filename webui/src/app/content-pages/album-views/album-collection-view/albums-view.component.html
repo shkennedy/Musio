@@ -2,8 +2,8 @@
 <div class="album-collection-container">
 
     <div *ngFor="let album of albums" class="artist-card col-sm-3 center-block" [routerLink]="['/albums',album.id]">
-      <img *ngIf="fake;else default_art" src="http://www.billboard.com/files/media/kendrick-lamar-performance-oct-8-2016-billboard-1548.jpg">
-      <ng-template #default_art>
+      <img *ngIf="album.albumArt; else defaultArt" src="{{album.albumArt}}">
+      <ng-template #defaultArt>
         <img src="assets/images/default_art.png" alt="">
       </ng-template>
       <p>{{album.title}}</p>

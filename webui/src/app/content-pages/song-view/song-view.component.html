@@ -4,6 +4,7 @@
       <tr>
         <th>Title</th>
         <th>Artist</th>
+        <th>Album</th>
         <th>Duration</th>
       </tr>
     </thead>
@@ -12,9 +13,9 @@
       <tr *ngFor="let song of songs">
         <td>{{song.title}}</td>
         <td>{{song.artist.name}}</td>
+        <td>{{song.album.title}}</td>
         <td>{{song.duration}}</td>
       </tr>
-
-      <!-- <song-item *ngFor="let song of songs" [song]="song"></song-item> -->
+      
     </tbody>
   </table>
