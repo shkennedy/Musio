@@ -1,89 +1,46 @@
 <div id="album-wrapper col-sm-12">
-  <div id="album-info" class="col-sm-4">
-    <div class="col-sm-12">
-      <img *ngIf="imageExists; else default_art" src="">
-      <ng-template #default_art>
-        <img width=300 src="assets/images/default_art.png" alt="">
-      </ng-template>
-    </div>
-    <div class="col-sm-12">
-      <h3 class="album-title">{{album.title}}</h3>
+    <div id="album-info" class="col-sm-4">
+        <div class="col-sm-12">
+            <img *ngIf="imageExists; else default_art" src="">
+            <ng-template #default_art>
+                <img width=300 src="assets/images/default_art.png" alt="">
+            </ng-template>
+        </div>
+        <div class="col-sm-12">
+            <h3 class="album-title">{{album.title}}</h3>
 
-      <h5>By <span id="artist-name">{{album.artists[0].name}}</span></h5>
-    </div>
-    <button class="btn btn-green block-center">PLAY</button>
+            <h5>By
+                <span id="artist-name">{{album.artists[0].name}}</span>
+            </h5>
+        </div>
+        <button class="btn btn-green block-center">PLAY</button>
 
-    <div>
-      <div *ngIf="isFavorited; else favourite">
-        <button class="btn btn-black glyphicon glyphicon-heart" (click)="unfavoriteAlbum()"></button>
-      </div>
-      <ng-template #favourite>
-        <button class="btn btn-grey " (click)="favoriteAlbum()">FAVORITE</button>
-      </ng-template>
-    </div>
+        <div>
+            <div *ngIf="isFavorited; else favourite">
+                <button class="btn btn-black glyphicon glyphicon-heart" (click)="unfavoriteAlbum()"></button>
+            </div>
+            <ng-template #favourite>
+                <button class="btn btn-grey " (click)="favoriteAlbum()">FAVORITE</button>
+            </ng-template>
+        </div>
 
-  </div>
-
-  <div id="album-tracklist" class="col-sm-8"></div>
-  <table class="table table-inverse song-table album-tracklist-table">
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>Song</th>
-        <th>Runtime</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let song of album.songs; let i = index">
-        <th>{{i}}</th>
-        <td>{{song.title}}</td>
-        <td>{{song.duration}}</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-
-
-<!-- <div id="album-wrapper">
-  <div id="album-info" class="col-sm-4">
-    <div class="col-sm-12">
-      <div *ngIf="fake;else default_image">
-      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIyMP_kyt9Ep7aBn-EWYO7y_BGlv2uZTfiL7pHXf2AkaxsCxO6">
-    </div>
-    <ng-template #default_image>
-      <div><img src="assets/images/default_art.png"></div>
-    </ng-template>
-    <div class="col-sm-12">
-      <h3 class="album-title">{{album.title}}</h3>
-
-      <h5>By <span id="artist-name">{{album.artists[0].name}}</span></h5>
-    </div>
-    <button class="btn btn-green">PLAY</button>
-
-    <div *ngIf="isFavorited; then favorite else unfavorite">
-      <ng-template #unfavorite>
-        <button class="btn btn-grey">UNFAVORITE</button>
-      </ng-template>
-      <ng-template #unfavorite>
-        <button class="btn btn-yellow">FAVORITE</button>
-      </ng-template>
     </div>
 
-  </div>
-
-  <div id="album-tracklist" class="col-sm-8"></div>
-  <table class="table table-inverse song-table album-tracklist-table">
-      <thead>
-        <tr>
-          <th>Song</th>
-          <th>Track</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let song of album.songs; let i = index">
-          <th>{{song.name}}</th>
-          <td>{{i}}</td>
-        </tr>
+    <div id="album-tracklist" class="col-sm-8"></div>
+    <table class="table table-inverse song-table album-tracklist-table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Song</th>
+                <th>Runtime</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let song of album.songs; let i = index">
+                <th>{{i + 1}}</th>
+                <td>{{song.title}}</td>
+                <td>{{song.duration}}</td>
+            </tr>
         </tbody>
     </table>
-</div> -->
+</div>

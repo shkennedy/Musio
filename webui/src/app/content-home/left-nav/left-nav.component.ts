@@ -46,12 +46,4 @@ export class LeftNavComponent implements OnInit {
     navigatePlaylist(playlistId: number) {
         this.router.navigate(['/playlist', playlistId]);
     }
-
-    getSong() {
-        console.log("here");
-        this.songService.getSongById(4)
-            .subscribe((song: any) => {
-                console.log('worked');
-            });
-    }
 }

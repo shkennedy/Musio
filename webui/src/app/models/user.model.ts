@@ -1,9 +1,23 @@
+import { Role } from './role.model';
+import { Song } from  './song.model';
+import { Artist } from './artist.model';
+import { Album } from './album.model';
+import { Station } from './station.model';
+import { GeoLocation } from './geoLocation.model';
+import { Genre } from './genre.model';
+import { Playlist } from './playlist.model';
+
 export class User{
-  public user_id: number;
-  public user_name: string;
-  public email: string;
-  public user_banner: File;
-  public following: User[];
-  public followers: User[];
-  public is_premium: boolean;
+    id: number;
+    email: string;
+    username: string;
+    roles: Role[];
+    favoriteSongs: Song[];
+    favoritePlaylists: Playlist[];
+    favoriteArtists: Artist[];
+    favoriteStations: Station[];
+    favoriteGenres: Genre[];
+    followedUsers: User[];
+    geoLocation: GeoLocation;
+    profileImage: File
 }

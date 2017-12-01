@@ -27,17 +27,22 @@ export class TopNavComponent implements OnInit {
         })
     }
 
+    gotoUserProfile() {
+        this.router.navigate(['/profile']);
+        console.log('clicked profile');
+    }
+
     goPremium() {
         this.router.navigate(['/goPremium']);
         console.log("clicked About");
     }
 
-    clickedAbout() {
+    gotoAbout() {
         this.router.navigate(['/about']);
         console.log("clicked About");
     }
 
-    clickedContact() {
+    gotoContact() {
         this.router.navigate(['/contact']);
         console.log("clicked contact");
     }

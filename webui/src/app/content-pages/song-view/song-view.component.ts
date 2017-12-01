@@ -37,7 +37,6 @@ export class SongViewComponent implements OnInit {
     //     console.log('im passin out');
     // });
 
-
     this.favoritesService.getFavoriteSongs()
     .subscribe((songs: Song[]) => {
       this.songs = songs;

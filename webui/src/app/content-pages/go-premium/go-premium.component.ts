@@ -15,6 +15,8 @@ export class GoPremiumComponent implements OnInit {
     private paymentInfo: PaymentInfo;
     private success: boolean;
 
+    private errorMessage: string;
+
     constructor(
         private router: Router,
         private userService: UserService
@@ -30,6 +32,7 @@ export class GoPremiumComponent implements OnInit {
             },
             (error: any) => {
                 this.success = false;
+                this.errorMessage = error;
                 console.log('error going premium');
             }
         );

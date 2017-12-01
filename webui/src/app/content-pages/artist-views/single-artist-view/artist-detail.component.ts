@@ -20,7 +20,9 @@ export class ArtistDetailComponent implements OnInit {
     @Input() artistId: number;
 
     private artist: Artist;
+    private followerCount: number;
     private isFollowed: boolean = false;
+    private relatedArtists: Artist[];
     private errorMessage: string;
 
     constructor(
@@ -40,6 +42,16 @@ export class ArtistDetailComponent implements OnInit {
             }
         );
 
+        this.artistService.getArtistFollowerCount(this.artistId)
+        .subscribe(
+            (followerCount: number) => {
+                this.followerCount = followerCount;
+            },
+            (error: any) => {
+                console.log(error);
+            }
+        )
+
         this.favoritesService.getFavoriteArtists()
         .subscribe(
             (artists: Artist[]) => {
@@ -51,6 +63,16 @@ export class ArtistDetailComponent implements OnInit {
                         }
                     }
                 }
+            },
+            (error: any) => {
+                console.log(error);
+            }
+        );
+
+        this.artistService.getRelatedArtists(this.artistId)
+        .subscribe(
+            (relatedArtists: Artist[]) => {
+                this.relatedArtists = relatedArtists;
             },
             (error: any) => {
                 console.log(error);

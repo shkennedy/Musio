@@ -1,1 +1,17 @@
-Welcome to this component
+<div class="row">
+    <div *ngIf="isEmpty; else hasPlaylists">
+        <p>No Playlists Found: Find some playlists in browse.</p>
+        <a [routerLink]="['/browse', '/artist']">Find Playlists</a>
+    </div>
+    <ng-template #hasPlaylists>
+        <div class="playlist-collection-container">
+            <div *ngFor="let playlist of playlists" class="artist-card col-sm-3 center-block" [routerLink]="['/playlists', playlist.id]">
+                <img *ngIf="!playlist.image; else defaultArt" src=playlist.image>
+                <ng-template #defaultArt>
+                    <img src="assets/images/no_artist_picture.png" alt="">
+                </ng-template>
+                <p>{{playlist.name}}</p>
+            </div>
+        </div>
+    </ng-template>
+</div>

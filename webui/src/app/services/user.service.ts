@@ -50,6 +50,13 @@ export class UserService {
         });
     }
 
+    // public getIsPremium(): Observable<boolean> {
+    //     return this.getUser()
+    //     .map((user: User) => {
+    //         return user.isPremium;
+    //     });
+    // }
+
     // public getUserPaymentInfo(userId: number): PaymentInfo {
     //     return this.httpRequest.get(UserService.PAYMENT_INFO_URL + "/" + userId)
     //     .subscribe((paymentInfo: PaymentInfo) => {

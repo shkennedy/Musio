@@ -32,6 +32,7 @@ export class AlbumsViewComponent implements OnInit {
                     }
                 },
                 (error: any) => {
+                    console.log(error);
                     this.empty = true;
                 }
             );

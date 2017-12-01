@@ -60,8 +60,7 @@ export class FavoritesService {
 	}
 
     public getFavoriteAlbums(): Observable<Album[]> {
-		// return this.getFavoritesByUrl(FavoritesService.ALBUMS_URL);
-		return this.http.get(FavoritesService.FAVORITES_URL + FavoritesService.ALBUMS_URL);
+		return this.getFavoritesByUrl(FavoritesService.ALBUMS_URL);
 	}
 
 	public addFavoriteAlbumById(albumId: number): Observable<boolean> {

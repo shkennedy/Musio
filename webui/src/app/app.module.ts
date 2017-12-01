@@ -31,6 +31,7 @@ import { ArtistItemComponent } from './content-pages/artist-views/artist-collect
 import { RadioViewComponent } from './content-pages/radio-view/radio-view.component';
 import { GoPremiumComponent } from './content-pages/go-premium/go-premium.component';
 
+import { AdService } from './services/ad.service';
 import { AlbumService } from './services/album.service';
 import { ArtistService } from './services/artist.service';
 import { FavoritesService } from './services/favorites.service';
@@ -76,6 +77,7 @@ import { UserService } from './services/user.service';
         HttpClientModule
     ],
     providers: [
+        AdService,
         AlbumService,
         ArtistService,
         FavoritesService,

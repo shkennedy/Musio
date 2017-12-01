@@ -12,6 +12,8 @@ export class ArtistService {
 
     private static ARTIST_URL: string = '/artist';
     private static GET_URL: string = '/get';
+    private static FOLLOWER_COUNT_URL: string = '/favoritesCount'
+    private static RELATED_URL: string = '/related';
     private static ADD_URL: string = '/add';
     private static DELETE_URL: string = '/delete';
 
@@ -28,6 +30,26 @@ export class ArtistService {
             }
             return null;
         });
+    }
+
+    public getArtistFollowerCount(artistId: number): Observable<number> {
+        return this.httpRequest.get(ArtistService.ARTIST_URL + ArtistService.FOLLOWER_COUNT_URL, artistId)
+        .map((response: ApiResponse) => {
+            if (response.success) {
+                return response.responseData;
+            }
+            return -1;
+        });
+    }
+
+    public getRelatedArtists(artistId: number): Observable<Artist[]> {
+        return this.httpRequest.get(ArtistService.ARTIST_URL + ArtistService.RELATED_URL, artistId)
+        .map((response: ApiResponse) => {
+            if (response.success) {
+                return response.responseData;
+            }
+            return null;
+        })
     }
 
     public addArtist(artist: Artist): Observable<boolean> {

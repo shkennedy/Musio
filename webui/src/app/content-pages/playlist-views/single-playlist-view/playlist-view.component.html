@@ -1,0 +1,44 @@
+<div id="playlist-wrapper col-sm-12">
+    <div id="playlist-info" class="col-sm-4">
+        <div class="col-sm-12">
+            <img *ngIf="imageExists; else default_art" src="">
+            <ng-template #default_art>
+                <img width=300 src="assets/images/default_art.png" alt="">
+            </ng-template>
+        </div>
+        <div class="col-sm-12">
+            <h3 class="album-title">{{playlist.name}}</h3>
+        </div>
+        <button class="btn btn-green block-center">PLAY</button>
+
+        <div>
+            <div *ngIf="isFavorited; else favorite">
+                <button class="btn btn-black glyphicon glyphicon-heart" (click)="unfavoritePlaylist()"></button>
+            </div>
+            <ng-template #favorite>
+                <button class="btn btn-grey " (click)="favoritePlaylist()">FAVORITE</button>
+            </ng-template>
+        </div>
+
+    </div>
+
+    <div id="playlist-tracklist" class="col-sm-8"></div>
+    <table class="table table-inverse song-table album-tracklist-table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Song</th>
+                <th>Duration</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let song of playlist.songs; let i = index">
+                <th>{{i + 1}}</th>
+                <td>{{song.title}}</td>
+                <td>{{song.duration}}</td>
+                <td>{{song.artist.name}}</td>
+                <td>{{song.album.name}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

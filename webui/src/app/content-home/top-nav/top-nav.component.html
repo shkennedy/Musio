@@ -13,7 +13,8 @@
         <li (click)="clickedAbout()"><a>Settings</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><a>{{username}}</a></li>
+        <li><a>{{user.profileImage}}</a></li>
+        <li><a>{{user.username}}</a></li>
         <li><a href='/logout'><span class="glyphicon glyphicon-log-in"></span>&nbsp;Logout</a></li>
       </ul>
     </div>
