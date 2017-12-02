@@ -21,6 +21,7 @@ export class AudioPlayerComponent implements OnInit {
     // https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/types/howler/index.d.ts
 
     // Alternatives
+    // https://521dimensions.com/open-source/amplitudejs
     // https://wiki.mozilla.org/Audio_Data_API#API_Tutorial
     // https://github.com/arielfaur/ionic-audio/tree/3.0
 

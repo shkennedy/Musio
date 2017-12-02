@@ -1,0 +1,9 @@
+<section>
+    <h>{{user.username}}</h>
+    
+    <img src="{{user.profileImage}}" />
+    <button type="button" ngFilePicker accept="image/*" (filePick)="file = $event">Change</button>
+
+    <p>{{user.email}}</p>
+    <p>{{user.geoLocation}}</p>
+</section>

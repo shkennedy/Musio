@@ -11,6 +11,7 @@ import { Artist } from '../models/artist.model';
 export class FileService {
 
     private static RESOURCE_URL = '/resource';
+    private static GENERIC_GET_URL: string = FileService.RESOURCE_URL + '/get';
     private static SONG_HIBR_URL: string = FileService.RESOURCE_URL + '/highBitrateSongFile';
     private static SONG_LOBR_URL: string = FileService.RESOURCE_URL + '/lowBitrateSongFile';
     private static ALBUM_FULL_URL: string = FileService.RESOURCE_URL + 'albumArtworkFullFile';
@@ -22,6 +23,16 @@ export class FileService {
         private router: Router,
         private httpRequest: HttpRequestService
     ) { }
+
+    public getImageFileById(fileId: number): Observable<File> {
+        return this.httpRequest.get(FileService.GENERIC_GET_URL, fileId)
+        .map((response: ApiResponse) => {
+            if (response.success) {
+                return response.responseData;
+            }
+            return null;
+        });
+    }
 
     public getAlbumThumbnailImageById(albumImageId: number): Observable<File> {
         return this.httpRequest.get(FileService.ALBUM_THUMB_URL, albumImageId)
