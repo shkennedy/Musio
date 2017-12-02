@@ -16,10 +16,10 @@
         <button class="btn btn-green block-center">PLAY</button>
 
         <div>
-            <div *ngIf="isFavorited; else favourite">
+            <div *ngIf="isFavorited; else favorite">
                 <button class="btn btn-black glyphicon glyphicon-heart" (click)="unfavoriteAlbum()"></button>
             </div>
-            <ng-template #favourite>
+            <ng-template #favorite>
                 <button class="btn btn-grey " (click)="favoriteAlbum()">FAVORITE</button>
             </ng-template>
         </div>

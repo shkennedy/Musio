@@ -5,13 +5,14 @@ import { Observable } from 'rxjs';
 import { HttpRequestService, ApiResponse } from './httpRequest.service';
 import { PaymentInfo } from '../models/paymentInfo.model';
 import { User } from '../models/user.model';
+import { Role } from '../models/role.model';
 
 @Injectable()
 export class UserService {
 
-    private static USER_URL: string = '/whoami';
-    private static FOLLOW_URL: string = '/followUser';
-    private static UNFOLLOW_URL: string = '/unfollowUser';
+    private static USER_URL = '/whoami';
+    private static FOLLOW_URL = '/followUser';
+    private static UNFOLLOW_URL = '/unfollowUser';
     private static GO_PREMIUM_URL: string = UserService.USER_URL + '/goPremium';
 
     constructor(
@@ -50,12 +51,17 @@ export class UserService {
             });
     }
 
-    // public getIsPremium(): Observable<boolean> {
-    //     return this.getUser()
-    //     .map((user: User) => {
-    //         return user.isPremium;
-    //     });
-    // }
+    public getIsPremium(): Observable<boolean> {
+        return this.getUser()
+        .map((user: User) => {
+            for (let i = 0; i < user.roles.length; ++i) {
+                if (user.roles[i].role === 'premiumUser') {
+                    return true;
+                }
+            }
+            return false;
+        });
+    }
 
     // public getUserPaymentInfo(userId: number): PaymentInfo {
     //     return this.httpRequest.get(UserService.PAYMENT_INFO_URL + "/" + userId)

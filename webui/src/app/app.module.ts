@@ -37,6 +37,7 @@ import { ArtistService } from './services/artist.service';
 import { FavoritesService } from './services/favorites.service';
 import { GenreService } from './services/genre.service';
 import { HttpRequestService } from './services/httpRequest.service';
+import { FileService } from './services/file.service';
 import { PlaylistService } from './services/playlist.service';
 import { SearchService } from './services/search.service';
 import { SongService } from './services/song.service';
@@ -83,6 +84,7 @@ import { UserService } from './services/user.service';
         FavoritesService,
         GenreService,
         HttpRequestService,
+        FileService,
         PlaylistService,
         SongService,
         SearchService,

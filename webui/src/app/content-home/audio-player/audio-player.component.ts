@@ -1,55 +1,76 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Howler } from 'howler';
 
-import { Howl } from 'howler';
+import { SongService } from '../../services/song.service';
+import { FileService } from '../../services/file.service';
+import { UserService } from '../../services/user.service';
 
 import { Song } from '../../models/song.model';
-import { SongService } from '../../services/song.service';
 
 @Component({
     selector: 'app-audio-player',
     templateUrl: './audio-player.component.html',
     styleUrls: ['./audio-player.component.css'],
-    providers: [SongService]
+    providers: [FileService, SongService, UserService]
 })
 export class AudioPlayerComponent implements OnInit {
 
-    private static IN_PROGRESS_TIME = 5;
-
     // Main
-    // https://github.com/goldfire/howler.js#documentation
+    // https://www.npmjs.com/package/@types/howler
+    // https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/types/howler/index.d.ts
 
     // Alternatives
     // https://wiki.mozilla.org/Audio_Data_API#API_Tutorial
     // https://github.com/arielfaur/ionic-audio/tree/3.0
 
-    model: {
-        currentSong: Song,
-        songQueue: Song[],
-        history: Song[],
-        volume: number,
-        isMuted: boolean,
-        isPlaying: boolean,
-        isRepeating: boolean,
-    };
-    errMsg: string;
+    private static IN_PROGRESS_TIME = 5;
 
-    private audio: Howl;
+    audio: Howl;
+    useHighBitrate: boolean;
+
+    currentSong: Song;
+    songQueue: Song[];
+    history: Song[];
+    volume: number;
+    isMuted: boolean;
+    isPlaying: boolean;
+    isRepeating: boolean;
+
+    errMsg: string;
 
     constructor(
         private router: Router,
-        private songService: SongService
+        private fileService: FileService,
+        private songService: SongService,
+        private userService: UserService
     ) { }
 
-    ngOnInit() { }
+    ngOnInit() {
+        // Find user allowed bitrate
+        this.userService.getIsPremium()
+        .subscribe(
+            (isPremium: boolean) => {
+                this.useHighBitrate = isPremium;
+            },
+            (error: any) => {
+                // Something went wrong, High bitrate on the house
+                this.useHighBitrate = true;
+                console.log(error);
+            }
+        );
+    }
 
-    private makeHowl(song: Song): Howl {
+    private makeHowl(songFile: File): Howl {
         const newHowl: Howl = new Howl({
-            src: [song.audio],
-            volume: this.model.volume,
+            // src: [song.audio],
+            src: ['../../assets/testSong.mp3'],
+            volume: this.volume,
             autoplay: true,
             onend: function () {
-                this.forward();
+                if (!this.isRepeating) {
+                    this.playNext();
+                }
             },
             onloaderror: function () {
                 this.errMsg = 'Unable to load song';
@@ -58,24 +79,46 @@ export class AudioPlayerComponent implements OnInit {
                 this.errMsg = 'Unable to play song';
             }
         });
+
+        return newHowl;
     }
 
     public playSong(songId: number): void {
+        // Fetch song object
         this.songService.getSongById(4)
-            .subscribe((song: Song) => {
-                if (!song) {
-                    return;
-                }
-                this.audio = this.makeHowl(song);
-                this.model.currentSong = song;
-            });
+        .subscribe(
+            (song: Song) => {
+                this.currentSong = song;
+                // Fetch song file
+                this.fileService.getSongFileByIdAndBitrate(song.id, this.useHighBitrate)
+                .subscribe(
+                    (songFile: File) => {
+                        this.audio = this.makeHowl(songFile);
+                        this.isPlaying = true;
+                    },
+                    (error: any) => {
+                        this.isPlaying = false;
+                        this.audio = null;
+                        this.currentSong = null;
+                        console.log(error);
+                    }
+                );
+            },
+            (error: any) => {
+                console.log(error);
+            }
+        );
     }
 
     public playNext(): void {
-        const nextSong: Song = this.model.songQueue.shift();
-        this.model.history.push(this.model.currentSong);
+        const nextSong: Song = this.songQueue.shift();
+        this.history.push(this.currentSong);
         if (nextSong) {
             this.playSong(nextSong.id);
+        } else {
+            this.isPlaying = false;
+            this.audio = null;
+            this.currentSong = null;
         }
     }
 
@@ -87,11 +130,11 @@ export class AudioPlayerComponent implements OnInit {
         }
 
         // Find last song
-        const lastSong: Song = this.model.history.pop();
+        const lastSong: Song = this.history.pop();
 
         // Add current song to songQueue
-        this.model.songQueue.push(this.model.songQueue[0]);
-        this.model.songQueue[0] = this.model.currentSong;
+        this.songQueue.push(this.songQueue[0]);
+        this.songQueue[0] = this.currentSong;
 
         if (lastSong) {
             this.playSong(lastSong.id);
@@ -99,25 +142,25 @@ export class AudioPlayerComponent implements OnInit {
     }
 
     public playOrPause(): void {
-        if (!this.model.currentSong) {
+        if (!this.currentSong) {
             return;
         }
 
-        if (this.model.isPlaying) {
+        if (this.isPlaying) {
             this.audio.pause();
         } else {
             this.audio.play();
         }
-        this.model.isPlaying = !this.model.isPlaying;
+        this.isPlaying = !this.isPlaying;
     }
 
     public muteOrUnmute(): void {
-        this.model.isMuted = !this.model.isMuted;
-        this.audio.mute(this.model.isMuted);
+        this.isMuted = !this.isMuted;
+        this.audio.mute(this.isMuted);
     }
 
     public repeat(): void {
-        this.model.isRepeating = !this.model.isRepeating;
-        this.audio.loop(this.model.isRepeating);
+        this.isRepeating = !this.isRepeating;
+        this.audio.loop(this.isRepeating);
     }
 }
