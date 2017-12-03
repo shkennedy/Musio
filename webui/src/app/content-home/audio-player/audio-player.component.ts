@@ -8,6 +8,7 @@ import { UserService } from '../../services/user.service';
 
 import { Song } from '../../models/song.model';
 import { useAnimation } from '@angular/core/src/animation/dsl';
+import { PACKAGE_ROOT_URL } from '@angular/core/src/application_tokens';
 
 @Component({
     selector: 'app-audio-player',
@@ -30,6 +31,7 @@ export class AudioPlayerComponent implements OnInit {
 
     audio: Howl;
     useHighBitrate: boolean;
+    privateMode: boolean;
 
     currentSong: Song;
     songQueue: Song[];
@@ -50,7 +52,30 @@ export class AudioPlayerComponent implements OnInit {
 
     ngOnInit() {
         // Find user allowed bitrate
-        this.userService.getIsPremium(this.setUseHighBitrate);
+        const setUseHighBitrate = (useHighBitrate: boolean): void => {
+            this.useHighBitrate = useHighBitrate;
+        };
+        this.userService.getIsPremium(setUseHighBitrate);
+
+        this.userService.getPrivateMode()
+        .subscribe(
+            (privateMode: boolean) => {
+                this.privateMode = privateMode;
+            },
+            (error: any) => {
+                console.log(error);
+            }
+        );
+
+        this.userService.getHistory()
+        .subscribe(
+            (history: Song[]) => {
+                this.history = history;
+            },
+            (error: any) => {
+                console.log(error);
+            }
+        );
     }
 
     private makeHowl(songFile: File): Howl {
@@ -73,10 +98,6 @@ export class AudioPlayerComponent implements OnInit {
         });
 
         return newHowl;
-    }
-
-    public setUseHighBitrate(useHighBitrate: boolean): void {
-        this.useHighBitrate = useHighBitrate;
     }
 
     public playSong(songId: number): void {
@@ -107,8 +128,11 @@ export class AudioPlayerComponent implements OnInit {
     }
 
     public playNext(): void {
-        const nextSong: Song = this.songQueue.shift();
         this.history.push(this.currentSong);
+        if (!this.privateMode) {
+            this.userService.addSongIdToHistory(this.currentSong.id);
+        }
+        const nextSong: Song = this.songQueue.shift();
         if (nextSong) {
             this.playSong(nextSong.id);
         } else {

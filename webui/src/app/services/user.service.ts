@@ -6,6 +6,7 @@ import { HttpRequestService, ApiResponse } from './httpRequest.service';
 import { PaymentInfo } from '../models/paymentInfo.model';
 import { User } from '../models/user.model';
 import { Role } from '../models/role.model';
+import { Song } from '../models/song.model';
 
 @Injectable()
 export class UserService {
@@ -16,6 +17,11 @@ export class UserService {
     private static FOLLOW_URL = UserService.USER_URL + '/followUser';
     private static UNFOLLOW_URL = UserService.USER_URL + '/unfollowUser';
     private static GO_PREMIUM_URL = UserService.USER_URL + '/goPremium';
+    private static BROWSING_MODE_URL = UserService.USER_URL + '/getBrowsingMode';
+    private static DISABLE_PRIVATE_MODE_URL = UserService.USER_URL + '/disablePrivateMode';
+    private static ENABLE_PRIVATE_MODE_URL = UserService.USER_URL + '/enablePrivateMode';
+    private static LISTENING_HISTORY_URL = UserService.USER_URL + '/myListeningHistory';
+    private static ADD_TO_HISTORY_URL = UserService + '/addSongToHistory';
 
     constructor(
         private router: Router,
@@ -67,6 +73,41 @@ export class UserService {
             callback(false);
         };
         this.getUser(getUserCallback);
+    }
+
+    public getPrivateMode(): Observable<boolean> {
+        return this.httpRequest.get(UserService.BROWSING_MODE_URL)
+            .map((response: ApiResponse) => {
+                if (response.success) {
+                    return response.responseData;
+                }
+                return false;
+            });
+    }
+
+    public setPrivateMode(isPrivateMode: boolean): Observable<boolean> {
+        const url = (isPrivateMode) ? UserService.ENABLE_PRIVATE_MODE_URL : UserService.DISABLE_PRIVATE_MODE_URL;
+        return this.httpRequest.get(url)
+            .map((response: ApiResponse) => {
+                return response.success;
+            });
+    }
+
+    public getHistory(): Observable<Song[]> {
+        return this.httpRequest.get(UserService.LISTENING_HISTORY_URL)
+            .map((response: ApiResponse) => {
+                if (response.success) {
+                    return response.responseData;
+                }
+                return null;
+            });
+    }
+
+    public addSongIdToHistory(songId: number): Observable<boolean> {
+        return this.httpRequest.get(UserService.ADD_TO_HISTORY_URL, songId)
+            .map((response: ApiResponse) => {
+                return response.success;
+            });
     }
 
     // public getUserPaymentInfo(userId: number): PaymentInfo {

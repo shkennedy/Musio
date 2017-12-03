@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-// import { FilePickerModule } from 'angular-file-picker';
+import { PickedFile } from 'angular-file-picker';
 
 import { FileService } from '../../../services/file.service';
 import { UserService } from '../../../services/user.service';
@@ -32,8 +32,10 @@ export class UserSettingsComponent implements OnInit {
         this.user = user;
     }
 
-    private changeProfileImage(): void {
-
+    private changeProfileImage(profileImage: PickedFile): void {
+        // this.userService.setProfileImage(profileImage)
+        // .subscribe((success: boolean) => {
+        // });
     }
 
     private changePassword(): void {
