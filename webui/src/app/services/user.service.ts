@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Rx';
 
 import { HttpRequestService, ApiResponse } from './httpRequest.service';
 import { PaymentInfo } from '../models/paymentInfo.model';

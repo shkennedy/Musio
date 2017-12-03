@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Rx';
 
 import { HttpRequestService, ApiResponse } from './httpRequest.service';
 
@@ -9,7 +9,7 @@ import { Ad } from '../models/ad.model';
 @Injectable()
 export class AdService {
 
-    private static AD_URL: string    = '/ad';
+    private static AD_URL = '/ad';
     private static AD_CLICK_URL: string = AdService.AD_URL + '/click';
 
     constructor(

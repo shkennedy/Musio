@@ -2,11 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Howler } from 'howler';
 
+import { AudioPlayerProxyService } from '../../services/audioPlayerProxy.service';
+import { AlbumService } from '../../services/album.service';
+import { ArtistService } from '../../services/artist.service';
 import { SongService } from '../../services/song.service';
 import { FileService } from '../../services/file.service';
 import { PlaylistService } from '../../services/playlist.service';
 import { UserService } from '../../services/user.service';
 
+import { Album } from '../../models/album.model';
+import { Artist } from '../../models/artist.model';
 import { Playlist } from '../../models/playlist.model';
 import { Song } from '../../models/song.model';
 
@@ -14,7 +19,7 @@ import { Song } from '../../models/song.model';
     selector: 'app-audio-player',
     templateUrl: './audio-player.component.html',
     styleUrls: ['./audio-player.component.css'],
-    providers: [FileService, PlaylistService, SongService, UserService]
+    providers: [AlbumService, FileService, PlaylistService, SongService, UserService]
 })
 export class AudioPlayerComponent implements OnInit {
 
@@ -45,6 +50,9 @@ export class AudioPlayerComponent implements OnInit {
 
     constructor(
         private router: Router,
+        private audioPlayerProxyService: AudioPlayerProxyService,
+        private albumService: AlbumService,
+        private artistService: ArtistService,
         private fileService: FileService,
         private playlistService: PlaylistService,
         private songService: SongService,
@@ -52,6 +60,14 @@ export class AudioPlayerComponent implements OnInit {
     ) { }
 
     ngOnInit() {
+        this.audioPlayerProxyService.registerListeners(
+            this.addAlbumToQueue, this.playAlbum,
+            this.addArtistToQueue, this.playArtist,
+            this.addPlaylistToQueue, this.playPlaylist,
+            this.addSongToQueue, this.playSong,
+            this.setPrivateMode
+        );
+
         // Find user allowed bitrate
         const setUseHighBitrate = (useHighBitrate: boolean): void => {
             this.useHighBitrate = useHighBitrate;
@@ -98,6 +114,17 @@ export class AudioPlayerComponent implements OnInit {
         this._playSong(songId);
     }
 
+    public addPlaylistToQueue(playlistId: number): void {
+        this.playlistService.getPlaylistById(playlistId)
+            .subscribe((playlist: Playlist) => {
+                if (playlist !== null) {
+                    playlist.songs.forEach((song: Song) => {
+                        this.songQueue.unshift(song);
+                    });
+                }
+            });
+    }
+
     public playPlaylist(playlistId: number): void {
         this.addCurrentSongToHistory();
         this.playlistService.getPlaylistById(playlistId)
@@ -108,6 +135,52 @@ export class AudioPlayerComponent implements OnInit {
                     this.songQueue = playlist.songs;
                 }
             });
+    }
+
+    public addAlbumToQueue(albumId: number): void {
+        this.albumService.getAlbumById(albumId)
+        .subscribe((album: Album) => {
+            if (album !== null) {
+                album.songs.forEach((song: Song) => {
+                    this.songQueue.unshift(song);
+                });
+            }
+        });
+    }
+
+    public playAlbum(albumId: number): void {
+        this.addCurrentSongToHistory();
+        this.albumService.getAlbumById(albumId)
+        .subscribe((album: Album) => {
+            if (album !== null) {
+                const song = album.songs.shift();
+                this._playSong(song.id);
+                this.songQueue = album.songs;
+            }
+        });
+    }
+
+    public addArtistToQueue(artistId: number): void {
+        // this.artistService.getArtistById(artistId) TODO
+        // .subscribe((artist: Artist) => {
+        //     if (artist !== null) {
+        //         artist.songs.forEach((song: Song) => {
+        //             this.songQueue.unshift(song);
+        //         });
+        //     }
+        // });
+    }
+
+    public playArtist(artistId: number): void {
+        // this.addCurrentSongToHistory(); TODO
+        // this.albumService.getAlbumById(artistId)
+        // .subscribe((artist: Artist) => {
+        //     if (album !== null) {
+        //         const song = album.songs.shift();
+        //         this._playSong(song.id);
+        //         this.songQueue = album.songs;
+        //     }
+        // });
     }
 
     public setPrivateMode(privateMode: boolean): void {
@@ -193,6 +266,7 @@ export class AudioPlayerComponent implements OnInit {
         }
     }
 
+    // UI Event Handlers -------------------------------------------------------------------
     private play(): void {
         if (this.audio !== null) {
             this.audio.play();
@@ -216,7 +290,10 @@ export class AudioPlayerComponent implements OnInit {
         this.isRepeating = !this.isRepeating;
         this.audio.loop(this.isRepeating);
     }
+    // ------------------------------------------------------------------------------------
 
+    // Helper for adding current song to history,
+    // Adds song to public history if not in privte mode
     private addCurrentSongToHistory(): void {
         if (this.currentSong === null) {
             return;

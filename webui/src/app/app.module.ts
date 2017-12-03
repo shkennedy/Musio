@@ -34,6 +34,7 @@ import { GoPremiumComponent } from './content-pages/go-premium/go-premium.compon
 import { AdService } from './services/ad.service';
 import { AlbumService } from './services/album.service';
 import { ArtistService } from './services/artist.service';
+import { AudioPlayerProxyService } from './services/audioPlayerProxy.service';
 import { FavoritesService } from './services/favorites.service';
 import { GenreService } from './services/genre.service';
 import { HttpRequestService } from './services/httpRequest.service';
@@ -81,6 +82,7 @@ import { UserService } from './services/user.service';
         AdService,
         AlbumService,
         ArtistService,
+        AudioPlayerProxyService,
         FavoritesService,
         GenreService,
         HttpRequestService,
