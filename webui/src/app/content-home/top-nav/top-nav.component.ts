@@ -11,7 +11,7 @@ import { User } from '../../models/user.model';
     styleUrls: ['./top-nav.component.css']
 })
 export class TopNavComponent implements OnInit {
-    
+
     public user: User;
     public button = true;
 
@@ -21,10 +21,11 @@ export class TopNavComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        this.userService.getUser()
-        .subscribe((user: User) => {
-            this.user = user;
-        })
+        this.userService.getUser(this.setUser);
+    }
+
+    public setUser(user: User): void {
+        this.user = user;
     }
 
     gotoUserProfile() {

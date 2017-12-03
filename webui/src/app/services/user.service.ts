@@ -10,23 +10,29 @@ import { Role } from '../models/role.model';
 @Injectable()
 export class UserService {
 
-    private static USER_URL = '/whoami';
-    private static FOLLOW_URL = '/followUser';
-    private static UNFOLLOW_URL = '/unfollowUser';
-    private static GO_PREMIUM_URL: string = UserService.USER_URL + '/goPremium';
+    private static USER_URL = '/user';
+    private static GET_USERNAME_URL = UserService.USER_URL + '/getUsername';
+    private static GET_USER_BY_USERNAME_URL = UserService.USER_URL + '/get';
+    private static FOLLOW_URL = UserService.USER_URL + '/followUser';
+    private static UNFOLLOW_URL = UserService.USER_URL + '/unfollowUser';
+    private static GO_PREMIUM_URL = UserService.USER_URL + '/goPremium';
 
     constructor(
         private router: Router,
         private httpRequest: HttpRequestService
     ) { }
 
-    public getUser(): Observable<User> {
-        return this.httpRequest.get(UserService.USER_URL)
-            .map((response: ApiResponse) => {
-                if (response.success) {
-                    return response.responseData;
+    public getUser(callback: (user: User) => void): void {
+        this.httpRequest.get(UserService.GET_USERNAME_URL)
+            .map((usernameResponse: ApiResponse) => {
+                if (usernameResponse.success) {
+                    this.httpRequest.get(
+                        UserService.GET_USER_BY_USERNAME_URL + usernameResponse.responseData)
+                        .map((userResponse: ApiResponse) => {
+                            callback(userResponse.responseData);
+                        });
                 }
-                return null;
+                callback(null);
             });
     }
 
@@ -51,16 +57,16 @@ export class UserService {
             });
     }
 
-    public getIsPremium(): Observable<boolean> {
-        return this.getUser()
-        .map((user: User) => {
+    public getIsPremium(callback: (b: boolean) => any): void {
+        const getUserCallback: (user: User) => void = (user: User) => {
             for (let i = 0; i < user.roles.length; ++i) {
                 if (user.roles[i].role === 'premiumUser') {
-                    return true;
+                    callback(true);
                 }
             }
-            return false;
-        });
+            callback(false);
+        };
+        this.getUser(getUserCallback);
     }
 
     // public getUserPaymentInfo(userId: number): PaymentInfo {

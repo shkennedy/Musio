@@ -25,31 +25,26 @@ export class UserSettingsComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        this.userService.getUser()
-        .subscribe(
-            (user: User) => {
-                this.user = user;
-            },
-            (error: any) => {
-                this.errorMessage = error;
-                console.log(error);
-            }
-        );
+        this.userService.getUser(this.setUser);
     }
 
-    changeProfileImage() {
+    public setUser(user: User): void {
+        this.user = user;
+    }
+
+    private changeProfileImage(): void {
 
     }
 
-    changePassword() {
+    private changePassword(): void {
 
     }
 
-    setPrivateSession() {
+    private setPrivateSession(): void {
 
     }
 
-    setPublicSession() {
+    private setPublicSession(): void {
 
     }
 }

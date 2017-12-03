@@ -7,6 +7,7 @@ import { FileService } from '../../services/file.service';
 import { UserService } from '../../services/user.service';
 
 import { Song } from '../../models/song.model';
+import { useAnimation } from '@angular/core/src/animation/dsl';
 
 @Component({
     selector: 'app-audio-player',
@@ -49,17 +50,7 @@ export class AudioPlayerComponent implements OnInit {
 
     ngOnInit() {
         // Find user allowed bitrate
-        this.userService.getIsPremium()
-        .subscribe(
-            (isPremium: boolean) => {
-                this.useHighBitrate = isPremium;
-            },
-            (error: any) => {
-                // Something went wrong, High bitrate on the house
-                this.useHighBitrate = true;
-                console.log(error);
-            }
-        );
+        this.userService.getIsPremium(this.setUseHighBitrate);
     }
 
     private makeHowl(songFile: File): Howl {
@@ -84,15 +75,19 @@ export class AudioPlayerComponent implements OnInit {
         return newHowl;
     }
 
+    public setUseHighBitrate(useHighBitrate: boolean): void {
+        this.useHighBitrate = useHighBitrate;
+    }
+
     public playSong(songId: number): void {
         // Fetch song object
         this.songService.getSongById(4)
-        .subscribe(
+            .subscribe(
             (song: Song) => {
                 this.currentSong = song;
                 // Fetch song file
                 this.fileService.getSongFileByIdAndBitrate(song.id, this.useHighBitrate)
-                .subscribe(
+                    .subscribe(
                     (songFile: File) => {
                         this.audio = this.makeHowl(songFile);
                         this.isPlaying = true;
@@ -103,12 +98,12 @@ export class AudioPlayerComponent implements OnInit {
                         this.currentSong = null;
                         console.log(error);
                     }
-                );
+                    );
             },
             (error: any) => {
                 console.log(error);
             }
-        );
+            );
     }
 
     public playNext(): void {
@@ -142,17 +137,18 @@ export class AudioPlayerComponent implements OnInit {
         }
     }
 
-    public playOrPause(): void {
-        if (!this.currentSong) {
-            return;
-        }
-
-        if (this.isPlaying) {
-            this.audio.pause();
-        } else {
+    public play(): void {
+        if (this.audio !== null) {
             this.audio.play();
+            this.isPlaying = true;
         }
-        this.isPlaying = !this.isPlaying;
+    }
+
+    public pause(): void {
+        if (this.audio !== null) {
+            this.audio.pause();
+            this.isPlaying = false;
+        }
     }
 
     public muteOrUnmute(): void {
