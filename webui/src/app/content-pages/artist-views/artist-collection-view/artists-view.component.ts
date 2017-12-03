@@ -34,7 +34,7 @@ export class ArtistsViewComponent implements OnInit {
                 this.isEmpty = false;
             },
             (error: any) => {
-                console.log(error);
+                console.log(error.toString());
             }
         );
     }

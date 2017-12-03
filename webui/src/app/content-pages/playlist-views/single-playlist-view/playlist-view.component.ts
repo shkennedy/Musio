@@ -29,7 +29,7 @@ export class PlaylistViewComponent implements OnInit {
                     this.playlist = playlist;
                 },
                 (error: any) => {
-                    console.log(error);
+                    console.log(error.toString());
                 }
         );
     }

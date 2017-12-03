@@ -48,7 +48,7 @@ export class ArtistDetailComponent implements OnInit {
                 this.followerCount = followerCount;
             },
             (error: any) => {
-                console.log(error);
+                console.log(error.toString());
             }
         )
 
@@ -65,7 +65,7 @@ export class ArtistDetailComponent implements OnInit {
                 }
             },
             (error: any) => {
-                console.log(error);
+                console.log(error.toString());
             }
         );
 
@@ -75,7 +75,7 @@ export class ArtistDetailComponent implements OnInit {
                 this.relatedArtists = relatedArtists;
             },
             (error: any) => {
-                console.log(error);
+                console.log(error.toString());
             }
         );
     }
@@ -87,7 +87,7 @@ export class ArtistDetailComponent implements OnInit {
                     this.isFollowed = true;
                 },
                 (error: any) => {
-                    console.log(error);
+                    console.log(error.toString());
                 }
             );
     }
@@ -99,7 +99,7 @@ export class ArtistDetailComponent implements OnInit {
                     this.isFollowed = false;
                 },
                 (error: any) => {
-                    console.log(error);
+                    console.log(error.toString());
                 }
             );
     }

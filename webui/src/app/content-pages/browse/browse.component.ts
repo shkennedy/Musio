@@ -45,7 +45,7 @@ export class BrowseComponent implements OnInit {
             },
             (error: any) => {
                 this.errorMessage = error;
-                console.log(error);
+                console.log(error.toString());
             }
         );
     }

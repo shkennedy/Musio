@@ -53,7 +53,7 @@ export class AlbumDetailComponent implements OnInit {
                 }
             },
             (error: any) => {
-                console.log(error);
+                console.log(error.toString());
             }
         );
     }
@@ -66,7 +66,7 @@ export class AlbumDetailComponent implements OnInit {
                     this.isFavorited = true;
                 },
                 (error: any) => {
-                    console.log(error);
+                    console.log(error.toString());
                 }
             );
     }
@@ -78,7 +78,7 @@ export class AlbumDetailComponent implements OnInit {
                     this.isFavorited = false;
                 },
                 (error: any) => {
-                    console.log(error);
+                    console.log(error.toString());
                 }
             );
     }

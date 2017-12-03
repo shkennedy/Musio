@@ -29,7 +29,7 @@ export class RightNavComponent implements OnInit {
         //         this.showAds = !isPremium;
         //     },
         //     (error: any) => {
-        //         console.log(error);
+        //         console.log(error.toString());
         //     }
         // )
 
@@ -40,7 +40,7 @@ export class RightNavComponent implements OnInit {
                     this.ads = ads;
                 },
                 (error: any) => {
-                    console.log(error);
+                    console.log(error.toString());
                 }
             )
         }
