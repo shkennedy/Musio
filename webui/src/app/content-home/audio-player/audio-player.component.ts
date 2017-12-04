@@ -286,7 +286,7 @@ export class AudioPlayerComponent implements OnInit {
             this.audio.play();
             this.isPlaying = true;
         }
-        // this.audio = this.makeHowl(null);
+        this.audio = this.makeHowl(null);
     }
 
     private pause(): void {

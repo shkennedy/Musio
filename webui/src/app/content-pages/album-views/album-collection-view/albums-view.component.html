@@ -1,13 +1,19 @@
-<div class="row">
-<div class="album-collection-container">
-
-    <div *ngFor="let album of albums" class="artist-card col-sm-3 center-block" [routerLink]="['/albums',album.id]">
-      <img *ngIf="album.albumArt; else defaultArt" src="{{album.albumArt}}">
-      <ng-template #defaultArt>
-        <img src="assets/images/default_art.png" alt="">
-      </ng-template>
-      <p>{{album.title}}</p>
-      <p>{{album.artistName}}</p>
-    </div>
-  </div>
+<div *ngIf="!albums; else hasAlbums">
+    <p>No Albums Found: Find some favorite albums in browse.</p>
+    <a [routerLink]="['/browse', '/albums']">Find Albums</a>
 </div>
+<ng-template #hasAlbums>
+    <div class="row">
+        <div class="album-collection-container">
+
+            <div *ngFor="let album of albums" class="artist-card col-sm-3 center-block" [routerLink]="['/albums',album.id]">
+                <img *ngIf="album.albumArt; else defaultArt" src="{{album.albumArt}}">
+                <ng-template #defaultArt>
+                    <img src="assets/images/default_art.png" alt="">
+                </ng-template>
+                <p>{{album.title}}</p>
+                <p>{{album.artistName}}</p>
+            </div>
+        </div>
+    </div>
+</ng-template>

@@ -1,21 +1,28 @@
-<div id="album-tracklist" class="col-sm-8"></div>
-<table class="table table-inverse song-table album-tracklist-table">
-    <thead>
-      <tr>
-        <th>Title</th>
-        <th>Artist</th>
-        <th>Album</th>
-        <th>Duration</th>
-      </tr>
-    </thead>
-    <tbody>
+<div *ngIf="!songs; else hasSongs">
+    <p>No Songs Found: Find some favorite songs in browse.</p>
+    <a [routerLink]="['/browse', '/songs']">Find Songs</a>
+</div>
+<ng-template #hasSongs>
+    <div id="album-tracklist" class="col-sm-8">
+        <table class="table table-inverse song-table album-tracklist-table">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Artist</th>
+                    <th>Album</th>
+                    <th>Duration</th>
+                </tr>
+            </thead>
+            <tbody>
 
-      <tr *ngFor="let song of songs">
-        <td>{{song.title}}</td>
-        <td>{{song.artist.name}}</td>
-        <td>{{song.album.title}}</td>
-        <td>{{song.duration}}</td>
-      </tr>
-      
-    </tbody>
-  </table>
+                <tr *ngFor="let song of songs">
+                    <td>{{song.title}}</td>
+                    <td>{{song.artist.name}}</td>
+                    <td>{{song.album.title}}</td>
+                    <td>{{song.duration}}</td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+</ng-template>

@@ -1,9 +1,9 @@
-<div class="row">
-    <div *ngIf="isEmpty; else hasArtists">
-        <p>No Artists Found: Find some artists to follow in browse.</p>
-        <a [routerLink]="['/browse', '/artist']">Find Artists</a>
-    </div>
-    <ng-template #hasArtists>
+<div *ngIf="!artists; else hasArtists">
+    <p>No Artists Found: Find some artists to follow in browse.</p>
+    <a [routerLink]="['/browse', '/artist']">Find Artists</a>
+</div>
+<ng-template #hasArtists>
+    <div class="row">
         <div class="artist-collection-container">
             <div *ngFor="let artist of artists" class="artist-card col-sm-3 center-block" [routerLink]="['/artists',artist.id]">
                 <img *ngIf="!artistImage; else defaultArt" src="http://www.billboard.com/files/media/kendrick-lamar-performance-oct-8-2016-billboard-1548.jpg">
@@ -13,5 +13,5 @@
                 <p>{{artist.name}}</p>
             </div>
         </div>
-    </ng-template>
-</div>
+    </div>
+</ng-template>

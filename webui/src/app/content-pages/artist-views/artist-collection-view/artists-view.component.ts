@@ -10,7 +10,7 @@ import { Genre } from '../../../models/genre.model';
 import { Song } from '../../../models/song.model';
 
 @Component({
-    selector: 'artists-view',
+    selector: 'app-artists-view',
     templateUrl: './artists-view.component.html',
     styleUrls: ['./artists-view.component.css'],
     providers: [ArtistService, FavoritesService]
@@ -18,7 +18,6 @@ import { Song } from '../../../models/song.model';
 export class ArtistsViewComponent implements OnInit {
 
     private artists: Artist[];
-    private isEmpty: boolean = true;
 
     constructor(
         private router: Router,
@@ -31,7 +30,6 @@ export class ArtistsViewComponent implements OnInit {
         .subscribe(
             (artists: Artist[]) => {
                 this.artists = artists;
-                this.isEmpty = false;
             },
             (error: any) => {
                 console.log(error.toString());
