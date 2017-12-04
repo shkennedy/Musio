@@ -20,7 +20,7 @@ export class AudioPlayerProxyService {
     private static PLAY_SONG_TAG = 'PLAY_SONG';
     private static SET_PRIVATE_MODE_TAG = 'SET_PRIVATE_MODE';
 
-    private listeners: {};
+    private listeners = {};
 
     constructor() { }
 

@@ -3,10 +3,10 @@
     <div class="col-sm-2 player-buttons-container">
         <img class="player-buttons" src="assets/images/prev.png">
         <div *ngIf="isPlaying; else isPaused;">
-            <button (click)="play()"><img class="player-buttons play-button" src="assets/images/play.png"></button>
+            <button (click)="pause()"><img class="player-buttons pause-button" src="assets/images/pause.png"></button>
         </div>
         <ng-template #isPaused>
-            <button (click)="pause()"><img class="player-buttons pause-button" src="assets/images/pause.png"></button>
+            <button (click)="play()"><img class="player-buttons play-button" src="assets/images/play.png"></button>
         </ng-template>
         <img class="player-buttons" src="assets/images/next.png">
 

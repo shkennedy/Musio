@@ -76,7 +76,7 @@ import { UserService } from './services/user.service';
         FormsModule,
         HttpModule,
         AppRoutingModule,
-        HttpClientModule
+        HttpClientModule,
     ],
     providers: [
         AdService,

@@ -12,7 +12,7 @@ import { User } from '../../models/user.model';
 })
 export class TopNavComponent implements OnInit {
 
-    public user: User;
+    public user: User = new User();
     public button = true;
 
     constructor(
@@ -25,6 +25,7 @@ export class TopNavComponent implements OnInit {
     }
 
     public setUser(user: User): void {
+        console.log(`whats good ${user}`);
         this.user = user;
     }
 
