@@ -18,6 +18,7 @@ export class FileService {
     private static ALBUM_THUMB_URL: string = FileService.RESOURCE_URL + '/albumArtworkThumbnailFile';
     private static ARTIST_FULL_URL: string = FileService.RESOURCE_URL + '/artistImageFullFile';
     private static ARTIST_THUMB_URL: string = FileService.RESOURCE_URL + '/artistImageThumbnailFile';
+    private static BASE_URL: string = 'http://localhost:8080';
 
     constructor(
         private router: Router,
@@ -74,14 +75,19 @@ export class FileService {
         });
     }
 
-    public getSongFileByIdAndBitrate(songId: number, useHighBitrate: boolean): Observable<File> {
-        const url = (useHighBitrate) ? FileService.SONG_HIBR_URL : FileService.SONG_LOBR_URL;
-        return this.httpRequest.get(url, songId)
-        .map((response: ApiResponse) => {
-            if (response.success) {
-                return response.responseData;
-            }
-            return null;
-        });
+    public getSongFileURLByIdAndBitrate(songId: number, useHighBitrate: boolean): string {
+        return FileService.BASE_URL + 
+        ((useHighBitrate) ? FileService.SONG_HIBR_URL : FileService.SONG_LOBR_URL) + `/${songId}`;
     }
+
+    // public getSongFileByIdAndBitrate(songId: number, useHighBitrate: boolean): Observable<File> {
+    //     const url = (useHighBitrate) ? FileService.SONG_HIBR_URL : FileService.SONG_LOBR_URL;
+    //     return this.httpRequest.get(url, songId)
+    //     .map((response: ApiResponse) => {
+    //         if (response.success) {
+    //             return response.responseData;
+    //         }
+    //         return null;
+    //     });
+    // }
 }

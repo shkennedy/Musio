@@ -186,13 +186,15 @@ export class AudioPlayerComponent implements OnInit {
         this.useHighBitrate = useHighBitrate;
     }
 
-    private makeHowl(songFile: File): Howl {
+    private makeHowl(songFileURL: string): Howl {
         const newHowl: Howl = new Howl({
             // src: [songFile],
-            src: ['../../assets/testSong.mp3'],
+            src: [songFileURL],
+            ext: ['vorbis'],
             volume: this.volume,
             autoplay: true,
-            onend: function () {
+            html5: true,
+            onend: function() {
                 if (!this.isRepeating) {
                     this.playNext();
                 }
@@ -216,21 +218,14 @@ export class AudioPlayerComponent implements OnInit {
             (song: Song) => {
                 this.currentSong = song;
                 // Fetch song file
-                this.fileService.getSongFileByIdAndBitrate(song.id, this.useHighBitrate)
-                    .subscribe(
-                    (songFile: File) => {
-                        this.audio = this.makeHowl(songFile);
-                        this.isPlaying = true;
-                    },
-                    (error: any) => {
-                        this.isPlaying = false;
-                        this.audio = null;
-                        this.currentSong = null;
-                        console.log(error.toString());
-                    }
-                    );
+                this.currentSong.audio = this.fileService.getSongFileURLByIdAndBitrate(song.id, this.useHighBitrate);
+                this.audio = this.makeHowl(this.currentSong.audio);
+                this.isPlaying = true;
             },
             (error: any) => {
+                this.isPlaying = false;
+                this.audio = null;
+                this.currentSong = null;
                 console.log(error.toString());
             }
             );

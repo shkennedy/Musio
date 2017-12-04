@@ -9,5 +9,5 @@ export class Song {
     public mbid: string;
     public artist: Artist;
 
-    public audio: File;
+    public audio: string;
 }
