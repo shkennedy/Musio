@@ -187,22 +187,27 @@ export class AudioPlayerComponent implements OnInit {
     }
 
     private makeHowl(songFileURL: string): Howl {
+        console.log(songFileURL);
         const newHowl: Howl = new Howl({
             // src: [songFile],
             src: [songFileURL],
-            ext: ['vorbis'],
+            format: ['ogg'],
+            // ext: ['vorbis'],
             volume: this.volume,
             autoplay: true,
             html5: true,
             onend: function() {
                 if (!this.isRepeating) {
-                    this.playNext();
+                    // this.playNext();
+                    console.log('would play next');
                 }
             },
             onloaderror: function () {
+                console.log('unable to load song');
                 this.errMsg = 'Unable to load song';
             },
             onplayerror: function () {
+                console.log('unable to play song');
                 this.errMsg = 'Unable to play song';
             }
         });
@@ -213,20 +218,22 @@ export class AudioPlayerComponent implements OnInit {
 
     private _playSong(songId: number): void {
         // Fetch song object
-        this.songService.getSongById(4)
+        this.songService.getSongById(songId)
             .subscribe(
             (song: Song) => {
                 this.currentSong = song;
+                console.log(`song: ${this.currentSong.title}`);
                 // Fetch song file
                 this.currentSong.audio = this.fileService.getSongFileURLByIdAndBitrate(song.id, this.useHighBitrate);
                 this.audio = this.makeHowl(this.currentSong.audio);
+                console.log(`${this.currentSong.audio}`);
                 this.isPlaying = true;
             },
             (error: any) => {
                 this.isPlaying = false;
                 this.audio = null;
                 this.currentSong = null;
-                console.log(error.toString());
+                console.log('something went wrong ' + error.toString());
             }
             );
     }
@@ -281,7 +288,7 @@ export class AudioPlayerComponent implements OnInit {
             this.audio.play();
             this.isPlaying = true;
         }
-        this.audio = this.makeHowl(null);
+        this._playSong(8);
     }
 
     private pause(): void {

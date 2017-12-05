@@ -18,7 +18,7 @@ export class FileService {
     private static ALBUM_THUMB_URL: string = FileService.RESOURCE_URL + '/albumArtworkThumbnailFile';
     private static ARTIST_FULL_URL: string = FileService.RESOURCE_URL + '/artistImageFullFile';
     private static ARTIST_THUMB_URL: string = FileService.RESOURCE_URL + '/artistImageThumbnailFile';
-    private static BASE_URL: string = 'http://localhost:8080';
+    private static BASE_URL = 'http://localhost:8080';
 
     constructor(
         private router: Router,
