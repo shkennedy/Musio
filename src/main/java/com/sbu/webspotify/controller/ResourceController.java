@@ -51,20 +51,20 @@ public class ResourceController
     }
 
     @RequestMapping(value = "/highBitrateSongFile/{songId}", method = RequestMethod.GET)
-    public @ResponseBody ApiResponseObject getHighBitrateSong(@PathVariable("songId") int songId) {
+    public @ResponseBody byte[] getHighBitrateSong(@PathVariable("songId") int songId) {
         ApiResponseObject response = new ApiResponseObject();
         Song song = songService.getSongById(songId);
         if(song == null) {
             response.setSuccess(false);
             response.setMessage("No song found with id "+songId+".");
-            return response;
+            return null;
         }
 
         Audio audio = song.getAudio();
         if(audio == null) {
             response.setSuccess(false);
             response.setMessage("Could not retrieve high bitrate data for song with id "+songId+".");
-            return response;
+            return null;
         }
 
         File file = fileRepository.findById(audio.getHighBitrateFileId());
@@ -75,25 +75,26 @@ public class ResourceController
         else {
             response.setSuccess(true);
             response.setResponseData(file);
+            return file.getBytes();
         }
-        return response;
+        return null;
     }
 
     @RequestMapping(value = "/lowBitrateSongFile/{songId}", method = RequestMethod.GET)
-    public @ResponseBody ApiResponseObject getLowBitrateSong(@PathVariable("songId") int songId) {
+    public @ResponseBody byte[] getLowBitrateSong(@PathVariable("songId") int songId) {
         ApiResponseObject response = new ApiResponseObject();
         Song song = songService.getSongById(songId);
         if(song == null) {
             response.setSuccess(false);
             response.setMessage("No song found with id "+songId+".");
-            return response;
+            return null;
         }
 
         Audio audio = song.getAudio();
         if(audio == null) {
             response.setSuccess(false);
             response.setMessage("Could not retrieve low bitrate data for song with id "+songId+".");
-            return response;
+            return null;
         }
 
         File file = fileRepository.findById(audio.getLowBitrateFileId());
@@ -104,8 +105,9 @@ public class ResourceController
         else {
             response.setSuccess(true);
             response.setResponseData(file);
+            return file.getBytes();
         }
-        return response;
+        return null;
     }
 
     @RequestMapping(value = "/albumArtworkFullFile/{albumId}", method = RequestMethod.GET)

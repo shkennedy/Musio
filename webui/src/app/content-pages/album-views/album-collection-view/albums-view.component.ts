@@ -13,7 +13,6 @@ import { Album } from '../../../models/album.model';
 })
 export class AlbumsViewComponent implements OnInit {
 
-    private empty: boolean = false;
     private albums: Album[];
 
     constructor(
@@ -25,16 +24,12 @@ export class AlbumsViewComponent implements OnInit {
         this.favoritesSevice.getFavoriteAlbums()
             .subscribe(
                 (albums: Album[]) => {
-                    if (albums == null) {
-                        this.empty = true;
-                    } else {
+                    if (albums.length !== 0) {
                         this.albums = albums;
                     }
                 },
                 (error: any) => {
                     console.log(error.toString());
-                    this.empty = true;
-                }
-            );
+                });
     }
 }

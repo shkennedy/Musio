@@ -29,12 +29,13 @@ export class ArtistsViewComponent implements OnInit {
         this.favoritesService.getFavoriteArtists()
         .subscribe(
             (artists: Artist[]) => {
-                this.artists = artists;
+                if (artists.length !== 0) {
+                    this.artists = artists;
+                }
             },
             (error: any) => {
                 console.log(error.toString());
-            }
-        );
+            });
     }
 
 }

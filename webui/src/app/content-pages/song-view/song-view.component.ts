@@ -26,13 +26,13 @@ export class SongViewComponent implements OnInit {
     ngOnInit() {
         this.favoritesService.getFavoriteSongs()
             .subscribe(
-                (songs: Song[]) => {
+            (songs: Song[]) => {
+                if (songs.length !== 0) {
                     this.songs = songs;
-                },
-                (error: any) => {
-                    console.log(error.toString());
                 }
-            );
+            },
+            (error: any) => {
+                console.log(error.toString());
+            });
     }
-
 }
