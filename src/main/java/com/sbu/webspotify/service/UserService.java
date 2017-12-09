@@ -98,10 +98,8 @@ public class UserService {
         return response;
     }
 
-    public ApiResponseObject sendChangePasswordEmail(User user) {
+    public ApiResponseObject sendChangePasswordEmail(User user, int securityCode) {
         ApiResponseObject response = new ApiResponseObject();
-        int securityCode = user.hashCode();
-        user.setSecurityCode(securityCode);
         userRepository.save(user);
         response.setSuccess(
             emailService.sendSimpleEmailToUser(user, 
@@ -110,9 +108,10 @@ public class UserService {
         return response;
     }
 
-    public ApiResponseObject tryChangePassword(User user, int securityCode, String newPassword) {
+    public ApiResponseObject tryChangePassword(User user, int knownSecurityCode,
+                                               int securityCode, String newPassword) {
         ApiResponseObject response = new ApiResponseObject();
-        if (user.getSecurityCode() == securityCode) {
+        if (knownSecurityCode == securityCode) {
             user.setPassword(newPassword);
             userRepository.save(user);
             response.setSuccess(true);

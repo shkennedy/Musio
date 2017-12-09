@@ -43,7 +43,6 @@ public class User implements Serializable {
 	private Set<User>     followedUsers;
     private GeoLocation   geoLocation;
     private File 		  profileImage;
-    private int           securityCode;
 
 	public User() {
 	}
@@ -308,15 +307,5 @@ public class User implements Serializable {
 	@Override
 	public int hashCode() {
         return Objects.hash(this.id);
-    }
-
-    @Transient
-	@JsonIgnore
-    public int getSecurityCode() {
-        return this.securityCode;
-    }
-
-    public void setSecurityCode(int securityCode) {
-        this.securityCode = securityCode;
     }
 }

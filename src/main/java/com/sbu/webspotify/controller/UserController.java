@@ -57,7 +57,9 @@ public class UserController {
     @GetMapping(path="/password/requestChange")
     public @ResponseBody ApiResponseObject updatePassword(HttpSession session) {
         User user = (User) session.getAttribute("user");
-        return userService.sendChangePasswordEmail(user);
+        int securityCode = user.hashCode();
+        session.setAttribute("securityCode", securityCode);
+        return userService.sendChangePasswordEmail(user, securityCode);
     }
 
     @RequestMapping(value="/password", method = RequestMethod.PUT, headers = "Accept=application/json")
@@ -65,7 +67,8 @@ public class UserController {
                                                           @RequestParam int securityCode,
                                                           @RequestParam String newPassword) {
         User user = (User) session.getAttribute("user");
-        return userService.tryChangePassword(user, securityCode, newPassword);
+        int knownSecurityCode = (Integer) session.getAttribute("securityCode");
+        return userService.tryChangePassword(user, knownSecurityCode, securityCode, newPassword);
     }
     
     @RequestMapping(value={"/{username}"}, method = RequestMethod.DELETE)
