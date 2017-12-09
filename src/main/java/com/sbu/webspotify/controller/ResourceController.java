@@ -52,29 +52,18 @@ public class ResourceController
 
     @RequestMapping(value = "/highBitrateSongFile/{songId}", method = RequestMethod.GET)
     public @ResponseBody byte[] getHighBitrateSong(@PathVariable("songId") int songId) {
-        ApiResponseObject response = new ApiResponseObject();
         Song song = songService.getSongById(songId);
         if(song == null) {
-            response.setSuccess(false);
-            response.setMessage("No song found with id "+songId+".");
             return null;
         }
 
         Audio audio = song.getAudio();
         if(audio == null) {
-            response.setSuccess(false);
-            response.setMessage("Could not retrieve high bitrate data for song with id "+songId+".");
             return null;
         }
 
         File file = fileRepository.findById(audio.getHighBitrateFileId());
-        if(file == null) {
-            response.setSuccess(false);
-            response.setMessage("Could not retrieve high bitrate data for song with id "+songId+".");
-        }
-        else {
-            response.setSuccess(true);
-            response.setResponseData(file);
+        if(file != null) {
             return file.getBytes();
         }
         return null;
@@ -82,147 +71,96 @@ public class ResourceController
 
     @RequestMapping(value = "/lowBitrateSongFile/{songId}", method = RequestMethod.GET)
     public @ResponseBody byte[] getLowBitrateSong(@PathVariable("songId") int songId) {
-        ApiResponseObject response = new ApiResponseObject();
         Song song = songService.getSongById(songId);
         if(song == null) {
-            response.setSuccess(false);
-            response.setMessage("No song found with id "+songId+".");
             return null;
         }
 
         Audio audio = song.getAudio();
         if(audio == null) {
-            response.setSuccess(false);
-            response.setMessage("Could not retrieve low bitrate data for song with id "+songId+".");
             return null;
         }
 
         File file = fileRepository.findById(audio.getLowBitrateFileId());
-        if(file == null) {
-            response.setSuccess(false);
-            response.setMessage("Could not retrieve low bitrate data for song with id "+songId+".");
-        }
-        else {
-            response.setSuccess(true);
-            response.setResponseData(file);
+        if(file != null) {
             return file.getBytes();
         }
         return null;
     }
 
     @RequestMapping(value = "/albumArtworkFullFile/{albumId}", method = RequestMethod.GET)
-    public @ResponseBody ApiResponseObject getAlbumArtwork(@PathVariable("albumId") int albumId) {
-        ApiResponseObject response = new ApiResponseObject();
+    public @ResponseBody byte[] getAlbumArtwork(@PathVariable("albumId") int albumId) {
         Album album = albumService.getAlbumById(albumId);
         if(album == null) {
-            response.setSuccess(false);
-            response.setMessage("No album found with id "+albumId+".");
-            return response;
+            return null;
         }
 
         Image image = album.getAlbumArt();
         if(image == null) {
-            response.setSuccess(false);
-            response.setMessage("Could not retrieve album art data for album with id "+albumId+".");
-            return response;
+            return null;
         }
 
         File file = fileRepository.findById(image.getFullFileId());
-        if(file == null) {
-            response.setSuccess(false);
-            response.setMessage("Could not retrieve album art data for album with id "+albumId+".");
+        if(file != null) {
+            return file.getBytes();
         }
-        else {
-            response.setSuccess(true);
-            response.setResponseData(file);
-        }
-        return response;
+        return null;
     }
 
     @RequestMapping(value = "/albumArtworkThumbnailFile/{albumId}", method = RequestMethod.GET)
-    public @ResponseBody ApiResponseObject getAlbumArtworkThumbnail(@PathVariable("albumId") int albumId) {
-        ApiResponseObject response = new ApiResponseObject();
+    public @ResponseBody byte[] getAlbumArtworkThumbnail(@PathVariable("albumId") int albumId) {
         Album album = albumService.getAlbumById(albumId);
         if(album == null) {
-            response.setSuccess(false);
-            response.setMessage("No album found with id "+albumId+".");
-            return response;
+            return null;
         }
 
         Image image = album.getAlbumArt();
         if(image == null) {
-            response.setSuccess(false);
-            response.setMessage("Could not retrieve album art data for album with id "+albumId+".");
-            return response;
+            return null;
         }
 
         File file = fileRepository.findById(image.getThumbFileId());
-        if(file == null) {
-            response.setSuccess(false);
-            response.setMessage("Could not retrieve album art data for album with id "+albumId+".");
+        if (file != null) {
+            return file.getBytes();
         }
-        else {
-            response.setSuccess(true);
-            response.setResponseData(file);
-        }
-        return response;
+        return null;
     }
 
     @RequestMapping(value = "/artistImageFullFile/{artistId}", method = RequestMethod.GET)
-    public @ResponseBody ApiResponseObject getArtistFullArtwork(@PathVariable("artistId") int artistId) {
-        ApiResponseObject response = new ApiResponseObject();
+    public @ResponseBody byte[] getArtistFullArtwork(@PathVariable("artistId") int artistId) {
         Artist artist = artistService.getArtistById(artistId);
         if(artist == null) {
-            response.setSuccess(false);
-            response.setMessage("No artist found with id "+artistId+".");
-            return response;
+            return null;
         }
 
         Image image = artist.getArtistImage();
         if(image == null) {
-            response.setSuccess(false);
-            response.setMessage("Could not retrieve artist image data for artist with id "+artistId+".");
-            return response;
+            return null;
         }
 
         File file = fileRepository.findById(image.getFullFileId());
-        if(file == null) {
-            response.setSuccess(false);
-            response.setMessage("Could not retrieve artist image data for artist with id "+artistId+".");
+        if (file != null) {
+            return file.getBytes();
         }
-        else {
-            response.setSuccess(true);
-            response.setResponseData(file);
-        }
-        return response;
+        return null;
     }
 
     @RequestMapping(value = "/artistImageThumbnailFile/{artistId}", method = RequestMethod.GET)
-    public @ResponseBody ApiResponseObject getArtistThumbnailArtwork(@PathVariable("artistId") int artistId) {
-        ApiResponseObject response = new ApiResponseObject();
+    public @ResponseBody byte[] getArtistThumbnailArtwork(@PathVariable("artistId") int artistId) {
         Artist artist = artistService.getArtistById(artistId);
         if(artist == null) {
-            response.setSuccess(false);
-            response.setMessage("No artist found with id "+artistId+".");
-            return response;
+            return null;
         }
 
         Image image = artist.getArtistImage();
         if(image == null) {
-            response.setSuccess(false);
-            response.setMessage("Could not retrieve artist image data for artist with id "+artistId+".");
-            return response;
+            return null;
         }
 
         File file = fileRepository.findById(image.getThumbFileId());
-        if(file == null) {
-            response.setSuccess(false);
-            response.setMessage("Could not retrieve artist image data for artist with id "+artistId+".");
+        if (file != null) {
+            return file.getBytes();
         }
-        else {
-            response.setSuccess(true);
-            response.setResponseData(file);
-        }
-        return response;
+        return null;
     }
 }
