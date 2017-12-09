@@ -29,5 +29,12 @@ public class AppConfig {
     @Value("${query.listeningHistoryToQuery}")
     public int listeningHistoryToQuery;
     
+    @Value("${email.emailAddress}")
+    public String emailAddress;
 
+    @Value("${email.changePasswordSubject}")
+    public String changePasswordSubject;
+
+    @Value("${email.changePasswordBody}")
+    public String changePasswordBody;
 }

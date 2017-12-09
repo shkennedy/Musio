@@ -49,7 +49,7 @@ export class ArtistService {
                 return response.responseData;
             }
             return null;
-        })
+        });
     }
 
     public addArtist(artist: Artist): Observable<boolean> {

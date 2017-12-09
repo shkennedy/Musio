@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sbu.webspotify.service.SongService;
 import com.sbu.webspotify.service.UserService;
@@ -25,7 +26,7 @@ import javax.servlet.http.HttpSession;
 public class UserController {
 
     @Autowired
-	private UserService userService;
+    private UserService userService;
 
 	@Autowired
 	private SongService songService;
@@ -40,15 +41,46 @@ public class UserController {
 	}
 
 	@GetMapping(path = "/get/{var}")
-	public @ResponseBody User getAUser(@PathVariable String var)
-	{
-		return userService.findUserByUsername(var);
+	public @ResponseBody ApiResponseObject getAUser(@PathVariable String var) {
+        ApiResponseObject response = new ApiResponseObject();
+        User user = userService.findUserByUsername(var);
+        response.setSuccess(user == null);
+        response.setResponseData(user);
+		return response;
 	}
 
 	@GetMapping(path="/whoami")
 	public @ResponseBody User whoAmI(HttpSession session) {
 		return (User) session.getAttribute("user");
-	}
+    }
+
+    @GetMapping(path="/password/requestChange")
+    public @ResponseBody ApiResponseObject updatePassword(HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        return userService.sendChangePasswordEmail(user);
+    }
+
+    @RequestMapping(value="/password", method = RequestMethod.PUT, headers = "Accept=application/json")
+    public @ResponseBody ApiResponseObject updatePassword(HttpSession session, 
+                                                          @RequestParam int securityCode,
+                                                          @RequestParam String newPassword) {
+        User user = (User) session.getAttribute("user");
+        return userService.tryChangePassword(user, securityCode, newPassword);
+    }
+    
+    @RequestMapping(value={"/{username}"}, method = RequestMethod.DELETE)
+    public @ResponseBody ApiResponseObject deleteUser(HttpSession session, @PathVariable String username) {
+        ApiResponseObject response = new ApiResponseObject();
+        User userToDelete = userService.findUserByUsername(username);
+        User currentUser = (User) session.getAttribute("user");
+        if (userToDelete.equals(currentUser) || currentUser.getIsAdmin()) {
+            userService.deleteUser(userToDelete);
+            response.setSuccess(true);
+        } else {
+            response.setSuccess(false);
+        }
+        return response;
+    }
 
 	/**
 	 * Re-query the user stored in the session from the database.

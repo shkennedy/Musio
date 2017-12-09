@@ -6,3 +6,7 @@ role.artistUser:  ARTIST_USER
 
 query.recentFavoritesToQuery: 3
 query.listeningHistoryToQuery: 25
+
+email.emailAddress:           "Musio.SBU@gmail.com"
+email.changePasswordSubject:  "Change Musio Password"
+email.changePasswordBody:     "Here is your one time security code for changing your password.\nPlease enter it into the confirmation dialog.\n\n"

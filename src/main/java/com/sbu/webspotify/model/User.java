@@ -42,7 +42,8 @@ public class User implements Serializable {
 	private Set<Genre>    favoriteGenres;
 	private Set<User>     followedUsers;
     private GeoLocation   geoLocation;
-	private File 		  profileImage;
+    private File 		  profileImage;
+    private int           securityCode;
 
 	public User() {
 	}
@@ -131,7 +132,16 @@ public class User implements Serializable {
 
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
-	}
+    }
+    
+    public boolean getIsAdmin() {
+        for (Role role : roles) {
+            if (role.getRole() == "adminUser") {
+                return true;
+            }
+        }
+        return false;
+    }
 
 	public String getUsername() {
 		return this.username;
@@ -309,4 +319,13 @@ public class User implements Serializable {
         return Objects.hash(this.id);
     }
 
+    @Transient
+	@JsonIgnore
+    public int getSecurityCode() {
+        return this.securityCode;
+    }
+
+    public void setSecurityCode(int securityCode) {
+        this.securityCode = securityCode;
+    }
 }

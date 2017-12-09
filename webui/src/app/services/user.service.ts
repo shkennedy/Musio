@@ -22,6 +22,8 @@ export class UserService {
     private static ENABLE_PRIVATE_MODE_URL = UserService.USER_URL + '/enablePrivateMode';
     private static LISTENING_HISTORY_URL = UserService.USER_URL + '/myListeningHistory';
     private static ADD_TO_HISTORY_URL = UserService + '/addSongToHistory';
+    private static PASSWORD_URL = UserService.USER_URL + '/password';
+    private static PASSWORD_CHANGE_URL = UserService.PASSWORD_URL + '/requestChange';
 
     constructor(
         private router: Router,
@@ -39,6 +41,31 @@ export class UserService {
                         });
                 }
                 callback(null);
+            });
+    }
+
+    public deleteUser(userId: number): Observable<boolean> {
+        return this.httpRequest.delete(UserService.USER_URL, userId)
+            .map((response: ApiResponse) => {
+                return response.success;
+            });
+    }
+
+    public sendChangePasswordEmail(userId: number): Observable<boolean> {
+        return this.httpRequest.get(UserService.PASSWORD_CHANGE_URL)
+            .map((response: ApiResponse) => {
+                return response.success;
+            });
+    }
+
+    public changePassword(userId: number, securityCode: number, newPassword: string): Observable<boolean> {
+        const body = {
+            'securityCode': securityCode,
+            'newPassword': newPassword
+        };
+        return this.httpRequest.put(UserService.PASSWORD_URL, body)
+            .map((response: ApiResponse) => {
+                return response.success;
             });
     }
 

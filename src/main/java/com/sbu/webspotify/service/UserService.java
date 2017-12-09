@@ -24,6 +24,8 @@ import com.sbu.webspotify.repo.PlaylistRepository;
 import com.sbu.webspotify.repo.RoleRepository;
 import com.sbu.webspotify.repo.SongRepository;
 import com.sbu.webspotify.repo.UserRepository;
+import com.sbu.webspotify.service.EmailService;
+import com.sun.mail.imap.AppendUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -51,16 +53,23 @@ public class UserService {
 	private PlaylistRepository playlistRepository;
 
 	@Autowired
-	private GenreRepository genreRepository;
+    private GenreRepository genreRepository;
+    
+    @Autowired 
+    private EmailService emailService;
 	
     @Autowired
-	private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
 	@Autowired
 	private AppConfig appConfig;
 	
 	public User findUserByUsername(String username) {
 		return userRepository.findByUsername(username);
+    }
+    
+    public User findUserById(int id) {
+		return userRepository.findById(id);
 	}
 
 	public User findUserByUsernameAndPassword(String username, String password) {
@@ -80,7 +89,38 @@ public class UserService {
         Role userRole = roleRepository.findByRole(appConfig.basicUser);
         user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
 		userRepository.save(user);
-	}
+    }
+    
+    public ApiResponseObject deleteUser(User user) {
+        ApiResponseObject response = new ApiResponseObject();
+        userRepository.delete(user);
+        response.setSuccess(true);
+        return response;
+    }
+
+    public ApiResponseObject sendChangePasswordEmail(User user) {
+        ApiResponseObject response = new ApiResponseObject();
+        int securityCode = user.hashCode();
+        user.setSecurityCode(securityCode);
+        userRepository.save(user);
+        response.setSuccess(
+            emailService.sendSimpleEmailToUser(user, 
+                                               appConfig.changePasswordSubject,
+                                               appConfig.changePasswordBody + securityCode));
+        return response;
+    }
+
+    public ApiResponseObject tryChangePassword(User user, int securityCode, String newPassword) {
+        ApiResponseObject response = new ApiResponseObject();
+        if (user.getSecurityCode() == securityCode) {
+            user.setPassword(newPassword);
+            userRepository.save(user);
+            response.setSuccess(true);
+        } else {
+            response.setSuccess(false);
+        }
+        return response;
+    }
 
 	public ApiResponseObject addFavoriteSong(User user, Integer songId) {
 		ApiResponseObject response = new ApiResponseObject();

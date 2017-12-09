@@ -22,5 +22,4 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	@Query(value = "INSERT INTO user_listening_history (user_id, song_id) values (:userId, :songId)", nativeQuery = true)
 	@Transactional
 	void addSongToUserHistory(@Param("userId") int userId, @Param("songId") int songId);
-	
 }

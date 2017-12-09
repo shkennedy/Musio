@@ -75,8 +75,8 @@ export class HttpRequestService {
     }
 
     private getHeaders(): HttpHeaders {
-        let headers = new HttpHeaders();
-        headers = headers.append('Content-Type', 'application/json');
+        const headers = new HttpHeaders();
+        headers.append('Content-Type', 'application/json');
         return headers;
     }
 }
