@@ -29,7 +29,8 @@ const appRoutes: Routes = [
       { path: 'playlists/:id', component: PlaylistViewComponent },
       { path: 'songs', component: SongViewComponent },
       { path: 'radio', component: RadioViewComponent },
-      { path: 'go-premium', component: GoPremiumComponent}
+      { path: 'go-premium', component: GoPremiumComponent},
+      { path: 'browse', component: BrowseComponent}
     ]
   },
   { path: 'login', component: LoginComponent },
