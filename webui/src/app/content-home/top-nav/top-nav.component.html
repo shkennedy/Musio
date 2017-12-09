@@ -11,6 +11,9 @@
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
         <li (click)="clickedAbout()"><a>Settings</a></li>
+        <form #searchForm="ngForm" (submit)="search(searchForm)">
+            <input type="text" name="searchQuery" placeholder="Search"><br>
+        </form>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li><a>{{user.profileImage}}</a></li>

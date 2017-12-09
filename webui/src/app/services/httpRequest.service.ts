@@ -30,6 +30,14 @@ export class HttpRequestService {
             });
     }
 
+    public getWithUrlParams(route: string, paramString: string): Observable<ApiResponse> {
+        const params = new HttpParams().set('query', paramString);
+        return this.http.get(route, {params})
+        .catch(function (error: any) {
+            return Observable.throw(error || 'Server error');
+        });
+    }
+
     public post(route: string, body: Object, id: number = -1): Observable<ApiResponse> {
         let url = route;
         if (id !== -1) {

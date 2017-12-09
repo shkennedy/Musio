@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { LoginComponent } from './landing-pages/login/login.component'
+import { LoginComponent } from './landing-pages/login/login.component';
 import { RegistrationComponent } from './landing-pages/registration/registration.component';
 import { PageNotFoundComponent } from './landing-pages/page-not-found/page-not-found.component';
 import { RecoverPasswordComponent } from './landing-pages/recover-password/recover-password.component';
@@ -13,6 +13,7 @@ import { PlaylistsViewComponent } from './content-pages/playlist-views/playlist-
 import { PlaylistViewComponent } from './content-pages/playlist-views/single-playlist-view/playlist-view.component';
 import { SongViewComponent } from './content-pages/song-view/song-view.component';
 import { BrowseComponent } from './content-pages/browse/browse.component';
+import { SearchComponent } from './content-pages/search-view/search-view.component';
 import { ContentHomeComponent } from './content-home/content-home.component';
 import { RadioViewComponent } from './content-pages/radio-view/radio-view.component';
 import { GoPremiumComponent } from './content-pages/go-premium/go-premium.component';
@@ -30,7 +31,8 @@ const appRoutes: Routes = [
       { path: 'songs', component: SongViewComponent },
       { path: 'radio', component: RadioViewComponent },
       { path: 'go-premium', component: GoPremiumComponent},
-      { path: 'browse', component: BrowseComponent}
+      { path: 'browse', component: BrowseComponent},
+      { path: 'search/:searchQuery', component: SearchComponent}
     ]
   },
   { path: 'login', component: LoginComponent },
@@ -41,10 +43,10 @@ const appRoutes: Routes = [
 ];
 
 @NgModule({
-  imports:[
+  imports: [
     RouterModule.forRoot(appRoutes)
   ],
-  exports:[ RouterModule ]
+  exports: [ RouterModule ]
 })
 export class AppRoutingModule {
 

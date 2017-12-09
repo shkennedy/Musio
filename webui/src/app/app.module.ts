@@ -30,6 +30,7 @@ import { AlbumItemComponent } from './content-pages/album-views/album-collection
 import { ArtistItemComponent } from './content-pages/artist-views/artist-collection-view/artist-item/artist-item.component';
 import { RadioViewComponent } from './content-pages/radio-view/radio-view.component';
 import { GoPremiumComponent } from './content-pages/go-premium/go-premium.component';
+import { SearchComponent } from './content-pages/search-view/search-view.component';
 
 import { AdService } from './services/ad.service';
 import { AlbumService } from './services/album.service';
@@ -69,7 +70,8 @@ import { UserService } from './services/user.service';
         AlbumDetailComponent,
         AlbumSongComponent,
         RadioViewComponent,
-        GoPremiumComponent
+        GoPremiumComponent,
+        SearchComponent
     ],
     imports: [
         BrowserModule,

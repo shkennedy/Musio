@@ -15,7 +15,7 @@ import { Song } from '../../../models/song.model';
 export class PlaylistsViewComponent implements OnInit {
 
     private playlists: Playlist[];
-    private isEmpty: boolean = true;
+    private isEmpty = true;
 
     private errorMessage: string;
 

@@ -1,0 +1,29 @@
+<div>Ayo sweet, where my beans?!
+    <div *ngFor="let artist of artists">
+        {{artist.artistImage}} {{artist.name}}
+    </div>
+
+    <div *ngFor="let album of albums">
+        {{album.albumArt}} {{album.title}} {{album.artists[0].name}}
+    </div>
+
+    <div *ngFor="let song of songs">
+        {{song.title}} {{song.artistName}} {{song.albumName}}
+    </div>
+
+    <div *ngFor="let genre of genres">
+        {{genre.image}} {{genre.name}}
+    </div>
+
+    <div *ngFor="let instrument of instruments">
+        {{instrument.image}} {{instument.name}}
+    </div>
+
+    <div *ngFor="let playlist of playlists">
+        {{playlist.image}} {{playlist.name}}
+    </div>
+
+    <div *ngFor="let user of users">
+        {{user.image}} {{user.username}}
+    </div>
+</div>
