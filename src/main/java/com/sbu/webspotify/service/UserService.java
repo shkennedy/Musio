@@ -322,7 +322,16 @@ public class UserService {
 		// TODO -- implement browse logic.
 		
 		return null;
-	}
+    }
+    
+    public boolean getIsAdmin(User user) {
+        for (Role role : user.getRoles()) {
+            if (role.getRole() == "adminUser") {
+                return true;
+            }
+        }
+        return false;
+    }
 
 	public boolean userExists(String username) {
 		return userRepository.existsByUsername(username);

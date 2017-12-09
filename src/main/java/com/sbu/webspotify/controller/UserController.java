@@ -73,7 +73,7 @@ public class UserController {
         ApiResponseObject response = new ApiResponseObject();
         User userToDelete = userService.findUserByUsername(username);
         User currentUser = (User) session.getAttribute("user");
-        if (userToDelete.equals(currentUser) || currentUser.getIsAdmin()) {
+        if (userToDelete.equals(currentUser) || userService.getIsAdmin(currentUser)) {
             userService.deleteUser(userToDelete);
             response.setSuccess(true);
         } else {

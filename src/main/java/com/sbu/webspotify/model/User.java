@@ -133,15 +133,6 @@ public class User implements Serializable {
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
     }
-    
-    public boolean getIsAdmin() {
-        for (Role role : roles) {
-            if (role.getRole() == "adminUser") {
-                return true;
-            }
-        }
-        return false;
-    }
 
 	public String getUsername() {
 		return this.username;
