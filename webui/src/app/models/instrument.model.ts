@@ -3,4 +3,6 @@ export class Instrument {
     public description: string;
     public imageId: number;
     public name: string;
+
+    public imageUrl: string;
 }

@@ -8,6 +8,6 @@ export class Song {
     public lyrics: string;
     public mbid: string;
     public artist: Artist;
-
+    
     public audio: string;
 }

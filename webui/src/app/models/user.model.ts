@@ -19,5 +19,5 @@ export class User {
     favoriteGenres: Genre[];
     followedUsers: User[];
     geoLocation: GeoLocation;
-    profileImage: File;
+    profileImageUrl: string;
 }

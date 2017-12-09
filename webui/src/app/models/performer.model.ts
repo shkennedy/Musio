@@ -7,4 +7,6 @@ export class Performer {
     public mbid: number;
     public performerArtId: number;
     public geoLocation: GeoLocation;
+
+    public performerArtUrl: string;
 }

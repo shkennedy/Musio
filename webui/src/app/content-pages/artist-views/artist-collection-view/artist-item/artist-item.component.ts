@@ -3,15 +3,17 @@ import { Router } from '@angular/router';
 
 import { FavoritesService } from '../../../../services/favorites.service';
 import { ArtistService } from '../../../../services/artist.service';
+import { FileService } from '../../../../services/file.service';
+
 import { Artist } from '../../../../models/artist.model';
 
 @Component({
-    selector: 'artist-item',
+    selector: 'app-artist-item',
     templateUrl: './artist-item.component.html',
     styleUrls: ['./artist-item.component.css'],
-    providers: [ArtistService, FavoritesService]
+    providers: [ArtistService, FavoritesService, FileService]
 })
-export class ArtistItemComponent implements OnInit {
+export class ArtistItemComponent implements OnInit { // AM I EVEN USED????
 
     @Input() artistId: number;
 
@@ -22,8 +24,9 @@ export class ArtistItemComponent implements OnInit {
 
     constructor(
         private router: Router,
+        private artistService: ArtistService,
         private favoritesService: FavoritesService,
-        private artistService: ArtistService
+        private fileService: FileService
     ) { }
 
     ngOnInit() {
@@ -31,6 +34,8 @@ export class ArtistItemComponent implements OnInit {
             .subscribe(
                 (artist: Artist) => {
                     this.artist = artist;
+                    this.artist.artistImageUrl =
+                        this.fileService.getArtistImageURLByIdAndSize(artist.id, true);
                 },
                 (error: any) => {
                     this.errMsg = error;

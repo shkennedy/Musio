@@ -2,14 +2,15 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { FavoritesService } from '../../../services/favorites.service';
+import { FileService } from '../../../services/file.service';
 
 import { Album } from '../../../models/album.model';
 
 @Component({
-    selector: 'albums-view',
+    selector: 'app-albums-view',
     templateUrl: './albums-view.component.html',
     styleUrls: ['./albums-view.component.css'],
-    providers: [FavoritesService]
+    providers: [FavoritesService, FileService]
 })
 export class AlbumsViewComponent implements OnInit {
 
@@ -17,7 +18,8 @@ export class AlbumsViewComponent implements OnInit {
 
     constructor(
         private router: Router,
-        private favoritesSevice: FavoritesService
+        private favoritesSevice: FavoritesService,
+        private fileService: FileService
     ) { }
 
     ngOnInit() {
@@ -26,6 +28,10 @@ export class AlbumsViewComponent implements OnInit {
                 (albums: Album[]) => {
                     if (albums.length !== 0) {
                         this.albums = albums;
+                        albums.forEach((album: Album) => {
+                            album.albumArtUrl =
+                                this.fileService.getAlbumImageURLByIdAndSize(album.albumArtId, false);
+                        });
                     }
                 },
                 (error: any) => {

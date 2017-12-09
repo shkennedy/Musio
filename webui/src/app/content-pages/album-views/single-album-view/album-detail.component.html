@@ -1,10 +1,11 @@
 <div id="album-wrapper col-sm-12">
     <div id="album-info" class="col-sm-4">
         <div class="col-sm-12">
-            <img *ngIf="imageExists; else default_art" src="">
+            <!-- <img *ngIf="imageExists; else default_art" src="">
             <ng-template #default_art>
                 <img width=300 src="assets/images/default_art.png" alt="">
-            </ng-template>
+            </ng-template> -->
+            <img src="{{album.albumArtUrl}}" alt="{{album.title}}">
         </div>
         <div class="col-sm-12">
             <h3 class="album-title">{{album.title}}</h3>

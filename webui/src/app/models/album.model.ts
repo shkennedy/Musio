@@ -10,4 +10,6 @@ export class Album {
   public albumArtId: number;
   private mbid: string;
   public releaseDate: Date;
+
+  public albumArtUrl: string;
 }

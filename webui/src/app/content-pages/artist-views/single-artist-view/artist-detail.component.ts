@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 
 import { ArtistService } from '../../../services/artist.service';
 import { FavoritesService } from '../../../services/favorites.service';
+import { FileService } from '../../../services/file.service';
 
 import { Artist } from '../../../models/artist.model';
 import { Album } from '../../../models/album.model';
@@ -10,10 +11,10 @@ import { Genre } from '../../../models/genre.model';
 import { Song } from '../../../models/song.model';
 
 @Component({
-    selector: 'artist-detail',
+    selector: 'app-artist-detail',
     templateUrl: './artist-detail.component.html',
     styleUrls: ['./artist-detail.component.css'],
-    providers: [ArtistService, FavoritesService]
+    providers: [ArtistService, FavoritesService, FileService]
 })
 export class ArtistDetailComponent implements OnInit {
 
@@ -21,14 +22,15 @@ export class ArtistDetailComponent implements OnInit {
 
     private artist: Artist;
     private followerCount: number;
-    private isFollowed: boolean = false;
+    private isFollowed = false;
     private relatedArtists: Artist[];
     private errorMessage: string;
 
     constructor(
         private router: Router,
         private artistService: ArtistService,
-        private favoritesService: FavoritesService
+        private favoritesService: FavoritesService,
+        private fileService: FileService
     ) { }
 
     ngOnInit() {
@@ -36,11 +38,12 @@ export class ArtistDetailComponent implements OnInit {
         .subscribe(
             (artist: Artist) => {
                 this.artist = artist;
+                this.artist.artistImageUrl =
+                    this.fileService.getArtistImageURLByIdAndSize(artist.id, true);
             },
             (error: any) => {
                 this.errorMessage = error;
-            }
-        );
+            });
 
         this.artistService.getArtistFollowerCount(this.artistId)
         .subscribe(
@@ -49,15 +52,14 @@ export class ArtistDetailComponent implements OnInit {
             },
             (error: any) => {
                 console.log(error.toString());
-            }
-        )
+            });
 
         this.favoritesService.getFavoriteArtists()
         .subscribe(
             (artists: Artist[]) => {
                 if (artists) {
                     for (let i = 0; i < artists.length; ++i) {
-                        if (artists[i].id == this.artist.id) {
+                        if (artists[i].id === this.artist.id) {
                             this.isFollowed = true;
                             console.log('artist-detail.component found artist is followed');
                         }
@@ -66,18 +68,20 @@ export class ArtistDetailComponent implements OnInit {
             },
             (error: any) => {
                 console.log(error.toString());
-            }
-        );
+            });
 
         this.artistService.getRelatedArtists(this.artistId)
         .subscribe(
             (relatedArtists: Artist[]) => {
                 this.relatedArtists = relatedArtists;
+                this.relatedArtists.forEach((artist: Artist) => {
+                    artist.artistImageUrl =
+                        this.fileService.getArtistImageURLByIdAndSize(artist.id, false);
+                });
             },
             (error: any) => {
                 console.log(error.toString());
-            }
-        );
+            });
     }
 
     followArtist() {
@@ -88,8 +92,7 @@ export class ArtistDetailComponent implements OnInit {
                 },
                 (error: any) => {
                     console.log(error.toString());
-                }
-            );
+                });
     }
 
     unfollowArtist() {
@@ -100,7 +103,6 @@ export class ArtistDetailComponent implements OnInit {
                 },
                 (error: any) => {
                     console.log(error.toString());
-                }
-            );
+                });
     }
 }

@@ -5,11 +5,12 @@
 <ng-template #hasArtists>
     <div class="row">
         <div class="artist-collection-container">
-            <div *ngFor="let artist of artists" class="artist-card col-sm-3 center-block" [routerLink]="['/artists',artist.id]">
-                <img *ngIf="!artistImage; else defaultArt" src="http://www.billboard.com/files/media/kendrick-lamar-performance-oct-8-2016-billboard-1548.jpg">
+            <div *ngFor="let artist of artists" class="artist-card col-sm-3 center-block" [routerLink]="['/artists', artist.id]">
+                <!-- <img *ngIf="!artistImage; else defaultArt" src="{{artist.artistImageUrl}}">
                 <ng-template #defaultArt>
                     <img src="assets/images/no_artist_picture.png" alt="">
-                </ng-template>
+                </ng-template> -->
+                <img src="{{artist.artistImageUrl}}" alt="{{artist.name}}">
                 <p>{{artist.name}}</p>
             </div>
         </div>

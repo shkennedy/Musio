@@ -1,10 +1,11 @@
 <div id="playlist-wrapper col-sm-12">
     <div id="playlist-info" class="col-sm-4">
         <div class="col-sm-12">
-            <img *ngIf="imageExists; else default_art" src="{{playlist.image}}">
+            <!-- <img *ngIf="imageExists; else default_art" src="{{playlist.image}}">
             <ng-template #default_art>
                 <img width=300 src="assets/images/default_art.png" alt="">
-            </ng-template>
+            </ng-template> -->
+            <img src="{{playlist.playlistImageUrl}}"
         </div>
         <div class="col-sm-12">
             <h3 class="album-title">{{playlist.name}}</h3>

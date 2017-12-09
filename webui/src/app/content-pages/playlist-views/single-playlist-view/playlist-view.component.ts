@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { FileService } from '../../../services/file.service';
 import { PlaylistService } from '../../../services/playlist.service';
 
 import { Playlist } from '../../../models/playlist.model';
@@ -19,6 +20,7 @@ export class PlaylistViewComponent implements OnInit {
 
     constructor(
         private router: Router,
+        private fileService: FileService,
         private playlistService: PlaylistService
     ) { }
 
@@ -27,6 +29,8 @@ export class PlaylistViewComponent implements OnInit {
             .subscribe(
                 (playlist: Playlist) => {
                     this.playlist = playlist;
+                    // this.playlist.playlistImageUrl = TODO
+                    //     this.fileService.getPlaylistImageByIdAndSize(this.playlist.id, true);
                 },
                 (error: any) => {
                     console.log(error.toString());

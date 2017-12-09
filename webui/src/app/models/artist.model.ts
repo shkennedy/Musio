@@ -13,6 +13,7 @@ export class Artist {
     public website: string;
     public musicLabel: User;
     public geoLocation: GeoLocation;
-    public artistImage: File;
-    public backgroundArt: File;
+
+    public artistImageUrl: string;
+    public backgroundArtUrl: string;
 }

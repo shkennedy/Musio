@@ -71,7 +71,7 @@
             <div class="row">
                 <div *ngFor="let relatedArtist of relatedArtists" class="artist-card col-sm-3 center-block" [routerLink]="['/artists',artist.id]">
                     <div class="artist-card col-sm-3 center-block">
-                        <img src="{{relatedArtist.artistImage}}">
+                        <img src="{{relatedArtist.artistImageUrl}}" alt="{{relatedArtist.name}}">
                         <p>relatedArtist.name</p>
                     </div>
                 </div>

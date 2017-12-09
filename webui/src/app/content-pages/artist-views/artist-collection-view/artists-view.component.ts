@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 
 import { ArtistService } from '../../../services/artist.service';
 import { FavoritesService } from '../../../services/favorites.service';
+import { FileService } from '../../../services/file.service';
 
 import { Artist } from '../../../models/artist.model';
 import { Album } from '../../../models/album.model';
@@ -13,7 +14,7 @@ import { Song } from '../../../models/song.model';
     selector: 'app-artists-view',
     templateUrl: './artists-view.component.html',
     styleUrls: ['./artists-view.component.css'],
-    providers: [ArtistService, FavoritesService]
+    providers: [ArtistService, FavoritesService, FileService]
 })
 export class ArtistsViewComponent implements OnInit {
 
@@ -22,7 +23,8 @@ export class ArtistsViewComponent implements OnInit {
     constructor(
         private router: Router,
         private artistService: ArtistService,
-        private favoritesService: FavoritesService
+        private favoritesService: FavoritesService,
+        private fileService: FileService
     ) { }
 
     ngOnInit() {
@@ -31,6 +33,10 @@ export class ArtistsViewComponent implements OnInit {
             (artists: Artist[]) => {
                 if (artists.length !== 0) {
                     this.artists = artists;
+                    artists.forEach((artist: Artist) => {
+                        artist.artistImageUrl =
+                            this.fileService.getArtistImageURLByIdAndSize(artist.id, false);
+                    });
                 }
             },
             (error: any) => {

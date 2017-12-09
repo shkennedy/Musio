@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
+import { FileService } from '../../services/file.service';
 import { SearchService, SearchResponse } from '../../services/search.service';
 import { BrowseResponse } from '../../services/search.service';
 
@@ -19,7 +20,7 @@ import { User } from '../../models/user.model';
 })
 export class SearchComponent implements OnInit {
 
-    @Input() searchQuery: string;
+    private searchQuery: string;
 
     private albums: Album[];
     private artists: Artist[];
@@ -32,27 +33,72 @@ export class SearchComponent implements OnInit {
     private errorMessage: string;
 
     constructor(
+        private activatedRoute: ActivatedRoute,
         private router: Router,
+        private fileService: FileService,
         private searchService: SearchService
     ) { }
 
     ngOnInit() {
+        this.activatedRoute.params
+            .subscribe((searchParams: any) => {
+                this.searchQuery = searchParams['searchQuery'];
+                this.search();
+        });
+    }
+
+    private search(): void {
         console.log(this.searchQuery);
         this.searchService.search(this.searchQuery)
-        .subscribe(
+            .subscribe(
             (searchData: SearchResponse) => {
                 this.albums = searchData.albums;
+                if (this.albums) {
+                    this.albums.forEach((album: Album) => {
+                        album.albumArtUrl =
+                            this.fileService.getAlbumImageURLByIdAndSize(album.albumArtId, false);
+                    });
+                }
+
                 this.artists = searchData.artists;
+                if (this.artists) {
+                    this.artists.forEach((artist: Artist) => {
+                        artist.artistImageUrl =
+                            this.fileService.getArtistImageURLByIdAndSize(artist.id, false);
+                    });
+                }
+
                 this.instruments = searchData.instruments;
+
                 this.genres = searchData.genres;
+                if (this.genres) {
+                    this.genres.forEach((genre: Genre) => {
+                        // genre.genreImageUrl = TODO
+                        //     this.fileService.getGenreImageURLByIdAndSize(genre.genreImageId, false);
+                    });
+                }
+
                 this.playlists = searchData.playlists;
+                if (this.playlists) {
+                    this.playlists.forEach((playlist: Playlist) => {
+                        // playlist.playlistImageUrl = TODO
+                        //     this.fileService.getPlaylistImageURLByIdAndSize(playlist.playlistImageId, false);
+                    });
+                }
+
                 this.songs = searchData.songs;
+
                 this.users = searchData.users;
+                if (this.users) {
+                    this.users.forEach((user: User) => {
+                        user.profileImageUrl =
+                            this.fileService.getAlbumImageURLByIdAndSize(user.id, false);
+                    });
+                }
             },
             (error: any) => {
                 this.errorMessage = error;
                 console.log(error.toString());
-            }
-        );
+            });
     }
 }
