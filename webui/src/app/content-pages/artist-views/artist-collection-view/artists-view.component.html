@@ -1,6 +1,6 @@
 <div *ngIf="!artists; else hasArtists">
     <p>No Artists Found: Find some artists to follow in browse.</p>
-    <a [routerLink]="['/browse', '/artist']">Find Artists</a>
+    <a [routerLink]="['/browse]">Find Artists</a>
 </div>
 <ng-template #hasArtists>
     <div class="row">

@@ -1,6 +1,6 @@
 <div *ngIf="!songs; else hasSongs">
     <p>No Songs Found: Find some favorite songs in browse.</p>
-    <a [routerLink]="['/browse', '/songs']">Find Songs</a>
+    <a [routerLink]="['/browse]">Find Songs</a>
 </div>
 <ng-template #hasSongs>
     <div id="album-tracklist" class="col-sm-8">
