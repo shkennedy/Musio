@@ -26,6 +26,9 @@ public class AppConfig {
     @Value("${query.recentFavoritesToQuery}")
     public int recentFavoritesToQuery;
 
+    @Value("${query.relatedArtistsToQuery}")
+    public int relatedArtistsToQuery;
+
     @Value("${query.listeningHistoryToQuery}")
     public int listeningHistoryToQuery;
     

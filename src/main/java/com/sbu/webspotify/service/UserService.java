@@ -25,7 +25,6 @@ import com.sbu.webspotify.repo.RoleRepository;
 import com.sbu.webspotify.repo.SongRepository;
 import com.sbu.webspotify.repo.UserRepository;
 import com.sbu.webspotify.service.EmailService;
-import com.sun.mail.imap.AppendUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

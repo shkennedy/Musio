@@ -23,15 +23,6 @@ import { Song } from '../../models/song.model';
 })
 export class AudioPlayerComponent implements OnInit {
 
-    // Main
-    // https://www.npmjs.com/package/@types/howler
-    // https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/types/howler/index.d.ts
-
-    // Alternatives
-    // https://521dimensions.com/open-source/amplitudejs
-    // https://wiki.mozilla.org/Audio_Data_API#API_Tutorial
-    // https://github.com/arielfaur/ionic-audio/tree/3.0
-
     private static IN_PROGRESS_TIME = 5;
 
     audio: Howl;
@@ -40,9 +31,12 @@ export class AudioPlayerComponent implements OnInit {
     isMuted = false;
     isPlaying = false;
     isRepeating = false;
+    isShuffling = false;
+    songProgress = 0;
+    songTimer: any;
     currentSong: Song;
-    songQueue: Song[];
-    history: Song[];
+    songQueue: Song[] = [];
+    history: Song[] = [];
     privateMode: boolean;
 
     errMsg: string;
@@ -189,19 +183,16 @@ export class AudioPlayerComponent implements OnInit {
     private makeHowl(songFileURL: string): Howl {
         console.log(songFileURL);
         const newHowl: Howl = new Howl({
-            // src: [songFile],
             src: [songFileURL],
             format: ['ogg'],
-            // ext: ['vorbis'],
             volume: this.volume,
             autoplay: true,
             html5: true,
-            onend: function() {
-                if (!this.isRepeating) {
-                    // this.playNext();
-                    console.log('would play next');
-                }
+            onplay: this.startSongTimer,
+            onpause: function() {
+                clearInterval(this.songTimer);
             },
+            onend: this.playNext,
             onloaderror: function () {
                 console.log('unable to load song');
                 this.errMsg = 'Unable to load song';
@@ -222,11 +213,13 @@ export class AudioPlayerComponent implements OnInit {
             .subscribe(
             (song: Song) => {
                 this.currentSong = song;
+                // Convert duration to seconds from ms
+                this.currentSong.duration = this.currentSong.duration / 1000;
                 console.log(`song: ${this.currentSong.title}`);
                 // Fetch song file
-                this.currentSong.audio = this.fileService.getSongFileURLByIdAndBitrate(song.id, this.useHighBitrate);
+                this.currentSong.audio = this.fileService
+                    .getSongFileURLByIdAndBitrate(song.id, this.useHighBitrate);
                 this.audio = this.makeHowl(this.currentSong.audio);
-                console.log(`${this.currentSong.audio}`);
                 this.isPlaying = true;
             },
             (error: any) => {
@@ -238,9 +231,27 @@ export class AudioPlayerComponent implements OnInit {
             );
     }
 
-    private playNext(): void {
+    private startSongTimer = (): void => {
+        this.songTimer = setInterval(() => {
+            this.songProgress += 1;
+        }, 1000);
+    }
+
+    private playNext = (): void => {
         this.addCurrentSongToHistory();
-        const nextSong: Song = this.songQueue.shift();
+
+        let nextSong: Song;
+        if (this.isRepeating) {
+            nextSong = this.currentSong;
+        } else if (this.songQueue.length === 0) {
+            if (this.isShuffling) {
+                const nextIndex = Math.floor(Math.random() * this.songQueue.length);
+                nextSong = this.songQueue.splice(nextIndex, 1)[0];
+            } else {
+                nextSong = this.songQueue.shift();
+            }
+        }
+
         if (nextSong) {
             this._playSong(nextSong.id);
         } else {
@@ -288,7 +299,7 @@ export class AudioPlayerComponent implements OnInit {
             this.audio.play();
             this.isPlaying = true;
         }
-        this._playSong(8);
+        this._playSong(8); // TODO remove
     }
 
     private pause(): void {
@@ -306,5 +317,13 @@ export class AudioPlayerComponent implements OnInit {
     private repeat(): void {
         this.isRepeating = !this.isRepeating;
         this.audio.loop(this.isRepeating);
+    }
+
+    private shuffle(): void {
+        this.isShuffling = !this.isShuffling;
+    }
+
+    private seek(): void {
+        this.audio.seek(this.songProgress);
     }
 }

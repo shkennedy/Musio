@@ -5,6 +5,7 @@ role.labelUser:   LABEL_USER
 role.artistUser:  ARTIST_USER
 
 query.recentFavoritesToQuery: 3
+query.relatedArtistsToQuery: 20
 query.listeningHistoryToQuery: 25
 
 email.emailAddress:           "Musio.SBU@gmail.com"

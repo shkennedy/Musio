@@ -30,5 +30,8 @@ public class ArtistService {
 	public boolean artistExists(int id) {
 		return artistRepository.exists(id);
 	}
-	
+    
+    public Set<ArtistIdentifier> getNRelatedArtists(int id, int nResults) {
+        return artistRepository.findMostRelatedArtists(id, nResults);
+    }
 }

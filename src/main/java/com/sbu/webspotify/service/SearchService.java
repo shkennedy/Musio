@@ -5,6 +5,7 @@ import java.util.Set;
 
 import com.sbu.webspotify.conf.AppConfig;
 import com.sbu.webspotify.dto.BrowseResults;
+import com.sbu.webspotify.dto.BrowseResults.BrowseResult;
 import com.sbu.webspotify.dto.SearchResults;
 import com.sbu.webspotify.dto.identifier.AlbumIdentifier;
 import com.sbu.webspotify.dto.identifier.ArtistIdentifier;
@@ -12,7 +13,9 @@ import com.sbu.webspotify.dto.identifier.GenreIdentifier;
 import com.sbu.webspotify.dto.identifier.InstrumentIdentifier;
 import com.sbu.webspotify.dto.identifier.PlaylistIdentifier;
 import com.sbu.webspotify.dto.identifier.SongIdentifier;
+import com.sbu.webspotify.model.Artist;
 import com.sbu.webspotify.model.User;
+import com.sbu.webspotify.model.Genre;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,7 +49,7 @@ public class SearchService {
 
     public SearchResults executeSearch(String query) {
 
-        if(query.length() == 0) {
+        if (query.length() == 0) {
             return new SearchResults();
         }
 
@@ -70,6 +73,26 @@ public class SearchService {
 
 	public BrowseResults getBrowseContent(User user) {
 
+        BrowseResults browseResults = new BrowseResults();
+        
+        browseResults.setNewReleases(getNewReleases(user));
+        browseResults.setFriendsFavorites(getFriendsFavorites(user));
+        browseResults.setDiscover(getDiscover(user));
+        browseResults.setPopular(getPopular());
+
+		return browseResults;
+    }
+    
+    private BrowseResult getNewReleases(User user) {
+        Set<ArtistIdentifier> artists = new HashSet<ArtistIdentifier>();
+        Set<PlaylistIdentifier> playlists = new HashSet<PlaylistIdentifier>();
+        Set<AlbumIdentifier> albums = new HashSet<AlbumIdentifier>();
+        Set<SongIdentifier> songs = new HashSet<SongIdentifier>();
+
+        return new BrowseResult(songs, artists, albums, playlists);
+    }
+
+    private BrowseResult getFriendsFavorites(User user) {
         Set<ArtistIdentifier> artists = new HashSet<ArtistIdentifier>();
         Set<PlaylistIdentifier> playlists = new HashSet<PlaylistIdentifier>();
         Set<AlbumIdentifier> albums = new HashSet<AlbumIdentifier>();
@@ -107,13 +130,41 @@ public class SearchService {
             }
         }
 
-        BrowseResults browseResults = new BrowseResults();
-        browseResults.setArtists(artists);
-        browseResults.setPlaylists(playlists);
-        browseResults.setAlbums(albums);
-        browseResults.setSongs(songs);
+        return new BrowseResult(songs, artists, albums, playlists);
+    }
 
-		return browseResults;
-	}
+    private BrowseResult getDiscover(User user) {
+        Set<ArtistIdentifier> artists = new HashSet<ArtistIdentifier>();
+        Set<PlaylistIdentifier> playlists = new HashSet<PlaylistIdentifier>();
+        Set<AlbumIdentifier> albums = new HashSet<AlbumIdentifier>();
+        Set<SongIdentifier> songs = new HashSet<SongIdentifier>();
 
+        // Get not favorited items from favorited genres
+        int nFavoriteArtists = user.getFavoriteArtists().size();
+        if (nFavoriteArtists != 0) {
+            int nRelatedPerItem =  appConfig.relatedArtistsToQuery / nFavoriteArtists;
+            for (Artist favoriteArtist : user.getFavoriteArtists()) {
+                for (ArtistIdentifier artist : artistService.getNRelatedArtists(favoriteArtist.getId(), nRelatedPerItem)) {
+                    if (artist.getId() != null) {
+                        artists.add(artist);
+                    }
+                }
+            }
+        } else {
+            
+        }
+
+        return new BrowseResult(songs, artists, albums, playlists);
+    }
+
+    private BrowseResult getPopular() {
+        Set<ArtistIdentifier> artists = new HashSet<ArtistIdentifier>();
+        Set<PlaylistIdentifier> playlists = new HashSet<PlaylistIdentifier>();
+        Set<AlbumIdentifier> albums = new HashSet<AlbumIdentifier>();
+        Set<SongIdentifier> songs = new HashSet<SongIdentifier>();
+
+        // TODO - need listens per song
+
+        return new BrowseResult(songs, artists, albums, playlists);
+    }
 }

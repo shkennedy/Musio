@@ -3,23 +3,41 @@
     <div class="col-sm-2 player-buttons-container">
         <img class="player-buttons" src="assets/images/prev.png">
         <div *ngIf="isPlaying; else isPaused;">
-            <button (click)="pause()"><img class="player-buttons pause-button" src="assets/images/pause.png"></button>
+            <button (click)="pause()">
+                <img class="player-buttons pause-button" src="assets/images/pause.png">
+            </button>
         </div>
         <ng-template #isPaused>
-            <button (click)="play()"><img class="player-buttons play-button" src="assets/images/play.png"></button>
+            <button (click)="play()">
+                <img class="player-buttons play-button" src="assets/images/play.png">
+            </button>
         </ng-template>
         <img class="player-buttons" src="assets/images/next.png">
 
     </div>
     <div class="col-sm-7 progress-bar-container text-middle">
 
-        <div class="audio-progress" id="audio-progress">
+        <!-- <md-slider-container>
+            <md-slider min="0" max="{{currentSong.duration}}" ng-model="songProgress" aria-label="seekBar" id="songProgressSlider">
+            </md-slider> -->
+            <!-- <md-input-container>
+                <input flex type="number" ng-model="songProgress" aria-label="seekBar" aria-controls="songProgress">
+            </md-input-container> -->
+        <!-- </md-slider-container> -->
+        <div *ngIf="currentSong; else noSong;">
+            <mat-slider min="0" max="{{currentSong.duration}}" step="1" value="{{songProgress}}"></mat-slider>
+        </div>
+        <ng-template #noSong>
+            <mat-slider min="0" max="1" step="1" value="0"></mat-slider>
+        </ng-template>
+
+        <!-- <div class="audio-progress" id="audio-progress">
             <div id="draggable-point" style="left:75%;" class="draggable ui-widget-content">
-                <!-- <div id="audio-progress-handle"></div> -->
+                <div id="audio-progress-handle"></div>
             </div>
             <div id="audio-progress-bar" class="bar" style="width:25%">
             </div>
-        </div>
+        </div> -->
 
     </div>
 
