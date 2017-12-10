@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { SearchService } from '../../services/search.service';
+import { SearchService, BrowseResponseTab } from '../../services/search.service';
 import { BrowseResponse } from '../../services/search.service';
 
 import { Song } from '../../models/song.model';
@@ -18,12 +18,10 @@ import { Instrument } from '../../models/instrument.model';
 })
 export class BrowseComponent implements OnInit {
 
-    private albums: Album[];
-    private artists: Artist[];
-    private genres: Genre[];
-    private instruments: Instrument[];
-    private playlists: Playlist[];
-    private songs: Song[];
+    private newReleases: BrowseResponseTab;
+    private friendsFavorites: BrowseResponseTab;
+    private discover: BrowseResponseTab;
+    private popular: BrowseResponseTab;
 
     private errorMessage: string;
 
@@ -36,12 +34,10 @@ export class BrowseComponent implements OnInit {
         this.searchService.getBrowse()
         .subscribe(
             (browseData: BrowseResponse) => {
-                this.albums = browseData.albums;
-                this.artists = browseData.artists;
-                this.instruments = browseData.instruments;
-                this.genres = browseData.genres;
-                this.playlists = browseData.playlists;
-                this.songs = browseData.songs;
+                this.newReleases = browseData.newReleases;
+                this.friendsFavorites = browseData.friendsFavorites;
+                this.discover = browseData.discover;
+                this.popular = browseData.popular;
             },
             (error: any) => {
                 this.errorMessage = error;

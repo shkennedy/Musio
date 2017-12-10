@@ -24,13 +24,18 @@ export interface SearchResponse {
     // stations: Station[]; TODO add when exists on back end
 }
 
-export interface BrowseResponse {
+export interface BrowseResponseTab {
     songs: Song[];
     artists: Artist[];
     albums: Album[];
     playlists: Playlist[];
-    instruments: Instrument[];
-    genres: Genre[];
+}
+
+export interface BrowseResponse {
+    newReleases: BrowseResponseTab;
+    friendsFavorites: BrowseResponseTab;
+    discover: BrowseResponseTab;
+    popular: BrowseResponseTab;
 }
 
 @Injectable()
