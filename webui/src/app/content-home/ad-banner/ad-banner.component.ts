@@ -7,11 +7,11 @@ import { UserService } from '../../services/user.service';
 import { Ad } from '../../models/ad.model';
 
 @Component({
-    selector: 'app-right-nav',
-    templateUrl: './right-nav.component.html',
-    styleUrls: ['./right-nav.component.css']
+    selector: 'app-ad-banner',
+    templateUrl: './ad-banner.component.html',
+    styleUrls: ['./ad-banner.component.css']
 })
-export class RightNavComponent implements OnInit {
+export class AdBannerComponent implements OnInit {
 
     private showAds: boolean;
     private ads: Ad[];
@@ -23,15 +23,11 @@ export class RightNavComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        // this.userService.getIsPremium()
-        // .subscribe(
-        //     (isPremium: boolean) => {
-        //         this.showAds = !isPremium;
-        //     },
-        //     (error: any) => {
-        //         console.log(error.toString());
-        //     }
-        // )
+        this.userService.getIsPremium(this.setIsPremium);
+    }
+
+    private setIsPremium = (isPremium: boolean): void => {
+        this.showAds = !isPremium;
 
         if (this.showAds) {
             this.adService.getVerticalBannerAds()
@@ -41,9 +37,7 @@ export class RightNavComponent implements OnInit {
                 },
                 (error: any) => {
                     console.log(error.toString());
-                }
-            )
+                });
         }
     }
-
 }

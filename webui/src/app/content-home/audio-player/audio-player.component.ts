@@ -217,9 +217,9 @@ export class AudioPlayerComponent implements OnInit {
                 this.currentSong.duration = this.currentSong.duration / 1000;
                 console.log(`song: ${this.currentSong.title}`);
                 // Fetch song file
-                this.currentSong.audio = this.fileService
+                this.currentSong.audioFileUrl = this.fileService
                     .getSongFileURLByIdAndBitrate(song.id, this.useHighBitrate);
-                this.audio = this.makeHowl(this.currentSong.audio);
+                this.audio = this.makeHowl(this.currentSong.audioFileUrl);
                 this.isPlaying = true;
             },
             (error: any) => {

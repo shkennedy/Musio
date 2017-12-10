@@ -43,5 +43,4 @@ export class ArtistsViewComponent implements OnInit {
                 console.log(error.toString());
             });
     }
-
 }

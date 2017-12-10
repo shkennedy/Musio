@@ -213,7 +213,16 @@ public class UserController {
 	public @ResponseBody ApiResponseObject removeFavoritePlaylist(HttpSession session, @PathVariable Integer playlistId) {
 		User user = (User) session.getAttribute("user");
 		return userService.removeFavoritePlaylist(user, playlistId);
-	}
+    }
+    
+    @RequestMapping(value={"/followedUsers"}, method = RequestMethod.GET)
+    public @ResponseBody ApiResponseObject getFollowedUsers(HttpSession session) {
+        ApiResponseObject response = new ApiResponseObject();
+        User user = (User) session.getAttribute("user");
+        response.setResponseData(user.getFollowedUsers());
+        response.setSuccess(true);
+        return response;
+    }
 
 	@RequestMapping(value={"/followUser/{userId}"})
 	public @ResponseBody ApiResponseObject addFollowedUser(HttpSession session, @PathVariable Integer userId) {

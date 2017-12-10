@@ -14,6 +14,7 @@ export class Artist {
     public musicLabel: User;
     public geoLocation: GeoLocation;
 
+    public albums: Album[];
     public artistImageUrl: string;
     public backgroundArtUrl: string;
 }

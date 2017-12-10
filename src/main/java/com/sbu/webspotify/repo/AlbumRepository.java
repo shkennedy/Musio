@@ -25,5 +25,11 @@ public interface AlbumRepository extends JpaRepository<Album, Integer>
                     + "WHERE ufa.album_id = alb.id AND ufa.user_id = :userId AND aam.artist_id = art.id AND aam.album_id = alb.id AND alb.album_art_id = i.id AND i.thumb_file_id = f.id "
                     + "ORDER BY timestamp DESC LIMIT :numElements",
                     nativeQuery = true)    
-	Set<AlbumIdentifier> findRecentlyFavoritedAlbumsByUser(@Param("userId") int userId, @Param("numElements") int numElements);
+    Set<AlbumIdentifier> findRecentlyFavoritedAlbumsByUser(@Param("userId") int userId, @Param("numElements") int numElements);
+    
+    @Query(value = "SELECT art.id as artistId, art.name as artistName, alb.id as id, alb.title as title "
+                    + "FROM Album alb, Artist art, album_artist_mapping aam "
+                    + "WHERE aam.artist_id = :artistId AND aam.artist_id = art.id AND aam.album_id = alb.id",
+                    nativeQuery = true)
+    Set<AlbumIdentifier> findAllByArtistId(@Param("artistId") int artistId);
 }

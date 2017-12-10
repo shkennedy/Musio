@@ -1,18 +1,19 @@
 <app-top-nav></app-top-nav>
 
 <div class="container-fluid text-center main-container">
-  <div class="row main-row" style="max-width:100%">
+    <div class="row main-row" style="max-width:100%">
 
-      <app-left-nav></app-left-nav>
+        <app-left-nav></app-left-nav>
 
-      <div class="col-sm-8 text-left content-container style-1">
-        <router-outlet></router-outlet>
-      </div>
+        <div class="col-sm-8 text-left content-container style-1">
+            <app-ad-banner></app-ad-banner>
+            <router-outlet></router-outlet>
+        </div>
 
-      <app-right-nav></app-right-nav>
+        <app-right-nav></app-right-nav>
 
-  </div>
+    </div>
 
-<app-audio-player></app-audio-player>
+    <app-audio-player></app-audio-player>
 
 </div>

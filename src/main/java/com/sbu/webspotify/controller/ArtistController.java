@@ -3,6 +3,7 @@ package com.sbu.webspotify.controller;
 import com.sbu.webspotify.dto.ApiResponseObject;
 import com.sbu.webspotify.model.Artist;
 import com.sbu.webspotify.repo.ArtistRepository;
+import com.sbu.webspotify.service.AlbumService;
 import com.sbu.webspotify.service.ArtistService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,9 @@ public class ArtistController
     @Autowired
     private ArtistService artistService;
 
+    @Autowired
+    private AlbumService albumService;
+
     @RequestMapping(value = "/get/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
     public @ResponseBody ApiResponseObject getArtist(@PathVariable("id") int id) {
         Artist artist = artistService.getArtistById(id);
@@ -36,6 +40,14 @@ public class ArtistController
             response.setSuccess(true);
             response.setResponseData(artist);
         }
+        return response;
+    }
+
+    @RequestMapping(value = "/get/{id}/albums", method = RequestMethod.GET, headers = "Accept=application/json")
+    public @ResponseBody ApiResponseObject getArtistAlbums(@PathVariable("id") int id) {
+        ApiResponseObject response = new ApiResponseObject();
+        response.setResponseData(albumService.getAllByArtistId(id));
+        response.setSuccess(true);
         return response;
     }
 

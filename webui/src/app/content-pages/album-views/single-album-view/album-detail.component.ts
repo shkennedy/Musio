@@ -17,9 +17,10 @@ import { Artist } from '../../../models/artist.model';
 })
 export class AlbumDetailComponent implements OnInit {
 
-    // @Input() albumId: number;
     private isFavorited: boolean;
     private album: Album;
+    private titleSort = false;
+    private ascendingOrder = true;
 
     private errorMessage = '';
 
@@ -61,7 +62,7 @@ export class AlbumDetailComponent implements OnInit {
     }
 
 
-    favoriteAlbum() {
+    private favoriteAlbum(): void {
         this.favoritesService.addFavoriteAlbumById(this.album.id)
             .subscribe(
                 (success: boolean) => {
@@ -72,7 +73,7 @@ export class AlbumDetailComponent implements OnInit {
                 });
     }
 
-    unfavoriteAlbum() {
+    private unfavoriteAlbum(): void {
         this.favoritesService.removeFavoriteAlbumById(this.album.id)
             .subscribe(
                 (success: boolean) => {
@@ -81,5 +82,13 @@ export class AlbumDetailComponent implements OnInit {
                 (error: any) => {
                     console.log(error.toString());
                 });
+    }
+
+    private sort(): void {
+        if (this.titleSort) {
+            this.albumService.sortAlbumBySongTitle(this.album, this.ascendingOrder);
+        } else {
+            this.albumService.sortAlbumByTrack(this.album, this.ascendingOrder);
+        }
     }
 }

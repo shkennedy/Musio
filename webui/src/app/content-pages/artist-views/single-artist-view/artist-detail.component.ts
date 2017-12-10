@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { AlbumService } from '../../../services/album.service';
 import { ArtistService } from '../../../services/artist.service';
 import { FavoritesService } from '../../../services/favorites.service';
 import { FileService } from '../../../services/file.service';
@@ -24,10 +25,14 @@ export class ArtistDetailComponent implements OnInit {
     private followerCount: number;
     private isFollowed = false;
     private relatedArtists: Artist[];
+    private titleSort = false;
+    private ascendingOrder = true;
+
     private errorMessage: string;
 
     constructor(
         private router: Router,
+        private albumService: AlbumService,
         private artistService: ArtistService,
         private favoritesService: FavoritesService,
         private fileService: FileService
@@ -35,18 +40,26 @@ export class ArtistDetailComponent implements OnInit {
 
     ngOnInit() {
         this.artistService.getArtistById(this.artistId)
-        .subscribe(
+            .subscribe(
             (artist: Artist) => {
                 this.artist = artist;
                 this.artist.artistImageUrl =
                     this.fileService.getArtistImageURLByIdAndSize(artist.id, true);
+                this.artistService.getArtistAlbumsById(artist.id)
+                    .subscribe(
+                    (albums: Album[]) => {
+                        this.artist.albums = albums;
+                    },
+                    (error: any) => {
+                        console.log(error.toString());
+                    });
             },
             (error: any) => {
                 this.errorMessage = error;
             });
 
         this.artistService.getArtistFollowerCount(this.artistId)
-        .subscribe(
+            .subscribe(
             (followerCount: number) => {
                 this.followerCount = followerCount;
             },
@@ -55,7 +68,7 @@ export class ArtistDetailComponent implements OnInit {
             });
 
         this.favoritesService.getFavoriteArtists()
-        .subscribe(
+            .subscribe(
             (artists: Artist[]) => {
                 if (artists) {
                     for (let i = 0; i < artists.length; ++i) {
@@ -71,7 +84,7 @@ export class ArtistDetailComponent implements OnInit {
             });
 
         this.artistService.getRelatedArtists(this.artistId)
-        .subscribe(
+            .subscribe(
             (relatedArtists: Artist[]) => {
                 this.relatedArtists = relatedArtists;
                 this.relatedArtists.forEach((artist: Artist) => {
@@ -87,22 +100,26 @@ export class ArtistDetailComponent implements OnInit {
     followArtist() {
         this.favoritesService.addFavoriteArtistById(this.artist.id)
             .subscribe(
-                (success: boolean) => {
-                    this.isFollowed = true;
-                },
-                (error: any) => {
-                    console.log(error.toString());
-                });
+            (success: boolean) => {
+                this.isFollowed = true;
+            },
+            (error: any) => {
+                console.log(error.toString());
+            });
     }
 
     unfollowArtist() {
         this.favoritesService.removeFavoriteArtistById(this.artist.id)
             .subscribe(
-                (success: boolean) => {
-                    this.isFollowed = false;
-                },
-                (error: any) => {
-                    console.log(error.toString());
-                });
+            (success: boolean) => {
+                this.isFollowed = false;
+            },
+            (error: any) => {
+                console.log(error.toString());
+            });
+    }
+
+    private sort(): void {
+        this.albumService.sortAlbumsByReleaseDate(this.artist.albums, this.ascendingOrder);
     }
 }

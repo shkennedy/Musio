@@ -14,6 +14,7 @@ export class UserService {
     private static USER_URL = '/user';
     private static GET_USERNAME_URL = UserService.USER_URL + '/getUsername';
     private static GET_USER_BY_USERNAME_URL = UserService.USER_URL + '/get';
+    private static FOLLOWED_USERS_URL = UserService.USER_URL + '/followedUsers';
     private static FOLLOW_URL = UserService.USER_URL + '/followUser';
     private static UNFOLLOW_URL = UserService.USER_URL + '/unfollowUser';
     private static GO_PREMIUM_URL = UserService.USER_URL + '/goPremium';
@@ -66,6 +67,13 @@ export class UserService {
         return this.httpRequest.put(UserService.PASSWORD_URL, body)
             .map((response: ApiResponse) => {
                 return response.success;
+            });
+    }
+
+    public getFollowedUsers(): Observable<User[]> {
+        return this.httpRequest.get(UserService.FOLLOWED_USERS_URL)
+            .map((response: ApiResponse) => {
+                return response.responseData;
             });
     }
 

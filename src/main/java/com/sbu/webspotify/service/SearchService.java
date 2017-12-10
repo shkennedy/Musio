@@ -15,7 +15,6 @@ import com.sbu.webspotify.dto.identifier.PlaylistIdentifier;
 import com.sbu.webspotify.dto.identifier.SongIdentifier;
 import com.sbu.webspotify.model.Artist;
 import com.sbu.webspotify.model.User;
-import com.sbu.webspotify.model.Genre;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

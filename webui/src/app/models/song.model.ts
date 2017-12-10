@@ -1,3 +1,4 @@
+import { Album } from './album.model';
 import { Artist } from './artist.model';
 import { Genre } from './genre.model';
 
@@ -9,5 +10,7 @@ export class Song {
     public mbid: string;
     public artist: Artist;
 
-    public audio: string;
+    public album: Album;
+    public trackNumber: number;
+    public audioFileUrl: string;
 }

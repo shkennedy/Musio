@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/Rx';
 import { HttpRequestService, ApiResponse } from './httpRequest.service';
 
 import { Playlist } from '../models/playlist.model';
+import { Song } from '../models/song.model';
 
 @Injectable()
 export class PlaylistService {
@@ -22,7 +23,11 @@ export class PlaylistService {
     public getPlaylistById(playlistId: number): Observable<Playlist> {
         return this.httpRequest.get(PlaylistService.PLAYLIST_URL, playlistId)
             .map((response: ApiResponse) => {
-                return response.responseData;
+                const playlist: Playlist = response.responseData;
+                for (let trackNumber = 1; trackNumber <= playlist.songs.length; trackNumber += 1) {
+                    playlist.songs[trackNumber].trackNumber = trackNumber;
+                }
+                return playlist;
             });
     }
 
@@ -67,5 +72,23 @@ export class PlaylistService {
             .map((response: ApiResponse) => {
                 return response.responseData;
             });
+    }
+
+    public sortByTitle(playlist: Playlist, ascending: boolean): void {
+        playlist.songs.sort((a: Song, b: Song) => {
+            if (a.title > b.title && ascending) {
+                return 1;
+            }
+            return -1;
+        });
+    }
+
+    public sortByTrack(playlist: Playlist, ascending: boolean): void {
+        playlist.songs.sort((a: Song, b: Song) => {
+            if (a.trackNumber > b.trackNumber && ascending) {
+                return 1;
+            }
+            return -1;
+        });
     }
 }

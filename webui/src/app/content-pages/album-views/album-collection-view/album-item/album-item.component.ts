@@ -6,7 +6,7 @@ import { AlbumService } from '../../../../services/album.service';
 import { Album } from '../../../../models/album.model';
 
 @Component({
-    selector: 'album-item',
+    selector: 'app-album-item',
     templateUrl: './album-item.component.html',
     styleUrls: ['./album-item.component.css'],
     providers: [AlbumService, FavoritesService]
@@ -16,6 +16,9 @@ export class AlbumItemComponent implements OnInit {
     @Input() albumId: number;
 
     public album: Album;
+    private titleSort: boolean;
+    private ascendingOrder: boolean;
+
     public errMsg: string;
 
     constructor(
@@ -34,5 +37,14 @@ export class AlbumItemComponent implements OnInit {
                     this.errMsg = error;
                 }
             );
+    }
+
+    private sort(): void {
+        // this.ascendingOrder = !this.ascendingOrder;
+        if (this.titleSort) {
+            this.albumService.sortAlbumBySongTitle(this.album, this.ascendingOrder);
+        } else {
+            this.albumService.sortAlbumByTrack(this.album, this.ascendingOrder);
+        }
     }
 }

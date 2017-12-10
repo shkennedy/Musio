@@ -17,6 +17,8 @@ export class PlaylistViewComponent implements OnInit {
     @Input() playlistId: number;
 
     private playlist: Playlist;
+    private titleSort: boolean;
+    private ascendingOrder: boolean;
 
     constructor(
         private router: Router,
@@ -36,5 +38,13 @@ export class PlaylistViewComponent implements OnInit {
                     console.log(error.toString());
                 }
         );
+    }
+
+    private sort(): void {
+        if (this.titleSort) {
+            this.playlistService.sortByTitle(this.playlist, this.ascendingOrder);
+        } else {
+            this.playlistService.sortByTrack(this.playlist, this.ascendingOrder);
+        }
     }
 }

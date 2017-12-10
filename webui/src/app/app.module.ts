@@ -19,7 +19,7 @@ import { ArtistDetailComponent } from './content-pages/artist-views/single-artis
 import { AlbumSongComponent } from './content-pages/album-views/single-album-view/album-song/album-song.component';
 import { TopNavComponent } from './content-home/top-nav/top-nav.component';
 import { LeftNavComponent } from './content-home/left-nav/left-nav.component';
-import { RightNavComponent } from './content-home/right-nav/right-nav.component';
+import { AdBannerComponent } from './content-home/ad-banner/ad-banner.component';
 import { AudioPlayerComponent } from './content-home/audio-player/audio-player.component';
 import { ContentHomeComponent } from './content-home/content-home.component';
 import { PlaylistsViewComponent } from './content-pages/playlist-views/playlist-collection-view/playlists-view.component';
@@ -32,6 +32,7 @@ import { ArtistItemComponent } from './content-pages/artist-views/artist-collect
 import { RadioViewComponent } from './content-pages/radio-view/radio-view.component';
 import { GoPremiumComponent } from './content-pages/go-premium/go-premium.component';
 import { SearchComponent } from './content-pages/search-view/search-view.component';
+import { FollowedUsersBarComponent } from './content-home/followed-users-bar/followed-users-bar.component';
 
 import { AdService } from './services/ad.service';
 import { AlbumService } from './services/album.service';
@@ -59,7 +60,7 @@ import { UserService } from './services/user.service';
         ArtistDetailComponent,
         TopNavComponent,
         LeftNavComponent,
-        RightNavComponent,
+        AdBannerComponent,
         AudioPlayerComponent,
         ContentHomeComponent,
         PlaylistsViewComponent,
@@ -72,7 +73,8 @@ import { UserService } from './services/user.service';
         AlbumSongComponent,
         RadioViewComponent,
         GoPremiumComponent,
-        SearchComponent
+        SearchComponent,
+        FollowedUsersBarComponent
     ],
     imports: [
         BrowserModule,

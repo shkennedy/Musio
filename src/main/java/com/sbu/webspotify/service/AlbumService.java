@@ -29,4 +29,7 @@ public class AlbumService {
 		return albumRepository.findByNameContaining(query);
 	}
 
+    public Set<AlbumIdentifier> getAllByArtistId(int artistId) {
+        return albumRepository.findAllByArtistId(artistId);
+    }
 }
