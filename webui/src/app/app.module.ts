@@ -80,9 +80,7 @@ import { UserService } from './services/user.service';
         RadioViewComponent,
         GoPremiumComponent,
         SearchComponent,
-        FollowedUsersBarComponent,
-        SharedModule,
-        CoreModule
+        FollowedUsersBarComponent
     ],
     entryComponents: [],
     imports: [
