@@ -4,8 +4,14 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
-import { MatSliderModule } from '@angular/material';
+import { MatSliderModule,
+         MatGridTile,
+         MatGridList,
+         MatIcon,
+         MatTabsModule } from '@angular/material';
 import { AppRoutingModule } from './app-routing.module';
+import { SharedModule } from './shared/shared.module';
+import { CoreModule } from './core/core.module';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './landing-pages/login/login.component';
@@ -74,15 +80,19 @@ import { UserService } from './services/user.service';
         RadioViewComponent,
         GoPremiumComponent,
         SearchComponent,
-        FollowedUsersBarComponent
+        FollowedUsersBarComponent,
+        SharedModule,
+        CoreModule
     ],
+    entryComponents: [],
     imports: [
         BrowserModule,
         FormsModule,
         HttpModule,
         AppRoutingModule,
         HttpClientModule,
-        MatSliderModule
+        SharedModule,
+        CoreModule
     ],
     providers: [
         AdService,
