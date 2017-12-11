@@ -1,0 +1,9 @@
+.friend{
+    margin-bottom: 10px;
+    display: flex;
+    justify-content:flex-start;
+    align-items: center;
+}
+.friend:last-child{
+    margin-bottom: 0px;
+}

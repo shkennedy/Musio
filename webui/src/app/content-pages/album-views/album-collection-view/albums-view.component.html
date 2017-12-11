@@ -3,18 +3,14 @@
     <a [routerLink]="['/browse']">Find Albums</a>
 </div>
 <ng-template #hasAlbums>
-    <div class="row">
-        <div class="album-collection-container">
-
-            <div *ngFor="let album of albums" class="artist-card col-sm-3 center-block" [routerLink]="['/albums',album.id]">
-                <!-- <img *ngIf="album.albumArt; else defaultArt" src="{{album.albumArt}}">
-                <ng-template #defaultArt>
-                    <img src="assets/images/default_art.png" alt="">
-                </ng-template> -->
-                <img src="{{album.albumArtUrl}}" alt="{{album.title}}">
-                <p>{{album.title}}</p>
-                <p>{{album.artistName}}</p>
-            </div>
-        </div>
-    </div>
+    <mat-grid-list cols="4" gutterSize="15px" class="padded">
+      <mat-grid-tile *ngFor="let album of albums"
+                     [routerLink]="['/albums',album.id]">
+          <div class="col_flex">
+              <img src="{{album.albumArtUrl}}" alt="{{album.title}}">
+              <p>{{album.title}}</p>
+              <p>{{album.artistName}}</p>
+          </div>
+      </mat-grid-tile>
+    </mat-grid-list>
 </ng-template>

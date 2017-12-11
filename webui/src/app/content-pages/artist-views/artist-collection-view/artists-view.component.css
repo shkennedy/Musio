@@ -26,3 +26,15 @@
 .album-collection-container{
       text-align: center;
     }
+
+    .padded{
+        margin-top:10px;
+        margin-left:10px;
+        margin-right: 10px;
+    }
+    .col_flex{
+        display:flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }

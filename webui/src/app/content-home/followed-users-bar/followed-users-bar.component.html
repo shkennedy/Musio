@@ -1,9 +1,11 @@
-<div *ngFor="let user of users;">
-    {{user.username}}
-    {{userHistory[user.id].artists[0]}}
-    {{userHistory[user.id].album.title}}
-    {{userHistory[user.id].title}}
-    <img src="{{user.profileImageUrl}}" width="40" height="40">
+<div class="friend" *ngFor="let user of users;">
+    <!-- <img src="{{user.profileImageUrl}}" width="40" height="40"> -->
+    <mat-icon style="color:#FFF;margin-left:10px;">account_circle</mat-icon>
+    <div>
+        <h2 style="color:white;">{{user.username}}</h2>
+        <h4 style="color:white;">{{userHistory[user.id].artists[0]}}</h4>
+        <h4 style="color:white;">{{userHistory[user.id].title}}</h4>
+    </div>
     <!-- right click for more options -->
     <!-- go to user page -->
     <!-- go to artist page of current/last song -->
