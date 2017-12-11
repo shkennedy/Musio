@@ -20,4 +20,7 @@ export class User {
     followedUsers: User[];
     geoLocation: GeoLocation;
     profileImageUrl: string;
+
+    privateSession: boolean;
+    useHighBitrate: boolean;
 }

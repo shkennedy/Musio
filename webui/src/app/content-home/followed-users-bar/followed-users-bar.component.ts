@@ -30,20 +30,17 @@ export class FollowedUsersBarComponent implements OnInit {
         .subscribe(
             (users: User[]) => {
                 this.users = users;
-                // users.forEach((user: User) => {
-                //     this.userService.getUserHistoryById(user.id)
-                //     .subscribe(
-                //         (song: Song) => {
-                //             this.userHistory[user.id] = song;
-                //         },
-                //         (error: any) => {
-                //             console.log(error.toString());
-                //         });
-                // });
+                this.userService.getFollowedUsersHistory()
+                .subscribe(
+                    (userHistory: Map<number, Song>) => {
+                        this.userHistory = userHistory;
+                    },
+                    (error: any) => {
+                        console.log(error.toString());
+                    });
             },
             (error: any) => {
                 console.log(error.toString());
             });
     }
-
 }

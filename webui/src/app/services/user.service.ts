@@ -15,6 +15,7 @@ export class UserService {
     private static GET_USERNAME_URL = UserService.USER_URL + '/getUsername';
     private static GET_USER_BY_USERNAME_URL = UserService.USER_URL + '/get';
     private static FOLLOWED_USERS_URL = UserService.USER_URL + '/followedUsers';
+    private static FOLLOWED_USERS_HISTORY = UserService.FOLLOWED_USERS_URL + '/history';
     private static FOLLOW_URL = UserService.USER_URL + '/followUser';
     private static UNFOLLOW_URL = UserService.USER_URL + '/unfollowUser';
     private static GO_PREMIUM_URL = UserService.USER_URL + '/goPremium';
@@ -38,7 +39,12 @@ export class UserService {
                     this.httpRequest.get(
                         UserService.GET_USER_BY_USERNAME_URL + usernameResponse.responseData)
                         .map((userResponse: ApiResponse) => {
-                            callback(userResponse.responseData);
+                            const user: User = userResponse.responseData;
+                            this.getPrivateSession()
+                                .map((privateSession: boolean) => {
+                                    user.privateSession = privateSession;
+                                    callback(user);
+                                });
                         });
                 }
                 callback(null);
@@ -110,7 +116,7 @@ export class UserService {
         this.getUser(getUserCallback);
     }
 
-    public getPrivateMode(): Observable<boolean> {
+    public getPrivateSession(): Observable<boolean> {
         return this.httpRequest.get(UserService.BROWSING_MODE_URL)
             .map((response: ApiResponse) => {
                 if (response.success) {
@@ -120,7 +126,7 @@ export class UserService {
             });
     }
 
-    public setPrivateMode(isPrivateMode: boolean): Observable<boolean> {
+    public setPrivateSession(isPrivateMode: boolean): Observable<boolean> {
         const url = (isPrivateMode) ? UserService.ENABLE_PRIVATE_MODE_URL : UserService.DISABLE_PRIVATE_MODE_URL;
         return this.httpRequest.get(url)
             .map((response: ApiResponse) => {
@@ -142,6 +148,13 @@ export class UserService {
         return this.httpRequest.get(UserService.ADD_TO_HISTORY_URL, songId)
             .map((response: ApiResponse) => {
                 return response.success;
+            });
+    }
+
+    public getFollowedUsersHistory(): Observable<Map<number, Song>> {
+        return this.httpRequest.get(UserService.FOLLOWED_USERS_HISTORY)
+            .map((response: ApiResponse) => {
+                return response.responseData;
             });
     }
 

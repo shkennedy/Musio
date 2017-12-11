@@ -32,6 +32,7 @@ export class AudioPlayerComponent implements OnInit {
     isPlaying = false;
     isRepeating = false;
     isShuffling = false;
+    isShowingLyrics = false;
     songProgress = 0;
     songTimer: any;
     currentSong: Song;
@@ -59,13 +60,13 @@ export class AudioPlayerComponent implements OnInit {
             this.addArtistToQueue, this.playArtist,
             this.addPlaylistToQueue, this.playPlaylist,
             this.addSongToQueue, this.playSong,
-            this.setPrivateMode
+            this.setPrivateMode, this.setUseHighBitrate
         );
 
         // Find user allowed bitrate
         this.userService.getIsPremium(this.setUseHighBitrate);
 
-        this.userService.getPrivateMode()
+        this.userService.getPrivateSession()
             .subscribe(
             (privateMode: boolean) => {
                 this.privateMode = privateMode;
@@ -321,6 +322,10 @@ export class AudioPlayerComponent implements OnInit {
 
     private shuffle(): void {
         this.isShuffling = !this.isShuffling;
+    }
+
+    private showLyrics(): void {
+        this.isShowingLyrics = !this.isShowingLyrics;
     }
 
     private seek(): void {

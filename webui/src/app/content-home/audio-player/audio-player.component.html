@@ -49,15 +49,16 @@
             <img class="player-buttons" src="assets/images/volume.png">
         </div>
 
-        <div class="col-sm-4" style="padding:0">
+        <!-- <div class="col-sm-4" style="padding:0">
             <div class="volume-progress">
                 <div id="draggable-point" style="left:25%;" class="draggable ui-widget-content">
                 </div>
                 <div id="volume-progress-bar" class="volume-bar" style="width:50%">
                 </div>
             </div>
-        </div>
+        </div> -->
 
+        <mat-slider class="" min="0" max="100" step="1" value="{{volume}}"></mat-slider>
 
     </div>
 

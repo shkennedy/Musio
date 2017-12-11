@@ -18,7 +18,8 @@ export class AudioPlayerProxyService {
     private static PLAY_ARTIST_TAG = 'PLAY_ARTIST';
     private static PLAY_PLAYLIST_TAG = 'PLAY_PLAYLIST';
     private static PLAY_SONG_TAG = 'PLAY_SONG';
-    private static SET_PRIVATE_MODE_TAG = 'SET_PRIVATE_MODE';
+    private static SET_PRIVATE_SESSION_TAG = 'SET_PRIVATE_SESSION';
+    private static SET_USE_HIGH_BITRATE_TAG = 'SET_USE_HIGH_BITRATE';
 
     private listeners = {};
 
@@ -28,7 +29,7 @@ export class AudioPlayerProxyService {
                              addArtistListener, playArtistListener,
                              addPlaylistListener, playPlaylistListener,
                              addSongListener, playSongListener,
-                             setPrivateModeListener): void {
+                             setPrivateSessionListener, setUseHighBitrateListener): void {
         this.listeners[AudioPlayerProxyService.ADD_ALBUM_TAG] = addAlbumListener;
         this.listeners[AudioPlayerProxyService.PLAY_ALBUM_TAG] = playAlbumListener;
         this.listeners[AudioPlayerProxyService.ADD_ARTIST_TAG] = addArtistListener;
@@ -37,7 +38,8 @@ export class AudioPlayerProxyService {
         this.listeners[AudioPlayerProxyService.PLAY_PLAYLIST_TAG] = playPlaylistListener;
         this.listeners[AudioPlayerProxyService.ADD_SONG_TAG] = addSongListener;
         this.listeners[AudioPlayerProxyService.PLAY_SONG_TAG] = playSongListener;
-        this.listeners[AudioPlayerProxyService.SET_PRIVATE_MODE_TAG] = setPrivateModeListener;
+        this.listeners[AudioPlayerProxyService.SET_PRIVATE_SESSION_TAG] = setPrivateSessionListener;
+        this.listeners[AudioPlayerProxyService.SET_USE_HIGH_BITRATE_TAG] = setUseHighBitrateListener;
     }
 
     public addSongToQueue(songId: number): void {
@@ -72,7 +74,11 @@ export class AudioPlayerProxyService {
         this.listeners[AudioPlayerProxyService.ADD_PLAYLIST_TAG](playlistId);
     }
 
-    public setPrivateMode(privateMode: boolean): void {
-        this.listeners[AudioPlayerProxyService.SET_PRIVATE_MODE_TAG](privateMode);
+    public setPrivateSession(privateSession: boolean): void {
+        this.listeners[AudioPlayerProxyService.SET_PRIVATE_SESSION_TAG](privateSession);
+    }
+
+    public setUseHighBitrate(useHighBitrate: boolean): void {
+        this.listeners[AudioPlayerProxyService.SET_USE_HIGH_BITRATE_TAG](useHighBitrate);
     }
 }

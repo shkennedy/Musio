@@ -1,9 +1,10 @@
 <section>
     <h>{{user.username}}</h>
     
-    <img src="{{user.profileImage}}" />
+    <img src="{{user.profileImageUrl}}" />
     <button type="button" ngFilePicker accept="image/*" (filePick)="file = $event">Change</button>
 
+    <mat-button-toggle ng-value="{{user.useHighBitrate}}">Use High Bitrate</mat-button-toggle>    
     <p>{{user.email}}</p>
     <p>{{user.geoLocation}}</p>
 </section>

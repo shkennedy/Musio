@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { PickedFile } from 'angular-file-picker';
+import { PACKAGE_ROOT_URL } from 'angular-file-picker/node_modules/@angular/core/src/application_tokens';
 
+import { AudioPlayerProxyService } from '../../../services/audioPlayerProxy.service';
 import { FileService } from '../../../services/file.service';
 import { UserService } from '../../../services/user.service';
 
 import { User } from '../../../models/user.model';
-import { PACKAGE_ROOT_URL } from 'angular-file-picker/node_modules/@angular/core/src/application_tokens';
 
 @Component({
     selector: 'app-user-settings',
@@ -24,7 +25,8 @@ export class UserSettingsComponent implements OnInit {
     constructor(
         private router: Router,
         private fileService: FileService,
-        private userService: UserService
+        private userService: UserService,
+        private audioPlayerProxyService: AudioPlayerProxyService
     ) { }
 
     ngOnInit() {
@@ -63,18 +65,21 @@ export class UserSettingsComponent implements OnInit {
             });
     }
 
-    private setPrivateSession(): void {
-
+    private setAudioBitrate(): void {
+        this.user.useHighBitrate = !this.user.useHighBitrate;
+        this.audioPlayerProxyService.setUseHighBitrate(this.user.useHighBitrate);
     }
 
-    private setPublicSession(): void {
-
+    private setPrivateSession(): void {
+        this.user.privateSession = !this.user.privateSession;
+        this.userService.setPrivateSession(this.user.privateSession);
+        this.audioPlayerProxyService.setPrivateSession(this.user.privateSession);
     }
 
     private deleteAccount(): void {
         // Confirmation dialog
 
         // Pleading/Survey of use
-        
+
     }
 }

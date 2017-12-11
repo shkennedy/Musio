@@ -1,5 +1,8 @@
 <div *ngFor="let user of users;">
-    {{user.username}} 
+    {{user.username}}
+    {{userHistory[user.id].artists[0]}}
+    {{userHistory[user.id].album.title}}
+    {{userHistory[user.id].title}}
     <img src="{{user.profileImageUrl}}" width="40" height="40">
     <!-- right click for more options -->
     <!-- go to user page -->
