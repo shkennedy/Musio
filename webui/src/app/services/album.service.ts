@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Rx';
 
 import { HttpRequestService, ApiResponse } from './httpRequest.service';
+import { FileService } from './file.service';
 
 import { Album } from '../models/album.model';
 import { Song } from '../models/song.model';
@@ -17,6 +18,7 @@ export class AlbumService {
 
     constructor(
         private router: Router,
+        private fileService: FileService,
         private httpRequest: HttpRequestService
     ) { }
 
@@ -27,6 +29,10 @@ export class AlbumService {
                 for (let trackNumber = 0; trackNumber < album.songs.length; trackNumber += 1) {
                     album.songs[trackNumber].trackNumber = trackNumber + 1;
                     album.songs[trackNumber].duration = album.songs[trackNumber].duration / 1000;
+                }
+                if (album.albumArt) {
+                    album.albumArtUrl =
+                        this.fileService.getAlbumImageURLByIdAndSize(album.albumArt.id, true);
                 }
                 return album;
             });

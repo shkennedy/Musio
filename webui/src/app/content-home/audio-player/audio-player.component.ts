@@ -27,7 +27,7 @@ export class AudioPlayerComponent implements OnInit {
 
     audio: Howl;
     useHighBitrate: boolean;
-    volume: number;
+    volume = 1.0;
     isMuted = false;
     isPlaying = false;
     isRepeating = false;
@@ -193,6 +193,7 @@ export class AudioPlayerComponent implements OnInit {
             onplay: this.startSongTimer,
             onpause: this.stopSongTimer,
             onend: this.playNext,
+            // mute: this.isMuted,
             onloaderror: function () {
                 console.log('unable to load song');
                 this.errMsg = 'Unable to load song';
@@ -253,6 +254,10 @@ export class AudioPlayerComponent implements OnInit {
     }
 
     private playNext = (): void => {
+        if (!this.currentSong) {
+            return;
+        }
+
         this.stopSongTimer();
         this.addCurrentSongToHistory();
 
@@ -279,7 +284,7 @@ export class AudioPlayerComponent implements OnInit {
 
     private playLast(): void {
         // If current song is in progress, restart
-        if (this.audio.seek() > AudioPlayerComponent.IN_PROGRESS_TIME) {
+        if (this.audio && this.audio.seek() > AudioPlayerComponent.IN_PROGRESS_TIME) {
             this.audio.seek(0);
             return;
         }
@@ -328,12 +333,22 @@ export class AudioPlayerComponent implements OnInit {
 
     private muteOrUnmute(): void {
         this.isMuted = !this.isMuted;
-        this.audio.mute(this.isMuted);
+        if (this.audio) {
+            this.audio.mute(this.isMuted);
+        }
+    }
+
+    private adjustVolume(): void {
+        if (this.audio) {
+            this.audio.volume(this.volume);
+        }
     }
 
     private repeat(): void {
-        this.isRepeating = !this.isRepeating;
-        this.audio.loop(this.isRepeating);
+        if (this.audio) {
+            this.isRepeating = !this.isRepeating;
+            // this.audio.loop(this.isRepeating);
+        }
     }
 
     private shuffle(): void {

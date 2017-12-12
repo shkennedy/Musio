@@ -43,8 +43,6 @@ export class ArtistDetailComponent implements OnInit {
             .subscribe(
             (artist: Artist) => {
                 this.artist = artist;
-                this.artist.artistImageUrl =
-                    this.fileService.getArtistImageURLByIdAndSize(artist.id, true);
                 this.artistService.getArtistAlbumsById(artist.id)
                     .subscribe(
                     (albums: Album[]) => {

@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Rx';
 
 import { HttpRequestService, ApiResponse } from './httpRequest.service';
+import { FileService } from './file.service';
 
 import { Album } from '../models/album.model';
 import { Artist } from '../models/artist.model';
@@ -20,6 +21,7 @@ export class ArtistService {
 
     constructor(
         private router: Router,
+        private fileService: FileService,
         private httpRequest: HttpRequestService
     ) { }
 
@@ -27,6 +29,11 @@ export class ArtistService {
         return this.httpRequest.get(ArtistService.ARTIST_URL + ArtistService.GET_URL, artistId)
             .map((response: ApiResponse) => {
                 if (response.success) {
+                    const artist: Artist = response.responseData;
+                    if (artist.artistImage) {
+                        artist.artistImageUrl =
+                            this.fileService.getArtistImageURLByIdAndSize(artist.artistImage.id, true);
+                    }
                     return response.responseData;
                 }
                 return null;

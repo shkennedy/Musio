@@ -36,11 +36,9 @@ export class AlbumDetailComponent implements OnInit {
         this.albumService.getAlbumById(Number(url[url.length - 1]))
             .subscribe(
             (album: Album) => {
-                console.log('pre assignment');
                 this.album = album;
-                console.log('album assigned ' + album);
-                this.album.albumArtUrl =
-                    this.fileService.getAlbumImageURLByIdAndSize(album.albumArtId, true);
+
+                // Check if favorited
                 this.favoritesService.getFavoriteAlbums()
                     .subscribe(
                     (albums: Album[]) => {
@@ -54,15 +52,13 @@ export class AlbumDetailComponent implements OnInit {
                         }
                     },
                     (error: any) => {
-                        console.log('sheet');
+                        this.errorMessage = error;
                     });
+            },
+            (error: any) => {
+                this.errorMessage = error;
             });
-            // (error: any) => {
-            //     this.errorMessage = error;
-            //     console.log('sheeeeeet');
-            // });
     }
-
 
     private favoriteAlbum(): void {
         this.favoritesService.addFavoriteAlbumById(this.album.id)

@@ -25,7 +25,7 @@
             <mat-slider min="0" max="1" step="1" value="0"></mat-slider>
         </ng-template> -->
 
-        <!-- <div class="audio-progress" id="audio-progress">
+<!-- <div class="audio-progress" id="audio-progress">
             <div id="draggable-point" style="left:75%;" class="draggable ui-widget-content">
                 <div id="audio-progress-handle"></div>
             </div>
@@ -33,7 +33,7 @@
             </div>
         </div> -->
 
-    <!-- </div>
+<!-- </div>
 
     <div class="col-sm-3 player-buttons-container text-left">
 
@@ -43,7 +43,7 @@
             <img class="player-buttons" src="assets/images/volume.png">
         </div> -->
 
-        <!-- <div class="col-sm-4" style="padding:0">
+<!-- <div class="col-sm-4" style="padding:0">
             <div class="volume-progress">
                 <div id="draggable-point" style="left:25%;" class="draggable ui-widget-content">
                 </div>
@@ -59,35 +59,70 @@
 </div> -->
 
 
-
-
-
 <div class="grid" id="play_wrapper">
-    <div class="flex_start" style="max-width:384px;">
-        <mat-icon style="font-size:50px;width:50px;height:50px;">album</mat-icon>
-        <div class="flex_start_column cut_off ellipsis">
-            <p style="color:#ddd;">Song Name</p>
-            <p style="color:#ddd;">Album Name</p>
+    <div class="flex_start" style="max-width:384px;margin-left:10px;">
+        <div *ngIf="currentSong">
+            <mat-icon style="font-size:50px;width:50px;height:50px;">album</mat-icon>
+            <div class="flex_start_column cut_off ellipsis">
+                <p style="color:#ddd;">{{currentSong.title}}</p>
+                <p *ngIf="currentSong.album" style="color:#ddd;">{{currentSong.album.title}}</p>
+            </div>
+            <button mat-icon-button>
+                <mat-icon>add</mat-icon>
+            </button>
         </div>
-        <button mat-icon-button><mat-icon>add</mat-icon></button>
     </div>
 
     <div class="flex_column">
         <div class="flex_center" style="height:30px;">
-            <mat-slider class="play_bar"></mat-slider>
+            <div *ngIf="currentSong; else noSong;">
+                <mat-slider class="play_bar" min="0" max="{{currentSong.duration}}" step="0.1" [(ngModel)]="songProgress"></mat-slider>
+                <!-- <p>{{songProgress}}:{{currentSong.duration}}</p> -->
+            </div>
+            <ng-template #noSong>
+                <mat-slider class="play_bar" min="0" max="1" step="1" value="0"></mat-slider>
+            </ng-template>
         </div>
         <div class="flex_center" style="width:100%;padding-bottom:5px;">
-            <button mat-icon-button><mat-icon>shuffle</mat-icon></button>
-            <button mat-icon-button><mat-icon>skip_previous</mat-icon></button>
-            <button mat-icon-button><mat-icon class="play">play_circle_outline</mat-icon></button>
-            <button mat-icon-button><mat-icon>skip_next</mat-icon></button>
-            <button mat-icon-button><mat-icon>repeat</mat-icon></button>
+            <button mat-icon-button>
+                <mat-icon>shuffle</mat-icon>
+            </button>
+            <button mat-icon-button (click)="playLast()">
+                <mat-icon>skip_previous</mat-icon>
+            </button>
+            <div *ngIf="isPlaying; else isPaused;">
+                <button mat-icon-button (click)="pause()">
+                    <mat-icon class="play">pause_circle_outline</mat-icon>
+                </button>
+            </div>
+            <ng-template #isPaused>
+                <button mat-icon-button (click)="play()">
+                    <mat-icon class="play">play_circle_outline</mat-icon>
+                </button>
+            </ng-template>
+            <button mat-icon-button (click)="playNext()">
+                <mat-icon>skip_next</mat-icon>
+            </button>
+            <button mat-icon-button (click)="repeat()">
+                <mat-icon>repeat</mat-icon>
+            </button>
         </div>
     </div>
 
     <div class="flex_end" style="margin-right:5px;">
-        <button mat-icon-button><mat-icon>closed_caption</mat-icon></button>
-        <button mat-icon-button><mat-icon>volume_up</mat-icon></button>
-        <mat-slider></mat-slider>
+        <button mat-icon-button (click)="showLyrics()">
+            <mat-icon>closed_caption</mat-icon>
+        </button>
+        <div *ngIf="isMuted; else isNotMuted;">
+            <button mat-icon-button (click)="muteOrUnmute()">
+                <mat-icon>volume_off</mat-icon>
+            </button>
+        </div>
+        <ng-template #isNotMuted>
+            <button mat-icon-button (click)="muteOrUnmute()">
+                <mat-icon>volume_up</mat-icon>
+            </button>
+        </ng-template>
+        <mat-slider min="0" max="1.0" step="0.01" [(ngModel)]="volume" (change)="adjustVolume()" style="margin-right:10px;"></mat-slider>
     </div>
 </div>
