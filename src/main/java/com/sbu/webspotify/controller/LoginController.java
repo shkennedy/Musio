@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.sbu.webspotify.dto.ApiResponseObject;
 import com.sbu.webspotify.model.*;
 import com.sbu.webspotify.service.GenreService;
 import com.sbu.webspotify.service.UserService;
@@ -44,12 +45,15 @@ public class LoginController {
 	}
     
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
-    public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
+    public ApiResponseObject logoutPage (HttpServletRequest request, HttpServletResponse response) {
+        ApiResponseObject apiResponse = new ApiResponseObject();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null){    
+        if (auth != null) {    
             new SecurityContextLogoutHandler().logout(request, response, auth);
+            apiResponse.setSuccess(true);
         }
-        return "redirect:/login?logout";
+        // return "redirect:/login?logout";
+        return apiResponse;
     }
 	
 	@RequestMapping(value = "/registration", method = RequestMethod.GET)

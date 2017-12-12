@@ -46,9 +46,10 @@ import { AlbumService } from './services/album.service';
 import { ArtistService } from './services/artist.service';
 import { AudioPlayerProxyService } from './services/audioPlayerProxy.service';
 import { FavoritesService } from './services/favorites.service';
+import { FileService } from './services/file.service';
 import { GenreService } from './services/genre.service';
 import { HttpRequestService } from './services/httpRequest.service';
-import { FileService } from './services/file.service';
+import { LoginService } from './services/login.service';
 import { PlaylistService } from './services/playlist.service';
 import { SearchService } from './services/search.service';
 import { SongService } from './services/song.service';
@@ -100,9 +101,10 @@ import { UserService } from './services/user.service';
         ArtistService,
         AudioPlayerProxyService,
         FavoritesService,
+        FileService,
         GenreService,
         HttpRequestService,
-        FileService,
+        LoginService,
         PlaylistService,
         SongService,
         SearchService,

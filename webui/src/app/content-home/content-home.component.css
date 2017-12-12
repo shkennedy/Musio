@@ -43,3 +43,11 @@
     display:grid;
     grid-template-columns: 10fr 75fr 15fr;
 }
+
+.content-container{
+    background-color: #181818;
+    height: 85vh;
+    overflow-y: auto;
+    padding-top: 20px;
+    color: #999999;
+  }

@@ -35,39 +35,39 @@
   </table>
 </div> -->
 
-<div id="side_nav" class="flex_column">
-    <div class="pointer">
-        <mat-icon class="light" style="margin-right:5px;">library_music</mat-icon>
-        <h4 class="light" [routerLink]="['/browse']">Browse</h4>
+<div id="side_nav" class="flex_column light">
+    <div class="pointer" style="margin-top:20px;">
+        <mat-icon ngClass="getClass('/browse')" style="margin-right:5px;">library_music</mat-icon>
+        <h4 [routerLink]="['/browse']">Browse</h4>
     </div>
 
     <div class="pointer">
-        <mat-icon class="light" style="margin-right:5px;">radio</mat-icon>
-        <h4 class="light" [routerLink]="['/radio']">Radio</h4>
+        <mat-icon ngClass="getClass('/radio')" style="margin-right:5px;">radio</mat-icon>
+        <h4 [routerLink]="['/radio']">Radio</h4>
     </div>
 
     <!-- Music Library -->
-    <div class="light" style="font-size:20px;">Your Music</div>
+    <div class="nav_block_header">Your Music</div>
 
     <div class="pointer">
-        <mat-icon class="light" style="margin-right:5px;">recent_actors</mat-icon>
-        <h4 class="light" [routerLink]="['/artists']">Artists</h4>
+        <mat-icon ngClass="getClass('/artists')" style="margin-right:5px;">recent_actors</mat-icon>
+        <h4 [routerLink]="['/artists']">Artists</h4>
     </div>
 
     <div class="pointer">
-        <mat-icon class="light" style="margin-right:5px;">album</mat-icon>
-        <h4 class="light" [routerLink]="['/albums']">Albums</h4>
+        <mat-icon ngClass="getClass('/albums')" style="margin-right:5px;">album</mat-icon>
+        <h4 [routerLink]="['/albums']">Albums</h4>
     </div>
 
     <div class="pointer">
-        <mat-icon class="light" style="margin-right:5px;">music_video</mat-icon>
-        <h4 class="light" [routerLink]="['/songs']">Songs</h4>
+        <mat-icon ngClass="getClass('/songs')" style="margin-right:5px;">music_video</mat-icon>
+        <h4 [routerLink]="['/songs']">Songs</h4>
     </div>
 
     <!-- Playlists -->
-    <div class="light" style="font-size:20px;">Playlists</div>
+    <div class="nav_block_header">Playlists</div>
 
     <div *ngFor="let playlist of playlists" class="pointer">
-        <h4 class="light" [routerLink]="['/playlist/playlist.id']">{{playlist.name}}</h4>
+        <h4 ngClass="getClass('/playlist', playlist.id)" [routerLink]="['/playlist/playlist.id']">{{playlist.name}}</h4>
     </div>
 </div>

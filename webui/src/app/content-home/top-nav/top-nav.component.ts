@@ -4,6 +4,7 @@ import { NgForm } from '@angular/forms';
 
 import { FavoritesService } from '../../services/favorites.service';
 import { UserService } from '../../services/user.service';
+import { LoginService } from '../../services/login.service';
 
 import { User } from '../../models/user.model';
 
@@ -19,6 +20,7 @@ export class TopNavComponent implements OnInit {
     constructor(
         private router: Router,
         private userService: UserService,
+        private loginService: LoginService,
         private favoritesService: FavoritesService
     ) { }
 
@@ -76,4 +78,10 @@ export class TopNavComponent implements OnInit {
         console.log('clicked contact');
     }
 
+    logout() {
+        this.loginService.logout()
+        .subscribe((success: boolean) => {
+            console.log(`logout success: ${success}`);
+        });
+    }
 }

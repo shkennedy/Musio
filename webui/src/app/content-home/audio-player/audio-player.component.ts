@@ -23,7 +23,7 @@ import { Song } from '../../models/song.model';
 })
 export class AudioPlayerComponent implements OnInit {
 
-    private static IN_PROGRESS_TIME = 5;
+    private static IN_PROGRESS_TIME = 2;
 
     audio: Howl;
     useHighBitrate: boolean;
@@ -285,6 +285,7 @@ export class AudioPlayerComponent implements OnInit {
     private playLast(): void {
         // If current song is in progress, restart
         if (this.audio && this.audio.seek() > AudioPlayerComponent.IN_PROGRESS_TIME) {
+            this.songProgress = 0;
             this.audio.seek(0);
             return;
         }
