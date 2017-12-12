@@ -37,37 +37,37 @@
 
 <div id="side_nav" class="flex_column">
     <div class="pointer">
-        <mat-icon style="margin-right:5px;">library_music</mat-icon>
-        <h4 [routerLink]="['/songs']">Browse</h4>
+        <mat-icon class="light" style="margin-right:5px;">library_music</mat-icon>
+        <h4 class="light" [routerLink]="['/songs']">Browse</h4>
     </div>
 
     <div class="pointer">
-        <mat-icon style="margin-right:5px;">radio</mat-icon>
-        <h4 [routerLink]="['/radio']">Radio</h4>
+        <mat-icon class="light" style="margin-right:5px;">radio</mat-icon>
+        <h4 class="light" [routerLink]="['/radio']">Radio</h4>
     </div>
 
     <!-- Music Library -->
-    <div style="font-size:20px;">Your Music</div>
+    <div class="light" style="font-size:20px;">Your Music</div>
 
     <div class="pointer">
-        <mat-icon style="margin-right:5px;">recent_actors</mat-icon>
-        <h4 [routerLink]="['/artist']">Artists</h4>
+        <mat-icon class="light" style="margin-right:5px;">recent_actors</mat-icon>
+        <h4 class="light" [routerLink]="['/artist']">Artists</h4>
     </div>
 
     <div class="pointer">
-        <mat-icon style="margin-right:5px;">album</mat-icon>
-        <h4 [routerLink]="['/albums']">Albums</h4>
+        <mat-icon class="light" style="margin-right:5px;">album</mat-icon>
+        <h4 class="light" [routerLink]="['/albums']">Albums</h4>
     </div>
 
     <div class="pointer">
-        <mat-icon style="margin-right:5px;">music_video</mat-icon>
-        <h4 [routerLink]="['/songs']">Songs</h4>
+        <mat-icon class="light" style="margin-right:5px;">music_video</mat-icon>
+        <h4 class="light" [routerLink]="['/songs']">Songs</h4>
     </div>
 
     <!-- Playlists -->
-    <div style="font-size:20px;">Playlists</div>
+    <div class="light" style="font-size:20px;">Playlists</div>
 
     <div *ngFor="let playlist of playlists" class="pointer">
-        <h4 [routerLink]="['/playlist/playlist.id']">playlist.name</h4>
+        <h4 class="light" [routerLink]="['/playlist/playlist.id']">{{playlist.name}}</h4>
     </div>
 </div>

@@ -24,10 +24,10 @@ export class LeftNavComponent implements OnInit {
         private playlistService: PlaylistService,
         private songService: SongService
     ) {
-        let p=new Playlist();
-        p.id=5;
-        p.name="PlayList"
-        this.playlists=[p,p,p,p,p,p,p,p,p];
+        let p = new Playlist();
+        p.id = 5;
+        p.name = "PlayList";
+        this.playlists = [p, p, p, p, p, p, p, p, p, p, p, p, p];
         // sample data
         // let p=new Playlist();
         // p.name="playlist1";
@@ -36,15 +36,14 @@ export class LeftNavComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.favoritesService.getFavoritePlaylists()
-        .subscribe(
-            (playlists: Playlist[]) => {
-                this.playlists = playlists;
-            },
-            (error: any) => {
-                this.errMsg = error;
-            }
-        )
+        // this.favoritesService.getFavoritePlaylists()
+        // .subscribe(
+        //     (playlists: Playlist[]) => {
+        //         this.playlists = playlists;
+        //     },
+        //     (error: any) => {
+        //         this.errMsg = error;
+        //     });
     }
 
     navigatePlaylist(playlistId: number) {
