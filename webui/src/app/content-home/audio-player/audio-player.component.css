@@ -77,7 +77,8 @@ mat-icon.play{
 }
 
 #play_wrapper{
-    height:100%;
+    min-height: 10vh;
+    max-height: 10vh;
     background-color:#555;
 }
 mat-icon{
