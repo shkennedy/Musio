@@ -89,7 +89,21 @@ public class ArtistController
             response.setResponseData(artistService.getFavoritesCountForArtist(id));
         }
         return response;
-	}	
+    }
+    
+    @RequestMapping(value = "/related/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
+	public @ResponseBody ApiResponseObject getRelatedArtists(@PathVariable("id") int id) {
+        ApiResponseObject response = new ApiResponseObject();
+        if(artistService.artistExists(id) == false) {
+            response.setSuccess(false);
+            response.setMessage("No artist found with ID "+id+".");
+        }
+        else {
+            response.setSuccess(true);
+            response.setResponseData(artistService.getNRelatedArtists(id, 12));
+        }
+        return response;
+    }
 
     @GetMapping(path="/all")
     public @ResponseBody Iterable<Artist> getAllArtists()

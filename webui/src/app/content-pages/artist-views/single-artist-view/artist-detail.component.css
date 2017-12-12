@@ -315,7 +315,13 @@
     .artist-card > p{
       width: 200px;
       text-align: center;
-      text-transform: uppercase;
       font-weight: 400;
       padding-top: 15px;
+    }
+
+    .tumbnail_image {
+        min-height:5vh;
+        max-height:5vh;
+        border-radius:50px;
+        margin-right:15px;
     }

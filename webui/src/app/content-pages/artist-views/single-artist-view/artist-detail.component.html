@@ -1,86 +1,103 @@
-<div class="row cover-info-box">
-    <div class="col-sm-3 col-xs-12 cover-box-left">
-        <img width="200" src="{{artist.artistImage}}">
-    </div>
-    <div class="col-sm-8 col-xs-12 cover-box-right">
-
-        <h1>{{artist.name}}</h1>
-        {{followerCount}} FOLLOWERS
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <button class="btn btn-green">PLAY</button>
-        <button class="btn btn-black">FOLLOW</button>
-    </div>
+<div *ngIf="!artist; else loaded;">
+    LOADING
 </div>
+<ng-template #loaded>
+    <div class="row cover-info-box">
+        <div class="col-sm-3 col-xs-12 cover-box-left">
+            <img width="200" src="{{artist.artistImageUrl}}">
+        </div>
+        <div class="col-sm-8 col-xs-12 cover-box-right">
 
-<div class="tabs1">
-
-    <input type="radio" id="tab1" name="tab-control" checked>
-    <input type="radio" id="tab2" name="tab-control">
-    <!-- <input type="radio" id="tab3" name="tab-control"> -->
-    <input type="radio" id="tab3" name="tab-control">
-
-    <ul>
-        <li title="tab 1">
-            <label for="tab1" role="button">
-                <span>Popular</span>
-            </label>
-        </li>
-        <li title="tab 2">
-            <label for="tab2" role="button">
-                <span>Related Artists</span>
-            </label>
-        </li>
-        <li title="tab 3">
-            <label for="tab3" role="button">
-                <span>Concerts</span>
-            </label>
-        </li>
-    </ul>
-    <div class="slider">
-        <div class="indicator"></div>
+            <h1>{{artist.name}}</h1>
+            {{followerCount}} FOLLOWERS
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <button class="btn btn-green">PLAY</button>
+            <div>
+                <div *ngIf="isFavorited; else favorite">
+                    <button class="btn btn-black glyphicon glyphicon-heart" (click)="unfollowArtist()"></button>
+                </div>
+                <ng-template #favorite>
+                    <button class="btn btn-grey" (click)="followArtist()">FOLLOW</button>
+                </ng-template>
+            </div>
+        </div>
     </div>
 
-    <div class="content">
-        <section>
-            <table class="table table-inverse popular-song-table">
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th>Song</th>
-                        <th>Duration</th>
-                        <th>Album</th>
+    <div class="tabs1">
 
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1. </td>
-                        <td>One Dance</td>
-                        <td>2:53</td>
-                        <td>Take Care</td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
+        <input type="radio" id="tab1" name="tab-control" checked>
+        <input type="radio" id="tab2" name="tab-control">
+        <!-- <input type="radio" id="tab3" name="tab-control"> -->
+        <input type="radio" id="tab3" name="tab-control">
 
-        <section>
-            <div class="row">
-                <div *ngFor="let relatedArtist of relatedArtists" class="artist-card col-sm-3 center-block" [routerLink]="['/artists',artist.id]">
-                    <div class="artist-card col-sm-3 center-block">
-                        <img src="{{relatedArtist.artistImageUrl}}" alt="{{relatedArtist.name}}">
-                        <p>relatedArtist.name</p>
+        <ul>
+            <li title="tab 1">
+                <label for="tab1" role="button">
+                    <span>Releases</span>
+                </label>
+            </li>
+            <li title="tab 2">
+                <label for="tab2" role="button">
+                    <span>Related Artists</span>
+                </label>
+            </li>
+            <li title="tab 3">
+                <label for="tab3" role="button">
+                    <span>Concerts</span>
+                </label>
+            </li>
+        </ul>
+        <div class="slider">
+            <div class="indicator"></div>
+        </div>
+
+        <div class="content">
+            <section>
+                <table class="table table-inverse popular-song-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Song</th>
+                            <th>Duration</th>
+                            <th>Album</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1. </td>
+                            <td>One Dance</td>
+                            <td>2:53</td>
+                            <td>Take Care</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section>
+                <div class="row">
+                    <div *ngFor="let relatedArtist of relatedArtists" class="artist-card col-sm-3 center-block">
+                        <div class="artist-card col-sm-3 center-block" [routerLink]="['/artists', relatedArtist.id]">
+                            <div *ngIf="relatedArtist.thumbnailFileId; else defaultArt;">
+                                <img src="{{relatedArtist.artistImageUrl}}" alt="{{relatedArtist.name}}">
+                            </div>
+                            <ng-template #defaultArt>
+                                    <img src="assets/images/no_artist_picture.png" alt="{{relatedArtist.name}}">
+                            </ng-template>
+                            <p>{{relatedArtist.name}}</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <section>
-            <h2>Concerts</h2>
-        </section>
+            <section>
+                <h2>Concerts</h2>
+            </section>
 
+        </div>
     </div>
-</div>
+</ng-template>

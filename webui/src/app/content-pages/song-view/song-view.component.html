@@ -7,9 +7,9 @@
         <table class="table table-inverse song-table album-tracklist-table">
             <thead>
                 <tr>
-                    <th>Title</th>
-                    <th>Artist</th>
-                    <th>Album</th>
+                    <th (click)="sort('title')">Title</th>
+                    <th (click)="sort('artist')">Artist</th>
+                    <th (click)="sort('album')">Album</th>
                     <th>Duration</th>
                 </tr>
             </thead>
@@ -19,7 +19,7 @@
                     <td>{{song.title}}</td>
                     <td>{{song.artist.name}}</td>
                     <td>{{song.album.title}}</td>
-                    <td>{{song.duration}}</td>
+                    <td>{{song.durationString}}</td>
                 </tr>
 
             </tbody>

@@ -16,16 +16,16 @@
                 <h3 class="album-title">{{album.title}}</h3>
 
                 <h5>By
-                    <span id="artist-name">{{album.artists[0].name}}</span>
+                    <span id="artist-name" [routerLink]="['/artists', album.artists[0].id]">{{album.artists[0].name}}</span>
                 </h5>
             </div>
             <button class="btn btn-green block-center">PLAY</button>
 
             <div>
-                <div *ngIf="isFavorited; else favorite">
+                <div *ngIf="isFollowed; else follow">
                     <button class="btn btn-black glyphicon glyphicon-heart" (click)="unfavoriteAlbum()"></button>
                 </div>
-                <ng-template #favorite>
+                <ng-template #follow>
                     <button class="btn btn-grey " (click)="favoriteAlbum()">FAVORITE</button>
                 </ng-template>
             </div>

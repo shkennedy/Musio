@@ -25,6 +25,10 @@ export class FileService {
         private httpRequest: HttpRequestService
     ) { }
 
+    public getFileURLById(fileId: number): string {
+        return FileService.GENERIC_GET_URL + `/${fileId}`;
+    }
+
     public getAlbumImageURLByIdAndSize(albumImageId: number, useFullSize): string {
         return FileService.BASE_URL +
         ((useFullSize) ? FileService.ALBUM_FULL_URL : FileService.ALBUM_THUMB_URL) + `/${albumImageId}`;

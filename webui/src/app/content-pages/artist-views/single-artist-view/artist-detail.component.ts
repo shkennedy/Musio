@@ -19,8 +19,6 @@ import { Song } from '../../../models/song.model';
 })
 export class ArtistDetailComponent implements OnInit {
 
-    @Input() artistId: number;
-
     private artist: Artist;
     private followerCount: number;
     private isFollowed = false;
@@ -39,7 +37,8 @@ export class ArtistDetailComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        this.artistService.getArtistById(this.artistId)
+        const url: string[] = this.router.url.split('/');
+        this.artistService.getArtistById(Number(url[url.length - 1]))
             .subscribe(
             (artist: Artist) => {
                 this.artist = artist;
@@ -51,47 +50,40 @@ export class ArtistDetailComponent implements OnInit {
                     (error: any) => {
                         console.log(error.toString());
                     });
+                this.artistService.getArtistFollowerCount(artist.id)
+                    .subscribe(
+                    (followerCount: number) => {
+                        this.followerCount = followerCount;
+                    },
+                    (error: any) => {
+                        console.log(error.toString());
+                    });
+                this.artistService.getRelatedArtists(artist.id)
+                    .subscribe(
+                    (relatedArtists: Artist[]) => {
+                        this.relatedArtists = relatedArtists;
+                    },
+                    (error: any) => {
+                        console.log(error.toString());
+                    });
+                this.favoritesService.getFavoriteArtists()
+                    .subscribe(
+                    (artists: Artist[]) => {
+                        if (artists) {
+                            for (let i = 0; i < artists.length; ++i) {
+                                if (artists[i].id === this.artist.id) {
+                                    this.isFollowed = true;
+                                    console.log('artist-detail.component found artist is followed');
+                                }
+                            }
+                        }
+                    },
+                    (error: any) => {
+                        console.log(error.toString());
+                    });
             },
             (error: any) => {
                 this.errorMessage = error;
-            });
-
-        this.artistService.getArtistFollowerCount(this.artistId)
-            .subscribe(
-            (followerCount: number) => {
-                this.followerCount = followerCount;
-            },
-            (error: any) => {
-                console.log(error.toString());
-            });
-
-        this.favoritesService.getFavoriteArtists()
-            .subscribe(
-            (artists: Artist[]) => {
-                if (artists) {
-                    for (let i = 0; i < artists.length; ++i) {
-                        if (artists[i].id === this.artist.id) {
-                            this.isFollowed = true;
-                            console.log('artist-detail.component found artist is followed');
-                        }
-                    }
-                }
-            },
-            (error: any) => {
-                console.log(error.toString());
-            });
-
-        this.artistService.getRelatedArtists(this.artistId)
-            .subscribe(
-            (relatedArtists: Artist[]) => {
-                this.relatedArtists = relatedArtists;
-                this.relatedArtists.forEach((artist: Artist) => {
-                    artist.artistImageUrl =
-                        this.fileService.getArtistImageURLByIdAndSize(artist.id, false);
-                });
-            },
-            (error: any) => {
-                console.log(error.toString());
             });
     }
 

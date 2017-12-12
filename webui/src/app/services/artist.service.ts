@@ -31,6 +31,7 @@ export class ArtistService {
                 if (response.success) {
                     const artist: Artist = response.responseData;
                     if (artist.artistImage) {
+                        console.log(artist.artistImage.id);
                         artist.artistImageUrl =
                             this.fileService.getArtistImageURLByIdAndSize(artist.artistImage.id, true);
                     }
@@ -63,7 +64,14 @@ export class ArtistService {
         return this.httpRequest.get(ArtistService.ARTIST_URL + ArtistService.RELATED_URL, artistId)
             .map((response: ApiResponse) => {
                 if (response.success) {
-                    return response.responseData;
+                    const artists: Artist[] = response.responseData;
+                    artists.forEach((artist: Artist) => {
+                        if (artist.thumbnailFileId) {
+                            artist.artistImageUrl =
+                                this.fileService.getFileURLById(artist.thumbnailFileId);
+                        }
+                    });
+                    return artists;
                 }
                 return null;
             });
