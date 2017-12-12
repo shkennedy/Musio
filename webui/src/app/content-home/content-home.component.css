@@ -36,7 +36,7 @@
 
 .grid1{
     display:grid;
-    grid-template-rows:5fr 85fr 10fr;
+    grid-template-rows:7fr 83fr 10fr;
 }
 
 .grid2{

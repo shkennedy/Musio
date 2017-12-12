@@ -26,7 +26,7 @@
 
 <div class="grid1" id="top_wrapper">
     <!-- Item 1 -->
-    <img style="width:100px;padding-top:5px;padding-bottom:5px;"
+    <img class="logo_sized"
          src="assets/images/mainlogo.png" alt="Logo">
     <!-- Item 2 -->
     <div>
@@ -46,7 +46,7 @@
     <div class="flex_row_end" style="padding-right:5px;">
         <img src="assets/images/no_artist_picture.png"
              alt="Profile Picture"
-             style="width:30px;height:30px;border-radius:50px;margin-right:15px;">
+             class="profile_picture">
         <!-- Username -->
         <div *ngIf="user.username;else defaultName"  class="light" style="margin-right:10px;">{{user.username}}</div>
         <ng-template #defaultName><div style="margin-right:10px;"  class="light">Username</div></ng-template>
