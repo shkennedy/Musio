@@ -1,67 +1,6 @@
-<!-- <div class="footer container-fluid text-center ">
-
-    <div class="col-sm-2 player-buttons-container">
-        <img class="player-buttons" src="assets/images/prev.png">
-        <div *ngIf="isPlaying; else isPaused;">
-            <button (click)="pause()">
-                <img class="player-buttons pause-button" src="assets/images/pause.png">
-            </button>
-        </div>
-        <ng-template #isPaused>
-            <button (click)="play()">
-                <img class="player-buttons play-button" src="assets/images/play.png">
-            </button>
-        </ng-template>
-        <img class="player-buttons" src="assets/images/next.png">
-
-    </div>
-    <div class="col-sm-7 progress-bar-container text-middle">
-
-        <div *ngIf="currentSong; else noSong;">
-            <mat-slider min="0" max="{{currentSong.duration}}" step="0.1" [(ngModel)]="songProgress"></mat-slider>
-            <p>{{songProgress}}:{{currentSong.duration}}</p>
-        </div>
-        <ng-template #noSong>
-            <mat-slider min="0" max="1" step="1" value="0"></mat-slider>
-        </ng-template> -->
-
-<!-- <div class="audio-progress" id="audio-progress">
-            <div id="draggable-point" style="left:75%;" class="draggable ui-widget-content">
-                <div id="audio-progress-handle"></div>
-            </div>
-            <div id="audio-progress-bar" class="bar" style="width:25%">
-            </div>
-        </div> -->
-
-<!-- </div>
-
-    <div class="col-sm-3 player-buttons-container text-left">
-
-        <div class="col-sm-8">
-            <img class="player-buttons" src="assets/images/shuffle.png">
-            <img class="player-buttons" src="assets/images/media-repeat.png">
-            <img class="player-buttons" src="assets/images/volume.png">
-        </div> -->
-
-<!-- <div class="col-sm-4" style="padding:0">
-            <div class="volume-progress">
-                <div id="draggable-point" style="left:25%;" class="draggable ui-widget-content">
-                </div>
-                <div id="volume-progress-bar" class="volume-bar" style="width:50%">
-                </div>
-            </div>
-        </div> -->
-<!--
-        <mat-slider min="0" max="1.0" step="0.01" value="{{volume}}"></mat-slider>
-
-    </div>
-
-</div> -->
-
-
 <div class="grid" id="play_wrapper">
-    <div class="flex_start" style="max-width:384px;margin-left:10px;">
-        <div *ngIf="currentSong">
+    <div style="max-width:384px;margin-left:10px;">
+        <div *ngIf="currentSong" class="flex_start">
             <mat-icon style="font-size:50px;width:50px;height:50px;">album</mat-icon>
             <div class="flex_start_column cut_off ellipsis">
                 <p style="color:#ddd;">{{currentSong.title}}</p>
