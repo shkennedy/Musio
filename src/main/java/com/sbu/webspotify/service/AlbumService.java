@@ -29,7 +29,12 @@ public class AlbumService {
 		return albumRepository.findByNameContaining(query);
 	}
 
-    public Set<AlbumIdentifier> getAllByArtistId(int artistId) {
-        return albumRepository.findAllByArtistId(artistId);
+    public Set<Album> getAllByArtistId(int artistId) {
+        Set<Album> albums = new HashSet<Album>();
+        Set<AlbumIdentifier> albumIdentifiers = albumRepository.findAllByArtistId(artistId);
+        for (AlbumIdentifier albumIdentifier : albumIdentifiers) {
+            albums.add(albumRepository.findById(albumIdentifier.getId()));
+        }
+        return albums;
     }
 }
