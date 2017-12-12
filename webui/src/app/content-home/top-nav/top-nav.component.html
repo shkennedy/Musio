@@ -1,4 +1,4 @@
-<nav class="navbar navbar-inverse">
+<!-- <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -11,9 +11,9 @@
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
         <li (click)="clickedAbout()"><a>Settings</a></li>
-        <!-- <form #searchForm="ngForm" (submit)="search(searchForm)">
+        <form #searchForm="ngForm" (submit)="search(searchForm)">
             <input type="text" name="searchQuery" placeholder="Search"><br>
-        </form> -->
+        </form>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li><a>{{user.profileImage}}</a></li>
@@ -22,4 +22,45 @@
       </ul>
     </div>
   </div>
-</nav>
+</nav> -->
+
+<div class="grid1" id="top_wrapper">
+    <!-- Item 1 -->
+    <img style="width:100px;padding-top:5px;padding-bottom:5px;"
+         src="assets/images/mainlogo.png" alt="Logo">
+    <!-- Item 2 -->
+    <div>
+        <form (ngSubmit)="makeSearch(search)" #search="ngForm">
+            <div style="margin-top:12px;margin-left:5px;">
+                <mat-icon class="search_icon">search</mat-icon>
+                <input type="text"
+                       class="search_bar"
+                       name="searchQuery"
+                       ngModel
+                       style="padding-left:25px;"
+                       placeholder="Search">
+            </div>
+        </form>
+    </div>
+    <!-- Item 3 -->
+    <div class="flex_row_end" style="padding-right:5px;">
+        <img src="assets/images/no_artist_picture.png"
+             alt="Profile Picture"
+             style="width:30px;height:30px;border-radius:50px;margin-right:15px;">
+        <!-- Username -->
+        <div *ngIf="user.username;else defaultName"  class="light" style="margin-right:10px;">{{user.username}}</div>
+        <ng-template #defaultName><div style="margin-right:10px;"  class="light">Username</div></ng-template>
+
+        <button mat-icon-button
+                matTooltip="Settings"
+                [routerLink]="['/userSettings']">
+            <mat-icon class="light">settings</mat-icon>
+        </button>
+
+        <button mat-icon-button
+                matTooltip="Logout"
+                [routerLink]="['/logout']">
+                <mat-icon  class="light">exit_to_app</mat-icon>
+        </button>
+    </div>
+</div>

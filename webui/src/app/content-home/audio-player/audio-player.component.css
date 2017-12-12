@@ -1,0 +1,84 @@
+.logo_sized{
+    width:100px;
+    height:40px;
+}
+
+.background{
+    color:black;
+}
+
+.height{
+    height:82.3vh;
+}
+
+
+/*CSS FOR PLAYBAR*/
+.flex_start{
+    display:flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.flex_start_column{
+    display:flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+.flex_center{
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.flex_end{
+    display:flex;
+    justify-content: flex-end;
+    align-items: center;
+    align-content: center;
+}
+
+.flex_column{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.grid{
+  display: grid;
+  grid-template-columns:1fr 3fr 1fr;
+}
+mat-icon{
+    font-size: 25px;
+    min-width:25px;
+    min-height:25px;
+}
+mat-icon.play{
+    font-size: 40px;
+    min-width:40px;
+}
+
+.ellipsis {
+  /* Required for text-overflow to do anything */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.play_bar{
+    width:700px;
+}
+
+.cut_off{
+    max-width: 200px;
+}
+
+#play_wrapper{
+    background-color:#555;
+}
+mat-icon{
+    color:#ddd;
+}
