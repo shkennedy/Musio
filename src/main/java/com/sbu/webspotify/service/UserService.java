@@ -12,6 +12,7 @@ import com.sbu.webspotify.dto.identifier.AlbumIdentifier;
 import com.sbu.webspotify.dto.identifier.ArtistIdentifier;
 import com.sbu.webspotify.dto.identifier.PlaylistIdentifier;
 import com.sbu.webspotify.dto.identifier.SongIdentifier;
+import com.sbu.webspotify.dto.identifier.UserIdentifier;
 import com.sbu.webspotify.model.Album;
 import com.sbu.webspotify.model.Artist;
 import com.sbu.webspotify.model.Genre;
@@ -379,4 +380,8 @@ public class UserService {
     public SongIdentifier getListeningHistoryTail(int userId) {
 		return songRepository.getListeningHistoryForUser(userId, 1).iterator().next();
     }
+
+	public Set<UserIdentifier> getFollowedUsers(int userId) {
+		return userRepository.getFollowedUsers(userId);
+	}
 }
