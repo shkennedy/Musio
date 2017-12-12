@@ -10,7 +10,7 @@
 }
 
 .bottom_bar{
-  height:10%;
+  height:20%;
   /*background-color:#e0e0e0;*/
 }
 .wrapper_horizontal{
@@ -25,4 +25,21 @@
 
 .left_nav{
   border:1pt solid #e0e0e0;
+}
+
+/*Vinny CSS*/
+
+.no_scrolling{
+    overflow-x:hidden;
+    overflow-y:hidden;
+}
+
+.grid1{
+    display:grid;
+    grid-template-rows:5fr 85fr 10fr;
+}
+
+.grid2{
+    display:grid;
+    grid-template-columns: 10fr 75fr 15fr;
 }
