@@ -35,8 +35,7 @@ export class TopNavComponent implements OnInit {
 
     private search(searchForm: NgForm): void {
         const searchQuery = searchForm.value['searchQuery'];
-        console.log(searchQuery);
-        this.router.navigate(['/search', 'frank']);
+        this.router.navigate(['/search', searchQuery]);
     }
 
     gotoUserProfile() {
@@ -70,7 +69,6 @@ export class TopNavComponent implements OnInit {
         //         console.log(response);
         //     });
         // }
-        console.log('clicked About');
     }
 
     gotoContact() {

@@ -42,10 +42,15 @@
             </li>
             <li title="tab 2">
                 <label for="tab2" role="button">
-                    <span>Related Artists</span>
+                    <span>About</span>
                 </label>
             </li>
             <li title="tab 3">
+                <label for="tab3" role="button">
+                    <span>Related Artists</span>
+                </label>
+            </li>
+            <li title="tab 4">
                 <label for="tab3" role="button">
                     <span>Concerts</span>
                 </label>
@@ -57,67 +62,74 @@
 
         <div class="content">
             <section>
-                    <ng-template #albumLoaded>
-                            <div id="album-wrapper col-sm-12">
-                                <div id="album-info" class="col-sm-4">
-                                    <div class="col-sm-12">
-                                    <div *ngIf="album.art; else defaultArt;">
-                                        <img src="{{album.albumArtUrl}}" alt="{{album.title}}" style="width:200px; height:200px;">
-                                    </div>
-                                    <ng-template #defaultArt>
-                                            <img src="assets/images/default_art.png" alt="{{album.title}}" style="width:200px; height:200px;">
-                                    </ng-template>
-                                    </div>
-                                    <div class="col-sm-12">
-                                        <h3 class="album-title">{{album.title}}</h3>
-                        
-                                        <h5>By
-                                            <span id="artist-name" [routerLink]="['/artists', album.artists[0].id]">{{album.artists[0].name}}</span>
-                                        </h5>
-                                    </div>
-                                    <button class="btn btn-green block-center">PLAY</button>
-                        
-                                    <div>
-                                        <div *ngIf="isFollowed; else follow">
-                                            <button class="btn btn-black glyphicon glyphicon-heart" (click)="unfavoriteAlbum()"></button>
-                                        </div>
-                                        <ng-template #follow>
-                                            <button class="btn btn-grey " (click)="favoriteAlbum()">FAVORITE</button>
-                                        </ng-template>
-                                    </div>
-                        
+                <div *ngFor="let album of artist.albums;">
+                    <div id="album-wrapper col-sm-12">
+                        <div id="album-info" class="col-sm-4">
+                            <div class="col-sm-12">
+                                <div *ngIf="album.art; else defaultArt;">
+                                    <img src="{{album.albumArtUrl}}" alt="{{album.title}}" style="width:200px; height:200px;">
                                 </div>
-                        
-                                <div id="album-tracklist" class="col-sm-8"></div>
-                                <table class="table table-inverse song-table album-tracklist-table">
-                                    <thead>
-                                        <tr>
-                                            <th (click)="sort('track')">#</th>
-                                            <th (click)="sort('title')">Title</th>
-                                            <th><mat-icon>schedule</mat-icon></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr *ngFor="let song of album.songs;">
-                                            <th>{{song.trackNumber}}</th>
-                                            <td>{{song.title}}</td>
-                                            <td>{{song.durationString}}</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                <ng-template #defaultArt>
+                                    <img src="assets/images/default_art.png" alt="{{album.title}}" style="width:200px; height:200px;">
+                                </ng-template>
                             </div>
-                        </ng-template>
+                            <div class="col-sm-12">
+                                <h3 class="album-title">{{album.title}}</h3>
+
+                                <h5>By
+                                    <span id="artist-name" [routerLink]="['/artists', album.artists[0].id]">{{album.artists[0].name}}</span>
+                                </h5>
+                            </div>
+                            <button class="btn btn-green block-center">PLAY</button>
+
+                            <div>
+                                <div *ngIf="isFollowed; else follow">
+                                    <button class="btn btn-black glyphicon glyphicon-heart" (click)="unfavoriteAlbum()"></button>
+                                </div>
+                                <ng-template #follow>
+                                    <button class="btn btn-grey " (click)="favoriteAlbum()">FAVORITE</button>
+                                </ng-template>
+                            </div>
+
+                        </div>
+
+                        <div id="album-tracklist" class="col-sm-8"></div>
+                        <table class="table table-inverse song-table album-tracklist-table">
+                            <thead>
+                                <tr>
+                                    <th (click)="sort('track')">#</th>
+                                    <th (click)="sort('title')">Title</th>
+                                    <th>
+                                        <mat-icon>schedule</mat-icon>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let song of album.songs;">
+                                    <th>{{song.trackNumber}}</th>
+                                    <td>{{song.title}}</td>
+                                    <td>{{song.durationString}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <p>{{artist.bio}}</p>
+                <p>{{artist.website}}</p>
             </section>
 
             <section>
                 <div class="row">
                     <div *ngFor="let relatedArtist of relatedArtists" class="artist-card col-sm-3 center-block">
-                        <div class="artist-card col-sm-3 center-block" [routerLink]="['/artists', relatedArtist.id]">
+                        <div class="artist-card col-sm-3 center-block" (click)="gotoRelatedArtist(relatedArtist.id)">
                             <div *ngIf="relatedArtist.thumbnailFileId; else defaultArt;">
                                 <img src="{{relatedArtist.artistImageUrl}}" alt="{{relatedArtist.name}}">
                             </div>
                             <ng-template #defaultArt>
-                                    <img src="assets/images/no_artist_picture.png" alt="{{relatedArtist.name}}">
+                                <img src="assets/images/no_artist_picture.png" alt="{{relatedArtist.name}}">
                             </ng-template>
                             <p>{{relatedArtist.name}}</p>
                         </div>
