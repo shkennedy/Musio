@@ -17,15 +17,9 @@
     </div>
     <div class="col-sm-7 progress-bar-container text-middle">
 
-        <!-- <md-slider-container>
-            <md-slider min="0" max="{{currentSong.duration}}" ng-model="songProgress" aria-label="seekBar" id="songProgressSlider">
-            </md-slider> -->
-            <!-- <md-input-container>
-                <input flex type="number" ng-model="songProgress" aria-label="seekBar" aria-controls="songProgress">
-            </md-input-container> -->
-        <!-- </md-slider-container> -->
         <div *ngIf="currentSong; else noSong;">
-            <mat-slider min="0" max="{{currentSong.duration}}" step="1" value="{{songProgress}}"></mat-slider>
+            <mat-slider min="0" max="{{currentSong.duration}}" step="0.1" [(ngModel)]="songProgress"></mat-slider>
+            <p>{{songProgress}}:{{currentSong.duration}}</p>
         </div>
         <ng-template #noSong>
             <mat-slider min="0" max="1" step="1" value="0"></mat-slider>
@@ -58,7 +52,7 @@
             </div>
         </div> -->
 
-        <mat-slider class="" min="0" max="100" step="1" value="{{volume}}"></mat-slider>
+        <mat-slider min="0" max="1.0" step="0.01" value="{{volume}}"></mat-slider>
 
     </div>
 

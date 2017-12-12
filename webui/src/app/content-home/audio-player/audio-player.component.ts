@@ -34,6 +34,7 @@ export class AudioPlayerComponent implements OnInit {
     isShuffling = false;
     isShowingLyrics = false;
     songProgress = 0;
+    prevSongProgress = 0;
     songTimer: any;
     currentSong: Song;
     songQueue: Song[] = [];
@@ -190,9 +191,7 @@ export class AudioPlayerComponent implements OnInit {
             autoplay: true,
             html5: true,
             onplay: this.startSongTimer,
-            onpause: function() {
-                clearInterval(this.songTimer);
-            },
+            onpause: this.stopSongTimer,
             onend: this.playNext,
             onloaderror: function () {
                 console.log('unable to load song');
@@ -215,12 +214,15 @@ export class AudioPlayerComponent implements OnInit {
             (song: Song) => {
                 this.currentSong = song;
                 // Convert duration to seconds from ms
-                this.currentSong.duration = this.currentSong.duration / 1000;
-                console.log(`song: ${this.currentSong.title}`);
+                // this.currentSong.duration = this.currentSong.duration / 1000;
+                this.currentSong.duration = 4;
+                console.log(`song: ${this.currentSong.title} duration: ${this.currentSong.duration}`);
                 // Fetch song file
                 this.currentSong.audioFileUrl = this.fileService
                     .getSongFileURLByIdAndBitrate(song.id, this.useHighBitrate);
                 this.audio = this.makeHowl(this.currentSong.audioFileUrl);
+                this.songProgress = 0;
+                this.prevSongProgress = 0;
                 this.isPlaying = true;
             },
             (error: any) => {
@@ -233,12 +235,25 @@ export class AudioPlayerComponent implements OnInit {
     }
 
     private startSongTimer = (): void => {
+        this.stopSongTimer();
         this.songTimer = setInterval(() => {
-            this.songProgress += 1;
-        }, 1000);
+            if (this.songProgress === this.prevSongProgress) {
+                this.songProgress += 0.1;
+                this.prevSongProgress = this.songProgress;
+            } else {
+                this.seek();
+            }
+        }, 100);
+    }
+
+    private stopSongTimer = (): void => {
+        if (this.songTimer) {
+            clearInterval(this.songTimer);
+        }
     }
 
     private playNext = (): void => {
+        this.stopSongTimer();
         this.addCurrentSongToHistory();
 
         let nextSong: Song;
@@ -299,8 +314,9 @@ export class AudioPlayerComponent implements OnInit {
         if (this.audio) {
             this.audio.play();
             this.isPlaying = true;
+        } else {
+            this._playSong(9); // TODO remove
         }
-        this._playSong(8); // TODO remove
     }
 
     private pause(): void {
@@ -330,5 +346,6 @@ export class AudioPlayerComponent implements OnInit {
 
     private seek(): void {
         this.audio.seek(this.songProgress);
+        this.prevSongProgress = this.songProgress;
     }
 }
