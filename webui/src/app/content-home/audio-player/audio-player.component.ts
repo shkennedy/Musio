@@ -364,4 +364,27 @@ export class AudioPlayerComponent implements OnInit {
         this.audio.seek(this.songProgress);
         this.prevSongProgress = this.songProgress;
     }
+
+    private sortQueue(): void {
+        // if (this.ascendingOrder) {
+        //     this.songQueue.sort(())
+        // }
+        // sortAlbumByTrack(album: Album, ascending: boolean): void {
+        //     if (ascending) {
+        //         album.songs.sort((a: Song, b: Song) => {
+        //             if (a.trackNumber > b.trackNumber) {
+        //                 return 1;
+        //             }
+        //             return -1;
+        //         });
+        //     } else {
+        //         album.songs.sort((a: Song, b: Song) => {
+        //             if (a.trackNumber < b.trackNumber) {
+        //                 return 1;
+        //             }
+        //             return -1;
+        //         });
+        //     }
+        // }
+    }
 }

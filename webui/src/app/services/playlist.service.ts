@@ -26,6 +26,11 @@ export class PlaylistService {
                 const playlist: Playlist = response.responseData;
                 for (let trackNumber = 1; trackNumber <= playlist.songs.length; trackNumber += 1) {
                     playlist.songs[trackNumber].trackNumber = trackNumber;
+                    playlist.songs[trackNumber].duration = Math.floor(playlist.songs[trackNumber].duration / 1000);
+                    playlist.songs[trackNumber].durationString =
+                        `${Math.floor(playlist.songs[trackNumber].duration / 60)}:`;
+                    const seconds = playlist.songs[trackNumber].duration % 60;
+                    playlist.songs[trackNumber].durationString += (seconds < 10) ? `0${seconds}` : seconds;
                 }
                 return playlist;
             });
@@ -75,20 +80,38 @@ export class PlaylistService {
     }
 
     public sortByTitle(playlist: Playlist, ascending: boolean): void {
-        playlist.songs.sort((a: Song, b: Song) => {
-            if (a.title > b.title && ascending) {
-                return 1;
-            }
-            return -1;
-        });
+        if (ascending) {
+            playlist.songs.sort((a: Song, b: Song) => {
+                if (a.title > b.title) {
+                    return 1;
+                }
+                return -1;
+            });
+        } else {
+            playlist.songs.sort((a: Song, b: Song) => {
+                if (a.title < b.title) {
+                    return 1;
+                }
+                return -1;
+            });
+        }
     }
 
     public sortByTrack(playlist: Playlist, ascending: boolean): void {
-        playlist.songs.sort((a: Song, b: Song) => {
-            if (a.trackNumber > b.trackNumber && ascending) {
-                return 1;
-            }
-            return -1;
-        });
+        if (ascending) {
+            playlist.songs.sort((a: Song, b: Song) => {
+                if (a.trackNumber > b.trackNumber) {
+                    return 1;
+                }
+                return -1;
+            });
+        } else {
+            playlist.songs.sort((a: Song, b: Song) => {
+                if (a.trackNumber < b.trackNumber) {
+                    return 1;
+                }
+                return -1;
+            });
+        }
     }
 }

@@ -1,14 +1,10 @@
-<div *ngIf="!album; else albumLoaded;">
+<div *ngIf="!album; else albumLoaded;" class=""> <!-- Needs loading gif -->
     LOADING
 </div>
 <ng-template #albumLoaded>
     <div id="album-wrapper col-sm-12">
         <div id="album-info" class="col-sm-4">
             <div class="col-sm-12">
-                <!-- <img *ngIf="imageExists; else default_art" src="">
-            <ng-template #default_art>
-                <img width=300 src="assets/images/default_art.png" alt="">
-            </ng-template> -->
             <div *ngIf="album.art; else defaultArt;">
                 <img src="{{album.albumArtUrl}}" alt="{{album.title}}" style="width:200px; height:200px;">
             </div>
@@ -40,16 +36,16 @@
         <table class="table table-inverse song-table album-tracklist-table">
             <thead>
                 <tr>
-                    <th>#</th>
-                    <th>Song</th>
+                    <th (click)="sort('track')">#</th>
+                    <th (click)="sort('title')">Title</th>
                     <th><mat-icon>schedule</mat-icon></th>
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let song of album.songs; let i = index">
-                    <th>{{i + 1}}</th>
+                <tr *ngFor="let song of album.songs;">
+                    <th>{{song.trackNumber}}</th>
                     <td>{{song.title}}</td>
-                    <td>{{song.duration}}</td>
+                    <td>{{song.durationString}}</td>
                 </tr>
             </tbody>
         </table>

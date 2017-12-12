@@ -11,6 +11,7 @@ export class Song {
     public artist: Artist;
 
     public album: Album;
+    public durationString: string;
     public trackNumber: number;
     public audioFileUrl: string;
 }

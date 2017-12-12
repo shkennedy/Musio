@@ -82,10 +82,20 @@ export class AlbumDetailComponent implements OnInit {
             });
     }
 
-    private sort(): void {
-        if (this.titleSort) {
+    private sort(type: string): void {
+        if (type === 'title') {
+            if (this.titleSort) {
+                this.ascendingOrder = !this.ascendingOrder;
+            } else {
+                this.titleSort = true;
+            }
             this.albumService.sortAlbumBySongTitle(this.album, this.ascendingOrder);
         } else {
+            if (!this.titleSort) {
+                this.ascendingOrder = !this.ascendingOrder;
+            } else {
+                this.titleSort = false;
+            }
             this.albumService.sortAlbumByTrack(this.album, this.ascendingOrder);
         }
     }

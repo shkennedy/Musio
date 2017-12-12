@@ -28,7 +28,11 @@ export class AlbumService {
                 const album: Album = response.responseData;
                 for (let trackNumber = 0; trackNumber < album.songs.length; trackNumber += 1) {
                     album.songs[trackNumber].trackNumber = trackNumber + 1;
-                    album.songs[trackNumber].duration = album.songs[trackNumber].duration / 1000;
+                    album.songs[trackNumber].duration = Math.floor(album.songs[trackNumber].duration / 1000);
+                    album.songs[trackNumber].durationString =
+                        `${Math.floor(album.songs[trackNumber].duration / 60)}:`;
+                    const seconds = album.songs[trackNumber].duration % 60;
+                    album.songs[trackNumber].durationString += (seconds < 10) ? `0${seconds}` : seconds;
                 }
                 if (album.albumArt) {
                     album.albumArtUrl =
@@ -78,20 +82,38 @@ export class AlbumService {
     }
 
     public sortAlbumBySongTitle(album: Album, ascending: boolean): void {
-        album.songs.sort((a: Song, b: Song) => {
-            if (a.title > b.title && ascending) {
-                return 1;
-            }
-            return -1;
-        });
+        if (ascending) {
+            album.songs.sort((a: Song, b: Song) => {
+                if (a.title > b.title) {
+                    return 1;
+                }
+                return -1;
+            });
+        } else {
+            album.songs.sort((a: Song, b: Song) => {
+                if (a.title < b.title) {
+                    return 1;
+                }
+                return -1;
+            });
+        }
     }
 
     public sortAlbumByTrack(album: Album, ascending: boolean): void {
-        album.songs.sort((a: Song, b: Song) => {
-            if (a.trackNumber > b.trackNumber && ascending) {
-                return 1;
-            }
-            return -1;
-        });
+        if (ascending) {
+            album.songs.sort((a: Song, b: Song) => {
+                if (a.trackNumber > b.trackNumber) {
+                    return 1;
+                }
+                return -1;
+            });
+        } else {
+            album.songs.sort((a: Song, b: Song) => {
+                if (a.trackNumber < b.trackNumber) {
+                    return 1;
+                }
+                return -1;
+            });
+        }
     }
 }

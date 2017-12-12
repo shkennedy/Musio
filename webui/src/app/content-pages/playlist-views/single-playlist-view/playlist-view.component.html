@@ -5,41 +5,40 @@
             <ng-template #default_art>
                 <img width=300 src="assets/images/default_art.png" alt="">
             </ng-template> -->
-            <img src="{{playlist.playlistImageUrl}}"
-        </div>
-        <div class="col-sm-12">
-            <h3 class="album-title">{{playlist.name}}</h3>
-        </div>
-        <button class="btn btn-green block-center">PLAY</button>
-
-        <div>
-            <div *ngIf="isFavorited; else favorite">
-                <button class="btn btn-black glyphicon glyphicon-heart" (click)="unfavoritePlaylist()"></button>
+            <img src="{{playlist.playlistImageUrl}}" </div>
+            <div class="col-sm-12">
+                <h3 class="album-title">{{playlist.name}}</h3>
             </div>
-            <ng-template #favorite>
-                <button class="btn btn-grey " (click)="favoritePlaylist()">FAVORITE</button>
-            </ng-template>
+            <button class="btn btn-green block-center">PLAY</button>
+
+            <div>
+                <div *ngIf="isFavorited; else favorite">
+                    <button class="btn btn-black glyphicon glyphicon-heart" (click)="unfavoritePlaylist()"></button>
+                </div>
+                <ng-template #favorite>
+                    <button class="btn btn-grey " (click)="favoritePlaylist()">FAVORITE</button>
+                </ng-template>
+            </div>
+
         </div>
 
+        <div id="playlist-tracklist" class="col-sm-8"></div>
+        <table class="table table-inverse song-table album-tracklist-table">
+            <thead>
+                <tr>
+                    <th (click)="sort('track')">#</th>
+                    <th (click)="sort('title')">Title</th>
+                    <th><mat-icon>schedule</mat-icon></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let song of playlist.songs;">
+                    <th>{{song.trackNumber}}</th>
+                    <td>{{song.title}}</td>
+                    <td>{{song.durationString}}</td>
+                    <td>{{song.artist.name}}</td>
+                    <td>{{song.album.name}}</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
-
-    <div id="playlist-tracklist" class="col-sm-8"></div>
-    <table class="table table-inverse song-table album-tracklist-table">
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>Song</th>
-                <th>Duration</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let song of playlist.songs; let i = index">
-                <th>{{i + 1}}</th>
-                <td>{{song.title}}</td>
-                <td>{{song.duration}}</td>
-                <td>{{song.artist.name}}</td>
-                <td>{{song.album.name}}</td>
-            </tr>
-        </tbody>
-    </table>
-</div>

@@ -53,10 +53,20 @@ export class PlaylistViewComponent implements OnInit {
         }
     }
 
-    private sort(): void {
-        if (this.titleSort) {
+    private sort(type: string): void {
+        if (type === 'title') {
+            if (this.titleSort) {
+                this.ascendingOrder = !this.ascendingOrder;
+            } else {
+                this.titleSort = true;
+            }
             this.playlistService.sortByTitle(this.playlist, this.ascendingOrder);
         } else {
+            if (!this.titleSort) {
+                this.ascendingOrder = !this.ascendingOrder;
+            } else {
+                this.titleSort = false;
+            }
             this.playlistService.sortByTrack(this.playlist, this.ascendingOrder);
         }
     }
