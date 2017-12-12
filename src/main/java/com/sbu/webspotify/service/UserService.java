@@ -1,6 +1,8 @@
 package com.sbu.webspotify.service;
 
 import java.util.Arrays;
+import java.util.Map;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -321,6 +323,17 @@ public class UserService {
 		
 		return null;
     }
+
+    public ApiResponseObject getFollowedUsersHistoryTails(User user) {
+        ApiResponseObject response = new ApiResponseObject();
+        Map<Integer, SongIdentifier> historyTails = new HashMap<>(); 
+        for (User followedUser : user.getFollowedUsers()) {
+            historyTails.put(followedUser.getId(), getListeningHistoryTail(followedUser.getId()));
+        }
+        response.setSuccess(true);
+        response.setResponseData(historyTails);
+        return response;
+    }
     
     public boolean getIsAdmin(User user) {
         for (Role role : user.getRoles()) {
@@ -361,6 +374,9 @@ public class UserService {
 
 	public Set<SongIdentifier> getListeningHistory(int userId) {
 		return songRepository.getListeningHistoryForUser(userId, appConfig.listeningHistoryToQuery);
-	}
-
+    }
+    
+    public SongIdentifier getListeningHistoryTail(int userId) {
+		return songRepository.getListeningHistoryForUser(userId, 1).iterator().next();
+    }
 }

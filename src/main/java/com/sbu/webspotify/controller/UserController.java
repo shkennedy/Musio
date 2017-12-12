@@ -224,6 +224,12 @@ public class UserController {
         return response;
     }
 
+    @RequestMapping(value={"/followedUsers/history"}, method = RequestMethod.GET)
+    public @ResponseBody ApiResponseObject getFollowedUsersHistoryTails(HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        return userService.getFollowedUsersHistoryTails(user);
+    }
+
 	@RequestMapping(value={"/followUser/{userId}"})
 	public @ResponseBody ApiResponseObject addFollowedUser(HttpSession session, @PathVariable Integer userId) {
 		User user = (User) session.getAttribute("user");
