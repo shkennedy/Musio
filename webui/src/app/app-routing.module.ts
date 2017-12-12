@@ -17,6 +17,7 @@ import { SearchComponent } from './content-pages/search-view/search-view.compone
 import { ContentHomeComponent } from './content-home/content-home.component';
 import { RadioViewComponent } from './content-pages/radio-view/radio-view.component';
 import { GoPremiumComponent } from './content-pages/go-premium/go-premium.component';
+import { UserSettingsComponent } from './content-pages/user-views/user-settings-view/user-settings.component';
 
 const appRoutes: Routes = [
   { path: '', component: ContentHomeComponent, children:
@@ -32,7 +33,8 @@ const appRoutes: Routes = [
       { path: 'radio', component: RadioViewComponent },
       { path: 'go-premium', component: GoPremiumComponent},
       { path: 'browse', component: BrowseComponent},
-      { path: 'search/:searchQuery', component: SearchComponent}
+      { path: 'search/:searchQuery', component: SearchComponent},
+      { path: 'userSettings', component: UserSettingsComponent},
     ]
   },
   { path: 'login', component: LoginComponent },

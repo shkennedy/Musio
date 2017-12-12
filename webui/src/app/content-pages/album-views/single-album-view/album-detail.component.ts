@@ -35,53 +35,55 @@ export class AlbumDetailComponent implements OnInit {
         const url: string[] = this.router.url.split('/');
         this.albumService.getAlbumById(Number(url[url.length - 1]))
             .subscribe(
-                (album: Album) => {
-                    this.album = album;
-                    this.album.albumArtUrl =
-                        this.fileService.getAlbumImageURLByIdAndSize(album.albumArtId, true);
-                },
-                (error: any) => {
-                    this.errorMessage = error;
-                });
-
-        this.favoritesService.getFavoriteAlbums()
-        .subscribe(
-            (albums: Album[]) => {
-                if (albums) {
-                    for (let i = 0; i < albums.length; ++i) {
-                        if (albums[i].id === this.album.id) {
-                            this.isFavorited = true;
-                            console.log('album-detail.component found album is favorited');
+            (album: Album) => {
+                console.log('pre assignment');
+                this.album = album;
+                console.log('album assigned ' + album);
+                this.album.albumArtUrl =
+                    this.fileService.getAlbumImageURLByIdAndSize(album.albumArtId, true);
+                this.favoritesService.getFavoriteAlbums()
+                    .subscribe(
+                    (albums: Album[]) => {
+                        if (albums) {
+                            for (let i = 0; i < albums.length; ++i) {
+                                if (albums[i].id === this.album.id) {
+                                    this.isFavorited = true;
+                                    console.log('album-detail.component found album is favorited');
+                                }
+                            }
                         }
-                    }
-                }
-            },
-            (error: any) => {
-                console.log(error.toString());
+                    },
+                    (error: any) => {
+                        console.log('sheet');
+                    });
             });
+            // (error: any) => {
+            //     this.errorMessage = error;
+            //     console.log('sheeeeeet');
+            // });
     }
 
 
     private favoriteAlbum(): void {
         this.favoritesService.addFavoriteAlbumById(this.album.id)
             .subscribe(
-                (success: boolean) => {
-                    this.isFavorited = true;
-                },
-                (error: any) => {
-                    console.log(error.toString());
-                });
+            (success: boolean) => {
+                this.isFavorited = true;
+            },
+            (error: any) => {
+                console.log(error.toString());
+            });
     }
 
     private unfavoriteAlbum(): void {
         this.favoritesService.removeFavoriteAlbumById(this.album.id)
             .subscribe(
-                (success: boolean) => {
-                    this.isFavorited = false;
-                },
-                (error: any) => {
-                    console.log(error.toString());
-                });
+            (success: boolean) => {
+                this.isFavorited = false;
+            },
+            (error: any) => {
+                console.log(error.toString());
+            });
     }
 
     private sort(): void {

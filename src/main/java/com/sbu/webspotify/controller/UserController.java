@@ -179,7 +179,7 @@ public class UserController {
 		return userService.removeFavoriteSong(user, songId);
 	}
 
-	@RequestMapping(value={"/favorites/add/album/{albumId}"})
+	@RequestMapping(value={"/favorites/add/album/{albumId}"}, method = RequestMethod.GET)
 	public @ResponseBody ApiResponseObject addFavoriteAlbum(HttpSession session, @PathVariable Integer albumId) {
 		User user = (User) session.getAttribute("user");
 		return userService.addFavoriteAlbum(user, albumId);

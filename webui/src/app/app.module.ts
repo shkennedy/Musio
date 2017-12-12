@@ -39,6 +39,7 @@ import { RadioViewComponent } from './content-pages/radio-view/radio-view.compon
 import { GoPremiumComponent } from './content-pages/go-premium/go-premium.component';
 import { SearchComponent } from './content-pages/search-view/search-view.component';
 import { FollowedUsersBarComponent } from './content-home/followed-users-bar/followed-users-bar.component';
+import { UserSettingsComponent } from './content-pages/user-views/user-settings-view/user-settings.component';
 
 import { AdService } from './services/ad.service';
 import { AlbumService } from './services/album.service';
@@ -80,7 +81,8 @@ import { UserService } from './services/user.service';
         RadioViewComponent,
         GoPremiumComponent,
         SearchComponent,
-        FollowedUsersBarComponent
+        FollowedUsersBarComponent,
+        UserSettingsComponent
     ],
     entryComponents: [],
     imports: [

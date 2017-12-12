@@ -24,8 +24,9 @@ export class AlbumService {
         return this.httpRequest.get(AlbumService.ALBUM_URL + AlbumService.GET_URL, albumId)
             .map((response: ApiResponse) => {
                 const album: Album = response.responseData;
-                for (let trackNumber = 1; trackNumber <= album.songs.length; trackNumber += 1) {
-                    album.songs[trackNumber].trackNumber = trackNumber;
+                for (let trackNumber = 0; trackNumber < album.songs.length; trackNumber += 1) {
+                    album.songs[trackNumber].trackNumber = trackNumber + 1;
+                    album.songs[trackNumber].duration = album.songs[trackNumber].duration / 1000;
                 }
                 return album;
             });

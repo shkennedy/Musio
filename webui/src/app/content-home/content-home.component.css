@@ -5,6 +5,10 @@
   resize:none;
 }
 
+.ad_bar {
+    height:10%;
+}
+
 .bottom_bar{
   height:10%;
   /*background-color:#e0e0e0;*/

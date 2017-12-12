@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 
+import { FavoritesService } from '../../services/favorites.service';
 import { UserService } from '../../services/user.service';
 
 import { User } from '../../models/user.model';
@@ -18,6 +19,7 @@ export class TopNavComponent implements OnInit {
     constructor(
         private router: Router,
         private userService: UserService,
+        private favoritesService: FavoritesService
     ) { }
 
     ngOnInit() {
@@ -45,8 +47,27 @@ export class TopNavComponent implements OnInit {
         console.log('clicked goPremium');
     }
 
-    gotoAbout() {
-        this.router.navigate(['/about']);
+    gotoSettings() {
+        this.router.navigate(['/userSettings']);
+        // for (let i = 4; i < 100; i += 1) {
+        //     console.log(i);
+        //     this.favoritesService.addFavoriteAlbumById(i)
+        //     .subscribe((response: boolean) => {
+        //         console.log(response);
+        //     });
+        //     this.favoritesService.addFavoriteArtistById(i)
+        //     .subscribe((response: boolean) => {
+        //         console.log(response);
+        //     });
+        //     this.favoritesService.addFavoritePlaylistById(i)
+        //     .subscribe((response: boolean) => {
+        //         console.log(response);
+        //     });
+        //     this.favoritesService.addFavoriteSongById(i)
+        //     .subscribe((response: boolean) => {
+        //         console.log(response);
+        //     });
+        // }
         console.log('clicked About');
     }
 

@@ -4,13 +4,18 @@
 </div>
 <ng-template #hasAlbums>
     <mat-grid-list cols="4" gutterSize="15px" class="padded">
-      <mat-grid-tile *ngFor="let album of albums"
-                     [routerLink]="['/albums',album.id]">
-          <div class="col_flex">
-              <img src="{{album.albumArtUrl}}" alt="{{album.title}}">
-              <p>{{album.title}}</p>
-              <p>{{album.artistName}}</p>
-          </div>
-      </mat-grid-tile>
+        <mat-grid-tile *ngFor="let album of albums" [routerLink]="['/albums',album.id]">
+            <div class="col_flex">
+                <div *ngIf="album.albumArt; else defaultArt;">
+                    <img src="album.albumArt.url" alt="{{album.title}}">
+                </div>
+                <ng-template #defaultArt>
+                    <img src="assets/images/default_art.png" alt="{{album.title}}">
+                </ng-template>
+                <!-- <img src="{{album.albumArtUrl}}" alt="{{album.title}}"> -->
+                <p>{{album.title}}</p>
+                <p>{{album.artistName}}</p>
+            </div>
+        </mat-grid-tile>
     </mat-grid-list>
 </ng-template>
