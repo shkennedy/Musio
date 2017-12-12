@@ -24,6 +24,10 @@ export class LeftNavComponent implements OnInit {
         private playlistService: PlaylistService,
         private songService: SongService
     ) {
+        let p=new Playlist();
+        p.id=5;
+        p.name="PlayList"
+        this.playlists=[p,p,p,p,p,p,p,p,p];
         // sample data
         // let p=new Playlist();
         // p.name="playlist1";
