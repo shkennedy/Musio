@@ -3,6 +3,7 @@ package com.sbu.webspotify.controller;
 import com.sbu.webspotify.dto.ApiResponseObject;
 import com.sbu.webspotify.dto.BrowsingMode;
 import com.sbu.webspotify.dto.identifier.SongIdentifier;
+import com.sbu.webspotify.dto.identifier.UserIdentifier;
 import com.sbu.webspotify.model.*;
 
 import java.util.Set;
@@ -218,8 +219,9 @@ public class UserController {
     @RequestMapping(value={"/followedUsers"}, method = RequestMethod.GET)
     public @ResponseBody ApiResponseObject getFollowedUsers(HttpSession session) {
         ApiResponseObject response = new ApiResponseObject();
-        User user = (User) session.getAttribute("user");
-        response.setResponseData(user.getFollowedUsers());
+		User user = (User) session.getAttribute("user");
+		Set<UserIdentifier> followedUsers = userService.getFollowedUsers(user.getId());
+        response.setResponseData(followedUsers);
         response.setSuccess(true);
         return response;
     }
