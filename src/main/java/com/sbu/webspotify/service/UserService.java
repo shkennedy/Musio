@@ -194,6 +194,7 @@ public class UserService {
 			return response;
 		}
 		persistUser(user);
+		userRepository.deleteFavoriteAlbumRecord(user.getId(), a.getId());
 		response.setSuccess(true);
 		return response;
 	}
@@ -226,6 +227,7 @@ public class UserService {
 			return response;
 		}
 		persistUser(user);
+		userRepository.deleteFavoriteArtistRecord(user.getId(), p.getId());		
 		response.setSuccess(true);
 		return response;
 	}
@@ -258,6 +260,7 @@ public class UserService {
 			return response;
 		}
 		persistUser(user);
+		userRepository.deleteFollowingUserRecord(user.getId(), u.getId());		
 		response.setSuccess(true);
 		return response;
 	}
@@ -266,6 +269,11 @@ public class UserService {
 		user = userRepository.save(user);
 		userRepository.flush();
 		userRepository.cleanFavoriteSongs();
+		userRepository.cleanFavoriteAlbums();
+		userRepository.cleanFavoriteArtists();
+		userRepository.cleanFavoriteGenres();
+		userRepository.cleanFollowingUsers();
+		userRepository.cleanFavoritePlaylists();
 	}
 
 	public ApiResponseObject addFavoritePlaylist(User user, Integer playlistId) {
@@ -296,6 +304,7 @@ public class UserService {
 			return response;
 		}
 		persistUser(user);
+		userRepository.deleteFavoritePlaylistRecord(user.getId(), p.getId());
 		response.setSuccess(true);
 		return response;
 	}
@@ -328,6 +337,7 @@ public class UserService {
 			return response;
 		}
 		persistUser(user);
+		userRepository.deleteFavoriteGenreRecord(user.getId(), p.getId());
 		response.setSuccess(true);
 		return response;
 	}
