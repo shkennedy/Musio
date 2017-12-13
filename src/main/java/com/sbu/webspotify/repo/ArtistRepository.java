@@ -4,7 +4,7 @@ import java.util.Set;
 
 import com.sbu.webspotify.dto.identifier.ArtistIdentifier;
 import com.sbu.webspotify.model.Artist;
-
+import com.sbu.webspotify.model.Concert;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -33,4 +33,12 @@ public interface ArtistRepository extends JpaRepository<Artist, Integer>
     
     @Query(value = "SELECT a2.id as id, a2.name as name FROM artist_artist_relation aar, artist a1, artist a2 WHERE a1.id = :artistId AND aar.artist1_id = a1.id AND aar.artist2_id = a2.id AND aar.artist1_id <> aar.artist2_id ORDER BY score DESC LIMIT :numElements", nativeQuery = true)    
     Set<ArtistIdentifier> findMostRelatedArtists(@Param("artistId") int artistId, @Param("numElements") int numElements);
+    
+    
+    
+    @Query(value = "SELECT c.* "
+                    + "FROM Concert c, artist_concert_mapping acm "
+                    + "WHERE acm.artist_id = :artistId ", 
+           nativeQuery = true)    
+    Set<Concert> findConcertsForArtist(@Param("artistId") int artistId);
 }
