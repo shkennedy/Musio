@@ -50,11 +50,11 @@
                     <span>Related Artists</span>
                 </label>
             </li>
-            <li title="tab 4">
+            <!-- <li title="tab 4">
                 <label for="tab3" role="button">
                     <span>Concerts</span>
                 </label>
-            </li>
+            </li> -->
         </ul>
         <div class="slider">
             <div class="indicator"></div>
@@ -75,10 +75,6 @@
                             </div>
                             <div class="col-sm-12">
                                 <h3 class="album-title">{{album.title}}</h3>
-
-                                <h5>By
-                                    <span id="artist-name" [routerLink]="['/artists', album.artists[0].id]">{{album.artists[0].name}}</span>
-                                </h5>
                             </div>
                             <button class="btn btn-green block-center">PLAY</button>
 
@@ -137,9 +133,9 @@
                 </div>
             </section>
 
-            <section>
+            <!-- <section>
                 <h2>Concerts</h2>
-            </section>
+            </section> -->
 
         </div>
     </div>

@@ -4,12 +4,11 @@
 </div>
 <ng-template #hasArtists>
     <mat-grid-list cols="4" gutterSize="15px" class="padded">
-      <mat-grid-tile *ngFor="let artist of artists"
-                     [routerLink]="['/artists', artist.id]">
-          <div class="col_flex">
-              <img src="{{artist.artistImageUrl}}" alt="{{artist.name}}">
-              <p>{{artist.name}}</p>
-          </div>
-      </mat-grid-tile>
+        <mat-grid-tile *ngFor="let artist of artists" [routerLink]="['/artists', artist.id]">
+            <div class="col_flex">
+                <img width="200px" height="200px" src="{{artist.artistImageUrl}}" alt="{{artist.name}}">
+                <p>{{artist.name}}</p>
+            </div>
+        </mat-grid-tile>
     </mat-grid-list>
 </ng-template>

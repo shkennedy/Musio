@@ -35,7 +35,7 @@ export class ArtistsViewComponent implements OnInit {
                     this.artists = artists;
                     artists.forEach((artist: Artist) => {
                         artist.artistImageUrl =
-                            this.fileService.getArtistImageURLByIdAndSize(artist.id, false);
+                            this.fileService.getArtistImageURLByIdAndSize(artist.id, true);
                     });
                 }
             },

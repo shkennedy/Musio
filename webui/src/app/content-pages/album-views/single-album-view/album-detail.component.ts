@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { AudioPlayerProxyService } from '../../../services/audioPlayerProxy.service';
 import { AlbumService } from '../../../services/album.service';
 import { FavoritesService } from '../../../services/favorites.service';
 import { FileService } from '../../../services/file.service';
@@ -27,6 +28,7 @@ export class AlbumDetailComponent implements OnInit {
     constructor(
         private router: Router,
         private albumService: AlbumService,
+        private audioPlayerProxyService: AudioPlayerProxyService,
         private favoritesService: FavoritesService,
         private fileService: FileService
     ) { }
@@ -98,5 +100,21 @@ export class AlbumDetailComponent implements OnInit {
             }
             this.albumService.sortAlbumByTrack(this.album, this.ascendingOrder);
         }
+    }
+
+    private playAlbum(): void {
+        this.audioPlayerProxyService.playAlbum(this.album.id);
+    }
+
+    private addAlbumToQueue(): void {
+        this.audioPlayerProxyService.addAlbumToQueue(this.album.id);
+    }
+
+    private playSong(songId: number): void {
+        this.audioPlayerProxyService.playSong(songId);
+    }
+
+    private addSongToQueue(songId: number): void {
+        this.audioPlayerProxyService.addSongToQueue(songId);
     }
 }

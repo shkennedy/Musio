@@ -41,7 +41,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let song of album.songs;">
+                <tr *ngFor="let song of album.songs;" (click)="addSongToQueue(song.id)">
                     <th>{{song.trackNumber}}</th>
                     <td>{{song.title}}</td>
                     <td>{{song.durationString}}</td>

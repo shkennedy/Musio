@@ -34,7 +34,7 @@ export class AlbumsViewComponent implements OnInit {
                         this.albums = albums;
                         albums.forEach((album: Album) => {
                             album.albumArtUrl =
-                                this.fileService.getAlbumImageURLByIdAndSize(album.albumArtId, false);
+                                this.fileService.getAlbumImageURLByIdAndSize(album.id, false);
                         });
                         this.sort();
                     }
