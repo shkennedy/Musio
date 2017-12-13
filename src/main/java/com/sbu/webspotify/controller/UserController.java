@@ -6,6 +6,7 @@ import com.sbu.webspotify.dto.identifier.SongIdentifier;
 import com.sbu.webspotify.dto.identifier.UserIdentifier;
 import com.sbu.webspotify.model.*;
 
+import java.io.IOException;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sbu.webspotify.service.SongService;
@@ -219,8 +221,8 @@ public class UserController {
     @RequestMapping(value={"/followedUsers"}, method = RequestMethod.GET)
     public @ResponseBody ApiResponseObject getFollowedUsers(HttpSession session) {
         ApiResponseObject response = new ApiResponseObject();
-		User user = (User) session.getAttribute("user");
-		Set<UserIdentifier> followedUsers = userService.getFollowedUsers(user.getId());
+		int userId = (int) session.getAttribute("userId");
+		Set<UserIdentifier> followedUsers = userService.getFollowedUsers(userId);
         response.setResponseData(followedUsers);
         response.setSuccess(true);
         return response;
@@ -332,6 +334,23 @@ public class UserController {
 	public @ResponseBody ApiResponseObject checkBrowsingMode(HttpSession session) {
 		boolean browsingMode = (boolean) session.getAttribute("privateMode");
 		return new ApiResponseObject(true, null, new BrowsingMode(browsingMode));
+	}
+
+	@RequestMapping(value="/uploadProfileImage", method=RequestMethod.POST)
+	public @ResponseBody ApiResponseObject updateProfileImage(@RequestParam("profileImageFile") MultipartFile profileImageFile, HttpSession session){
+		ApiResponseObject response = new ApiResponseObject();
+		User currentUser = (User) session.getAttribute("user");
+		try {
+			userService.updateProfileImage(currentUser, profileImageFile);
+			response.setSuccess(true);
+		}
+		catch(IOException e){
+			e.printStackTrace();
+			response.setMessage("Error uploading new profile image.");
+			response.setSuccess(false);
+		}
+
+		return response;
 	}
 
 

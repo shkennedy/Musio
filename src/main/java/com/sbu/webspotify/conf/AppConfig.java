@@ -40,4 +40,13 @@ public class AppConfig {
 
     @Value("${email.changePasswordBody}")
     public String changePasswordBody;
+
+    @Value("${mimetype.jpeg}")
+    public String jpeg;
+
+    @Value("${mimetype.png}")
+    public String png;
+
+    @Value("${mimetype.vorbis}")
+    public String vorbis;
 }

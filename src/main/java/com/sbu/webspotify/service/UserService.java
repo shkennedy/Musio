@@ -1,9 +1,10 @@
 package com.sbu.webspotify.service;
 
+import java.io.IOException;
 import java.util.Arrays;
-import java.util.Map;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import com.sbu.webspotify.conf.AppConfig;
@@ -15,7 +16,9 @@ import com.sbu.webspotify.dto.identifier.SongIdentifier;
 import com.sbu.webspotify.dto.identifier.UserIdentifier;
 import com.sbu.webspotify.model.Album;
 import com.sbu.webspotify.model.Artist;
+import com.sbu.webspotify.model.File;
 import com.sbu.webspotify.model.Genre;
+import com.sbu.webspotify.model.MimeType;
 import com.sbu.webspotify.model.Playlist;
 import com.sbu.webspotify.model.Role;
 import com.sbu.webspotify.model.Song;
@@ -23,15 +26,16 @@ import com.sbu.webspotify.model.User;
 import com.sbu.webspotify.repo.AlbumRepository;
 import com.sbu.webspotify.repo.ArtistRepository;
 import com.sbu.webspotify.repo.GenreRepository;
+import com.sbu.webspotify.repo.MimeTypeRepository;
 import com.sbu.webspotify.repo.PlaylistRepository;
 import com.sbu.webspotify.repo.RoleRepository;
 import com.sbu.webspotify.repo.SongRepository;
 import com.sbu.webspotify.repo.UserRepository;
-import com.sbu.webspotify.service.EmailService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service("userService")
 public class UserService {
@@ -58,7 +62,13 @@ public class UserService {
     private GenreRepository genreRepository;
     
     @Autowired 
-    private EmailService emailService;
+	private EmailService emailService;
+	
+	@Autowired
+	private FileService fileService;
+
+	@Autowired
+	private MimeTypeRepository mimeTypeRepository;
 	
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -252,7 +262,8 @@ public class UserService {
 	}
 
 	public void persistUser(User user) {
-		userRepository.save(user);
+		user = userRepository.save(user);
+		userRepository.flush();
 	}
 
 	public ApiResponseObject addFavoritePlaylist(User user, Integer playlistId) {
@@ -384,4 +395,14 @@ public class UserService {
 	public Set<UserIdentifier> getFollowedUsers(int userId) {
 		return userRepository.getFollowedUsers(userId);
 	}
+
+	public void updateProfileImage(User user, MultipartFile profileImageFile) throws IOException {
+		// PNG images only.
+		MimeType mimeType = mimeTypeRepository.findBySubtype(appConfig.png);
+		File profileImage = fileService.uploadFile(profileImageFile.getBytes(), mimeType);
+		user.setProfileImage(profileImage);
+		persistUser(user);
+	}
+
+
 }

@@ -27,6 +27,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 
         HttpSession session = request.getSession();
         session.setAttribute("user", user);
+        session.setAttribute("userId", user.getId());        
         session.setAttribute("privateMode", false);
         session.setAttribute("authorities", authentication.getAuthorities());
 
