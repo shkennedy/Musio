@@ -33,7 +33,7 @@ export class ArtistService {
                     if (artist.artistImage) {
                         console.log(artist.artistImage.id);
                         artist.artistImageUrl =
-                            this.fileService.getArtistImageURLByIdAndSize(artist.artistImage.id, true);
+                            this.fileService.getArtistImageURLByIdAndSize(artistId, true);
                     }
                     return response.responseData;
                 }
@@ -43,10 +43,25 @@ export class ArtistService {
 
     getArtistAlbumsById(artistId: number): Observable<Album[]> {
         const url = ArtistService.ARTIST_URL + ArtistService.GET_URL + '/' +
-                    artistId + ArtistService.ALBUMS_URL;
+            artistId + ArtistService.ALBUMS_URL;
         return this.httpRequest.get(url)
             .map((response: ApiResponse) => {
-                return response.responseData;
+                const albums: Album[] = response.responseData;
+                albums.forEach((album: Album) => {
+                    for (let trackNumber = 0; trackNumber < album.songs.length; trackNumber += 1) {
+                        album.songs[trackNumber].trackNumber = trackNumber + 1;
+                        album.songs[trackNumber].duration = Math.floor(album.songs[trackNumber].duration / 1000);
+                        album.songs[trackNumber].durationString =
+                            `${Math.floor(album.songs[trackNumber].duration / 60)}:`;
+                        const seconds = album.songs[trackNumber].duration % 60;
+                        album.songs[trackNumber].durationString += (seconds < 10) ? `0${seconds}` : seconds;
+                    }
+                    if (album.albumArt) {
+                        album.albumArtUrl =
+                            this.fileService.getAlbumImageURLByIdAndSize(album.id, true);
+                    }
+                });
+                return albums;
             });
     }
 

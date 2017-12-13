@@ -46,7 +46,7 @@ export class AudioPlayerProxyService {
         this.listeners[AudioPlayerProxyService.ADD_SONG_TAG](songId);
     }
 
-    public playSongQueue(songId: number): void {
+    public playSong(songId: number): void {
         this.listeners[AudioPlayerProxyService.PLAY_SONG_TAG](songId);
     }
 
@@ -54,7 +54,7 @@ export class AudioPlayerProxyService {
         this.listeners[AudioPlayerProxyService.ADD_ALBUM_TAG](albumId);
     }
 
-    public playAlbumQueue(albumId: number): void {
+    public playAlbum(albumId: number): void {
         this.listeners[AudioPlayerProxyService.PLAY_ALBUM_TAG](albumId);
     }
 
@@ -62,16 +62,16 @@ export class AudioPlayerProxyService {
         this.listeners[AudioPlayerProxyService.ADD_ARTIST_TAG](artistId);
     }
 
-    public playArtistQueue(artistId: number): void {
+    public playArtist(artistId: number): void {
         this.listeners[AudioPlayerProxyService.PLAY_ARTIST_TAG](artistId);
-    }
-
-    public playPlaylistQueue(playlistId: number): void {
-        this.listeners[AudioPlayerProxyService.PLAY_PLAYLIST_TAG](playlistId);
     }
 
     public addPlaylistToQueue(playlistId: number): void {
         this.listeners[AudioPlayerProxyService.ADD_PLAYLIST_TAG](playlistId);
+    }
+
+    public playPlaylist(playlistId: number): void {
+        this.listeners[AudioPlayerProxyService.PLAY_PLAYLIST_TAG](playlistId);
     }
 
     public setPrivateSession(privateSession: boolean): void {

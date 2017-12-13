@@ -23,7 +23,7 @@ import { Song } from '../../models/song.model';
 })
 export class AudioPlayerComponent implements OnInit {
 
-    private static IN_PROGRESS_TIME = 2;
+    private static IN_PROGRESS_TIME = 1;
 
     audio: Howl;
     useHighBitrate: boolean;
@@ -86,12 +86,13 @@ export class AudioPlayerComponent implements OnInit {
             });
     }
 
-    public addSongToQueue(songId: number): void {
+    public addSongToQueue = (songId: number): void => {
         this.songService.getSongById(songId)
             .subscribe(
             (song: Song) => {
                 if (song) {
-                    this.songQueue.unshift(song);
+                    this.songQueue.push(song);
+                    console.log(`${this.songQueue}`);
                 }
             },
             (error: any) => {
@@ -99,7 +100,7 @@ export class AudioPlayerComponent implements OnInit {
             });
     }
 
-    public playSong(songId: number): void {
+    public playSong = (songId: number): void => {
         this.addCurrentSongToHistory();
         this.songQueue = [];
         this._playSong(songId);
@@ -116,7 +117,7 @@ export class AudioPlayerComponent implements OnInit {
             });
     }
 
-    public playPlaylist(playlistId: number): void {
+    public playPlaylist = (playlistId: number): void => {
         this.addCurrentSongToHistory();
         this.playlistService.getPlaylistById(playlistId)
             .subscribe((playlist: Playlist) => {
@@ -128,7 +129,7 @@ export class AudioPlayerComponent implements OnInit {
             });
     }
 
-    public addAlbumToQueue(albumId: number): void {
+    public addAlbumToQueue = (albumId: number): void => {
         this.albumService.getAlbumById(albumId)
             .subscribe((album: Album) => {
                 if (album) {
@@ -139,7 +140,7 @@ export class AudioPlayerComponent implements OnInit {
             });
     }
 
-    public playAlbum(albumId: number): void {
+    public playAlbum = (albumId: number): void => {
         this.addCurrentSongToHistory();
         this.albumService.getAlbumById(albumId)
             .subscribe((album: Album) => {
@@ -151,7 +152,7 @@ export class AudioPlayerComponent implements OnInit {
             });
     }
 
-    public addArtistToQueue(artistId: number): void {
+    public addArtistToQueue = (artistId: number): void => {
         // this.artistService.getArtistById(artistId) TODO
         // .subscribe((artist: Artist) => {
         //     if (artist) {
@@ -162,7 +163,7 @@ export class AudioPlayerComponent implements OnInit {
         // });
     }
 
-    public playArtist(artistId: number): void {
+    public playArtist = (artistId: number): void => {
         // this.addCurrentSongToHistory(); TODO
         // this.albumService.getAlbumById(artistId)
         // .subscribe((artist: Artist) => {
@@ -174,11 +175,11 @@ export class AudioPlayerComponent implements OnInit {
         // });
     }
 
-    public setPrivateMode(privateMode: boolean): void {
+    public setPrivateMode = (privateMode: boolean): void => {
         this.privateMode = privateMode;
     }
 
-    public setUseHighBitrate(useHighBitrate: boolean): void {
+    public setUseHighBitrate = (useHighBitrate: boolean): void => {
         this.useHighBitrate = useHighBitrate;
     }
 
@@ -203,8 +204,8 @@ export class AudioPlayerComponent implements OnInit {
                 this.errMsg = 'Unable to play song';
             }
         });
+        newHowl.mute(this.isMuted);
 
-        this.isPlaying = true;
         return newHowl;
     }
 
@@ -253,18 +254,53 @@ export class AudioPlayerComponent implements OnInit {
         }
     }
 
-    private playNext = (): void => {
+    // Helper for adding current song to history,
+    // Adds song to public history if not in private mode
+    private addCurrentSongToHistory(): void {
         if (!this.currentSong) {
             return;
         }
 
-        this.stopSongTimer();
+        this.history.push(this.currentSong);
+        if (!this.privateMode) {
+            this.userService.addSongIdToHistory(this.currentSong.id);
+        }
+    }
+
+    // UI Event Handlers -------------------------------------------------------------------
+
+    private play(): void {
+        console.log(this.songQueue);
+        if (this.audio) {
+            this.audio.play();
+            this.isPlaying = true;
+        } else if (this.songQueue.length !== 0) {
+            this.playNext();
+        }
+    }
+
+    private pause(): void {
+        if (this.audio) {
+            this.audio.pause();
+            this.isPlaying = false;
+        }
+    }
+
+    private playNext = (): void => {
+        if (!this.currentSong && this.songQueue.length === 0) {
+            return;
+        }
+
+        if (this.audio) {
+            this.audio.pause();
+        }
+
         this.addCurrentSongToHistory();
 
         let nextSong: Song;
         if (this.isRepeating) {
             nextSong = this.currentSong;
-        } else if (this.songQueue.length === 0) {
+        } else if (this.songQueue.length !== 0) {
             if (this.isShuffling) {
                 const nextIndex = Math.floor(Math.random() * this.songQueue.length);
                 nextSong = this.songQueue.splice(nextIndex, 1)[0];
@@ -296,39 +332,12 @@ export class AudioPlayerComponent implements OnInit {
         // Add current song to songQueue
         this.songQueue.unshift(this.currentSong);
 
-        if (lastSong) {
-            this._playSong(lastSong.id);
-        }
-    }
-
-    // Helper for adding current song to history,
-    // Adds song to public history if not in private mode
-    private addCurrentSongToHistory(): void {
-        if (!this.currentSong) {
-            return;
-        }
-
-        this.history.push(this.currentSong);
-        if (!this.privateMode) {
-            this.userService.addSongIdToHistory(this.currentSong.id);
-        }
-    }
-
-    // UI Event Handlers -------------------------------------------------------------------
-
-    private play(): void {
-        if (this.audio) {
-            this.audio.play();
-            this.isPlaying = true;
-        } else {
-            this._playSong(9); // TODO remove
-        }
-    }
-
-    private pause(): void {
         if (this.audio) {
             this.audio.pause();
-            this.isPlaying = false;
+        }
+
+        if (lastSong) {
+            this._playSong(lastSong.id);
         }
     }
 

@@ -109,6 +109,13 @@ export class ArtistDetailComponent implements OnInit {
             });
     }
 
+    private gotoRelatedArtist(relatedArtistId: number): void {
+        this.router.navigate(['/albums']) // garbage link to force page reload
+        .then(() => {
+            this.router.navigate(['/artists', relatedArtistId]);
+        });
+    }
+
     private sort(): void {
         this.albumService.sortAlbumsByReleaseDate(this.artist.albums, this.ascendingOrder);
     }

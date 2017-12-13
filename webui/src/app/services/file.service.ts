@@ -29,14 +29,14 @@ export class FileService {
         return FileService.GENERIC_GET_URL + `/${fileId}`;
     }
 
-    public getAlbumImageURLByIdAndSize(albumImageId: number, useFullSize): string {
+    public getAlbumImageURLByIdAndSize(albumId: number, useFullSize): string {
         return FileService.BASE_URL +
-        ((useFullSize) ? FileService.ALBUM_FULL_URL : FileService.ALBUM_THUMB_URL) + `/${albumImageId}`;
+        ((useFullSize) ? FileService.ALBUM_FULL_URL : FileService.ALBUM_THUMB_URL) + `/${albumId}`;
     }
 
-    public getArtistImageURLByIdAndSize(artistImageId: number, useFullSize): string {
+    public getArtistImageURLByIdAndSize(artistId: number, useFullSize): string {
         return FileService.BASE_URL +
-        ((useFullSize) ? FileService.ARTIST_FULL_URL : FileService.ARTIST_THUMB_URL) + `/${artistImageId}`;
+        ((useFullSize) ? FileService.ARTIST_FULL_URL : FileService.ARTIST_THUMB_URL) + `/${artistId}`;
     }
 
     public getSongFileURLByIdAndBitrate(songId: number, useHighBitrate: boolean): string {

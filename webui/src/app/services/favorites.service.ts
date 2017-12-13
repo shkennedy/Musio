@@ -76,11 +76,11 @@ export class FavoritesService {
     }
 
     public addFavoriteArtistById(artistId: number): Observable<boolean> {
-        return this.addFavoriteByUrlAndId(FavoritesService.ALBUM_URL, artistId);
+        return this.addFavoriteByUrlAndId(FavoritesService.ARTIST_URL, artistId);
     }
 
     public removeFavoriteArtistById(artistId: number): Observable<boolean> {
-        return this.removeFavoriteByUrlAndId(FavoritesService.ALBUM_URL, artistId);
+        return this.removeFavoriteByUrlAndId(FavoritesService.ARTIST_URL, artistId);
     }
 
     public getFavoriteGenres(): Observable<Genre[]> {

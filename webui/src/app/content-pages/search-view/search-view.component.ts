@@ -56,7 +56,7 @@ export class SearchComponent implements OnInit {
                 if (this.albums) {
                     this.albums.forEach((album: Album) => {
                         album.albumArtUrl =
-                            this.fileService.getAlbumImageURLByIdAndSize(album.albumArtId, false);
+                            this.fileService.getAlbumImageURLByIdAndSize(album.id, false);
                     });
                 }
 
@@ -91,8 +91,8 @@ export class SearchComponent implements OnInit {
                 this.users = searchData.users;
                 if (this.users) {
                     this.users.forEach((user: User) => {
-                        user.profileImageUrl =
-                            this.fileService.getAlbumImageURLByIdAndSize(user.id, false);
+                        // user.profileImageUrl =
+                            // this.fileService.getAlbumImageURLByIdAndSize(user.id, false);
                     });
                 }
             },
