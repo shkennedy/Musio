@@ -21,6 +21,7 @@ public class Playlist implements Serializable {
 	private boolean isPrivate;
 	private String  name;
 	private User    owner;
+	private int 	imageFileId;
 
 	private List<Song> songs;
 
@@ -113,6 +114,20 @@ public class Playlist implements Serializable {
 
 	public boolean removeSong(Song s) {
 		return this.songs.remove(s);
+	}
+
+	/**
+	 * @return the imageFileId
+	 */
+	public int getImageFileId() {
+		return imageFileId;
+	}
+
+	/**
+	 * @param imageFileId the imageFileId to set
+	 */
+	public void setImageFileId(int imageFileId) {
+		this.imageFileId = imageFileId;
 	}
 
 }

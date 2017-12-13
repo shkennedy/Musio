@@ -1,22 +1,31 @@
 package com.sbu.webspotify.controller;
 
+import java.io.IOException;
+
 import javax.servlet.http.HttpSession;
 
+import com.sbu.webspotify.conf.AppConfig;
 import com.sbu.webspotify.dto.ApiResponseObject;
+import com.sbu.webspotify.model.File;
+import com.sbu.webspotify.model.MimeType;
 import com.sbu.webspotify.model.Playlist;
 import com.sbu.webspotify.model.User;
+import com.sbu.webspotify.repo.MimeTypeRepository;
 import com.sbu.webspotify.repo.PlaylistRepository;
+import com.sbu.webspotify.service.FileService;
 import com.sbu.webspotify.service.PlaylistService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @RequestMapping(path = "/playlist") // This means URL's start with /example (after Application path)
@@ -27,6 +36,15 @@ public class PlaylistController
 
     @Autowired
     private PlaylistService playlistService;
+
+    @Autowired
+    private MimeTypeRepository mimeTypeRepository;
+
+    @Autowired
+    private FileService fileService;
+
+    @Autowired
+    private AppConfig appConfig;
 
     @RequestMapping(value = "/get/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
     public @ResponseBody ApiResponseObject getPlaylist(@PathVariable("id") int id) {
@@ -117,6 +135,38 @@ public class PlaylistController
     public @ResponseBody Iterable<Playlist> getAllPlaylists()
     {
         return playlistService.getAllPlaylists();
+    }
+
+
+    @RequestMapping(path="/updatePlaylistImage")
+    public @ResponseBody ApiResponseObject updatePlaylistImage(@RequestParam("playlistId") int playlistId,
+                                                               @RequestParam("playlistArtFile") MultipartFile playlistArtFile){
+        ApiResponseObject response = new ApiResponseObject();
+
+        boolean playlistExists = playlistRepository.exists(playlistId);
+        if(playlistExists == false) {
+            response.setMessage("No playlist found with id "+playlistId+".");
+            response.setSuccess(false);
+            return response;
+        }
+
+        try {
+            
+            Playlist playlist = playlistRepository.findById(playlistId);
+            MimeType mimeType = mimeTypeRepository.findBySubtype(appConfig.png);
+            File artFile = fileService.uploadFile(playlistArtFile.getBytes(), mimeType);
+            playlist.setImageFileId(artFile.getId());
+            playlistRepository.save(playlist);
+            playlistRepository.flush();
+            
+            response.setSuccess(true);
+
+        } catch(IOException e) {
+            e.printStackTrace();
+            response.setSuccess(false);
+        }
+
+        return response;
     }
 
 }
