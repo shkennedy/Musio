@@ -27,4 +27,16 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	nativeQuery = true)
 	Set<UserIdentifier> getFollowedUsers(@Param("userId") int userId);
 
+	@Modifying
+	@Query(value = "DELETE zt FROM user_favorite_song zt WHERE EXISTS ( SELECT * FROM (SELECT * FROM user_favorite_song) AS ex WHERE ex.song_id = zt.song_id AND ex.user_id = zt.user_id AND ex.timestamp < zt.timestamp)"
+			, nativeQuery = true)
+	@Transactional
+	void cleanFavoriteSongs();
+
+	@Modifying
+	@Query(value = "DELETE from user_favorite_song where user_id=:userId and song_id=:songId"
+			, nativeQuery = true)
+	@Transactional
+	void deleteFavoriteSongRecord(@Param("userId") int userId, @Param("songId") int songId);
+
 }

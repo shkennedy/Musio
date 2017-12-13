@@ -161,6 +161,7 @@ public class UserService {
 			return response;
 		}
 		persistUser(user);
+		userRepository.deleteFavoriteSongRecord(user.getId(), s.getId());
 		response.setSuccess(true);
 		return response;
 	}
@@ -264,6 +265,7 @@ public class UserService {
 	public void persistUser(User user) {
 		user = userRepository.save(user);
 		userRepository.flush();
+		userRepository.cleanFavoriteSongs();
 	}
 
 	public ApiResponseObject addFavoritePlaylist(User user, Integer playlistId) {
