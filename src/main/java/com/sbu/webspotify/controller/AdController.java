@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
@@ -23,6 +24,25 @@ public class AdController
 
         Advertisement ad = adRepository.findRandomAd();
         response.setResponseData(ad);
+        response.setSuccess(true);
+
+        return response;
+    }
+
+    @RequestMapping(value = "/deleteById")
+    public @ResponseBody ApiResponseObject getRandomAd(@RequestParam("advertisementId") int advertisementId) {
+        ApiResponseObject response = new ApiResponseObject();
+
+        boolean adExists = adRepository.exists(advertisementId);
+        if(adExists == false) {
+            response.setMessage("No advertisement found with id "+advertisementId+".");
+            response.setSuccess(false);
+            return response;
+        }
+
+        adRepository.delete(advertisementId);
+
+        response.setMessage("Advertisement "+advertisementId+" successfully deleted.");
         response.setSuccess(true);
 
         return response;
