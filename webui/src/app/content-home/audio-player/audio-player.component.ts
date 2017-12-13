@@ -23,7 +23,7 @@ import { Song } from '../../models/song.model';
 })
 export class AudioPlayerComponent implements OnInit {
 
-    private static IN_PROGRESS_TIME = 2;
+    private static IN_PROGRESS_TIME = 1;
 
     audio: Howl;
     useHighBitrate: boolean;
@@ -91,7 +91,7 @@ export class AudioPlayerComponent implements OnInit {
             .subscribe(
             (song: Song) => {
                 if (song) {
-                    this.songQueue.unshift(song);
+                    this.songQueue.push(song);
                     console.log(`${this.songQueue}`);
                 }
             },
@@ -204,8 +204,8 @@ export class AudioPlayerComponent implements OnInit {
                 this.errMsg = 'Unable to play song';
             }
         });
+        newHowl.mute(this.isMuted);
 
-        this.isPlaying = true;
         return newHowl;
     }
 
@@ -291,7 +291,10 @@ export class AudioPlayerComponent implements OnInit {
             return;
         }
 
-        this.stopSongTimer();
+        if (this.audio) {
+            this.audio.pause();
+        }
+
         this.addCurrentSongToHistory();
 
         let nextSong: Song;
@@ -328,6 +331,10 @@ export class AudioPlayerComponent implements OnInit {
 
         // Add current song to songQueue
         this.songQueue.unshift(this.currentSong);
+
+        if (this.audio) {
+            this.audio.pause();
+        }
 
         if (lastSong) {
             this._playSong(lastSong.id);
