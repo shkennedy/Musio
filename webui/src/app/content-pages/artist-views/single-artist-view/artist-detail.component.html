@@ -1,7 +1,7 @@
-<div *ngIf="!artist; else loaded;">
+<div *ngIf="!artist; else artistLoaded;">
     <mat-spinner color="accent"></mat-spinner>
 </div>
-<ng-template #loaded>
+<ng-template #artistLoaded>
     <div class="row cover-info-box">
         <div class="col-sm-3 col-xs-12 cover-box-left">
             <img width="200" src="{{artist.artistImageUrl}}">
@@ -12,11 +12,8 @@
             {{followerCount}} FOLLOWERS
             <br>
             <br>
-            <br>
-            <br>
-            <br>
-            <button class="btn btn-green">PLAY</button>
             <div>
+            <button class="btn btn-green" (click)="playArtist()">PLAY</button>
                 <div *ngIf="isFollowed; else notFollowed">
                     <button class="btn btn-black glyphicon glyphicon-heart" (click)="unfollowArtist()"></button>
                 </div>
@@ -62,57 +59,63 @@
 
         <div class="content">
             <section>
-                <div *ngFor="let album of artist.albums;">
-                    <div id="album-wrapper col-sm-12">
-                        <div id="album-info" class="col-sm-4">
-                            <div class="col-sm-12">
-                                <div *ngIf="album.art; else defaultArt;">
-                                    <img src="{{album.albumArtUrl}}" alt="{{album.title}}" style="width:200px; height:200px;">
+                <div *ngIf="!albumTablesData; else albumsLoaded;">
+                    <mat-spinner color="accent"></mat-spinner>
+                </div>
+                <ng-template #albumsLoaded>
+                    <div *ngFor="let album of artist.albums;">
+                        <div id="album-wrapper col-sm-12">
+                            <div id="album-info" class="col-sm-4">
+                                <div class="col-sm-12">
+                                    <div *ngIf="album.art; else defaultArt;">
+                                        <img src="{{album.albumArtUrl}}" alt="{{album.title}}" style="width:200px; height:200px;">
+                                    </div>
+                                    <ng-template #defaultArt>
+                                        <img src="assets/images/default_art.png" alt="{{album.title}}" style="width:200px; height:200px;">
+                                    </ng-template>
                                 </div>
-                                <ng-template #defaultArt>
-                                    <img src="assets/images/default_art.png" alt="{{album.title}}" style="width:200px; height:200px;">
-                                </ng-template>
-                            </div>
-                            <div class="col-sm-12">
-                                <h3 class="album-title">{{album.title}}</h3>
-                            </div>
-                            <button class="btn btn-green block-center">PLAY</button>
-
-                            <div>
-                                <div *ngIf="isFollowed; else follow">
-                                    <button class="btn btn-black glyphicon glyphicon-heart" (click)="unfavoriteAlbum()"></button>
+                                <div class="col-sm-12">
+                                    <h3 class="album-title">{{album.title}}</h3>
                                 </div>
-                                <ng-template #follow>
-                                    <button class="btn btn-grey " (click)="favoriteAlbum()">FAVORITE</button>
-                                </ng-template>
+                                <button class="btn btn-green block-center">PLAY</button>
+
+                                <div>
+                                    <div *ngIf="isFollowed; else follow">
+                                        <button class="btn btn-black glyphicon glyphicon-heart" (click)="unfavoriteAlbum()"></button>
+                                    </div>
+                                    <ng-template #follow>
+                                        <button class="btn btn-grey " (click)="favoriteAlbum()">FAVORITE</button>
+                                    </ng-template>
+                                </div>
+
                             </div>
 
-                        </div>
+                            <div id="album-tracklist" class="col-sm-8">
+                                <mat-table #table [dataSource]="getAlbumData(album.id)" matSort>
+                                    <!-- Track Column -->
+                                    <ng-container matColumnDef="track">
+                                        <mat-header-cell *matHeaderCellDef mat-sort-header> # </mat-header-cell>
+                                        <mat-cell *matCellDef="let element"> {{element.position}} </mat-cell>
+                                    </ng-container>
 
-                        <div id="album-tracklist" class="col-sm-8">
-                            <mat-table #table [dataSource]="dataSource" matSort>
-                                <!-- Track Column -->
-                                <ng-container matColumnDef="track">
-                                    <mat-header-cell *matHeaderCellDef mat-sort-header> # </mat-header-cell>
-                                    <mat-cell *matCellDef="let element"> {{element.position}} </mat-cell>
-                                </ng-container>
+                                    <!-- Name Column -->
+                                    <ng-container matColumnDef="name">
+                                        <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+                                        <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+                                    </ng-container>
 
-                                <!-- Name Column -->
-                                <ng-container matColumnDef="name">
-                                    <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
-                                    <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
-                                </ng-container>
+                                    <!-- Duration Column -->
+                                    <ng-container matColumnDef="weight">
+                                        <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                            <mat-icon>schedule</mat-icon>
+                                        </mat-header-cell>
+                                        <mat-cell *matCellDef="let element"> {{element.weight}} </mat-cell>
+                                    </ng-container>
 
-                                <!-- Duration Column -->
-                                <ng-container matColumnDef="weight">
-                                    <mat-header-cell *matHeaderCellDef mat-sort-header> <mat-icon>schedule</mat-icon> </mat-header-cell>
-                                    <mat-cell *matCellDef="let element"> {{element.weight}} </mat-cell>
-                                </ng-container>
-
-                                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-                                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-                            </mat-table>
-                            <!-- <table class="table table-inverse song-table album-tracklist-table">
+                                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                                    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                                </mat-table>
+                                <!-- <table class="table table-inverse song-table album-tracklist-table">
                                 <thead>
                                     <tr>
                                         <th (click)="sort('track')">#</th>
@@ -130,9 +133,10 @@
                                     </tr>
                                 </tbody>
                             </table> -->
+                            </div>
                         </div>
                     </div>
-                </div>
+                </ng-template>
             </section>
 
             <section>

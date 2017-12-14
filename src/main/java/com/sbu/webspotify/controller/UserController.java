@@ -34,6 +34,15 @@ public class UserController {
 	@Autowired
 	private SongService songService;
 
+    @RequestMapping(value={"/getUser"}, method = RequestMethod.GET)
+	public @ResponseBody ApiResponseObject getMyUser(HttpSession session){
+		User user = (User) session.getAttribute("user");
+		ApiResponseObject response = new ApiResponseObject();
+		response.setResponseData(user);
+		response.setSuccess(true);
+		return response;
+	}
+
 	@RequestMapping(value={"/getUsername"}, method = RequestMethod.GET)
 	public @ResponseBody ApiResponseObject getMyUsername(HttpSession session){
 		User user = (User) session.getAttribute("user");

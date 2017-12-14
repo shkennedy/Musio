@@ -153,26 +153,34 @@ export class AudioPlayerComponent implements OnInit {
     }
 
     public addArtistToQueue = (artistId: number): void => {
-        // this.artistService.getArtistById(artistId) TODO
-        // .subscribe((artist: Artist) => {
-        //     if (artist) {
-        //         artist.songs.forEach((song: Song) => {
-        //             this.songQueue.unshift(song);
-        //         });
-        //     }
-        // });
+        this.addCurrentSongToHistory();
+        this.artistService.getArtistAlbumsById(artistId)
+            .subscribe((albums: Album[]) => {
+                albums.forEach((album: Album) => {
+                    this.songQueue.concat(album.songs);
+                });
+            });
     }
 
     public playArtist = (artistId: number): void => {
-        // this.addCurrentSongToHistory(); TODO
-        // this.albumService.getAlbumById(artistId)
-        // .subscribe((artist: Artist) => {
-        //     if (album) {
-        //         const song = album.songs.shift();
-        //         this._playSong(song.id);
-        //         this.songQueue = album.songs;
-        //     }
-        // });
+        this.addCurrentSongToHistory();
+        console.log('start');
+        this.artistService.getArtistAlbumsById(artistId)
+            .subscribe((albums: Album[]) => {
+                console.log('middle');
+                let firstAlbum = true;
+                albums.forEach((album: Album) => {
+                    console.log(album.id);
+                    if (firstAlbum) {
+                        const song = album.songs.shift();
+                        this._playSong(song.id);
+                        firstAlbum = false;
+                        this.songQueue = album.songs;
+                    } else {
+                        this.songQueue.concat(album.songs);
+                    }
+                });
+            });
     }
 
     public setPrivateMode = (privateMode: boolean): void => {

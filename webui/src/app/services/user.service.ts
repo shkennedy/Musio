@@ -12,6 +12,7 @@ import { Song } from '../models/song.model';
 export class UserService {
 
     private static USER_URL = '/user';
+    private static GET_USER_URL = UserService.USER_URL + '/getUser';
     private static GET_USERNAME_URL = UserService.USER_URL + '/getUsername';
     private static GET_USER_BY_USERNAME_URL = UserService.USER_URL + '/get';
     private static FOLLOWED_USERS_URL = UserService.USER_URL + '/followedUsers';
@@ -34,14 +35,14 @@ export class UserService {
 
     public getUser(callback: (user: User) => void): void {
         this.httpRequest.get(UserService.GET_USERNAME_URL)
-            .map((usernameResponse: ApiResponse) => {
+            .subscribe((usernameResponse: ApiResponse) => {
                 if (usernameResponse.success) {
                     this.httpRequest.get(
-                        UserService.GET_USER_BY_USERNAME_URL + usernameResponse.responseData)
-                        .map((userResponse: ApiResponse) => {
+                        UserService.GET_USER_BY_USERNAME_URL + '/' + usernameResponse.responseData)
+                        .subscribe((userResponse: ApiResponse) => {
                             const user: User = userResponse.responseData;
                             this.getPrivateSession()
-                                .map((privateSession: boolean) => {
+                                .subscribe((privateSession: boolean) => {
                                     user.privateSession = privateSession;
                                     callback(user);
                                 });
@@ -106,8 +107,11 @@ export class UserService {
 
     public getIsPremium(callback: (b: boolean) => any): void {
         const getUserCallback: (user: User) => void = (user: User) => {
+            if (!user) {
+                return;
+            }
             for (let i = 0; i < user.roles.length; ++i) {
-                if (user.roles[i].role === 'premiumUser') {
+                if (user.roles[i].role === 'PREMIUM_USER') {
                     callback(true);
                 }
             }

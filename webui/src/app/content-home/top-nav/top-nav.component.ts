@@ -28,7 +28,7 @@ export class TopNavComponent implements OnInit {
         this.userService.getUser(this.setUser);
     }
 
-    public setUser(user: User): void {
+    public setUser = (user: User): void => {
         console.log(`whats good ${user}`);
         this.user = user;
     }
@@ -74,12 +74,5 @@ export class TopNavComponent implements OnInit {
     gotoContact() {
         this.router.navigate(['/contact']);
         console.log('clicked contact');
-    }
-
-    logout() {
-        this.loginService.logout()
-        .subscribe((success: boolean) => {
-            console.log(`logout success: ${success}`);
-        });
     }
 }

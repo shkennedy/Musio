@@ -26,41 +26,31 @@
 
 <div class="grid1" id="top_wrapper">
     <!-- Item 1 -->
-    <img class="logo_sized"
-         src="assets/images/mainlogo.png" alt="Logo">
+    <img class="logo_sized" src="assets/images/mainlogo.png" alt="Logo">
     <!-- Item 2 -->
     <div>
-        <form (ngSubmit)="makeSearch(search)" #search="ngForm">
+        <form (ngSubmit)="search(search)" #search="ngForm">
             <div id="search_wrapper">
                 <mat-icon class="search_icon">search</mat-icon>
-                <input type="text"
-                       class="search_bar"
-                       name="searchQuery"
-                       ngModel
-                       style="padding-left:25px;"
-                       placeholder="Search">
+                <input type="text" class="search_bar" name="searchQuery" ngModel style="padding-left:25px;" placeholder="Search">
             </div>
         </form>
     </div>
     <!-- Item 3 -->
-    <div class="flex_row_end" style="padding-right:5px;">
-        <img src="assets/images/no_artist_picture.png"
-             alt="Profile Picture"
-             class="profile_picture">
+    <div *ngIf="user;" class="flex_row_end" style="padding-right:5px;">
+        <img src="assets/images/no_artist_picture.png" alt="Profile Picture" class="profile_picture">
         <!-- Username -->
-        <div *ngIf="user.username;else defaultName"  class="light" style="margin-right:10px;">{{user.username}}</div>
-        <ng-template #defaultName><div style="margin-right:10px;"  class="light">Username</div></ng-template>
+        <div *ngIf="user.username;else defaultName" class="light" style="margin-right:10px;">{{user.username}}</div>
+        <ng-template #defaultName>
+            <div style="margin-right:10px;" class="light">Username</div>
+        </ng-template>
 
-        <button mat-icon-button
-                matTooltip="Settings"
-                [routerLink]="['/userSettings']">
+        <button mat-icon-button matTooltip="Settings" [routerLink]="['/userSettings']">
             <mat-icon class="light">settings</mat-icon>
         </button>
 
-        <button mat-icon-button
-                matTooltip="Logout"
-                (click)="logout()">
-                <mat-icon  class="light">exit_to_app</mat-icon>
-        </button>
+        <a href="/logout" mat-icon-button matTooltip="Logout">
+            <mat-icon class="light">exit_to_app</mat-icon>
+        </a>
     </div>
 </div>
