@@ -5,5 +5,5 @@ public interface AlbumIdentifier {
     String getTitle();
     Integer getArtistId();
     String getArtistName();
-    Integer getThumbnailFileId();
+    Integer getFullFileId();
 }
