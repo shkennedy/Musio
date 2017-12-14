@@ -1,5 +1,5 @@
 <div class="grid" id="play_wrapper">
-    <div style="max-width:20vw;margin-left:10px;">
+    <div class="height_normal">
         <div *ngIf="currentSong" class="flex_start">
             <mat-icon style="font-size:50px;width:50px;height:50px;">album</mat-icon>
             <div class="flex_start_column cut_off ellipsis">
@@ -12,17 +12,9 @@
         </div>
     </div>
 
-    <div class="flex_column">
-        <div class="flex_center" style="height:30px;">
-            <div *ngIf="currentSong; else noSong;">
-                <mat-slider class="play_bar" min="0" max="{{currentSong.duration}}" step="0.1" [(ngModel)]="songProgress"></mat-slider>
-                <!-- <p>{{songProgress}}:{{currentSong.duration}}</p> -->
-            </div>
-            <ng-template #noSong>
-                <mat-slider class="play_bar" min="0" max="1" step="1" value="0"></mat-slider>
-            </ng-template>
-        </div>
-        <div class="flex_center" style="width:100%;padding-bottom:20px;">
+    <div class="flex_center">
+
+        <div class="height_normal spaced_top">
             <button mat-icon-button>
                 <mat-icon>shuffle</mat-icon>
             </button>
@@ -48,7 +40,7 @@
         </div>
     </div>
 
-    <div class="flex_end" style="margin-right:5px;">
+    <div class="flex_center height_normal">
         <button mat-icon-button (click)="showLyrics()">
             <mat-icon>playlist_play</mat-icon>
         </button>
@@ -68,3 +60,10 @@
         <mat-slider min="0" max="1.0" step="0.01" [(ngModel)]="volume" (change)="adjustVolume()" style="margin-right:10px;"></mat-slider>
     </div>
 </div>
+
+<div *ngIf="currentSong; else noSong;" class="topper">
+    <mat-slider class="absolute" min="0" max="{{currentSong.duration}}" step="0.1" [(ngModel)]="songProgress"></mat-slider>
+</div>
+<ng-template #noSong class="topper">
+    <mat-slider class="absolute" min="0" max="1" step="1" value="0"></mat-slider>
+</ng-template>

@@ -1,4 +1,4 @@
-<div *ngIf="!album; else albumLoaded;" class=""> <!-- Needs loading gif -->
+<div *ngIf="!album; else albumLoaded;" class="center_loading"> <!-- Needs loading gif -->
     <mat-spinner color="accent"></mat-spinner>
 </div>
 <ng-template #albumLoaded>
@@ -23,7 +23,7 @@
 
             <div>
                 <div *ngIf="isFavorited; else notFavorited">
-                    <button class="btn btn-black glyphicon glyphicon-heart" (click)="unfavoriteAlbum()"></button>
+                    <button class="btn btn-black glyphicon glyphicon-heart" (click)="unfavoriteAlbum()" matTooltip="Unfavorite"></button>
                 </div>
                 <ng-template #notFavorited>
                     <button class="btn btn-grey " (click)="favoriteAlbum()">FAVORITE</button>

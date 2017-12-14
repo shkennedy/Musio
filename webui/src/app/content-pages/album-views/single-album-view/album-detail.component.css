@@ -1,7 +1,14 @@
 .album-info > img {
-      width: 200px;     
+      width: 200px;
 }
 
 .song-table {
       width:500px;
+}
+
+.center_loading{
+    height:100%;
+    display:flex;
+    justify-content: center;
+    align-items: center;
 }

@@ -46,7 +46,10 @@
 
 .content-container{
     background-color: #181818;
-    height: 85vh;
+    max-height: 83vh;
+    min-height: 83vh;
+    width:100%;
+    overflow-x: hidden;
     overflow-y: auto;
     color: #999999;
 }

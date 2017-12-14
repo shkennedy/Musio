@@ -22,7 +22,7 @@ export class TopNavComponent implements OnInit {
         private userService: UserService,
         private loginService: LoginService,
         private favoritesService: FavoritesService
-    ) { }
+    ) {}
 
     ngOnInit() {
         this.userService.getUser(this.setUser);
