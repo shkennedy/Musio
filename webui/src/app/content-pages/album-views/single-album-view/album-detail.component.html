@@ -1,16 +1,17 @@
-<div *ngIf="!album; else albumLoaded;" class="center_loading"> <!-- Needs loading gif -->
+<div *ngIf="!album; else albumLoaded;" class="center_loading">
+    <!-- Needs loading gif -->
     <mat-spinner color="accent"></mat-spinner>
 </div>
 <ng-template #albumLoaded>
     <div id="album-wrapper col-sm-12">
         <div id="album-info" class="col-sm-4">
             <div class="col-sm-12">
-            <div *ngIf="album.albumArt; else defaultArt;">
-                <img src="{{album.albumArtUrl}}" alt="{{album.title}}" style="width:200px; height:200px;">
-            </div>
-            <ng-template #defaultArt>
+                <div *ngIf="album.albumArt; else defaultArt;">
+                    <img src="{{album.albumArtUrl}}" alt="{{album.title}}" style="width:200px; height:200px;">
+                </div>
+                <ng-template #defaultArt>
                     <img src="assets/images/default_art.png" alt="{{album.title}}" style="width:200px; height:200px;">
-            </ng-template>
+                </ng-template>
             </div>
             <div class="col-sm-12">
                 <h3 class="album-title">{{album.title}}</h3>
@@ -19,7 +20,7 @@
                     <span id="artist-name" [routerLink]="['/artists', album.artists[0].id]">{{album.artists[0].name}}</span>
                 </h5>
             </div>
-            <button class="btn btn-green block-center">PLAY</button>
+            <button class="btn btn-green block-center" (click)="playAlbum()">PLAY</button>
 
             <div>
                 <div *ngIf="isFavorited; else notFavorited">
@@ -31,13 +32,42 @@
             </div>
         </div>
 
-        <div id="album-tracklist" class="col-sm-8"></div>
+        <div id="album-tracklist" class="col-sm-8">
+            <mat-table #table [dataSource]="albumTableData">
+                <!-- Track Column -->
+                <ng-container matColumnDef="trackNumber">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> # </mat-header-cell>
+                    <mat-cell *matCellDef="let song"> {{song.trackNumber}} </mat-cell>
+                </ng-container>
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="title">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Title </mat-header-cell>
+                    <mat-cell *matCellDef="let song"> {{song.title}} </mat-cell>
+                </ng-container>
+
+                <!-- Duration Column -->
+                <ng-container matColumnDef="duration">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>
+                        <mat-icon>schedule</mat-icon>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let song"> {{song.durationString}} </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="['trackNumber', 'title', 'duration']"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: ['trackNumber', 'title', 'duration'];"></mat-row>
+            </mat-table>
+        </div>
+
+      <!--  <div id="album-tracklist" class="col-sm-8"></div>
         <table class="table table-inverse song-table album-tracklist-table">
             <thead>
                 <tr>
                     <th (click)="sort('track')">#</th>
                     <th (click)="sort('title')">Title</th>
-                    <th><mat-icon>schedule</mat-icon></th>
+                    <th>
+                        <mat-icon>schedule</mat-icon>
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -47,6 +77,6 @@
                     <td>{{song.durationString}}</td>
                 </tr>
             </tbody>
-        </table>
+        </table> -->
     </div>
 </ng-template>

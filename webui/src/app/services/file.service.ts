@@ -14,7 +14,7 @@ export class FileService {
     private static GENERIC_GET_URL: string = FileService.RESOURCE_URL + '/get';
     private static SONG_HIBR_URL: string = FileService.RESOURCE_URL + '/highBitrateSongFile';
     private static SONG_LOBR_URL: string = FileService.RESOURCE_URL + '/lowBitrateSongFile';
-    private static ALBUM_FULL_URL: string = FileService.RESOURCE_URL + 'albumArtworkFullFile';
+    private static ALBUM_FULL_URL: string = FileService.RESOURCE_URL + '/albumArtworkFullFile';
     private static ALBUM_THUMB_URL: string = FileService.RESOURCE_URL + '/albumArtworkThumbnailFile';
     private static ARTIST_FULL_URL: string = FileService.RESOURCE_URL + '/artistImageFullFile';
     private static ARTIST_THUMB_URL: string = FileService.RESOURCE_URL + '/artistImageThumbnailFile';

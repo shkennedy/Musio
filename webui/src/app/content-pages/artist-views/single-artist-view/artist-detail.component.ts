@@ -129,6 +129,10 @@ export class ArtistDetailComponent implements OnInit {
         this.audioPlayerProxyService.addArtistToQueue(this.artist.id);
     }
 
+    private gotoAlbum(albumId: number): void {
+        this.router.navigate(['/albums', albumId]);
+    }
+
     private gotoRelatedArtist(relatedArtistId: number): void {
         this.router.navigate(['/albums']) // garbage link to force page reload
             .then(() => {

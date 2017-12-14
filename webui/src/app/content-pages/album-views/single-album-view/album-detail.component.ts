@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { MatTableDataSource } from '@angular/material';
 
 import { AudioPlayerProxyService } from '../../../services/audioPlayerProxy.service';
 import { AlbumService } from '../../../services/album.service';
@@ -18,8 +19,9 @@ import { Artist } from '../../../models/artist.model';
 })
 export class AlbumDetailComponent implements OnInit {
 
-    private isFavorited: boolean;
     private album: Album;
+    private albumTableData: MatTableDataSource<Song>;
+    private isFavorited: boolean;
     private titleSort = false;
     private ascendingOrder = true;
 
@@ -39,6 +41,7 @@ export class AlbumDetailComponent implements OnInit {
             .subscribe(
             (album: Album) => {
                 this.album = album;
+                this.albumTableData = new MatTableDataSource(album.songs);
 
                 // Check if favorited
                 this.favoritesService.getFavoriteAlbums()

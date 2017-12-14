@@ -1,3 +1,7 @@
+* {
+    background-color: transparent;
+}
+
 .album-info > img {
       width: 200px;
 }
@@ -11,4 +15,20 @@
     display:flex;
     justify-content: center;
     align-items: center;
+}
+
+mat-row:hover {
+    background-color: grey;
+}
+
+.album_section {
+    margin-bottom: 20px;
+}
+
+.mat-column-trackNumber {
+    max-width: 64px;
+}
+
+.mat-column-duration {
+    max-width: 64px;
 }
