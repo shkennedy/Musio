@@ -1,11 +1,11 @@
 <div *ngIf="!album; else albumLoaded;" class=""> <!-- Needs loading gif -->
-    LOADING
+    <mat-spinner color="green"></mat-spinner>
 </div>
 <ng-template #albumLoaded>
     <div id="album-wrapper col-sm-12">
         <div id="album-info" class="col-sm-4">
             <div class="col-sm-12">
-            <div *ngIf="album.art; else defaultArt;">
+            <div *ngIf="album.albumArt; else defaultArt;">
                 <img src="{{album.albumArtUrl}}" alt="{{album.title}}" style="width:200px; height:200px;">
             </div>
             <ng-template #defaultArt>

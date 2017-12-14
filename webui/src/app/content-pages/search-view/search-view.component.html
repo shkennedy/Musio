@@ -1,4 +1,7 @@
-<div>
+<div *ngIf="!artists || !albums || !songs || !genres || !instruments || !playlists || !users; else loaded;">
+    <mat-spinner color="green"></mat-spinner>
+</div>
+<ng-template #loaded>
     <div *ngFor="let artist of artists">
         {{artist.artistImage}} {{artist.name}}
     </div>
@@ -26,4 +29,4 @@
     <div *ngFor="let user of users">
         {{user.image}} {{user.username}}
     </div>
-</div>
+</ng-template>

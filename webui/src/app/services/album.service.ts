@@ -36,7 +36,7 @@ export class AlbumService {
                 }
                 if (album.albumArt) {
                     album.albumArtUrl =
-                        this.fileService.getAlbumImageURLByIdAndSize(album.id, true);
+                        this.fileService.getAlbumImageURLByIdAndSize(album.albumArt.fullFileId, true);
                 }
                 return album;
             });
