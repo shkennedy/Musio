@@ -21,6 +21,8 @@ import { Song } from '../../../models/song.model';
 })
 export class ArtistDetailComponent implements OnInit {
 
+    private static displayedColumns = ['trackNumber', 'title', 'duration'];
+
     private artist: Artist;
     private albumTablesData: Map<number, MatTableDataSource<Song>>;
     private followerCount: number;
@@ -52,8 +54,6 @@ export class ArtistDetailComponent implements OnInit {
                         this.artist.albums = albums;
                         this.albumTablesData = new Map();
                         this.artist.albums.forEach((album: Album) => {
-                            console.log('wateeee');
-                            console.log(`setting ${album.id} ${album}`);
                             this.albumTablesData.set(album.id, new MatTableDataSource(album.songs));
                         });
                     },

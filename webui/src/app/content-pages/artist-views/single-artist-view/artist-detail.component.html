@@ -13,7 +13,7 @@
             <br>
             <br>
             <div>
-            <button class="btn btn-green" (click)="playArtist()">PLAY</button>
+                <button class="btn btn-green" (click)="playArtist()">PLAY</button>
                 <div *ngIf="isFollowed; else notFollowed">
                     <button class="btn btn-black glyphicon glyphicon-heart" (click)="unfollowArtist()"></button>
                 </div>
@@ -63,59 +63,58 @@
                     <mat-spinner color="accent"></mat-spinner>
                 </div>
                 <ng-template #albumsLoaded>
-                    <div *ngFor="let album of artist.albums;">
-                        <div id="album-wrapper col-sm-12">
-                            <div id="album-info" class="col-sm-4">
-                                <div class="col-sm-12">
-                                    <div *ngIf="album.art; else defaultArt;">
-                                        <img src="{{album.albumArtUrl}}" alt="{{album.title}}" style="width:200px; height:200px;">
-                                    </div>
-                                    <ng-template #defaultArt>
-                                        <img src="assets/images/default_art.png" alt="{{album.title}}" style="width:200px; height:200px;">
-                                    </ng-template>
+                    <div *ngFor="let album of artist.albums;" style="padding-bottom: 50px;">
+                        <div id="album-info" class="col-sm-4" style="margin-top: 10px;">
+                            <div class="col-sm-12">
+                                <div *ngIf="album.art; else defaultArt;">
+                                    <img src="{{album.albumArtUrl}}" alt="{{album.title}}" style="width:200px; height:200px;">
                                 </div>
-                                <div class="col-sm-12">
-                                    <h3 class="album-title">{{album.title}}</h3>
-                                </div>
-                                <button class="btn btn-green block-center">PLAY</button>
+                                <ng-template #defaultArt>
+                                    <img src="assets/images/default_art.png" alt="{{album.title}}" style="width:200px; height:200px;">
+                                </ng-template>
+                            </div>
+                            <div class="col-sm-12">
+                                <h3 class="album-title">{{album.title}}</h3>
+                            </div>
+                            <button class="btn btn-green block-center">PLAY</button>
 
-                                <div>
-                                    <div *ngIf="isFollowed; else follow">
-                                        <button class="btn btn-black glyphicon glyphicon-heart" (click)="unfavoriteAlbum()"></button>
-                                    </div>
-                                    <ng-template #follow>
-                                        <button class="btn btn-grey " (click)="favoriteAlbum()">FAVORITE</button>
-                                    </ng-template>
+                            <div>
+                                <div *ngIf="isFollowed; else follow">
+                                    <button class="btn btn-black glyphicon glyphicon-heart" (click)="unfavoriteAlbum()"></button>
                                 </div>
-
+                                <ng-template #follow>
+                                    <button class="btn btn-grey " (click)="favoriteAlbum()">FAVORITE</button>
+                                </ng-template>
                             </div>
 
-                            <div id="album-tracklist" class="col-sm-8">
-                                <mat-table #table [dataSource]="getAlbumData(album.id)" matSort>
-                                    <!-- Track Column -->
-                                    <ng-container matColumnDef="track">
-                                        <mat-header-cell *matHeaderCellDef mat-sort-header> # </mat-header-cell>
-                                        <mat-cell *matCellDef="let element"> {{element.position}} </mat-cell>
-                                    </ng-container>
+                        </div>
 
-                                    <!-- Name Column -->
-                                    <ng-container matColumnDef="name">
-                                        <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
-                                        <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
-                                    </ng-container>
+                        <div id="album-tracklist" class="col-sm-8">
+                            <mat-table #table [dataSource]="getAlbumData(album.id)">
+                                <!-- Track Column -->
+                                <ng-container matColumnDef="trackNumber">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header> # </mat-header-cell>
+                                    <mat-cell *matCellDef="let song"> {{song.trackNumber}} </mat-cell>
+                                </ng-container>
 
-                                    <!-- Duration Column -->
-                                    <ng-container matColumnDef="weight">
-                                        <mat-header-cell *matHeaderCellDef mat-sort-header>
-                                            <mat-icon>schedule</mat-icon>
-                                        </mat-header-cell>
-                                        <mat-cell *matCellDef="let element"> {{element.weight}} </mat-cell>
-                                    </ng-container>
+                                <!-- Name Column -->
+                                <ng-container matColumnDef="title">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header> Title </mat-header-cell>
+                                    <mat-cell *matCellDef="let song"> {{song.title}} </mat-cell>
+                                </ng-container>
 
-                                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-                                    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-                                </mat-table>
-                                <!-- <table class="table table-inverse song-table album-tracklist-table">
+                                <!-- Duration Column -->
+                                <ng-container matColumnDef="duration">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                        <mat-icon>schedule</mat-icon>
+                                    </mat-header-cell>
+                                    <mat-cell *matCellDef="let song"> {{song.durationString}} </mat-cell>
+                                </ng-container>
+
+                                <mat-header-row *matHeaderRowDef="['trackNumber', 'title', 'duration']"></mat-header-row>
+                                <mat-row *matRowDef="let row; columns: ['trackNumber', 'title', 'duration'];"></mat-row>
+                            </mat-table>
+                            <!-- <table class="table table-inverse song-table album-tracklist-table">
                                 <thead>
                                     <tr>
                                         <th (click)="sort('track')">#</th>
@@ -133,7 +132,6 @@
                                     </tr>
                                 </tbody>
                             </table> -->
-                            </div>
                         </div>
                     </div>
                 </ng-template>
