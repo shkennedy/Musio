@@ -354,3 +354,19 @@ mat-row:hover {
         justify-content: center;
         align-items: center;
     }
+
+    /*.flex_column{
+        display:flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }*/
+
+.flex_row{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.flex_row>*{
+    margin-right:20px;
+}

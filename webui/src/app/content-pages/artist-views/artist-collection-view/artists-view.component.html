@@ -1,4 +1,4 @@
-<div *ngIf="!artists; else hasArtists">
+<div *ngIf="!artists; else hasArtists" style="padding:20px;">
     <p>No Artists Found: Find some artists to follow in browse.</p>
     <a [routerLink]="['/browse']">Find Artists</a>
 </div>

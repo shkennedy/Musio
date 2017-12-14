@@ -1,4 +1,4 @@
-<div *ngIf="!songs; else hasSongs">
+<div *ngIf="!songs; else hasSongs" style="padding:20px;">
     <p>No Songs Found: Find some favorite songs in browse.</p>
     <a [routerLink]="['/browse']">Find Songs</a>
 </div>

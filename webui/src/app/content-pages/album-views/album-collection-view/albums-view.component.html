@@ -1,4 +1,4 @@
-<div *ngIf="!albums; else hasAlbums">
+<div *ngIf="!albums; else hasAlbums" style="padding:20px;">
     <p>No Albums Found: Find some favorite albums in browse.</p>
     <a [routerLink]="['/browse']">Find Albums</a>
 </div>

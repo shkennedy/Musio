@@ -12,7 +12,7 @@
             {{followerCount}} FOLLOWERS
             <br>
             <br>
-            <div>
+            <div class="flex_row">
                 <button class="btn btn-green" (click)="playArtist()">PLAY</button>
                 <div *ngIf="isFollowed; else notFollowed">
                     <button class="btn btn-black glyphicon glyphicon-heart" (click)="unfollowArtist()"></button>
@@ -28,7 +28,6 @@
 
         <input type="radio" id="tab1" name="tab-control" checked>
         <input type="radio" id="tab2" name="tab-control">
-        <!-- <input type="radio" id="tab3" name="tab-control"> -->
         <input type="radio" id="tab3" name="tab-control">
 
         <ul>
@@ -63,7 +62,7 @@
                     <mat-spinner color="accent"></mat-spinner>
                 </div>
                 <ng-template #albumsLoaded>
-                    <div *ngFor="let album of artist.albums;" style="padding-bottom: 50px;">
+                    <div *ngFor="let album of artist.albums;">
                         <div id="album-info" class="col-sm-4" style="margin-top: 10px;">
                             <div class="col-sm-12">
                                 <div *ngIf="album.art; else defaultArt;">
@@ -91,19 +90,19 @@
 
                         <div id="album-tracklist" class="col-sm-8">
                             <mat-table #table [dataSource]="getAlbumData(album.id)">
-                                <!-- Track Column -->
+                                Track Column
                                 <ng-container matColumnDef="trackNumber">
                                     <mat-header-cell *matHeaderCellDef mat-sort-header> # </mat-header-cell>
                                     <mat-cell *matCellDef="let song"> {{song.trackNumber}} </mat-cell>
                                 </ng-container>
 
-                                <!-- Name Column -->
+                                Name Column
                                 <ng-container matColumnDef="title">
                                     <mat-header-cell *matHeaderCellDef mat-sort-header> Title </mat-header-cell>
                                     <mat-cell *matCellDef="let song"> {{song.title}} </mat-cell>
                                 </ng-container>
 
-                                <!-- Duration Column -->
+                                Duration Column
                                 <ng-container matColumnDef="duration">
                                     <mat-header-cell *matHeaderCellDef mat-sort-header>
                                         <mat-icon>schedule</mat-icon>
@@ -114,24 +113,6 @@
                                 <mat-header-row *matHeaderRowDef="['trackNumber', 'title', 'duration']"></mat-header-row>
                                 <mat-row *matRowDef="let row; columns: ['trackNumber', 'title', 'duration'];"></mat-row>
                             </mat-table>
-                            <!-- <table class="table table-inverse song-table album-tracklist-table">
-                                <thead>
-                                    <tr>
-                                        <th (click)="sort('track')">#</th>
-                                        <th (click)="sort('title')">Title</th>
-                                        <th>
-                                            <mat-icon>schedule</mat-icon>
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr *ngFor="let song of album.songs;">
-                                        <th>{{song.trackNumber}}</th>
-                                        <td>{{song.title}}</td>
-                                        <td>{{song.durationString}}</td>
-                                    </tr>
-                                </tbody>
-                            </table> -->
                         </div>
                     </div>
                 </ng-template>
