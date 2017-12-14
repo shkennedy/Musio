@@ -66,18 +66,32 @@ mat-icon{
     min-height:25px;
 }*/
 
-mat-icon{
+button{
     color:#ddd;
-}
-
-mat-icon{
-    font-size: 4vh;
+    display: flex;
+    justify-content: center;
     min-width:4vh;
     min-height:4vh;
 }
-mat-icon.play{
-    font-size: 6vh;
+
+button.play {
     min-width:6vh;
+    min-height:6vh;
+}
+
+mat-icon {
+    font-size: 3vh;
+    min-width:3vh;
+    min-height:3vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+mat-icon.play {
+    font-size: 5vh;
+    min-width:5vh;
+    min-height:5vh;
 }
 
 .ellipsis {
@@ -98,6 +112,7 @@ mat-icon.play{
 }
 
 #play_wrapper{
+    width: 100%;
     max-height:10vh;
     min-height:10vh;
     /*min-height: 10vh;
@@ -136,16 +151,11 @@ mat-slider.smaller{
 
 mat-slider.absolute{
     position: absolute;
-    top:88vh;
+    top:89vh;
     width:55vw;
     left: 0;
     right: 0;
     margin: auto
-}
-
-.topper{
-    position:absolute;
-    top:1vh;
 }
 
 .spaced_top{

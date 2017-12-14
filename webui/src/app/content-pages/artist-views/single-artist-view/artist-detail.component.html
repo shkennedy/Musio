@@ -1,4 +1,4 @@
-<div *ngIf="!artist; else artistLoaded;">
+<div *ngIf="!artist; else artistLoaded;" class="center_loading">
     <mat-spinner color="accent"></mat-spinner>
 </div>
 <ng-template #artistLoaded>
@@ -59,7 +59,7 @@
 
         <div class="content">
             <section>
-                <div *ngIf="!albumTablesData; else albumsLoaded;">
+                <div *ngIf="!albumTablesData; else albumsLoaded;" class="center_loading">
                     <mat-spinner color="accent"></mat-spinner>
                 </div>
                 <ng-template #albumsLoaded>

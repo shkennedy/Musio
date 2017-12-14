@@ -14,7 +14,7 @@
 
     <div class="flex_center">
 
-        <div class="height_normal spaced_top">
+        <div class="height_normal flex_center" style="width: 100%;">
             <button mat-icon-button>
                 <mat-icon>shuffle</mat-icon>
             </button>
@@ -22,12 +22,12 @@
                 <mat-icon>skip_previous</mat-icon>
             </button>
             <div *ngIf="isPlaying; else isPaused;">
-                <button mat-icon-button (click)="pause()">
+                <button class="play" mat-icon-button (click)="pause()">
                     <mat-icon class="play">pause_circle_outline</mat-icon>
                 </button>
             </div>
             <ng-template #isPaused>
-                <button mat-icon-button (click)="play()">
+                <button class="play" mat-icon-button (click)="play()">
                     <mat-icon class="play">play_circle_outline</mat-icon>
                 </button>
             </ng-template>
@@ -61,9 +61,9 @@
     </div>
 </div>
 
-<div *ngIf="currentSong; else noSong;" class="topper">
+<div *ngIf="currentSong; else noSong;">
     <mat-slider class="absolute" min="0" max="{{currentSong.duration}}" step="0.1" [(ngModel)]="songProgress"></mat-slider>
 </div>
-<ng-template #noSong class="topper">
+<ng-template #noSong>
     <mat-slider class="absolute" min="0" max="1" step="1" value="0"></mat-slider>
 </ng-template>
