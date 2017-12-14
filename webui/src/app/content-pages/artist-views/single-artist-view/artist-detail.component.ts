@@ -21,7 +21,7 @@ import { Song } from '../../../models/song.model';
 export class ArtistDetailComponent implements OnInit {
 
     private artist: Artist;
-    private albumTablesData: MatTableDataSource<Album>[] = [];
+    private albumTablesData: MatTableDataSource<Song>[] = [];
     private followerCount: number;
     private isFollowed = false;
     private relatedArtists: Artist[];
@@ -49,7 +49,7 @@ export class ArtistDetailComponent implements OnInit {
                     (albums: Album[]) => {
                         this.artist.albums = albums;
                         this.artist.albums.forEach((album: Album) => {
-                            this.albumTablesData.push(new MatTableDataSource(album));
+                            this.albumTablesData.push(new MatTableDataSource(album.songs));
                         });
                     },
                     (error: any) => {
