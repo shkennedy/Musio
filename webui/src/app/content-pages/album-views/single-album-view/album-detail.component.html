@@ -20,7 +20,7 @@
                     <span id="artist-name" [routerLink]="['/artists', album.artists[0].id]">{{album.artists[0].name}}</span>
                 </h5>
             </div>
-            <button class="btn btn-green block-center">PLAY</button>
+            <button class="btn btn-green block-center" (click)="playAlbum()">PLAY</button>
 
             <div>
                 <div *ngIf="isFavorited; else notFavorited">
