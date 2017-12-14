@@ -47,8 +47,18 @@
 }
 
 mat-icon{
+    font-size: 3vh;
     min-height:3vh;
     max-height:3vh;
+        display:flex;
+        justify-content: center;
+        align-items: center;
+}
+
+button,a{
+    display:flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .profile_picture{
