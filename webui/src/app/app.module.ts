@@ -8,7 +8,11 @@ import { MatSliderModule,
          MatGridTile,
          MatGridList,
          MatIcon,
-         MatTabsModule } from '@angular/material';
+         MatTabsModule,
+         MatCard,
+         MatCardTitle,
+         MatCardImage,
+         MatCardActions } from '@angular/material';
 import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './shared/shared.module';
 import { CoreModule } from './core/core.module';

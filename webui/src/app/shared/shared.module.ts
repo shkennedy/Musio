@@ -21,7 +21,11 @@ import {
     MatExpansionModule,
     MatTabsModule,
     MatGridListModule,
-    MatSliderModule
+    MatSliderModule,
+    MatCard,
+    MatCardTitle,
+    MatCardImage,
+    MatCardActions
 } from '@angular/material';
 @NgModule({
     imports: [MatToolbarModule,
@@ -45,7 +49,11 @@ import {
         MatExpansionModule,
         MatTabsModule,
         MatGridListModule,
-        MatSliderModule],
+        MatSliderModule,
+        MatCard,
+        MatCardTitle,
+        MatCardImage,
+        MatCardActions],
 
     exports: [MatToolbarModule,
         MatInputModule,
@@ -68,7 +76,11 @@ import {
         MatExpansionModule,
         MatTabsModule,
         MatGridListModule,
-        MatSliderModule]
+        MatSliderModule,
+        MatCard,
+        MatCardTitle,
+        MatCardImage,
+        MatCardActions]
 })
 
 export class SharedModule { }
