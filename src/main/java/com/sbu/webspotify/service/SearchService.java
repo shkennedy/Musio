@@ -15,6 +15,7 @@ import com.sbu.webspotify.dto.identifier.PlaylistIdentifier;
 import com.sbu.webspotify.dto.identifier.SongIdentifier;
 import com.sbu.webspotify.model.Artist;
 import com.sbu.webspotify.model.User;
+import com.sbu.webspotify.repo.GenreRepository;
 import com.sbu.webspotify.repo.InstrumentRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +47,9 @@ public class SearchService {
 
     @Autowired
     InstrumentRepository instrumentRepository;
+
+    @Autowired
+    GenreRepository genreRepository;
 
     @Autowired
     GenreService genreService;
@@ -176,6 +180,14 @@ public class SearchService {
         results.setArtists(instrumentRepository.findArtistsByInstrument(instrumentId));
         results.setAlbums(instrumentRepository.findAlbumsByInstrument(instrumentId));
         results.setSongs(instrumentRepository.findSongsByInstrument(instrumentId));
+		return results;
+	}
+
+	public SearchResults searchByGenre(int genreId) {
+		SearchResults results = new SearchResults();
+        results.setArtists(genreRepository.findArtistsByGenre(genreId));
+        results.setAlbums(genreRepository.findAlbumsByGenre(genreId));
+        results.setSongs(genreRepository.findSongsByGenre(genreId));
 		return results;
 	}
 }
