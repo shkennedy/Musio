@@ -63,7 +63,21 @@ public class AlbumController
         ApiResponseObject response = new ApiResponseObject();
         response.setSuccess(true);
         return response;
-	}	
+    }	
+    
+    @RequestMapping(value = "/related/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
+	public @ResponseBody ApiResponseObject getRelatedArtists(@PathVariable("id") int id) {
+        ApiResponseObject response = new ApiResponseObject();
+        if(albumRepository.exists(id) == false) {
+            response.setSuccess(false);
+            response.setMessage("No album found with ID "+id+".");
+        }
+        else {
+            response.setSuccess(true);
+            response.setResponseData(albumRepository.findMostRelatedAlbums(id, 12));
+        }
+        return response;
+    }
 
     @GetMapping(path="/all")
     public @ResponseBody Iterable<Album> getAllAlbums()

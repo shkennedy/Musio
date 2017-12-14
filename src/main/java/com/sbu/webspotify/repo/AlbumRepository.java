@@ -27,9 +27,17 @@ public interface AlbumRepository extends JpaRepository<Album, Integer>
                     nativeQuery = true)    
     Set<AlbumIdentifier> findRecentlyFavoritedAlbumsByUser(@Param("userId") int userId, @Param("numElements") int numElements);
     
+    @Query(value = "SELECT art.id as artistId, art.name as artistName, i.full_file_id as fullFileId, a2.id as id, a2.title as title "
+                    +"FROM album_album_relation aar, album a1, album a2, Image i, artist art, album_artist_mapping aam "
+                    +"WHERE a1.id = :albumId AND aar.album1_id = a1.id AND aam.album_id = a2.id AND art.id = aam.artist_id AND "
+                    +"aar.album2_id = a2.id AND aar.album1_id <> aar.album2_id AND a2.album_art_id = i.id "
+                    +"ORDER BY score DESC LIMIT :numElements", 
+                        nativeQuery = true)    
+    Set<AlbumIdentifier> findMostRelatedAlbums(@Param("albumId") int albumId, @Param("numElements") int numElements);
+
     @Query(value = "SELECT art.id as artistId, art.name as artistName, i.full_file_id as fullFileId, alb.id as id, alb.title as title "
                     + "FROM Album alb, Artist art, album_artist_mapping aam, Image i "
-                    + "WHERE aam.artist_id = :artistId AND aam.artist_id = art.id AND aam.album_id = alb.id AND i.id=art.artist_art_id",
+                    + "WHERE aam.artist_id = :artistId AND aam.artist_id = art.id AND aam.album_id = alb.id AND i.id=alb.album_art_id",
                     nativeQuery = true)
     Set<AlbumIdentifier> findAllByArtistId(@Param("artistId") int artistId);
 }
