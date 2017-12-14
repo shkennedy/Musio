@@ -15,6 +15,7 @@ import com.sbu.webspotify.dto.identifier.PlaylistIdentifier;
 import com.sbu.webspotify.dto.identifier.SongIdentifier;
 import com.sbu.webspotify.model.Artist;
 import com.sbu.webspotify.model.User;
+import com.sbu.webspotify.repo.InstrumentRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,6 +43,9 @@ public class SearchService {
 
     @Autowired
     InstrumentService instrumentService;
+
+    @Autowired
+    InstrumentRepository instrumentRepository;
 
     @Autowired
     GenreService genreService;
@@ -166,4 +170,12 @@ public class SearchService {
 
         return new BrowseResult(songs, artists, albums, playlists);
     }
+
+	public SearchResults searchByInstrument(int instrumentId) {
+        SearchResults results = new SearchResults();
+        results.setArtists(instrumentRepository.findArtistsByInstrument(instrumentId));
+        results.setAlbums(instrumentRepository.findAlbumsByInstrument(instrumentId));
+        results.setSongs(instrumentRepository.findSongsByInstrument(instrumentId));
+		return results;
+	}
 }
