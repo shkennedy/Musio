@@ -12,11 +12,11 @@
                 <ng-template #defaultArt>
                     <img width="200px" height="auto" src="assets/images/default_art.png" alt="{{album.title}}">
                 </ng-template>
-                <!-- <img src="{{album.albumArtUrl}}" alt="{{album.title}}"> -->
+                <! <img src="{{album.albumArtUrl}}" alt="{{album.title}}"> -->
             <!-- <p class="album_name">{{album.title}}</p>
                 <p class="artist_name">{{album.artistName}}</p> -->
             <!-- </div> -->
-            <mat-card class="col_flex">
+            <mat-card style="background-size: cover;">
                 <div *ngIf="album.albumArt; else defaultArt;">
                     <img mat-card-image src="{{album.albumArtUrl}}" alt="{{album.title}}">
                 </div>
@@ -27,7 +27,7 @@
                     <p class="album_name">{{album.title}}</p>
                     <p class="artist_name">{{album.artistName}}</p>
                 </mat-card-footer>
-                </div>
+            </mat-card>
         </mat-grid-tile>
     </mat-grid-list>
 </ng-template>
