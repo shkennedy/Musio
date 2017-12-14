@@ -18,7 +18,7 @@
             <!-- </div> -->
             <mat-card class="col_flex">
                 <div *ngIf="album.albumArt; else defaultArt;">
-                    <img mat-card-image src="{{album.albumArt.url}}" alt="{{album.title}}">
+                    <img mat-card-image src="{{album.albumArtUrl}}" alt="{{album.title}}">
                 </div>
                 <ng-template #defaultArt>
                     <img mat-card-image width="200px" height="auto" src="assets/images/default_art.png" alt="{{album.title}}">
