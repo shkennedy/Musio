@@ -217,7 +217,7 @@ export class AudioPlayerComponent implements OnInit {
                 this.currentSong = song;
                 // Convert duration to seconds from ms
                 // this.currentSong.duration = this.currentSong.duration / 1000;
-                this.currentSong.duration = 4;
+                this.currentSong.duration = 30;
                 console.log(`song: ${this.currentSong.title} duration: ${this.currentSong.duration}`);
                 // Fetch song file
                 this.currentSong.audioFileUrl = this.fileService
