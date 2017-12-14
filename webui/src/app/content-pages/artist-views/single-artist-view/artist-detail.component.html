@@ -66,7 +66,7 @@
                     <div *ngFor="let album of artist.albums;" style="padding-bottom: 50px;">
                         <div id="album-info" class="col-sm-4" style="margin-top: 10px;">
                             <div class="col-sm-12">
-                                <div *ngIf="album.art; else defaultArt;">
+                                <div *ngIf="album.albumArt; else defaultArt;">
                                     <img src="{{album.albumArtUrl}}" alt="{{album.title}}" style="width:200px; height:200px;">
                                 </div>
                                 <ng-template #defaultArt>
@@ -74,7 +74,7 @@
                                 </ng-template>
                             </div>
                             <div class="col-sm-12">
-                                <h3 class="album-title">{{album.title}}</h3>
+                                <h3 class="album-title" (click)="gotoAlbum(album.id)">{{album.title}}</h3>
                             </div>
                             <button class="btn btn-green block-center">PLAY</button>
 
@@ -114,24 +114,6 @@
                                 <mat-header-row *matHeaderRowDef="['trackNumber', 'title', 'duration']"></mat-header-row>
                                 <mat-row *matRowDef="let row; columns: ['trackNumber', 'title', 'duration'];"></mat-row>
                             </mat-table>
-                            <!-- <table class="table table-inverse song-table album-tracklist-table">
-                                <thead>
-                                    <tr>
-                                        <th (click)="sort('track')">#</th>
-                                        <th (click)="sort('title')">Title</th>
-                                        <th>
-                                            <mat-icon>schedule</mat-icon>
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr *ngFor="let song of album.songs;">
-                                        <th>{{song.trackNumber}}</th>
-                                        <td>{{song.title}}</td>
-                                        <td>{{song.durationString}}</td>
-                                    </tr>
-                                </tbody>
-                            </table> -->
                         </div>
                     </div>
                 </ng-template>
