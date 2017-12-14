@@ -4,6 +4,7 @@ import { MatTableDataSource } from '@angular/material';
 
 import { AlbumService } from '../../../services/album.service';
 import { ArtistService } from '../../../services/artist.service';
+import { AudioPlayerProxyService } from '../../../services/audioPlayerProxy.service';
 import { FavoritesService } from '../../../services/favorites.service';
 import { FileService } from '../../../services/file.service';
 
@@ -21,7 +22,7 @@ import { Song } from '../../../models/song.model';
 export class ArtistDetailComponent implements OnInit {
 
     private artist: Artist;
-    private albumTablesData: MatTableDataSource<Song>[] = [];
+    private albumTablesData: Map<number, MatTableDataSource<Song>>;
     private followerCount: number;
     private isFollowed = false;
     private relatedArtists: Artist[];
@@ -34,6 +35,7 @@ export class ArtistDetailComponent implements OnInit {
         private router: Router,
         private albumService: AlbumService,
         private artistService: ArtistService,
+        private audioPlayerProxyService: AudioPlayerProxyService,
         private favoritesService: FavoritesService,
         private fileService: FileService
     ) { }
@@ -48,8 +50,11 @@ export class ArtistDetailComponent implements OnInit {
                     .subscribe(
                     (albums: Album[]) => {
                         this.artist.albums = albums;
+                        this.albumTablesData = new Map();
                         this.artist.albums.forEach((album: Album) => {
-                            this.albumTablesData.push(new MatTableDataSource(album.songs));
+                            console.log('wateeee');
+                            console.log(`setting ${album.id} ${album}`);
+                            this.albumTablesData.set(album.id, new MatTableDataSource(album.songs));
                         });
                     },
                     (error: any) => {
@@ -92,7 +97,7 @@ export class ArtistDetailComponent implements OnInit {
             });
     }
 
-    followArtist() {
+    private followArtist(): void {
         this.favoritesService.addFavoriteArtistById(this.artist.id)
             .subscribe(
             (success: boolean) => {
@@ -104,7 +109,7 @@ export class ArtistDetailComponent implements OnInit {
             });
     }
 
-    unfollowArtist() {
+    private unfollowArtist(): void {
         this.favoritesService.removeFavoriteArtistById(this.artist.id)
             .subscribe(
             (success: boolean) => {
@@ -116,6 +121,14 @@ export class ArtistDetailComponent implements OnInit {
             });
     }
 
+    private playArtist(): void {
+        this.audioPlayerProxyService.playArtist(this.artist.id);
+    }
+
+    private addArtistToQueue(): void {
+        this.audioPlayerProxyService.addArtistToQueue(this.artist.id);
+    }
+
     private gotoRelatedArtist(relatedArtistId: number): void {
         this.router.navigate(['/albums']) // garbage link to force page reload
             .then(() => {
@@ -125,5 +138,11 @@ export class ArtistDetailComponent implements OnInit {
 
     private sort(): void {
         this.albumService.sortAlbumsByReleaseDate(this.artist.albums, this.ascendingOrder);
+    }
+
+    private getAlbumData(albumId: number) {
+        console.log(albumId);
+        console.log(this.albumTablesData.get(albumId));
+        return this.albumTablesData.get(albumId);
     }
 }

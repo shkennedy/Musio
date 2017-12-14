@@ -24,6 +24,7 @@ export class HttpRequestService {
         if (id !== -1) {
             url += '/' + id.toString();
         }
+        console.log(url);
         return this.http.get(url)
             .catch(function (error: any) {
                 return Observable.throw(error || 'Server error');
