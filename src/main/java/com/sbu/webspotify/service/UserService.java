@@ -267,13 +267,13 @@ public class UserService {
 
 	public void persistUser(User user) {
 		user = userRepository.save(user);
-		userRepository.flush();
 		userRepository.cleanFavoriteSongs();
 		userRepository.cleanFavoriteAlbums();
 		userRepository.cleanFavoriteArtists();
 		userRepository.cleanFavoriteGenres();
 		userRepository.cleanFollowingUsers();
 		userRepository.cleanFavoritePlaylists();
+		userRepository.flush();
 	}
 
 	public ApiResponseObject addFavoritePlaylist(User user, Integer playlistId) {
