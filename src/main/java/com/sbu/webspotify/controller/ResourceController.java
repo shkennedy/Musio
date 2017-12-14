@@ -1,16 +1,17 @@
 package com.sbu.webspotify.controller;
 
-import com.sbu.webspotify.dto.ApiResponseObject;
 import com.sbu.webspotify.model.Album;
 import com.sbu.webspotify.model.Artist;
 import com.sbu.webspotify.model.Audio;
 import com.sbu.webspotify.model.File;
 import com.sbu.webspotify.model.Image;
 import com.sbu.webspotify.model.Song;
+import com.sbu.webspotify.model.User;
 import com.sbu.webspotify.repo.FileRepository;
 import com.sbu.webspotify.service.AlbumService;
 import com.sbu.webspotify.service.ArtistService;
 import com.sbu.webspotify.service.SongService;
+import com.sbu.webspotify.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -35,19 +36,27 @@ public class ResourceController
     @Autowired
     ArtistService artistService;
 
+    @Autowired
+    UserService userService;
+
     @RequestMapping(value = "/get/{fileId}", method = RequestMethod.GET)
-    public @ResponseBody ApiResponseObject getResource(@PathVariable("fileId") int fileId) {
-        ApiResponseObject response = new ApiResponseObject();
-        File file = fileRepository.findById(fileId);
-        if(file == null) {
-            response.setSuccess(false);
-            response.setMessage("No file found with id "+fileId+".");
+    public @ResponseBody byte[] getResource(@PathVariable("fileId") int fileId) {
+        return fileRepository.findById(fileId).getBytes();
+    }
+
+    @RequestMapping(value = "/userProfileImage/{userId}", method = RequestMethod.GET)
+    public @ResponseBody byte[] getProfileImage(@PathVariable("userId") int userId) {
+        User user = userService.findUserById(userId);
+        if(user == null) {
+            return null;
         }
-        else {
-            response.setSuccess(true);
-            response.setResponseData(file);
+
+        File profileImageFile = user.getProfileImage();
+        if(profileImageFile == null) {
+            return null;
         }
-        return response;
+
+        return profileImageFile.getBytes();
     }
 
     @RequestMapping(value = "/highBitrateSongFile/{songId}", method = RequestMethod.GET)
