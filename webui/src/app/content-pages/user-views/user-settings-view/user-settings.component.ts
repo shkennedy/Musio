@@ -33,7 +33,7 @@ export class UserSettingsComponent implements OnInit {
         this.userService.getUser(this.setUser);
     }
 
-    public setUser(user: User): void {
+    public setUser = (user: User): void => {
         this.user = user;
     }
 

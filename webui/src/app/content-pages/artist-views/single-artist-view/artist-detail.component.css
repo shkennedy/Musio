@@ -1,3 +1,7 @@
+* {
+    background-color: transparent;
+}
+
 .tabs1 {
       left: 50%;
       -webkit-transform: translateX(-50%);
@@ -5,10 +9,11 @@
       position: relative;
       background: none;
       padding: 20px;
-      padding-bottom: 80px;
       width: 100%;
-      height: 100%;
-      box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+      /* height: 100%; */
+      overflow: auto;
+    display: block;
+      /* box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22); */
       border-radius: 5px;
       min-width: 240px;
     }
@@ -325,6 +330,22 @@
         border-radius:50px;
         margin-right:15px;
     }
+
+.album_section {
+    margin-bottom: 20px;
+}
+
+.mat-column-trackNumber {
+    max-width: 64px;
+}
+
+.mat-column-duration {
+    max-width: 64px;
+}
+
+mat-row:hover {
+    background-color: grey;
+}
 
     .center_loading{
         height:100%;

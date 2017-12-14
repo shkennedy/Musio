@@ -1,4 +1,7 @@
-<section>
+<div *ngIf="!user; else userLoaded">
+    <mat-spinner color="accent"></mat-spinner>
+</div>
+<ng-template #userLoaded>
     {{user.username}}
     
     <img src="{{user.profileImageUrl}}" />
@@ -7,4 +10,4 @@
     <!-- <mat-button-toggle value="{{user.useHighBitrate}}">Use High Bitrate</mat-button-toggle>     -->
     <p>{{user.email}}</p>
     <p>{{user.geoLocation}}</p>
-</section>
+</ng-template>
