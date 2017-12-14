@@ -16,7 +16,7 @@
             <!-- <p class="album_name">{{album.title}}</p>
                 <p class="artist_name">{{album.artistName}}</p> -->
             <!-- </div> -->
-            <mat-card style="background-size: cover;">
+            <mat-card>
                 <div *ngIf="album.albumArt; else defaultArt;">
                     <img mat-card-image src="{{album.albumArtUrl}}" alt="{{album.title}}">
                 </div>

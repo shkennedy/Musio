@@ -1,5 +1,5 @@
 <div *ngIf="!album; else albumLoaded;" class=""> <!-- Needs loading gif -->
-    <mat-spinner color="green"></mat-spinner>
+    <mat-spinner color="accent"></mat-spinner>
 </div>
 <ng-template #albumLoaded>
     <div id="album-wrapper col-sm-12">
@@ -22,10 +22,10 @@
             <button class="btn btn-green block-center">PLAY</button>
 
             <div>
-                <div *ngIf="isFollowed; else follow">
+                <div *ngIf="isFavorited; else notFavorited">
                     <button class="btn btn-black glyphicon glyphicon-heart" (click)="unfavoriteAlbum()"></button>
                 </div>
-                <ng-template #follow>
+                <ng-template #notFavorited>
                     <button class="btn btn-grey " (click)="favoriteAlbum()">FAVORITE</button>
                 </ng-template>
             </div>

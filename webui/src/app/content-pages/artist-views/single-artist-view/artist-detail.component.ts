@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { MatTableDataSource } from '@angular/material';
 
 import { AlbumService } from '../../../services/album.service';
 import { ArtistService } from '../../../services/artist.service';
@@ -20,6 +21,7 @@ import { Song } from '../../../models/song.model';
 export class ArtistDetailComponent implements OnInit {
 
     private artist: Artist;
+    private albumTablesData: MatTableDataSource<Album>[] = [];
     private followerCount: number;
     private isFollowed = false;
     private relatedArtists: Artist[];
@@ -46,6 +48,9 @@ export class ArtistDetailComponent implements OnInit {
                     .subscribe(
                     (albums: Album[]) => {
                         this.artist.albums = albums;
+                        this.artist.albums.forEach((album: Album) => {
+                            this.albumTablesData.push(new MatTableDataSource(album));
+                        });
                     },
                     (error: any) => {
                         console.log(error.toString());
@@ -92,6 +97,7 @@ export class ArtistDetailComponent implements OnInit {
             .subscribe(
             (success: boolean) => {
                 this.isFollowed = true;
+                this.followerCount += 1;
             },
             (error: any) => {
                 console.log(error.toString());
@@ -103,6 +109,7 @@ export class ArtistDetailComponent implements OnInit {
             .subscribe(
             (success: boolean) => {
                 this.isFollowed = false;
+                this.followerCount -= 1;
             },
             (error: any) => {
                 console.log(error.toString());
@@ -111,9 +118,9 @@ export class ArtistDetailComponent implements OnInit {
 
     private gotoRelatedArtist(relatedArtistId: number): void {
         this.router.navigate(['/albums']) // garbage link to force page reload
-        .then(() => {
-            this.router.navigate(['/artists', relatedArtistId]);
-        });
+            .then(() => {
+                this.router.navigate(['/artists', relatedArtistId]);
+            });
     }
 
     private sort(): void {

@@ -1,5 +1,5 @@
 <div *ngIf="!artist || !albums || !songs || !genres || !instruments || !playlists; else loaded;">
-    <mat-spinner color="green"></mat-spinner>
+    <mat-spinner color="accent"></mat-spinner>
 </div>
 <ng-template #loaded>
     <div *ngFor="let artist of artists">
