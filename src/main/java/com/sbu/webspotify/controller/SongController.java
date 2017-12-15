@@ -18,6 +18,9 @@ public class SongController
     private SongRepository songRepository;
 
     @Autowired
+    private AlbumRepository albumRepository;
+
+    @Autowired
     private SongService songService;
 
     @RequestMapping(value = "/get/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
@@ -67,6 +70,21 @@ public class SongController
 	public @ResponseBody ApiResponseObject deleteSong(@PathVariable("id") int id) {
         songRepository.delete(id);
         ApiResponseObject response = new ApiResponseObject();
+        response.setSuccess(true);
+        return response;
+    }	
+    
+    @RequestMapping(value = "/getBasicAlbumInfo/{songId}")
+	public @ResponseBody ApiResponseObject getAlbumInfo(@PathVariable("songId") int songId) {
+        ApiResponseObject response = new ApiResponseObject();
+        boolean songExists = songRepository.exists(songId);
+        if(songExists == false) {
+            response.setSuccess(false);
+            response.setMessage("No song with id "+songId+" found.");
+            return response;
+        }
+
+        response.setResponseData(albumRepository.getAlbumInfoForSong(songId));
         response.setSuccess(true);
         return response;
 	}	
