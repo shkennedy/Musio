@@ -14,4 +14,5 @@ export class Song {
     public durationString: string;
     public trackNumber: number;
     public audioFileUrl: string;
+    public isFavorited: boolean;
 }

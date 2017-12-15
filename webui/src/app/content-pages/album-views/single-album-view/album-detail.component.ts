@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource, MatRow } from '@angular/material';
 
 import { AudioPlayerProxyService } from '../../../services/audioPlayerProxy.service';
 import { AlbumService } from '../../../services/album.service';
@@ -20,10 +20,13 @@ import { Artist } from '../../../models/artist.model';
 export class AlbumDetailComponent implements OnInit {
 
     private album: Album;
-    private albumTableData: MatTableDataSource<Song>;
     private isFavorited: boolean;
+    private songs: Map<number, Song> = new Map();
     private titleSort = false;
     private ascendingOrder = true;
+
+    private albumTableData: MatTableDataSource<Song>;
+    private playButtonsVisibility: Map<number, boolean> = new Map();
 
     private errorMessage = '';
 
@@ -42,6 +45,10 @@ export class AlbumDetailComponent implements OnInit {
             (album: Album) => {
                 this.album = album;
                 this.albumTableData = new MatTableDataSource(album.songs);
+                album.songs.forEach((song: Song) => {
+                    this.songs.set(song.id, song);
+                    this.playButtonsVisibility.set(song.id, false);
+                });
 
                 // Check if favorited
                 this.favoritesService.getFavoriteAlbums()
@@ -59,6 +66,17 @@ export class AlbumDetailComponent implements OnInit {
                     (error: any) => {
                         this.errorMessage = error;
                     });
+
+                // this.favoritesService.getFavoriteSongs()
+                //     .subscribe(
+                //     (songs: Song[]) => {
+                //         this.songs.forEach((song: Song) => {
+                //             this.songs.get(song.id).isFavorited = songs.includes(song);
+                //         });
+                //     },
+                //     (error: any) => {
+                //         console.log('error fetching favorite songs');
+                //     });
             },
             (error: any) => {
                 this.errorMessage = error;
@@ -114,10 +132,41 @@ export class AlbumDetailComponent implements OnInit {
     }
 
     private playSong(songId: number): void {
+        console.log(songId);
         this.audioPlayerProxyService.playSong(songId);
     }
 
     private addSongToQueue(songId: number): void {
         this.audioPlayerProxyService.addSongToQueue(songId);
+    }
+
+    private showPlay(songId: number): void {
+        this.playButtonsVisibility.set(songId, true);
+    }
+
+    private hidePlay(songId: number): void {
+        this.playButtonsVisibility.set(songId, false);
+    }
+
+    private getPlayVisibility(songId: number): Object {
+        return { 'visibility': this.playButtonsVisibility.get(songId) ? 'visible' : 'hidden' };
+    }
+
+    private favoriteOrUnfavoriteSong(songId: number): void {
+        if (this.songs.get(songId).isFavorited) {
+            this.favoritesService.removeFavoriteSongById(songId)
+                .subscribe((success: boolean) => {
+                    this.songs.get(songId).isFavorited = !success;
+                });
+        } else {
+            this.favoritesService.addFavoriteSongById(songId)
+                .subscribe((success: boolean) => {
+                    this.songs.get(songId).isFavorited = success;
+                });
+        }
+    }
+
+    private getFavoritedIcon(isFavorited: boolean): Object {
+        return (isFavorited) ? 'remove' : 'add';
     }
 }

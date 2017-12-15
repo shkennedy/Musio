@@ -40,6 +40,16 @@
                     <mat-cell *matCellDef="let song"> {{song.trackNumber}} </mat-cell>
                 </ng-container>
 
+                <!-- Play Button Column -->
+                <ng-container matColumnDef="playButton">
+                    <mat-header-cell *matHeaderCellDef></mat-header-cell>
+                    <mat-cell *matCellDef="let song">
+                        <button mat-icon-button class="song_play_button" [ngStyle]="getPlayVisibility(song.id)" (click)="playSong(song.id)">
+                            <mat-icon>play_circle_filled</mat-icon>
+                        </button>
+                    </mat-cell>
+                </ng-container>
+
                 <!-- Name Column -->
                 <ng-container matColumnDef="title">
                     <mat-header-cell *matHeaderCellDef mat-sort-header> Title </mat-header-cell>
@@ -54,12 +64,23 @@
                     <mat-cell *matCellDef="let song"> {{song.durationString}} </mat-cell>
                 </ng-container>
 
-                <mat-header-row *matHeaderRowDef="['trackNumber', 'title', 'duration']"></mat-header-row>
-                <mat-row *matRowDef="let row; columns: ['trackNumber', 'title', 'duration'];"></mat-row>
+                <!-- Favorite Button Column -->
+                <ng-container matColumnDef="favoriteButton">
+                    <mat-header-cell *matHeaderCellDef></mat-header-cell>
+                    <mat-cell *matCellDef="let song">
+                        <button mat-icon-button class="song_favorite_button" (click)="favoriteOrUnfavoriteSong(song.id)">
+                            <mat-icon>{{getFavoritedIcon(song.isFavorited)}}</mat-icon>
+                        </button>
+                    </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="['trackNumber', 'playButton', 'title', 'duration', 'favoriteButton']"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: ['trackNumber', 'playButton', 'title', 'duration', 'favoriteButton'];" (mouseenter)="showPlay(row.id)"
+                    (mouseleave)="hidePlay(row.id)"></mat-row>
             </mat-table>
         </div>
 
-      <!--  <div id="album-tracklist" class="col-sm-8"></div>
+        <!--  <div id="album-tracklist" class="col-sm-8"></div>
         <table class="table table-inverse song-table album-tracklist-table">
             <thead>
                 <tr>
