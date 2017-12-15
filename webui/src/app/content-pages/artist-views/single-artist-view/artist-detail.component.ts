@@ -1,6 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { MatTableDataSource } from '@angular/material';
+import { MatSort, MatTableDataSource } from '@angular/material';
 
 import { AlbumService } from '../../../services/album.service';
 import { ArtistService } from '../../../services/artist.service';
@@ -21,15 +21,17 @@ import { Song } from '../../../models/song.model';
 })
 export class ArtistDetailComponent implements OnInit {
 
-    private static displayedColumns = ['trackNumber', 'title', 'duration'];
-
     private artist: Artist;
-    private albumTablesData: Map<number, MatTableDataSource<Song>>;
     private followerCount: number;
     private isFollowed = false;
     private relatedArtists: Artist[];
     private titleSort = false;
     private ascendingOrder = true;
+
+    @ViewChild(MatSort) sort: any;
+    private albumTablesData: Map<number, MatTableDataSource<Song>>;
+    private songs: Map<number, Song> = new Map();
+    private playButtonsVisibility: Map<number, boolean> = new Map();
 
     private errorMessage: string;
 
@@ -55,6 +57,10 @@ export class ArtistDetailComponent implements OnInit {
                         this.albumTablesData = new Map();
                         this.artist.albums.forEach((album: Album) => {
                             this.albumTablesData.set(album.id, new MatTableDataSource(album.songs));
+                            album.songs.forEach((song: Song) => {
+                                this.songs.set(song.id, song);
+                                this.playButtonsVisibility.set(song.id, false);
+                            });
                         });
                     },
                     (error: any) => {
@@ -95,6 +101,12 @@ export class ArtistDetailComponent implements OnInit {
             (error: any) => {
                 this.errorMessage = error;
             });
+
+            setTimeout(() => {
+                this.artist.albums.forEach((album: Album) => {
+                    this.albumTablesData.get(album.id).sort = this.sort;
+                });
+            }, 3000);
     }
 
     private followArtist(): void {
@@ -121,14 +133,6 @@ export class ArtistDetailComponent implements OnInit {
             });
     }
 
-    private playArtist(): void {
-        this.audioPlayerProxyService.playArtist(this.artist.id);
-    }
-
-    private addArtistToQueue(): void {
-        this.audioPlayerProxyService.addArtistToQueue(this.artist.id);
-    }
-
     private gotoAlbum(albumId: number): void {
         this.router.navigate(['/albums', albumId]);
     }
@@ -140,8 +144,63 @@ export class ArtistDetailComponent implements OnInit {
             });
     }
 
-    private sort(): void {
-        this.albumService.sortAlbumsByReleaseDate(this.artist.albums, this.ascendingOrder);
+    private playArtist(): void {
+        this.audioPlayerProxyService.playArtist(this.artist.id);
+    }
+
+    private addArtistToQueue(): void {
+        this.audioPlayerProxyService.addArtistToQueue(this.artist.id);
+    }
+
+    private playAlbum(albumId: number): void {
+        this.audioPlayerProxyService.playAlbum(albumId);
+    }
+
+    private addAlbumToQueue(albumId: number): void {
+        this.audioPlayerProxyService.addAlbumToQueue(albumId);
+    }
+
+    private playSong(songId: number): void {
+        console.log(songId);
+        this.audioPlayerProxyService.playSong(songId);
+    }
+
+    private addSongToQueue(songId: number): void {
+        this.audioPlayerProxyService.addSongToQueue(songId);
+    }
+
+    private showPlay(songId: number): void {
+        this.playButtonsVisibility.set(songId, true);
+    }
+
+    private hidePlay(songId: number): void {
+        this.playButtonsVisibility.set(songId, false);
+    }
+
+    private getPlayVisibility(songId: number): Object {
+        return { 'visibility': this.playButtonsVisibility.get(songId) ? 'visible' : 'hidden' };
+    }
+
+    private favoriteOrUnfavoriteSong(songId: number): void {
+        if (this.songs.get(songId).isFavorited) {
+            this.favoritesService.removeFavoriteSongById(songId)
+                .subscribe((success: boolean) => {
+                    this.songs.get(songId).isFavorited = !success;
+                });
+        } else {
+            this.favoritesService.addFavoriteSongById(songId)
+                .subscribe((success: boolean) => {
+                    this.songs.get(songId).isFavorited = success;
+                });
+        }
+    }
+
+    private getFavoritedIcon(songId: number, isFavorited: boolean): Object {
+        if (this.playButtonsVisibility.get(songId)) {
+            return (isFavorited) ? 'remove' : 'add';
+        } else {
+            return (isFavorited) ? 'favorite' : 'add';
+        }
     }
 
     private getAlbumData(albumId: number) {

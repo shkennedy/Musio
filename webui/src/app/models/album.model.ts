@@ -14,4 +14,5 @@ export class Album {
 
   public albumArtId: number;
   public albumArtUrl: string;
+  public isFavorited: boolean;
 }

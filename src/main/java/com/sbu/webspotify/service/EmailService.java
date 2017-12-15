@@ -22,6 +22,7 @@ public class EmailService {
     private AppConfig appConfig;
 	
     public boolean sendSimpleEmailToUser(User user, String subject, String body) {
+        System.out.println("Start of email send");
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(user.getEmail());
         message.setFrom(appConfig.emailAddress);
@@ -29,8 +30,11 @@ public class EmailService {
         message.setText(body);
 
         try {
+            System.out.println("Pre email send");
             mailSender.send(message);
+            System.out.println("Post email send");
         } catch (MailException me) {
+            System.out.println("email send error " + me.getMessage());
             return false;
         }
         return true;

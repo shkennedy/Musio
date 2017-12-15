@@ -221,6 +221,10 @@ export class AudioPlayerComponent implements OnInit {
     }
 
     private _playSong(songId: number): void {
+        if (this.audio) {
+            this.audio.pause();
+        }
+
         // Fetch song object
         this.songService.getSongById(songId)
             .subscribe(
