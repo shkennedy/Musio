@@ -19,6 +19,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './shared/shared.module';
 import { CoreModule } from './core/core.module';
 
+import { CapitalizePipe } from './pipes/capitalize-pipe.pipe';
+
 import { AppComponent } from './app.component';
 import { LoginComponent } from './landing-pages/login/login.component';
 import { RegistrationComponent } from './landing-pages/registration/registration.component';
@@ -95,7 +97,8 @@ import { PictureDialogComponent } from './dialogs/picture-dialog/picture-dialog/
         UserSettingsComponent,
         PasswordDialogComponent,
         DeleteDialogComponent,
-        PictureDialogComponent
+        PictureDialogComponent,
+        CapitalizePipe
     ],
     entryComponents: [PasswordDialogComponent,
                       DeleteDialogComponent,

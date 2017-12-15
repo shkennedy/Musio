@@ -40,3 +40,17 @@ background-color: grey;
 .routing_img:hover {
     cursor: pointer;
 }
+
+.flex_row{
+    display:flex;
+    justify-content: flex-start;
+}
+
+h3{
+    margin-left:20px;
+    font-weight:bold;
+}
+
+.hoverable:hover{
+    color:white;
+}

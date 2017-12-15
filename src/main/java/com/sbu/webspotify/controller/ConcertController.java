@@ -3,7 +3,7 @@ package com.sbu.webspotify.controller;
 import java.util.Set;
 
 import com.sbu.webspotify.dto.ApiResponseObject;
-import com.sbu.webspotify.model.Concert;
+import com.sbu.webspotify.dto.identifier.ConcertIdentifier;
 import com.sbu.webspotify.repo.ArtistRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +31,7 @@ public class ConcertController
             return response;
         }
 
-        Set<Concert> concerts = artistRepository.findConcertsForArtist(artistId);
+        Set<ConcertIdentifier> concerts = artistRepository.findConcertsForArtist(artistId);
         response.setResponseData(concerts);
         response.setSuccess(true);
 

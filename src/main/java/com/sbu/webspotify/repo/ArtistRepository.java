@@ -3,8 +3,9 @@ package com.sbu.webspotify.repo;
 import java.util.Set;
 
 import com.sbu.webspotify.dto.identifier.ArtistIdentifier;
+import com.sbu.webspotify.dto.identifier.ConcertIdentifier;
 import com.sbu.webspotify.model.Artist;
-import com.sbu.webspotify.model.Concert;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -39,9 +40,8 @@ public interface ArtistRepository extends JpaRepository<Artist, Integer>
                         nativeQuery = true)    
     Set<ArtistIdentifier> findMostRelatedArtists(@Param("artistId") int artistId, @Param("numElements") int numElements);
     
-    @Query(value = "SELECT c.* "
+    @Query(value = "SELECT c.date as date, c.id as id, c.name as name, c.venue_id as venueId "
                     + "FROM Concert c, artist_concert_mapping acm "
-                    + "WHERE acm.artist_id = :artistId ", 
-           nativeQuery = true)    
-    Set<Concert> findConcertsForArtist(@Param("artistId") int artistId);
+                    + "WHERE acm.artist_id = :artistId AND c.id = acm.concert_id", nativeQuery=true)    
+    Set<ConcertIdentifier> findConcertsForArtist(@Param("artistId") int artistId);
 }
