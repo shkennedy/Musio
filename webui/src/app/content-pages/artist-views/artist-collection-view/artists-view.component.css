@@ -23,6 +23,10 @@
       padding-top: 15px;
     }
 
+.artist-card:hover {
+    cursor: pointer;
+}
+
 .album-collection-container{
       text-align: center;
     }

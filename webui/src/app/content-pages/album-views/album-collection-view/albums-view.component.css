@@ -47,3 +47,12 @@
         margin-left:10px;
         margin-right: 10px;
     }
+
+.album_image {
+    width: 200px;
+    height: 200px;
+}
+
+.album_image:hover {
+    cursor: pointer;
+}
