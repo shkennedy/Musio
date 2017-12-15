@@ -4,7 +4,7 @@
 </div>
 <ng-template #hasArtists>
     <mat-grid-list cols="4" gutterSize="15px" class="padded">
-        <mat-grid-tile *ngFor="let artist of artists" [routerLink]="['/artists', artist.id]">
+        <mat-grid-tile class="artist-card col-sm-3 center-block" *ngFor="let artist of artists" [routerLink]="['/artists', artist.id]">
             <div class="col_flex">
                 <img width="200px" height="200px" src="{{artist.artistImageUrl}}" alt="{{artist.name}}">
                 <p>{{artist.name}}</p>

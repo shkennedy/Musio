@@ -13,6 +13,7 @@ import com.sbu.webspotify.dto.identifier.GenreIdentifier;
 import com.sbu.webspotify.dto.identifier.InstrumentIdentifier;
 import com.sbu.webspotify.dto.identifier.PlaylistIdentifier;
 import com.sbu.webspotify.dto.identifier.SongIdentifier;
+import com.sbu.webspotify.dto.identifier.UserIdentifier;
 import com.sbu.webspotify.model.Artist;
 import com.sbu.webspotify.model.User;
 import com.sbu.webspotify.repo.AlbumRepository;
@@ -74,6 +75,7 @@ public class SearchService {
         Set<SongIdentifier> songs = songService.searchByTitle(query);
         Set<InstrumentIdentifier> instruments = instrumentService.searchByName(query);
         Set<GenreIdentifier> genres = genreService.searchByName(query);
+        Set<UserIdentifier> users = userService.searchByUsername(query);
         
         SearchResults searchResults = new SearchResults();
         searchResults.setArtists(artists);
@@ -82,6 +84,7 @@ public class SearchService {
         searchResults.setSongs(songs);
         searchResults.setInstruments(instruments);
         searchResults.setGenres(genres);
+        searchResults.setUsers(users);
 
         return searchResults;
     }

@@ -91,5 +91,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	@Modifying
 	@Query(value = "DELETE from user_following_user where follower=:user1Id and user_being_followed=:user2Id", nativeQuery = true)
 	@Transactional
-	void deleteFollowingUserRecord(@Param("user1Id") int follower, @Param("user2Id") int user_being_followed);
+    void deleteFollowingUserRecord(@Param("user1Id") int follower, @Param("user2Id") int user_being_followed);
+    
+    @Query(value = "SELECT u.id as id, u.username as username FROM User u WHERE u.username LIKE CONCAT('%' :queryString, '%')", nativeQuery = true)
+    Set<UserIdentifier> findByUsernameContaining(@Param("queryString") String queryString);
 }

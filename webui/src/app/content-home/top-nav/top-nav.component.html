@@ -29,7 +29,7 @@
     <img class="logo_sized" src="assets/images/mainlogo.png" alt="Logo">
     <!-- Item 2 -->
     <div>
-        <form (ngSubmit)="search(search)" #search="ngForm">
+        <form (ngSubmit)="search(searchForm.form.value.searchQuery)" #searchForm="ngForm">
             <div id="search_wrapper">
                 <mat-icon class="search_icon">search</mat-icon>
                 <input type="text" class="search_bar" name="searchQuery" ngModel style="padding-left:25px;" placeholder="Search">
