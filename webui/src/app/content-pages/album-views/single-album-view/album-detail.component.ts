@@ -126,7 +126,6 @@ export class AlbumDetailComponent implements OnInit {
     }
 
     private playSong(songId: number): void {
-        console.log(songId);
         this.audioPlayerProxyService.playSong(songId);
     }
 

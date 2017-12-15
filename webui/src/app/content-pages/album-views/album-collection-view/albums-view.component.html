@@ -6,13 +6,13 @@
     <mat-grid-list cols="4" gutterSize="15px" class="padded">
         <mat-grid-tile *ngFor="let album of albums" [routerLink]="['/albums',album.id]">
             <div class="col_flex">
-                <div *ngIf="album.albumArt; else defaultArt;">
-                    <img src="{{album.albumArt.url}}" alt="{{album.title}}">
+                <!-- <div *ngIf="album.albumArt; else defaultArt;">
+                    <img style="max-width:200px; max-height:200px;" src="{{album.albumArt.url}}" alt="{{album.title}}">
                 </div>
                 <ng-template #defaultArt>
                     <img width="200px" height="auto" src="assets/images/default_art.png" alt="{{album.title}}">
-                </ng-template>
-                <img src="{{album.albumArtUrl}}" alt="{{album.title}}">
+                </ng-template> -->
+                <img class="album_image" src="{{album.albumArtUrl}}" alt="{{album.title}}">
                 <p class="album_name">{{album.title}}</p>
                 <p class="artist_name">{{album.artistName}}</p>
             </div>

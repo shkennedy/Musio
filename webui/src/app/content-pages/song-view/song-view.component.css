@@ -1,0 +1,33 @@
+* {
+    background-color: transparent;
+}
+
+.center_loading {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.mat-column-playButton {
+    max-width: 28px;
+}
+
+.song_play_button {
+    max-width: 32px;
+    display: flex;
+    align-content: center;
+}
+
+.mat-column-duration {
+    max-width: 48px;
+}
+
+.mat-column-favoriteButton {
+    max-width: 32px;
+}
+
+mat-row:hover {
+background-color: grey;
+}

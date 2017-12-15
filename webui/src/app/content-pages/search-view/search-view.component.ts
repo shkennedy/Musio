@@ -1,6 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MatTableDataSource, MatRow, MatSort } from '@angular/material';
 
+import { AudioPlayerProxyService } from '../../services/audioPlayerProxy.service';
+import { FavoritesService } from '../../services/favorites.service';
 import { FileService } from '../../services/file.service';
 import { SearchService, SearchResponse } from '../../services/search.service';
 import { BrowseResponse } from '../../services/search.service';
@@ -27,14 +30,20 @@ export class SearchComponent implements OnInit {
     private genres: Genre[];
     private instruments: Instrument[];
     private playlists: Playlist[];
-    private songs: Song[];
+    private songs: Map<number, Song>;
     private users: User[];
+
+    @ViewChild(MatSort) sort: any;
+    private songTableData: MatTableDataSource<Song>;
+    private playButtonsVisibility: Map<number, boolean> = new Map();
 
     private errorMessage: string;
 
     constructor(
         private activatedRoute: ActivatedRoute,
         private router: Router,
+        private audioPlayerProxyService: AudioPlayerProxyService,
+        private favoritesService: FavoritesService,
         private fileService: FileService,
         private searchService: SearchService
     ) { }
@@ -44,7 +53,7 @@ export class SearchComponent implements OnInit {
             .subscribe((searchParams: any) => {
                 this.searchQuery = searchParams['searchQuery'];
                 this.search();
-        });
+            });
     }
 
     private search(): void {
@@ -56,7 +65,7 @@ export class SearchComponent implements OnInit {
                 if (this.albums) {
                     this.albums.forEach((album: Album) => {
                         album.albumArtUrl =
-                            this.fileService.getAlbumImageURLByIdAndSize(album.id, false);
+                            this.fileService.getAlbumImageURLByIdAndSize(album.id, true);
                     });
                 }
 
@@ -64,7 +73,7 @@ export class SearchComponent implements OnInit {
                 if (this.artists) {
                     this.artists.forEach((artist: Artist) => {
                         artist.artistImageUrl =
-                            this.fileService.getArtistImageURLByIdAndSize(artist.id, false);
+                            this.fileService.getArtistImageURLByIdAndSize(artist.id, true);
                     });
                 }
 
@@ -86,13 +95,22 @@ export class SearchComponent implements OnInit {
                     });
                 }
 
-                this.songs = searchData.songs;
+                this.songTableData = new MatTableDataSource(searchData.songs);
+                this.songs = new Map();
+                searchData.songs.forEach((song: Song) => {
+                    this.songs.set(song.id, song);
+                    this.playButtonsVisibility.set(song.id, false);
+                });
+
+                setTimeout(() => {
+                    this.songTableData.sort = this.sort;
+                }, 2000);
 
                 this.users = searchData.users;
                 if (this.users) {
                     this.users.forEach((user: User) => {
                         // user.profileImageUrl =
-                            // this.fileService.getAlbumImageURLByIdAndSize(user.id, false);
+                        // this.fileService.getAlbumImageURLByIdAndSize(user.id, false);
                     });
                 }
             },
@@ -100,5 +118,47 @@ export class SearchComponent implements OnInit {
                 this.errorMessage = error;
                 console.log(error.toString());
             });
+    }
+
+    private playSong(songId: number): void {
+        this.audioPlayerProxyService.playSong(songId);
+    }
+
+    private addSongToQueue(songId: number): void {
+        this.audioPlayerProxyService.addSongToQueue(songId);
+    }
+
+    private favoriteOrUnfavoriteSong(songId: number): void {
+        if (this.songs.get(songId).isFavorited) {
+            this.favoritesService.removeFavoriteSongById(songId)
+                .subscribe((success: boolean) => {
+                    this.songs.get(songId).isFavorited = !success;
+                });
+        } else {
+            this.favoritesService.addFavoriteSongById(songId)
+                .subscribe((success: boolean) => {
+                    this.songs.get(songId).isFavorited = success;
+                });
+        }
+    }
+
+    private getFavoritedIcon(songId: number, isFavorited: boolean): Object {
+        if (this.playButtonsVisibility.get(songId)) {
+            return (isFavorited) ? 'remove' : 'add';
+        } else {
+            return (isFavorited) ? 'favorite' : 'add';
+        }
+    }
+
+    private showPlay(songId: number): void {
+        this.playButtonsVisibility.set(songId, true);
+    }
+
+    private hidePlay(songId: number): void {
+        this.playButtonsVisibility.set(songId, false);
+    }
+
+    private getPlayVisibility(songId: number): Object {
+        return { 'visibility': this.playButtonsVisibility.get(songId) ? 'visible' : 'hidden' };
     }
 }
