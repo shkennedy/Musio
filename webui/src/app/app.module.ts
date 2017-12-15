@@ -13,6 +13,7 @@ import { MatSliderModule,
          MatCardTitle,
          MatCardImage,
          MatCardActions } from '@angular/material';
+import { ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './shared/shared.module';
 import { CoreModule } from './core/core.module';
@@ -58,6 +59,9 @@ import { PlaylistService } from './services/playlist.service';
 import { SearchService } from './services/search.service';
 import { SongService } from './services/song.service';
 import { UserService } from './services/user.service';
+import { PasswordDialogComponent } from './dialogs/password-dialog/password-dialog.component';
+import { DeleteDialogComponent } from './dialogs/delete-dialog/delete-dialog/delete-dialog.component';
+import { PictureDialogComponent } from './dialogs/picture-dialog/picture-dialog/picture-dialog.component';
 
 @NgModule({
     declarations: [
@@ -87,9 +91,14 @@ import { UserService } from './services/user.service';
         GoPremiumComponent,
         SearchComponent,
         FollowedUsersBarComponent,
-        UserSettingsComponent
+        UserSettingsComponent,
+        PasswordDialogComponent,
+        DeleteDialogComponent,
+        PictureDialogComponent
     ],
-    entryComponents: [],
+    entryComponents: [PasswordDialogComponent,
+                      DeleteDialogComponent,
+                      PictureDialogComponent],
     imports: [
         BrowserModule,
         FormsModule,
@@ -97,7 +106,8 @@ import { UserService } from './services/user.service';
         AppRoutingModule,
         HttpClientModule,
         SharedModule,
-        CoreModule
+        CoreModule,
+        ReactiveFormsModule
     ],
     providers: [
         AdService,

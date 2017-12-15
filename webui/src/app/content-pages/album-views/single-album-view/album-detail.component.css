@@ -32,3 +32,10 @@ mat-row:hover {
 .mat-column-duration {
     max-width: 64px;
 }
+
+.flex_column{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

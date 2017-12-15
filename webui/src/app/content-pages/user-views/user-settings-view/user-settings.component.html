@@ -1,13 +1,99 @@
-<div *ngIf="!user; else userLoaded">
+<!-- <div *ngIf="!user; else userLoaded">
     <mat-spinner color="accent"></mat-spinner>
 </div>
 <ng-template #userLoaded>
     {{user.username}}
-    
+
     <img src="{{user.profileImageUrl}}" />
     <button type="button" ngFilePicker accept="image/*" (filePick)="file = $event">Change</button>
-
-    <!-- <mat-button-toggle value="{{user.useHighBitrate}}">Use High Bitrate</mat-button-toggle>     -->
     <p>{{user.email}}</p>
     <p>{{user.geoLocation}}</p>
-</ng-template>
+</ng-template> -->
+
+<!-- TAB GROUPS
+<div [@.disabled]="true">
+    <mat-tab-group>
+      <mat-tab label="Tab 1">Content 1</mat-tab>
+      <mat-tab label="Tab 2">Content 2</mat-tab>
+    </mat-tab-group>
+</div> -->
+
+<!-- <mat-icon matPrefix>location_on</mat-icon> -->
+    <mat-card class="userSettings flex_center">
+        <div class="flex_column padder">
+            <h4>User Settings</h4>
+            <button mat-raised-button class="sized"
+                    type="button"
+                    (click)="passwordDialog()">Change Password</button>
+            <button mat-raised-button class="sized"
+                    type="button"
+                    (click)="pictureDialog()">Change Profile Picture</button>
+            <div class="grid">
+                <div class="flex_column">
+                    <h4>Music Quality</h4>
+                    <mat-slide-toggle (change)="audioToggle($event)">{{quality_name}}</mat-slide-toggle>
+                </div>
+
+                <div class="flex_column">
+                    <h4>Session Type</h4>
+                    <mat-slide-toggle (change)="sessionToggle($event)">{{session_type}}</mat-slide-toggle>
+                </div>
+            </div>
+            <button mat-raised-button class="sized"
+                    type="button"
+                    (click)="deleteDialog()">Delete Account</button>
+        </div>
+    </mat-card>
+
+
+
+    <!-- <div class="flex_row bottom_margin">
+        <button mat-raised-button class="sized"
+                (click)="password_toggle=!password_toggle;"
+                type="button">Change Password</button>
+        <input *ngIf="password_toggle"
+               type="password"
+               placeholder="Enter a new password"
+               value=""
+               name="password"
+               ngModel
+               pattern="^\w+$"
+               required
+               class="input input_margin">
+    </div>
+
+    <div class="flex_row bottom_margin">
+        <button mat-raised-button class="sized"
+                (click)="filePicker.click()"
+                type="button">Change Profile Picture</button>
+        <input type="file"
+               style="display:none;"
+               #filePicker
+               (change)="fileSelected($event)"
+               accept="image/*">
+        <input type="text"
+               name="password"
+               [ngModel]="fileName"
+               class="input input_margin b_border">
+        <button mat-icon-button
+                *ngIf="fileObject"
+                (click)="fileObject=null;fileName='No File Selected';"
+                style="width:36px;height:36px;">
+            <mat-icon>clear</mat-icon>
+        </button>
+    </div> -->
+    <!-- Change Audio Stype -->
+    <!-- <div class="grid2">
+        <div class="flex_column">
+            <h4>Music Quality</h4>
+            <mat-slide-toggle (change)="audioToggle($event)">{{quality_name}}</mat-slide-toggle>
+        </div>
+
+        <div class="flex_column">
+            <h4>Session Type</h4>
+            <mat-slide-toggle (change)="sessionToggle($event)">{{session_type}}</mat-slide-toggle>
+        </div>
+    <button mat-raised-button
+            class="sized flex_center"
+            type="submit" [disabled]="!password_toggle || !f.valid">Submit Changes</button>
+    </div> -->

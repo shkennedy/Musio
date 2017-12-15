@@ -1,0 +1,30 @@
+<div class="flex_column">
+    <div>
+        <!-- Button -->
+        <button mat-raised-button class="sized"
+                (click)="filePicker.click()"
+                style="margin-right:20px;"
+                type="button">Change Profile Picture</button>
+        <!-- Hidden file picker -->
+        <input type="file"
+               style="display:none;"
+               #filePicker
+               (change)="fileSelected($event)"
+               accept="image/*">
+        <!-- File Name display -->
+        <input type="text"
+               [ngModel]="fileName"
+               style="background-color:transparent; border:none; border-bottom:1px solid white;">
+        <!-- Remove file button -->
+        <button mat-icon-button
+                *ngIf="fileObject"
+                (click)="fileObject=null;fileName='No File Selected';"
+                style="width:36px;height:36px;">
+            <mat-icon>clear</mat-icon>
+        </button>
+    </div>
+
+    <div style="margin-top:25px;">
+        <button mat-raised-button color="accent" [disabled]="fileName=='No File Selected'" (click)="changeProfilePicture()">Submit</button>
+    </div>
+</div>

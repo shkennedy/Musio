@@ -1,0 +1,32 @@
+.userSettings{
+    width:500px;
+    height:60vh;
+}
+
+.flex_center{
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50px;
+}
+
+.flex_column{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.sized{
+    width:80%;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.padder > *{
+    margin-bottom: 20px;
+}
+.padder:last-child{
+    margin-bottom: 0px;
+}

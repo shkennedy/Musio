@@ -37,7 +37,9 @@
                 <!-- Track Column -->
                 <ng-container matColumnDef="trackNumber">
                     <mat-header-cell *matHeaderCellDef mat-sort-header> # </mat-header-cell>
-                    <mat-cell *matCellDef="let song"> {{song.trackNumber}} </mat-cell>
+                    <mat-cell *matCellDef="let song">
+                        {{song.trackNumber}}
+                    </mat-cell>
                 </ng-container>
 
                 <!-- Name Column -->

@@ -2,10 +2,18 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { PickedFile } from 'angular-file-picker';
 import { PACKAGE_ROOT_URL } from 'angular-file-picker/node_modules/@angular/core/src/application_tokens';
+import { NgForm } from '@angular/forms';
 
 import { AudioPlayerProxyService } from '../../../services/audioPlayerProxy.service';
 import { FileService } from '../../../services/file.service';
 import { UserService } from '../../../services/user.service';
+
+import { MatDialog,
+         MatDialogRef,
+         MAT_DIALOG_DATA } from '@angular/material';
+import { PasswordDialogComponent } from '../../../dialogs/password-dialog/password-dialog.component';
+import { DeleteDialogComponent } from '../../../dialogs/delete-dialog/delete-dialog/delete-dialog.component';
+import { PictureDialogComponent } from '../../../dialogs/picture-dialog/picture-dialog/picture-dialog.component';
 
 import { User } from '../../../models/user.model';
 
@@ -22,8 +30,15 @@ export class UserSettingsComponent implements OnInit {
 
     private errorMessage: string;
 
+    //My additions
+    password_toggle:boolean=false;
+    quality_toggle:boolean=false;
+    session_toggle:boolean=false;
+    session_type="Public Session";
+    quality_name:string="Low Quality";
     constructor(
         private router: Router,
+        private dialog: MatDialog,
         private fileService: FileService,
         private userService: UserService,
         private audioPlayerProxyService: AudioPlayerProxyService
@@ -82,4 +97,39 @@ export class UserSettingsComponent implements OnInit {
         // Pleading/Survey of use
 
     }
+
+
+    //my stuff
+
+    audioToggle(data:any){
+        if(data.checked){this.quality_name="High Quality";}
+        else{this.quality_name="Low Quality";}
+    }
+
+    sessionToggle(data:any){
+        if(data.checked){this.session_type="Private Session";}
+        else{this.session_type="Public Session";}
+    }
+
+    passwordDialog(){
+        let dialogRef = this.dialog.open(PasswordDialogComponent, {
+          width: '800px',
+          height:'500px'
+        });
+    }
+
+    deleteDialog(){
+        let dialogRef = this.dialog.open(DeleteDialogComponent, {
+          width: '300px',
+          height:'200px'
+        });
+    }
+
+    pictureDialog(){
+        let dialogRef = this.dialog.open(PictureDialogComponent, {
+          width: '600px',
+          height:'200px'
+        });
+    }
+
 }
