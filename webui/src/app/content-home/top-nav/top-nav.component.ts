@@ -32,8 +32,7 @@ export class TopNavComponent implements OnInit {
         this.user = user;
     }
 
-    private search(searchForm: NgForm): void {
-        const searchQuery = searchForm.value['searchQuery'];
+    private search(searchQuery: string): void {
         this.router.navigate(['/search', searchQuery]);
     }
 

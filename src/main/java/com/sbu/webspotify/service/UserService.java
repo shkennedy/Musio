@@ -419,7 +419,11 @@ public class UserService {
 
 	public Set<UserIdentifier> getFollowedUsers(int userId) {
 		return userRepository.getFollowedUsers(userId);
-	}
+    }
+    
+    public Set<UserIdentifier> searchByUsername(String queryString) {
+        return userRepository.findByUsernameContaining(queryString);
+    }
 
 	@Transactional
 	public void updateProfileImage(User user, MultipartFile profileImageFile) throws IOException {

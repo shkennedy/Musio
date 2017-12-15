@@ -10,6 +10,7 @@ import com.sbu.webspotify.dto.identifier.GenreIdentifier;
 import com.sbu.webspotify.dto.identifier.InstrumentIdentifier;
 import com.sbu.webspotify.dto.identifier.PlaylistIdentifier;
 import com.sbu.webspotify.dto.identifier.SongIdentifier;
+import com.sbu.webspotify.dto.identifier.UserIdentifier;
 
 public class SearchResults implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -19,7 +20,8 @@ public class SearchResults implements Serializable {
     private Set<AlbumIdentifier> albums = new HashSet<AlbumIdentifier>();
 	private Set<PlaylistIdentifier> playlists = new HashSet<PlaylistIdentifier>();
 	private Set<InstrumentIdentifier> instruments = new HashSet<InstrumentIdentifier>();
-	private Set<GenreIdentifier> genres = new HashSet<GenreIdentifier>();
+    private Set<GenreIdentifier> genres = new HashSet<GenreIdentifier>();
+    private Set<UserIdentifier> users = new HashSet<UserIdentifier>();
 	
 	public SearchResults() {
 
@@ -71,6 +73,13 @@ public class SearchResults implements Serializable {
 
 	public void setGenres(Set<GenreIdentifier> genres) {
 		this.genres = genres;
-	}    
+    }    
+    
+    public Set<UserIdentifier> getUsers() {
+        return users;
+    }
 
+    public void setUsers(Set<UserIdentifier> users) {
+        this.users = users;
+    }
 }
