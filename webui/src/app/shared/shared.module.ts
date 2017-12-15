@@ -23,7 +23,7 @@ import {
     MatGridListModule,
     MatSliderModule,
     MatSlideToggleModule,
-    MatStepperModule
+    MatStepperModule,
     MatSortModule
 } from '@angular/material';
 @NgModule({
@@ -50,7 +50,7 @@ import {
         MatGridListModule,
         MatSliderModule,
         MatSlideToggleModule,
-        MatStepperModule],
+        MatStepperModule,
         MatSortModule],
 
     exports: [MatToolbarModule,
@@ -76,7 +76,7 @@ import {
         MatGridListModule,
         MatSliderModule,
         MatSlideToggleModule,
-        MatStepperModule]
+        MatStepperModule,
         MatSortModule]
 })
 
