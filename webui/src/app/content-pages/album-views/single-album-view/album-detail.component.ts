@@ -61,7 +61,6 @@ export class AlbumDetailComponent implements OnInit {
                             for (let i = 0; i < albums.length; ++i) {
                                 if (albums[i].id === this.album.id) {
                                     this.isFavorited = true;
-                                    console.log('album-detail.component found album is favorited');
                                 }
                             }
                         }
@@ -78,7 +77,6 @@ export class AlbumDetailComponent implements OnInit {
                             song.isFavorited = false;
                             songs.forEach((favoritedSong: Song) => {
                                 if (favoritedSong.id === song.id) {
-                                    console.log(`found favorite song ${song}`);
                                     song.isFavorited = true;
                                 }
                             });

@@ -81,10 +81,8 @@ export class ArtistService {
                 if (response.success) {
                     const artists: Artist[] = response.responseData;
                     artists.forEach((artist: Artist) => {
-                        if (artist.thumbnailFileId) {
-                            artist.artistImageUrl =
-                                this.fileService.getFileURLById(artist.thumbnailFileId);
-                        }
+                        artist.artistImageUrl =
+                            this.fileService.getArtistImageURLByIdAndSize(artist.id, true);
                     });
                     return artists;
                 }

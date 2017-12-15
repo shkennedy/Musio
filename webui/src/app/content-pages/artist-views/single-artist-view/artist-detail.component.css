@@ -309,12 +309,14 @@
       text-align: center;
       margin: 15px;
       width: 200px;
-
     }
-    .artist-card > img{
-      width: 200px;
-      height: 200px;
-      border-radius: 50%;
+    
+    .artist_card_img{
+        min-width: 200px;
+        min-height: 200px;
+        max-width: 200px;
+        max-height: 200px;
+        border-radius: 50%;
     }
 
     .artist-card > p{
