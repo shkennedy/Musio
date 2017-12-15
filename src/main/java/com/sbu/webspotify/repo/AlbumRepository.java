@@ -40,4 +40,12 @@ public interface AlbumRepository extends JpaRepository<Album, Integer>
                     + "WHERE aam.artist_id = :artistId AND aam.artist_id = art.id AND aam.album_id = alb.id AND i.id=alb.album_art_id",
                     nativeQuery = true)
     Set<AlbumIdentifier> findAllByArtistId(@Param("artistId") int artistId);
+
+    @Query(value = "SELECT art.id as artistId, art.name as artistName, i.full_file_id as fullFileId, alb.id as id, alb.title as title "
+                    + "FROM Album alb, Artist art, album_artist_mapping aam, Image i "
+                    + "WHERE aam.artist_id = art.id AND aam.album_id = alb.id AND i.id=alb.album_art_id "
+                    + "ORDER BY alb.release_date DESC LIMIT :numElements ",
+                    nativeQuery = true)
+    Set<AlbumIdentifier> findNewReleases(@Param("numElements") int numElements);
+    
 }

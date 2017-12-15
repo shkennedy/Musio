@@ -33,4 +33,8 @@ public interface SongRepository extends JpaRepository<Song, Integer>
                     + "ORDER BY timestamp DESC LIMIT :numElements",
                     nativeQuery = true)    
 	Set<SongIdentifier> getListeningHistoryForUser(@Param("userId") int userId, @Param("numElements") int numElements);
+
+
+    @Query(value = "SELECT listenCount from song_listens_view where song_id = :songId", nativeQuery = true)
+	Set<SongIdentifier> findSongsWithMostListens(@Param("songId") int songId);
 }

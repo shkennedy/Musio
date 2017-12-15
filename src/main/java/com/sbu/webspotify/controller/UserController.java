@@ -1,13 +1,22 @@
 package com.sbu.webspotify.controller;
 
-import com.sbu.webspotify.dto.ApiResponseObject;
-import com.sbu.webspotify.dto.BrowsingMode;
-import com.sbu.webspotify.dto.identifier.SongIdentifier;
-import com.sbu.webspotify.dto.identifier.UserIdentifier;
-import com.sbu.webspotify.model.*;
-
 import java.io.IOException;
 import java.util.Set;
+
+import javax.servlet.http.HttpSession;
+
+import com.sbu.webspotify.dto.ApiResponseObject;
+import com.sbu.webspotify.dto.identifier.SongIdentifier;
+import com.sbu.webspotify.dto.identifier.UserIdentifier;
+import com.sbu.webspotify.model.Album;
+import com.sbu.webspotify.model.Artist;
+import com.sbu.webspotify.model.Genre;
+import com.sbu.webspotify.model.Playlist;
+import com.sbu.webspotify.model.Song;
+import com.sbu.webspotify.model.Station;
+import com.sbu.webspotify.model.User;
+import com.sbu.webspotify.service.SongService;
+import com.sbu.webspotify.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,14 +24,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import com.sbu.webspotify.service.SongService;
-import com.sbu.webspotify.service.UserService;
-
-import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping(path = "/user")
