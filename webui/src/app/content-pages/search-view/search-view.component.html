@@ -5,10 +5,10 @@
 
     <!-- Artists -->
     <mat-grid-list *ngIf="artists.length !== 0" cols="4" gutterSize="15px" class="padded">
-        <h3>Artist</h3>
+        <h3>Artists</h3>
         <mat-grid-tile *ngFor="let artist of artists" class="artist-card col-sm-3 center-block" [routerLink]="['/artists', artist.id]">
             <div class="col_flex">
-                <img width="200px" height="200px" src="{{artist.artistImageUrl}}" alt="{{artist.name}}">
+                <img class="routing_img" src="{{artist.artistImageUrl}}" alt="{{artist.name}}">
                 <p>{{artist.name}}</p>
             </div>
         </mat-grid-tile>
@@ -19,13 +19,7 @@
         <h3>Albums</h3>
         <mat-grid-tile *ngFor="let album of albums" [routerLink]="['/albums', album.id]">
             <div class="col_flex">
-                <div *ngIf="album.albumArt; else defaultArt;">
-                    <img src="{{album.albumArt.url}}" alt="{{album.title}}">
-                </div>
-                <ng-template #defaultArt>
-                    <img width="200px" height="auto" src="assets/images/default_art.png" alt="{{album.title}}">
-                </ng-template>
-                <img src="{{album.albumArtUrl}}" alt="{{album.title}}">
+                <img class="routing_img" src="{{album.albumArtUrl}}" alt="{{album.title}}">
                 <p class="album_name">{{album.title}}</p>
                 <p class="artist_name">{{album.artistName}}</p>
             </div>
@@ -37,13 +31,7 @@
         <h3>Playlists</h3>
         <mat-grid-tile *ngFor="let playlist of playlists" [routerLink]="['/playlistss', playlist.id]">
             <div class="col_flex">
-                <div *ngIf="playlist.playlistImage; else defaultArt;">
-                    <img src="{{album.albumArt.url}}" alt="{{album.title}}">
-                </div>
-                <ng-template #defaultArt>
-                    <img width="200px" height="auto" src="assets/images/default_art.png" alt="{{album.title}}">
-                </ng-template>
-                <img src="{{album.albumArtUrl}}" alt="{{album.title}}">
+                <img class="routing_img" src="{{album.albumArtUrl}}" alt="{{album.title}}">
                 <p class="album_name">{{album.title}}</p>
                 <p class="artist_name">{{album.artistName}}</p>
             </div>
@@ -85,14 +73,6 @@
                     <mat-cell *matCellDef="let song">{{song.albumTitle}}</mat-cell>
                 </ng-container>
 
-                <!-- Duration Column -->
-                <ng-container matColumnDef="duration">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header>
-                        <mat-icon>schedule</mat-icon>
-                    </mat-header-cell>
-                    <mat-cell *matCellDef="let song"> {{song.durationString}} </mat-cell>
-                </ng-container>
-
                 <!-- Favorite Button Column -->
                 <ng-container matColumnDef="favoriteButton">
                     <mat-header-cell *matHeaderCellDef></mat-header-cell>
@@ -103,8 +83,8 @@
                     </mat-cell>
                 </ng-container>
 
-                <mat-header-row *matHeaderRowDef="['playButton', 'title', 'artist', 'album', 'duration', 'favoriteButton']"></mat-header-row>
-                <mat-row *matRowDef="let row; columns: ['playButton', 'title', 'artist', 'album', 'duration', 'favoriteButton'];" (mouseenter)="showPlay(row.id)"
+                <mat-header-row *matHeaderRowDef="['playButton', 'title', 'artist', 'album', 'favoriteButton']"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: ['playButton', 'title', 'artist', 'album', 'favoriteButton'];" (mouseenter)="showPlay(row.id)"
                     (mouseleave)="hidePlay(row.id)"></mat-row>
             </mat-table>
         </div>

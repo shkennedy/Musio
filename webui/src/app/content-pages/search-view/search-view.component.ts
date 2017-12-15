@@ -98,14 +98,13 @@ export class SearchComponent implements OnInit {
                 this.songTableData = new MatTableDataSource(searchData.songs);
                 this.songs = new Map();
                 searchData.songs.forEach((song: Song) => {
-                    song.duration = Math.floor(song.duration / 1000);
-                    song.durationString = `${Math.floor(song.duration / 60)}:`;
-                    const seconds = song.duration % 60;
-                    song.durationString += (seconds < 10) ? `0${seconds}` : seconds;
-                    console.log(song.durationString);
                     this.songs.set(song.id, song);
                     this.playButtonsVisibility.set(song.id, false);
                 });
+
+                setTimeout(() => {
+                    this.songTableData.sort = this.sort;
+                }, 2000);
 
                 this.users = searchData.users;
                 if (this.users) {

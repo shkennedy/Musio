@@ -10,12 +10,8 @@
     align-items: center;
 }
 
-.mat-column-trackNumber {
-    max-width: 40px;
-}
-
 .mat-column-playButton {
-    max-width: 32px;
+    max-width: 28px;
 }
 
 .song_play_button {
@@ -34,4 +30,13 @@
 
 mat-row:hover {
 background-color: grey;
+}
+
+.routing_img {
+    height: 200px;
+    width: 200px;
+}
+
+.routing_img:hover {
+    cursor: pointer;
 }
