@@ -29,7 +29,6 @@ export class TopNavComponent implements OnInit {
     }
 
     public setUser = (user: User): void => {
-        console.log(`whats good ${user}`);
         this.user = user;
     }
 

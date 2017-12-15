@@ -29,8 +29,9 @@ export class ArtistDetailComponent implements OnInit {
     private ascendingOrder = true;
 
     @ViewChild(MatSort) sort: any;
-    private albumTablesData: Map<number, MatTableDataSource<Song>>;
+    private albums: Map<number, Album> = new Map();
     private songs: Map<number, Song> = new Map();
+    private albumTablesData: Map<number, MatTableDataSource<Song>>;
     private playButtonsVisibility: Map<number, boolean> = new Map();
 
     private errorMessage: string;
@@ -56,12 +57,51 @@ export class ArtistDetailComponent implements OnInit {
                         this.artist.albums = albums;
                         this.albumTablesData = new Map();
                         this.artist.albums.forEach((album: Album) => {
+                            this.albums.set(album.id, album);
                             this.albumTablesData.set(album.id, new MatTableDataSource(album.songs));
                             album.songs.forEach((song: Song) => {
                                 this.songs.set(song.id, song);
                                 this.playButtonsVisibility.set(song.id, false);
                             });
                         });
+
+                        // Check if favorited
+                        this.favoritesService.getFavoriteAlbums()
+                            .subscribe(
+                            (favoriteAlbums: Album[]) => {
+                                if (albums) {
+                                    this.albums.forEach((album: Album) => {
+                                        album.isFavorited = false;
+                                        favoriteAlbums.forEach((favoriteAlbum: Album) => {
+                                            if (album.id === favoriteAlbum.id) {
+                                                album.isFavorited = true;
+                                                console.log('album-detail.component found album is favorited');
+                                            }
+                                        });
+                                    });
+                                }
+                            },
+                            (error: any) => {
+                                this.errorMessage = error;
+                            });
+
+                        this.favoritesService.getFavoriteSongs()
+                            .subscribe(
+                            (songs: Song[]) => {
+                                console.log(songs);
+                                this.songs.forEach((song: Song) => {
+                                    song.isFavorited = false;
+                                    songs.forEach((favoritedSong: Song) => {
+                                        if (favoritedSong.id === song.id) {
+                                            console.log(`found favorite song ${song}`);
+                                            song.isFavorited = true;
+                                        }
+                                    });
+                                });
+                            },
+                            (error: any) => {
+                                console.log('error fetching favorite songs');
+                            });
                     },
                     (error: any) => {
                         console.log(error.toString());
@@ -102,11 +142,12 @@ export class ArtistDetailComponent implements OnInit {
                 this.errorMessage = error;
             });
 
-            setTimeout(() => {
-                this.artist.albums.forEach((album: Album) => {
-                    this.albumTablesData.get(album.id).sort = this.sort;
-                });
-            }, 3000);
+        setTimeout(() => {
+            this.artist.albums.forEach((album: Album) => {
+                console.log(`assigning ${album.id} sort obj ${this.sort}`);
+                this.albumTablesData.get(album.id).sort = this.sort;
+            });
+        }, 3000);
     }
 
     private followArtist(): void {
@@ -127,6 +168,28 @@ export class ArtistDetailComponent implements OnInit {
             (success: boolean) => {
                 this.isFollowed = false;
                 this.followerCount -= 1;
+            },
+            (error: any) => {
+                console.log(error.toString());
+            });
+    }
+
+    private favoriteAlbum(albumId: number): void {
+        this.favoritesService.addFavoriteAlbumById(albumId)
+            .subscribe(
+            (success: boolean) => {
+                this.albums.get(albumId).isFavorited = true;
+            },
+            (error: any) => {
+                console.log(error.toString());
+            });
+    }
+
+    private unfavoriteAlbum(albumId: number): void {
+        this.favoritesService.removeFavoriteAlbumById(albumId)
+            .subscribe(
+            (success: boolean) => {
+                this.albums.get(albumId).isFavorited = false;
             },
             (error: any) => {
                 console.log(error.toString());
@@ -204,8 +267,6 @@ export class ArtistDetailComponent implements OnInit {
     }
 
     private getAlbumData(albumId: number) {
-        console.log(albumId);
-        console.log(this.albumTablesData.get(albumId));
         return this.albumTablesData.get(albumId);
     }
 }

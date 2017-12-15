@@ -78,11 +78,11 @@
                             <button class="btn btn-green block-center">PLAY</button>
 
                             <div>
-                                <div *ngIf="isFollowed; else follow">
-                                    <button class="btn btn-black glyphicon glyphicon-heart" (click)="unfavoriteAlbum()"></button>
+                                <div *ngIf="album.isFavorited; else notFavorited">
+                                    <button class="btn btn-black glyphicon glyphicon-heart" (click)="unfavoriteAlbum(album.id)"></button>
                                 </div>
-                                <ng-template #follow>
-                                    <button class="btn btn-grey " (click)="favoriteAlbum()">FAVORITE</button>
+                                <ng-template #notFavorited>
+                                    <button class="btn btn-grey " (click)="favoriteAlbum(album.id)">FAVORITE</button>
                                 </ng-template>
                             </div>
 
