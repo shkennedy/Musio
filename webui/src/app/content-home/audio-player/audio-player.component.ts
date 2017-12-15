@@ -40,6 +40,8 @@ export class AudioPlayerComponent implements OnInit {
     songQueue: Song[] = [];
     history: Song[] = [];
     privateMode: boolean;
+    lyricsToggle = false;
+    queueToggle = false;
 
     errMsg: string;
 
@@ -413,5 +415,19 @@ export class AudioPlayerComponent implements OnInit {
         //         });
         //     }
         // }
+    }
+
+    qToggle() {
+        if (this.lyricsToggle) {
+            this.lyricsToggle = false;
+        }
+        this.queueToggle = !this.queueToggle;
+    }
+
+    lToggle() {
+        if (this.queueToggle) {
+            this.queueToggle = false;
+        }
+        this.lyricsToggle = !this.lyricsToggle;
     }
 }

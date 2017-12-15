@@ -162,3 +162,22 @@ mat-slider.absolute{
     position:relative;
     top:3vh;
 }
+
+.hidden_content {
+    display: none;
+    width: 75vw;
+    height:83vh;
+    padding:0px;
+    z-index: 1;
+    position: absolute;
+    bottom:10vh;
+    right:15vw;
+}
+
+#lyrics.bingo{
+    display:block;
+}
+
+#queue.bingo{
+    display:block;
+}

@@ -41,10 +41,17 @@
     </div>
 
     <div class="flex_center height_normal">
-        <button mat-icon-button (click)="showLyrics()">
+        <div #lyrics id="lyrics" class="hidden_content" style="background-color:grey" [ngClass]="lyricsToggle?'bingo':''">
+            lyrics
+        </div>
+
+        <div #queue id="queue" class="hidden_content" style="background-color:grey" [ngClass]="queueToggle?'bingo':''">
+            queue
+        </div>
+        <button mat-icon-button (click)="qToggle()">
             <mat-icon>playlist_play</mat-icon>
         </button>
-        <button mat-icon-button (click)="showLyrics()">
+        <button mat-icon-button (click)="lToggle()">
             <mat-icon>closed_caption</mat-icon>
         </button>
         <div *ngIf="isMuted; else isNotMuted;">
