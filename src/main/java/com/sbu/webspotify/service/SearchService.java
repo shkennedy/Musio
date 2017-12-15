@@ -15,8 +15,10 @@ import com.sbu.webspotify.dto.identifier.PlaylistIdentifier;
 import com.sbu.webspotify.dto.identifier.SongIdentifier;
 import com.sbu.webspotify.model.Artist;
 import com.sbu.webspotify.model.User;
+import com.sbu.webspotify.repo.AlbumRepository;
 import com.sbu.webspotify.repo.GenreRepository;
 import com.sbu.webspotify.repo.InstrumentRepository;
+import com.sbu.webspotify.repo.SongRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -53,6 +55,12 @@ public class SearchService {
 
     @Autowired
     GenreService genreService;
+
+    @Autowired
+    AlbumRepository albumRepository;
+
+    @Autowired
+    SongRepository songRepository;
 
     public SearchResults executeSearch(String query) {
 
@@ -93,7 +101,7 @@ public class SearchService {
     private BrowseResult getNewReleases(User user) {
         Set<ArtistIdentifier> artists = new HashSet<ArtistIdentifier>();
         Set<PlaylistIdentifier> playlists = new HashSet<PlaylistIdentifier>();
-        Set<AlbumIdentifier> albums = new HashSet<AlbumIdentifier>();
+        Set<AlbumIdentifier> albums = albumRepository.findNewReleases(5);
         Set<SongIdentifier> songs = new HashSet<SongIdentifier>();
 
         return new BrowseResult(songs, artists, albums, playlists);

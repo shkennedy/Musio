@@ -42,7 +42,7 @@ public class BrowseResults implements Serializable {
     }
 
     public BrowseResult getPopular() {
-        return this.discover;
+        return this.popular;
     }
 
     public void setPopular(BrowseResult popular) {
