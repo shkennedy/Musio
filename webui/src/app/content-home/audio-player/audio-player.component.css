@@ -1,3 +1,11 @@
+* {
+    background-color: tranparent;
+}
+
+h3 {
+    color: white;
+}
+
 .logo_sized{
     width:100px;
     height:40px;
@@ -164,20 +172,51 @@ mat-slider.absolute{
 }
 
 .hidden_content {
+    background-color: #222;
     display: none;
     width: 75vw;
     height:83vh;
+    overflow-y: auto;
+    overflow-x: hidden;
     padding:0px;
     z-index: 1;
     position: absolute;
-    bottom:10vh;
+    top: 7vh;
+    /* bottom:10vh; */
     right:15vw;
 }
 
-#lyrics.bingo{
+#lyrics.bingo {
     display:block;
 }
 
 #queue.bingo{
     display:block;
+}
+
+.lyrics {
+    line-height: 200%;
+    color: white;
+    font-size: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    overflow-y: auto;
+}
+
+.song_play_button {
+    max-width: 32px;
+    display: flex;
+    align-content: center;
+}
+
+.mat-column-duration {
+    max-width: 48px;
+}
+
+.mat-column-removeButton {
+    max-width: 32px;
+}
+
+mat-row:hover {
+background-color: grey;
 }

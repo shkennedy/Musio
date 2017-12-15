@@ -87,7 +87,6 @@ export class ArtistDetailComponent implements OnInit {
                         this.favoritesService.getFavoriteSongs()
                             .subscribe(
                             (songs: Song[]) => {
-                                console.log(songs);
                                 this.songs.forEach((song: Song) => {
                                     song.isFavorited = false;
                                     songs.forEach((favoritedSong: Song) => {
@@ -127,7 +126,6 @@ export class ArtistDetailComponent implements OnInit {
                             for (let i = 0; i < artists.length; ++i) {
                                 if (artists[i].id === this.artist.id) {
                                     this.isFollowed = true;
-                                    console.log('artist-detail.component found artist is followed');
                                 }
                             }
                         }
@@ -142,7 +140,6 @@ export class ArtistDetailComponent implements OnInit {
 
         setTimeout(() => {
             this.artist.albums.forEach((album: Album) => {
-                console.log(`assigning ${album.id} sort obj ${this.sort}`);
                 this.albumTablesData.get(album.id).sort = this.sort;
             });
         }, 3000);
@@ -222,7 +219,6 @@ export class ArtistDetailComponent implements OnInit {
     }
 
     private playSong(songId: number): void {
-        console.log(songId);
         this.audioPlayerProxyService.playSong(songId);
     }
 

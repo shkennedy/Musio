@@ -41,12 +41,63 @@
     </div>
 
     <div class="flex_center height_normal">
-        <div #lyrics id="lyrics" class="hidden_content" style="background-color:grey" [ngClass]="lyricsToggle?'bingo':''">
-            lyrics
+        <div #lyrics id="lyrics" class="hidden_content" [ngClass]="lyricsToggle?'bingo':''">
+
+            <h3>Lyrics</h3>
+            <p *ngIf="currentSong; else noLyrics;" class="lyrics">{{currentSong.lyrics}}</p>
+            <ng-template #noLyrics>
+                <p>No Current Song.</p>
+            </ng-template>
         </div>
 
-        <div #queue id="queue" class="hidden_content" style="background-color:grey" [ngClass]="queueToggle?'bingo':''">
-            queue
+        <div #queue id="queue" class="hidden_content" [ngClass]="queueToggle?'bingo':''">
+            <div *ngIf="songQueue.length !== 0 else emptyQueue;">
+                <h3>Songs</h3>
+                <div id="album-tracklist">
+                    <mat-table #table [dataSource]="queueTableData" matSort>
+
+                        <!-- Title Column -->
+                        <ng-container matColumnDef="title">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header> Title </mat-header-cell>
+                            <mat-cell *matCellDef="let song">{{song.title}}</mat-cell>
+                        </ng-container>
+
+                        <!-- Artist Column -->
+                        <ng-container matColumnDef="artist">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header> Artist </mat-header-cell>
+                            <mat-cell *matCellDef="let song">{{song.artistName}}</mat-cell>
+                        </ng-container>
+
+                        <!-- Album Column -->
+                        <ng-container matColumnDef="album">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header> Album </mat-header-cell>
+                            <mat-cell *matCellDef="let song">{{song.albumTitle}}</mat-cell>
+                        </ng-container>
+
+                        <!-- Duration Column -->
+                        <ng-container matColumnDef="duration">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header><mat-icon>schedule</mat-icon></mat-header-cell>
+                                <mat-cell *matCellDef="let song">{{song.durationString}}</mat-cell>
+                            </ng-container>
+
+                        <!-- Remove Button Column -->
+                        <ng-container matColumnDef="removeButton">
+                            <mat-header-cell *matHeaderCellDef></mat-header-cell>
+                            <mat-cell *matCellDef="let song">
+                                <button mat-icon-button class="song_remove_button" (click)="removeSongFromQueue(song.id)">
+                                    <mat-icon>clear</mat-icon>
+                                </button>
+                            </mat-cell>
+                        </ng-container>
+
+                        <mat-header-row *matHeaderRowDef="['title', 'artist', 'album', 'duration', 'removeButton']"></mat-header-row>
+                        <mat-row *matRowDef="let row; columns: ['title', 'artist', 'album', 'duration', 'removeButton'];"></mat-row>
+                    </mat-table>
+                </div>
+            </div>
+            <ng-template #emptyQueue>
+                Queue is empty.
+            </ng-template>
         </div>
         <button mat-icon-button (click)="qToggle()">
             <mat-icon>playlist_play</mat-icon>

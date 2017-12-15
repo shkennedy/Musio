@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Howl } from 'howler';
+import { MatSort, MatTableDataSource } from '@angular/material';
 
 import { AudioPlayerProxyService } from '../../services/audioPlayerProxy.service';
 import { AlbumService } from '../../services/album.service';
@@ -42,6 +43,9 @@ export class AudioPlayerComponent implements OnInit {
     privateMode: boolean;
     lyricsToggle = false;
     queueToggle = false;
+
+    @ViewChild(MatSort) sort: any;
+    queueTableData: MatTableDataSource<Song>;
 
     errMsg: string;
 
@@ -144,6 +148,7 @@ export class AudioPlayerComponent implements OnInit {
     }
 
     public playAlbum = (albumId: number): void => {
+        console.log(albumId);
         this.addSongToHistory(this.currentSong);
         this.albumService.getAlbumById(albumId)
             .subscribe((album: Album) => {
@@ -394,34 +399,19 @@ export class AudioPlayerComponent implements OnInit {
         this.prevSongProgress = this.songProgress;
     }
 
-    private sortQueue(): void {
-        // if (this.ascendingOrder) {
-        //     this.songQueue.sort(())
-        // }
-        // sortAlbumByTrack(album: Album, ascending: boolean): void {
-        //     if (ascending) {
-        //         album.songs.sort((a: Song, b: Song) => {
-        //             if (a.trackNumber > b.trackNumber) {
-        //                 return 1;
-        //             }
-        //             return -1;
-        //         });
-        //     } else {
-        //         album.songs.sort((a: Song, b: Song) => {
-        //             if (a.trackNumber < b.trackNumber) {
-        //                 return 1;
-        //             }
-        //             return -1;
-        //         });
-        //     }
-        // }
-    }
-
     qToggle() {
         if (this.lyricsToggle) {
             this.lyricsToggle = false;
         }
+        if (!this.queueToggle) {
+            this.queueTableData = new MatTableDataSource(this.songQueue);
+            this.queueTableData.sort = this.sort;
+        } else {
+            this.queueTableData = null;
+        }
+
         this.queueToggle = !this.queueToggle;
+        console.log(this.songQueue);
     }
 
     lToggle() {
