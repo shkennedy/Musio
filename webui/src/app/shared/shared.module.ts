@@ -21,7 +21,8 @@ import {
     MatExpansionModule,
     MatTabsModule,
     MatGridListModule,
-    MatSliderModule
+    MatSliderModule,
+    MatSortModule
 } from '@angular/material';
 @NgModule({
     imports: [MatToolbarModule,
@@ -45,7 +46,8 @@ import {
         MatExpansionModule,
         MatTabsModule,
         MatGridListModule,
-        MatSliderModule],
+        MatSliderModule,
+        MatSortModule],
 
     exports: [MatToolbarModule,
         MatInputModule,
@@ -68,7 +70,8 @@ import {
         MatExpansionModule,
         MatTabsModule,
         MatGridListModule,
-        MatSliderModule]
+        MatSliderModule,
+        MatSortModule]
 })
 
 export class SharedModule { }
