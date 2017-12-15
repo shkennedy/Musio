@@ -92,10 +92,15 @@
 
     <!-- Intruments -->
     <div *ngIf="instruments.length !== 0">
-        <h3>Instruments</h3>
-        <div *ngFor="let instrument of instruments">
-            {{instrument.image}} {{instrument.name}}
+        <div class="flex_row">
+            <!-- <img src="assets/images/music.svg" alt="Instrumental" style="width:30px;height:30px;"> -->
+            <h3>Instruments</h3>
         </div>
+        <mat-grid-list cols="4" rowHeight="4:1">
+            <mat-grid-tile *ngFor="let instrument of instruments" class="hoverable">
+                {{instrument.name | capitalize}}
+            </mat-grid-tile>
+        </mat-grid-list>
     </div>
 
     <!-- Genres -->

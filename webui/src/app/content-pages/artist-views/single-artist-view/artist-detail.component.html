@@ -3,8 +3,8 @@
 </div>
 <ng-template #artistLoaded>
     <div class="row cover-info-box">
-        <div class="col-sm-3 col-xs-12 cover-box-left">
-            <img width="200" src="{{artist.artistImageUrl}}">
+        <div class="col-sm-3 col-xs-12 cover-box-left flex_end">
+            <img width="200px" height="200px" src="{{artist.artistImageUrl}}">
         </div>
         <div class="col-sm-8 col-xs-12 cover-box-right">
 
@@ -18,7 +18,7 @@
                     <button class="btn btn-black glyphicon glyphicon-heart" (click)="unfollowArtist()"></button>
                 </div>
                 <ng-template #notFollowed>
-                    <button class="btn btn-grey" (click)="followArtist()">FOLLOW</button>
+                    <button class="btn btn-black" (click)="followArtist()">FOLLOW</button>
                 </ng-template>
             </div>
         </div>
@@ -75,14 +75,13 @@
                             <div class="col-sm-12">
                                 <h3 class="album-title" (click)="gotoAlbum(album.id)">{{album.title}}</h3>
                             </div>
-                            <button class="btn btn-green block-center">PLAY</button>
-
-                            <div>
+                            <div style="padding-left:4vw;">
+                                <button class="btn btn-green block-center">PLAY</button>
                                 <div *ngIf="album.isFavorited; else notFavorited">
                                     <button class="btn btn-black glyphicon glyphicon-heart" (click)="unfavoriteAlbum(album.id)"></button>
                                 </div>
                                 <ng-template #notFavorited>
-                                    <button class="btn btn-grey " (click)="favoriteAlbum(album.id)">FAVORITE</button>
+                                    <button class="btn btn-black" (click)="favoriteAlbum(album.id)">FAVORITE</button>
                                 </ng-template>
                             </div>
 
