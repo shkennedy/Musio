@@ -1,20 +1,37 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
+import { UserService } from '../../../services/user.service';
+
+import { User } from '../../../models/user.model';
+
 @Component({
-  selector: 'app-delete-dialog',
-  templateUrl: './delete-dialog.component.html',
-  styleUrls: ['./delete-dialog.component.css']
+    selector: 'app-delete-dialog',
+    templateUrl: './delete-dialog.component.html',
+    styleUrls: ['./delete-dialog.component.css']
 })
 export class DeleteDialogComponent implements OnInit {
 
-    constructor(public dialogRef: MatDialogRef<DeleteDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any){ }
+    private user: User;
 
-  ngOnInit() {
-  }
+    constructor(
+        private userService: UserService,
+        public dialogRef: MatDialogRef<DeleteDialogComponent>,
+        @Inject(MAT_DIALOG_DATA) public data: any
+    ) { }
 
-  deleteAccount(){
-      console.log("Delete Account");
-  }
+    ngOnInit() {
+        this.userService.getUser(this.setUser);
+    }
+
+    setUser = (user: User): void => {
+        this.user = user;
+    }
+
+    deleteAccount() {
+        this.userService.deleteUser(this.user.id)
+            .subscribe((success: boolean) => {
+                window.location.href = '/logout';
+            });
+    }
 }

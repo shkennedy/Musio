@@ -83,11 +83,12 @@ public class UserController {
         return userService.tryChangePassword(user, knownSecurityCode, securityCode, newPassword);
     }
     
-    @RequestMapping(value={"/{username}"}, method = RequestMethod.DELETE)
-    public @ResponseBody ApiResponseObject deleteUser(HttpSession session, @PathVariable String username) {
+    @RequestMapping(value={"/{userId}"}, method = RequestMethod.DELETE)
+    public @ResponseBody ApiResponseObject deleteUser(HttpSession session, @PathVariable int userId) {
         ApiResponseObject response = new ApiResponseObject();
-        User userToDelete = userService.findUserByUsername(username);
+        User userToDelete = userService.findUserById(userId);
         User currentUser = (User) session.getAttribute("user");
+        System.out.println("userToDelete " + userToDelete + " || currentUser " + currentUser);
         if (userToDelete.equals(currentUser) || userService.getIsAdmin(currentUser)) {
             userService.deleteUser(userToDelete);
             response.setSuccess(true);

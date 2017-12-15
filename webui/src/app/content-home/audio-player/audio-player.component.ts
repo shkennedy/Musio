@@ -187,6 +187,7 @@ export class AudioPlayerComponent implements OnInit {
 
     public setPrivateMode = (privateMode: boolean): void => {
         this.privateMode = privateMode;
+        console.log(privateMode);
     }
 
     public setUseHighBitrate = (useHighBitrate: boolean): void => {

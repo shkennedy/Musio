@@ -59,14 +59,14 @@ export class UserService {
             });
     }
 
-    public sendChangePasswordEmail(userId: number): Observable<boolean> {
+    public sendChangePasswordEmail(): Observable<boolean> {
         return this.httpRequest.get(UserService.PASSWORD_CHANGE_URL)
             .map((response: ApiResponse) => {
                 return response.success;
             });
     }
 
-    public changePassword(userId: number, securityCode: number, newPassword: string): Observable<boolean> {
+    public changePassword(securityCode: number, newPassword: string): Observable<boolean> {
         const body = {
             'securityCode': securityCode,
             'newPassword': newPassword

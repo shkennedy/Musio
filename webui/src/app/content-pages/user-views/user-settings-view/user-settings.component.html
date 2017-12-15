@@ -19,19 +19,19 @@
 </div> -->
 
 <!-- <mat-icon matPrefix>location_on</mat-icon> -->
+<div *ngIf="!user; else userLoaded">
+    <mat-spinner color="accent" class="center_loading"></mat-spinner>
+</div>
+<ng-template #userLoaded>
     <mat-card class="userSettings flex_center">
         <div class="flex_column padder">
             <h4>User Settings</h4>
-            <button mat-raised-button class="sized"
-                    type="button"
-                    (click)="passwordDialog()">Change Password</button>
-            <button mat-raised-button class="sized"
-                    type="button"
-                    (click)="pictureDialog()">Change Profile Picture</button>
+            <button mat-raised-button class="sized" type="button" (click)="passwordDialog()">Change Password</button>
+            <button mat-raised-button class="sized" type="button" (click)="pictureDialog()">Change Profile Picture</button>
             <div class="grid">
                 <div class="flex_column">
                     <h4>Music Quality</h4>
-                    <mat-slide-toggle (change)="audioToggle($event)">{{quality_name}}</mat-slide-toggle>
+                    <mat-slide-toggle [disabled]="!isPremiumUser" (change)="audioToggle($event)">{{quality_name}}</mat-slide-toggle>
                 </div>
 
                 <div class="flex_column">
@@ -39,15 +39,12 @@
                     <mat-slide-toggle (change)="sessionToggle($event)">{{session_type}}</mat-slide-toggle>
                 </div>
             </div>
-            <button mat-raised-button class="sized"
-                    type="button"
-                    (click)="deleteDialog()">Delete Account</button>
+            <button mat-raised-button class="sized" type="button" (click)="deleteDialog()">Delete Account</button>
         </div>
     </mat-card>
+</ng-template>
 
-
-
-    <!-- <div class="flex_row bottom_margin">
+<!-- <div class="flex_row bottom_margin">
         <button mat-raised-button class="sized"
                 (click)="password_toggle=!password_toggle;"
                 type="button">Change Password</button>
@@ -82,8 +79,8 @@
             <mat-icon>clear</mat-icon>
         </button>
     </div> -->
-    <!-- Change Audio Stype -->
-    <!-- <div class="grid2">
+<!-- Change Audio Stype -->
+<!-- <div class="grid2">
         <div class="flex_column">
             <h4>Music Quality</h4>
             <mat-slide-toggle (change)="audioToggle($event)">{{quality_name}}</mat-slide-toggle>
