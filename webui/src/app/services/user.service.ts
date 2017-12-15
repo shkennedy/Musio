@@ -24,7 +24,7 @@ export class UserService {
     private static DISABLE_PRIVATE_MODE_URL = UserService.USER_URL + '/disablePrivateMode';
     private static ENABLE_PRIVATE_MODE_URL = UserService.USER_URL + '/enablePrivateMode';
     private static LISTENING_HISTORY_URL = UserService.USER_URL + '/myListeningHistory';
-    private static ADD_TO_HISTORY_URL = UserService + '/addSongToHistory';
+    private static ADD_TO_HISTORY_URL = UserService.USER_URL + '/addSongToHistory';
     private static PASSWORD_URL = UserService.USER_URL + '/password';
     private static PASSWORD_CHANGE_URL = UserService.PASSWORD_URL + '/requestChange';
 

@@ -101,8 +101,7 @@ export class AudioPlayerComponent implements OnInit {
     }
 
     public playSong = (songId: number): void => {
-        this.addCurrentSongToHistory();
-        this.songQueue = [];
+        this.addSongToHistory(this.currentSong);
         this._playSong(songId);
     }
 
@@ -118,13 +117,15 @@ export class AudioPlayerComponent implements OnInit {
     }
 
     public playPlaylist = (playlistId: number): void => {
-        this.addCurrentSongToHistory();
+        this.addSongToHistory(this.currentSong);
         this.playlistService.getPlaylistById(playlistId)
             .subscribe((playlist: Playlist) => {
                 if (playlist) {
                     const song = playlist.songs.shift();
                     this._playSong(song.id);
-                    this.songQueue = playlist.songs;
+                    playlist.songs.reverse().forEach((playlistSong: Song) => {
+                        this.songQueue.unshift(playlistSong);
+                    });
                 }
             });
     }
@@ -141,19 +142,21 @@ export class AudioPlayerComponent implements OnInit {
     }
 
     public playAlbum = (albumId: number): void => {
-        this.addCurrentSongToHistory();
+        this.addSongToHistory(this.currentSong);
         this.albumService.getAlbumById(albumId)
             .subscribe((album: Album) => {
                 if (album) {
                     const song = album.songs.shift();
                     this._playSong(song.id);
-                    this.songQueue = album.songs;
+                    album.songs.reverse().forEach((playlistSong: Song) => {
+                        this.songQueue.unshift(playlistSong);
+                    });
                 }
             });
     }
 
     public addArtistToQueue = (artistId: number): void => {
-        this.addCurrentSongToHistory();
+        this.addSongToHistory(this.currentSong);
         this.artistService.getArtistAlbumsById(artistId)
             .subscribe((albums: Album[]) => {
                 albums.forEach((album: Album) => {
@@ -163,22 +166,21 @@ export class AudioPlayerComponent implements OnInit {
     }
 
     public playArtist = (artistId: number): void => {
-        this.addCurrentSongToHistory();
-        console.log('start');
+        this.addSongToHistory(this.currentSong);
         this.artistService.getArtistAlbumsById(artistId)
             .subscribe((albums: Album[]) => {
-                console.log('middle');
                 let firstAlbum = true;
+                const allAlbumSongs: Song[] = [];
                 albums.forEach((album: Album) => {
-                    console.log(album.id);
                     if (firstAlbum) {
                         const song = album.songs.shift();
                         this._playSong(song.id);
                         firstAlbum = false;
-                        this.songQueue = album.songs;
-                    } else {
-                        this.songQueue.concat(album.songs);
                     }
+                    allAlbumSongs.concat(album.songs);
+                });
+                allAlbumSongs.reverse().forEach((playlistSong: Song) => {
+                    this.songQueue.unshift(playlistSong);
                 });
             });
     }
@@ -264,14 +266,17 @@ export class AudioPlayerComponent implements OnInit {
 
     // Helper for adding current song to history,
     // Adds song to public history if not in private mode
-    private addCurrentSongToHistory(): void {
-        if (!this.currentSong) {
+    private addSongToHistory(song: Song): void {
+        if (!song) {
             return;
         }
 
-        this.history.push(this.currentSong);
+        this.history.push(song);
         if (!this.privateMode) {
-            this.userService.addSongIdToHistory(this.currentSong.id);
+            this.userService.addSongIdToHistory(song.id)
+                .subscribe(() => {
+                    console.log(`added ${song.id} to history`);
+                });
         }
     }
 
@@ -303,7 +308,7 @@ export class AudioPlayerComponent implements OnInit {
             this.audio.pause();
         }
 
-        this.addCurrentSongToHistory();
+        this.addSongToHistory(this.currentSong);
 
         let nextSong: Song;
         if (this.isRepeating) {

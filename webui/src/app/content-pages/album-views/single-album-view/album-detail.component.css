@@ -26,11 +26,25 @@ mat-row:hover {
 }
 
 .mat-column-trackNumber {
-    max-width: 64px;
+    max-width: 40px;
+}
+
+.mat-column-playButton {
+    max-width: 32px;
+}
+
+.song_play_button {
+    max-width: 32px;
+    display: flex;
+    align-content: center;
 }
 
 .mat-column-duration {
-    max-width: 64px;
+    max-width: 48px;
+}
+
+.mat-column-favoriteButton {
+    max-width: 32px;
 }
 
 .flex_column{

@@ -24,6 +24,7 @@ import {
     MatSliderModule,
     MatSlideToggleModule,
     MatStepperModule
+    MatSortModule
 } from '@angular/material';
 @NgModule({
     imports: [MatToolbarModule,
@@ -50,6 +51,7 @@ import {
         MatSliderModule,
         MatSlideToggleModule,
         MatStepperModule],
+        MatSortModule],
 
     exports: [MatToolbarModule,
         MatInputModule,
@@ -75,6 +77,7 @@ import {
         MatSliderModule,
         MatSlideToggleModule,
         MatStepperModule]
+        MatSortModule]
 })
 
 export class SharedModule { }

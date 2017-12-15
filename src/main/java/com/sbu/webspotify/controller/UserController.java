@@ -237,6 +237,15 @@ public class UserController {
         return response;
     }
 
+    @RequestMapping(value={"{userId}/followedUsers"}, method = RequestMethod.GET)
+    public @ResponseBody ApiResponseObject getFollowedUsers(@PathVariable Integer userId) {
+        ApiResponseObject response = new ApiResponseObject();
+		Set<UserIdentifier> followedUsers = userService.getFollowedUsers(userId);
+        response.setResponseData(followedUsers);
+        response.setSuccess(true);
+        return response;
+    }
+
     @RequestMapping(value={"/followedUsers/history"}, method = RequestMethod.GET)
     public @ResponseBody ApiResponseObject getFollowedUsersHistoryTails(HttpSession session) {
         User user = (User) session.getAttribute("user");
@@ -342,7 +351,7 @@ public class UserController {
 	@RequestMapping(value={"/getBrowsingMode"})
 	public @ResponseBody ApiResponseObject checkBrowsingMode(HttpSession session) {
 		boolean browsingMode = (boolean) session.getAttribute("privateMode");
-		return new ApiResponseObject(true, null, new BrowsingMode(browsingMode));
+		return new ApiResponseObject(true, null, browsingMode);
 	}
 
 	@RequestMapping(value="/uploadProfileImage", method=RequestMethod.POST)

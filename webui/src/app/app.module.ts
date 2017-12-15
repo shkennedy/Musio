@@ -14,6 +14,7 @@ import { MatSliderModule,
          MatCardImage,
          MatCardActions } from '@angular/material';
 import { ReactiveFormsModule } from '@angular/forms';
+         MatSortModule } from '@angular/material';
 import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './shared/shared.module';
 import { CoreModule } from './core/core.module';
