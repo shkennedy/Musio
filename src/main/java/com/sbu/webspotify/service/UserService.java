@@ -35,6 +35,7 @@ import com.sbu.webspotify.repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service("userService")
@@ -133,6 +134,7 @@ public class UserService {
         return response;
     }
 
+	@Transactional
 	public ApiResponseObject addFavoriteSong(User user, Integer songId) {
 		ApiResponseObject response = new ApiResponseObject();
 		Song s = songRepository.findById(songId);
@@ -147,6 +149,7 @@ public class UserService {
 		return response;
 	}
 
+	@Transactional
 	public ApiResponseObject removeFavoriteSong(User user, Integer songId) {
 		ApiResponseObject response = new ApiResponseObject();
 		Song s = songRepository.findById(songId);
@@ -166,6 +169,7 @@ public class UserService {
 		return response;
 	}
 
+	@Transactional
 	public ApiResponseObject addFavoriteAlbum(User user, Integer albumId) {
 		ApiResponseObject response = new ApiResponseObject();
 		Album a = albumRepository.findById(albumId);
@@ -180,6 +184,7 @@ public class UserService {
 		return response;
 	}
 
+	@Transactional
 	public ApiResponseObject removeFavoriteAlbum(User user, Integer albumId) {
 		ApiResponseObject response = new ApiResponseObject();
 		Album a = albumRepository.findById(albumId);
@@ -199,6 +204,7 @@ public class UserService {
 		return response;
 	}
 
+	@Transactional
 	public ApiResponseObject addFavoriteArtist(User user, Integer artistId) {
 		ApiResponseObject response = new ApiResponseObject();
 		Artist a = artistRepository.findById(artistId);
@@ -213,6 +219,7 @@ public class UserService {
 		return response;
 	}
 
+	@Transactional
 	public ApiResponseObject removeFavoriteArtist(User user, Integer artistId) {
 		ApiResponseObject response = new ApiResponseObject();
 		Artist p = artistRepository.findById(artistId);
@@ -232,6 +239,7 @@ public class UserService {
 		return response;
 	}
 
+	@Transactional
 	public ApiResponseObject addFollowedUser(User user, Integer userId) {
 		ApiResponseObject response = new ApiResponseObject();
 		User u = userRepository.findById(userId);
@@ -246,6 +254,7 @@ public class UserService {
 		return response;
 	}
 
+	@Transactional
 	public ApiResponseObject removeFollowedUser(User user, Integer userId) {
 		ApiResponseObject response = new ApiResponseObject();
 		User u = userRepository.findById(userId);
@@ -276,6 +285,7 @@ public class UserService {
 		userRepository.flush();
 	}
 
+	@Transactional
 	public ApiResponseObject addFavoritePlaylist(User user, Integer playlistId) {
 		ApiResponseObject response = new ApiResponseObject();
 		Playlist p = playlistRepository.findById(playlistId);
@@ -290,6 +300,7 @@ public class UserService {
 		return response;
 	}
 
+	@Transactional
 	public ApiResponseObject removeFavoritePlaylist(User user, Integer playlistId) {
 		ApiResponseObject response = new ApiResponseObject();
 		Playlist p = playlistRepository.findById(playlistId);
@@ -309,6 +320,7 @@ public class UserService {
 		return response;
 	}
 
+	@Transactional
 	public ApiResponseObject addFavoriteGenre(User user, Integer genreId) {
 		ApiResponseObject response = new ApiResponseObject();
 		Genre g = genreRepository.findById(genreId);
@@ -323,6 +335,7 @@ public class UserService {
 		return response;
 	}
 
+	@Transactional
 	public ApiResponseObject removeFavoriteGenre(User user, Integer genreId) {
 		ApiResponseObject response = new ApiResponseObject();
 		Genre p = genreRepository.findById(genreId);
@@ -408,6 +421,7 @@ public class UserService {
 		return userRepository.getFollowedUsers(userId);
 	}
 
+	@Transactional
 	public void updateProfileImage(User user, MultipartFile profileImageFile) throws IOException {
 		// PNG images only.
 		MimeType mimeType = mimeTypeRepository.findBySubtype(appConfig.png);
