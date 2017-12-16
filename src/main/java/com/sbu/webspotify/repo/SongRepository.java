@@ -35,7 +35,7 @@ public interface SongRepository extends JpaRepository<Song, Integer>
 	Set<SongIdentifier> getListeningHistoryForUser(@Param("userId") int userId, @Param("numElements") int numElements);
 
 
-    @Query(value = "SELECT alb.id as id, alb.title as albumTitle, art.id as artistId, art.name as artistName, s.id as albumId, s.title as title "
+    @Query(value = "SELECT alb.id as id, alb.title as albumTitle, art.id as artistId, art.name as artistName, s.duration as duration, s.id as albumId, s.title as title "
                     + "FROM Song s, Album alb, Artist art, song_album_mapping sam, album_artist_mapping aam, song_listens_view slv "
                     + "WHERE s.id = sam.song_id AND sam.album_id = alb.id AND aam.artist_id = art.id AND aam.album_id = alb.id AND slv.song_id = s.id "
                     + "order by slv.listenCount desc limit :numElements", 

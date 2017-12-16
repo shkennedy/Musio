@@ -179,7 +179,7 @@ public class SearchService {
         Set<ArtistIdentifier> artists = new HashSet<ArtistIdentifier>();
         Set<PlaylistIdentifier> playlists = new HashSet<PlaylistIdentifier>();
         Set<AlbumIdentifier> albums = new HashSet<AlbumIdentifier>();
-        Set<SongIdentifier> songs = songRepository.findNSongsWithMostListens(6);
+        Set<SongIdentifier> songs = songRepository.findNSongsWithMostListens(20);
         
         return new BrowseResult(songs, artists, albums, playlists);
     }
