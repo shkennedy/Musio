@@ -1,3 +1,8 @@
+<div>
+    <img src="{{user.profileImageUrl}}">
+    <h1>{{user.username}}</h1>
+</div>
+
 <div class="tabs1">
 
         <input type="radio" id="tab1" name="tab-control" checked>
@@ -27,10 +32,10 @@
 
         <div class="content">
             <section>
-                <mat-grid-list cols="4">
+                <mat-grid-list cols="4" gutterSize="15px">
                     <mat-grid-tile *ngFor="let followedUser of followedUsers;">
                         <div class="flex_column">
-                            <img src="{{followedUser.profileImage}}" class="followers"/>
+                            <!-- <img src="{{followedUser.profileImage}}" class="followers"/> -->
                             <div>{{followedUser.username}}</div>
                         </div>
                     </mat-grid-tile>
@@ -38,11 +43,19 @@
             </section>
 
             <section>
-                tab2
+                history to do
             </section>
 
             <section>
-                tab3
+                playlists commented out
+                <!-- <mat-grid-list cols="4" gutterSize="15px">
+                    <mat-grid-tile *ngFor="let playlist of playlists;">
+                        <div class="flex_column">
+                            <img src="{{playlist.playlistImageUrl}}" class="playlist"/>
+                            <div>{{playlist.username}}</div>
+                        </div>
+                    </mat-grid-tile>
+                </mat-grid-list> -->
             </section>
         </div>
     </div>

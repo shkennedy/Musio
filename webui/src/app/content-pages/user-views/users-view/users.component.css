@@ -374,7 +374,19 @@ mat-row:hover {
     align-content: center;
 }
 
+.flex_row{
+    display:flex;
+    justify-content: center;
+    align-content: center;
+}
+
 .followers{
+    width:180px;
+    height:180px;
+    border-radius:50%;
+}
+
+.playlist{
     width:180px;
     height:180px;
 }

@@ -6,6 +6,8 @@ import { FileService } from '../../../services/file.service';
 import { UserService } from '../../../services/user.service';
 
 import { User } from '../../../models/user.model';
+import { Playlist } from '../../../models/playlist.model';
+import { Song } from '../../../models/song.model';
 
 @Component({
     selector: 'app-users',
@@ -14,7 +16,10 @@ import { User } from '../../../models/user.model';
 })
 export class UsersComponent implements OnInit {
 
+    private user: User;
     private followedUsers: User[];
+    private playlists: Playlist[];
+    private history: Song[];
 
     private errorMessage: string;
 
@@ -36,21 +41,5 @@ export class UsersComponent implements OnInit {
                 console.log(error.toString());
             }
         );
-    }
-
-    changeProfileImage() {
-
-    }
-
-    changePassword() {
-
-    }
-
-    setPrivateSession() {
-
-    }
-
-    setPublicSession() {
-
     }
 }
