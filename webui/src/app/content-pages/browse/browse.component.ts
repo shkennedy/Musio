@@ -2,8 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatTableDataSource, MatSort, MatTable } from '@angular/material';
 
-import { SearchService, BrowseResponseTab } from '../../services/search.service';
-import { BrowseResponse } from '../../services/search.service';
+import { SearchService, BrowseResponse, BrowseResponseTab } from '../../services/search.service';
+import { FileService } from '../../services/file.service';
 
 import { Song } from '../../models/song.model';
 import { Album } from '../../models/album.model';
@@ -39,6 +39,7 @@ export class BrowseComponent implements OnInit {
 
     constructor(
         private router: Router,
+        private fileService: FileService,
         private searchService: SearchService
     ) { }
 
@@ -71,5 +72,17 @@ export class BrowseComponent implements OnInit {
             const seconds = song.duration % 60;
             song.durationString += (seconds < 10) ? `0${seconds}` : seconds;
         });
+
+        browseData.albums.forEach((album: Album) => {
+            album.albumArtUrl = this.fileService.getAlbumImageURLByIdAndSize(album.id, true);
+        });
+
+        browseData.artists.forEach((artist: Artist) => {
+            artist.artistImageUrl = this.fileService.getArtistImageURLByIdAndSize(artist.id, true);
+        });
+
+        // browseData.playlists.forEach((playlist: Playlist) => {
+        //     playlist.playlistImageUrl = this.fileService.getPlaylistImageURLById(playlist.id);
+        // });
     }
 }
