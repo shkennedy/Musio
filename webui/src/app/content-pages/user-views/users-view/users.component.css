@@ -380,6 +380,12 @@ mat-row:hover {
     align-content: center;
 }
 
+.flex_row_start{
+    display:flex;
+    justify-content: flex-start;
+    align-content: center;
+}
+
 .followers{
     width:180px;
     height:180px;
@@ -389,4 +395,14 @@ mat-row:hover {
 .playlist{
     width:180px;
     height:180px;
+}
+
+.height{
+    height:200px;
+}
+
+.username{
+    font-size:35px;
+    font-weight:bold;
+    color:white;
 }

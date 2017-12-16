@@ -1,6 +1,9 @@
-<div>
-    <img src="{{user.profileImageUrl}}">
-    <h1>{{user.username}}</h1>
+<div class="height flex_row_start" style="padding-left:20px;">
+    <img *ngIf="user.profileImageUrl; else default" src="{{user.profileImageUrl}}" class="followers">
+    <ng-template #default>
+        <img src="/assets/images/no_artist_picture.png" class="followers"> 
+    </ng-template>
+    <div class="username" style="margin-left:20px;margin-top:auto;margin-bottom:auto;">{{user.username}}</div>
 </div>
 
 <div class="tabs1">

@@ -41,5 +41,16 @@ export class UsersComponent implements OnInit {
                 console.log(error.toString());
             }
         );
+
+        this.userService.getUser(this.setUser);
+    }
+
+    public setUser = (user: User): void => {
+        this.user = user;
+        this.getUserImage(this.user.id);
+    }
+
+    public getUserImage(userId: number): void {
+        this.user.profileImageUrl = this.fileService.getUserImageURLById(userId);
     }
 }

@@ -45,7 +45,7 @@ export class FileService {
         ((useHighBitrate) ? FileService.SONG_HIBR_URL : FileService.SONG_LOBR_URL) + `/${songId}`;
     }
 
-    public getUserImageURLByIdAndSize(userId: number): string {
+    public getUserImageURLById(userId: number): string {
         return FileService.BASE_URL + FileService.USER_FULL_URL + `/${userId}`;
     }
 }
