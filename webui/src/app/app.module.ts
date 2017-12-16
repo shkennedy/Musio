@@ -66,6 +66,7 @@ import { UserService } from './services/user.service';
 import { PasswordDialogComponent } from './dialogs/password-dialog/password-dialog.component';
 import { DeleteDialogComponent } from './dialogs/delete-dialog/delete-dialog/delete-dialog.component';
 import { PictureDialogComponent } from './dialogs/picture-dialog/picture-dialog/picture-dialog.component';
+import { PremiumDialogComponent } from './dialogs/premium-dialog/premium-dialog/premium-dialog.component';
 
 @NgModule({
     declarations: [
@@ -100,11 +101,13 @@ import { PictureDialogComponent } from './dialogs/picture-dialog/picture-dialog/
         DeleteDialogComponent,
         PictureDialogComponent,
         CapitalizePipe,
-        UsersComponent
+        UsersComponent,
+        PremiumDialogComponent
     ],
     entryComponents: [PasswordDialogComponent,
                       DeleteDialogComponent,
-                      PictureDialogComponent],
+                      PictureDialogComponent,
+                      PremiumDialogComponent],
     imports: [
         BrowserModule,
         FormsModule,

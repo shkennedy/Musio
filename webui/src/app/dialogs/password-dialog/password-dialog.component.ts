@@ -60,4 +60,8 @@ export class PasswordDialogComponent implements OnInit {
             }
         });
     }
+
+    closeDialog() {
+        this.dialogRef.close();
+    }
 }

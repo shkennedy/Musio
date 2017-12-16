@@ -78,3 +78,30 @@ button,a{
     margin-top:2vh;
     margin-bottom:2vh;
 }
+
+.positioned{
+    position:absolute;
+    /* top:5vh; */
+    margin-top:0px;
+    top:1.5vh;
+    left:60vw;
+    height:4vh;
+    width:125px;
+    display:flex;
+    justify-content: center;
+    align-content: center;
+    color:white;
+    border-radius:100px;
+    border:none;
+    background-color:#1db954;
+    padding-top:0px;
+    padding-bottom:0px;
+    /* letter-spacing: 2px; */
+    /* font-family: Circular,Helvetica,Arial,sans-serif !important; */
+    font-family:inherit;
+}
+
+.positioned:hover{
+    position:absolute;
+    color:black;
+}

@@ -1,0 +1,106 @@
+<div *ngIf="!success;else basic" style="position:relative;">
+    <div *ngIf="loading" class="loading">
+        <mat-spinner color="accent"></mat-spinner>
+    </div>
+    <h1 class="flex_center" style="margin-top:5px;">
+        <div class="flex_center">
+            <img width="20px" height="20px" src="https://upload.wikimedia.org/wikipedia/commons/f/f4/StarIconBronze.png">
+        </div>
+        <div class="flex_center">UPGRADE TO PREMIUM</div>
+    </h1>
+
+
+    <div class="creditCardForm" style="margin-top:10px; padding-bottom:20px;">
+        <div class="heading">
+            <h2>Confirm Purchase</h2>
+        </div>
+        <div class="flex_col">
+            <form (ngSubmit)="goPremium(f)" #f="ngForm">
+
+                <mat-form-field style="width:100%;">
+                    <input matInput placeholder="Card Holder Name" name="name" pattern="^[A-Z]([A-Za-z])*( [A-Z][A-Za-z]*)? [A-Z][A-Za-z]*$"
+                        ngModel required (change)="invalidChange()">
+                </mat-form-field>
+
+                <div class="flex_center">
+                    <mat-radio-group class="example-radio-group" (change)="changeCardType($event)">
+                        <mat-radio-button value="visa" checked>
+                            <img style="width:100px;height:100px;" src="/assets/images/visa.svg">
+                        </mat-radio-button>
+
+                        <mat-radio-button value="mastercard">
+                            <img style="width:100px;height:100px;" src="/assets/images/mastercard.svg">
+                        </mat-radio-button>
+
+                        <mat-radio-button value="amex">
+                            <img style="width:100px;height:100px;" src="/assets/images/amex.svg">
+                        </mat-radio-button>
+                    </mat-radio-group>
+                </div>
+
+                <div class="flex_between">
+                    <mat-form-field style="width:80%;">
+                        <input type="number" matInput placeholder="Card Number" [pattern]="getCardPattern()" name="card_number" ngModel required
+                            (change)="invalidChange()">
+                    </mat-form-field>
+
+                    <mat-form-field style="width:10%;">
+                        <input type="number" matInput placeholder="CVV" name="cvv" [pattern]="getCvvPattern()" ngModel required (change)="invalidChange()">
+                    </mat-form-field>
+                </div>
+
+                <div>
+                    <mat-form-field style="width:100%;">
+                        <input type="text" matInput placeholder="Address" name="address" pattern="^\d+ [A-Za-z]+( [A-Za-z]+)?$" ngModel required
+                            (change)="invalidChange()">
+                    </mat-form-field>
+                </div>
+
+                <div class="flex_between">
+                    <mat-form-field style="width:45%;">
+                        <mat-select placeholder="Month of Expiration" ngModel name="month" required (change)="invalidChange()">
+                            <mat-option value="01">January</mat-option>
+                            <mat-option value="02">February</mat-option>
+                            <mat-option value="03">March</mat-option>
+                            <mat-option value="04">April</mat-option>
+                            <mat-option value="05">May</mat-option>
+                            <mat-option value="06">June</mat-option>
+                            <mat-option value="07">July</mat-option>
+                            <mat-option value="08">August</mat-option>
+                            <mat-option value="09">Setember</mat-option>
+                            <mat-option value="10">October</mat-option>
+                            <mat-option value="11">November</mat-option>
+                            <mat-option value="12">December</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field style="width:45%;">
+                        <mat-select placeholder="Year of Expiration" (change)="invalidChange()" ngModel name="year" required>
+                            <mat-option value="2018">2018</mat-option>
+                            <mat-option value="2019">2019</mat-option>
+                            <mat-option value="2020">2020</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+                <div class="flex_center">
+                    <button mat-raised-button color="accent" [disabled]="!f.valid" style="width:50%;">Submit</button>
+                </div>
+
+                <div *ngIf="invalid" class="flex_center" style="color:red;">This is an invalid card. Please enter a valid card.</div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<ng-template #basic>
+    <div class="flex_col" style="height:100%;">
+        <div class="flex_center">
+            Congradulations! You are now a Premium User.
+        </div>
+
+        <div class="flex_center">
+            <button mat-raised-button color="accent" style="width:50%;" (click)="closeDialog()">Close</button>
+        </div>
+    </div>
+</ng-template>

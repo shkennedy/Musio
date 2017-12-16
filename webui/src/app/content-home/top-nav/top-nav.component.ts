@@ -6,6 +6,9 @@ import { FavoritesService } from '../../services/favorites.service';
 import { UserService } from '../../services/user.service';
 import { LoginService } from '../../services/login.service';
 
+import { PremiumDialogComponent } from '../../dialogs/premium-dialog/premium-dialog/premium-dialog.component';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+
 import { User } from '../../models/user.model';
 
 @Component({
@@ -21,15 +24,21 @@ export class TopNavComponent implements OnInit {
         private router: Router,
         private userService: UserService,
         private loginService: LoginService,
-        private favoritesService: FavoritesService
+        private favoritesService: FavoritesService,
+        private dialog: MatDialog
     ) {}
 
     ngOnInit() {
         this.userService.getUser(this.setUser);
+        this.userService.getIsPremium(this.setPremium);
     }
 
     public setUser = (user: User): void => {
         this.user = user;
+    }
+
+    public setPremium = (isPremium: boolean): void => {
+        this.user.isPremium = isPremium;
     }
 
     private search(searchQuery: string): void {
@@ -41,10 +50,10 @@ export class TopNavComponent implements OnInit {
         console.log('clicked profile');
     }
 
-    goPremium() {
-        this.router.navigate(['/goPremium']);
-        console.log('clicked goPremium');
-    }
+    // goPremium() {
+    //     this.router.navigate(['/goPremium']);
+    //     console.log('clicked goPremium');
+    // }
 
     gotoSettings() {
         this.router.navigate(['/userSettings']);
@@ -72,5 +81,12 @@ export class TopNavComponent implements OnInit {
     gotoContact() {
         this.router.navigate(['/contact']);
         console.log('clicked contact');
+    }
+
+    goPremium() {
+        const dialogRef = this.dialog.open(PremiumDialogComponent, {
+            width: '800px',
+            height: '500px'
+        });
     }
 }
