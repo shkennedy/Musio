@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { MatTableDataSource, MatSort, MatTable } from '@angular/material';
 
 import { SearchService, BrowseResponseTab } from '../../services/search.service';
 import { BrowseResponse } from '../../services/search.service';
@@ -18,10 +19,21 @@ import { Instrument } from '../../models/instrument.model';
 })
 export class BrowseComponent implements OnInit {
 
+    @ViewChild(MatSort) newReleasesSort: MatSort;
     private newReleases: BrowseResponseTab;
+    private newReleasesSongTableData: MatTableDataSource<Song>;
+
+    @ViewChild(MatSort) friendsFavoritesSort: MatSort;
     private friendsFavorites: BrowseResponseTab;
+    private friendsFavoritesSongTableData: MatTableDataSource<Song>;
+
+    @ViewChild(MatSort) discoverSort: MatSort;
     private discover: BrowseResponseTab;
+    private discoverSongTableData: MatTableDataSource<Song>;
+
+    @ViewChild(MatSort) popularSort: MatSort;
     private popular: BrowseResponseTab;
+    private popularSongTableData: MatTableDataSource<Song>;
 
     private errorMessage: string;
 
