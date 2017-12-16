@@ -73,7 +73,7 @@
                                 </ng-template>
                             </div>
                             <div class="col-sm-12">
-                                <h3 class="album-title" (click)="gotoAlbum(album.id)">{{album.title}}</h3>
+                                <h3 class="album-title" (click)="gotoAlbum(album.id)" style="text-align: center;padding-right:2.5vw;">{{album.title}}</h3>
                             </div>
                             <div style="padding-left:4vw;">
                                 <button class="btn btn-green block-center" (click)="playAlbum(album.id)">PLAY</button>
@@ -139,13 +139,27 @@
             </section>
 
             <section>
-                <p>{{artist.bio}}</p>
+                <p class="spaced_bio">{{artist.bio}}</p>
                 <p>Website:</p>
                 <a href="{{artist.website}}">{{artist.website}}</a>
             </section>
 
             <section>
-                <div class="row">
+                <mat-grid-list cols="4" gutterSize="15px">
+                    <mat-grid-tile *ngFor="let relatedArtist of relatedArtists"
+                                   (click)="gotoRelatedArtist(relatedArtist.id)">
+                        <div class="flex_column">
+                            <div *ngIf="relatedArtist.fullFileId; else defaultArt;">
+                                <img class="artist_card_img" src="{{relatedArtist.artistImageUrl}}" alt="{{relatedArtist.name}}">
+                            </div>
+                            <ng-template #defaultArt>
+                                <img class="artist_card_img" src="assets/images/no_artist_picture.png" alt="{{relatedArtist.name}}">
+                            </ng-template>
+                            <div style="text-align: center;">{{relatedArtist.name}}</div>
+                        </div>
+                    </mat-grid-tile>
+                </mat-grid-list>
+                <!-- <div class="row">
                     <div *ngFor="let relatedArtist of relatedArtists" class="artist-card col-sm-3 center-block">
                         <div class="artist-card col-sm-3 center-block" (click)="gotoRelatedArtist(relatedArtist.id)">
                             <div *ngIf="relatedArtist.fullFileId; else defaultArt;">
@@ -157,7 +171,7 @@
                             <p>{{relatedArtist.name}}</p>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </section>
 
             <!-- <section>

@@ -312,10 +312,10 @@
     }
     
     .artist_card_img{
-        min-width: 200px;
-        min-height: 200px;
-        max-width: 200px;
-        max-height: 200px;
+        min-width: 180px;
+        min-height: 180px;
+        max-width: 180px;
+        max-height: 180px;
         border-radius: 50%;
     }
 
@@ -391,4 +391,15 @@ mat-row:hover {
 .flex_center{
   display:flex;
   justify-content: center;
+}
+
+.spaced_bio{
+  line-height:200%;
+}
+
+.flex_column{
+  display:flex;
+  justify-content: center;
+  align-content: center;
+  flex-direction: column;
 }
