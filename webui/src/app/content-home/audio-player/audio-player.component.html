@@ -10,8 +10,8 @@
                 <mat-icon>add</mat-icon>
             </button>
             <ng-template #currFavorited>
-                <button mat-icon-button (click)="unfavoriteCurrentSong()" (mouseenter)="" (mouseleave)="">
-                    <mat-icon>{getFavoritedIcon(song.id, song.isFavorited)</mat-icon>
+                <button mat-icon-button (click)="unfavoriteCurrentSong()" (mouseenter)="hoverFavorite(true)" (mouseleave)="hoverFavorite(false)">
+                    <mat-icon>{{getFavoritedIcon()}}</mat-icon>
                 </button>
             </ng-template>
         </div>

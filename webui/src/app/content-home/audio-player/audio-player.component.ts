@@ -50,6 +50,8 @@ export class AudioPlayerComponent implements OnInit {
     @ViewChild(MatSort) sort: any;
     queueTableData: MatTableDataSource<Song>;
 
+    isHovered: boolean;
+
     errMsg: string;
 
     constructor(
@@ -428,18 +430,6 @@ export class AudioPlayerComponent implements OnInit {
         }
     }
 
-    private unfavoriteCurrentSong(): void {
-        if (this.currentSong) {
-            this.favoritesService.removeFavoriteSongById(this.currentSong.id)
-                .subscribe((success: boolean) => {
-                    this.isFavorited = !success;
-                },
-                (error: any) => {
-                    console.log('error favoriting current song');
-                });
-        }
-    }
-
     private showLyrics(): void {
         this.isShowingLyrics = !this.isShowingLyrics;
     }
@@ -478,5 +468,25 @@ export class AudioPlayerComponent implements OnInit {
                 this.queueTableData = new MatTableDataSource(this.songQueue);
             }
         }
+    }
+
+    private unfavoriteCurrentSong(): void {
+        if (this.currentSong) {
+            this.favoritesService.removeFavoriteSongById(this.currentSong.id)
+                .subscribe((success: boolean) => {
+                    this.isFavorited = !success;
+                },
+                (error: any) => {
+                    console.log('error favoriting current song');
+                });
+        }
+    }
+
+    private hoverFavorite(isHovered: boolean): void {
+        this.isHovered = isHovered;
+    }
+
+    private getFavoritedIcon(): Object {
+        return (this.isHovered) ? 'remove' : 'favorite';
     }
 }

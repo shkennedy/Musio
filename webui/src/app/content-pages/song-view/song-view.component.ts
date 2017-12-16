@@ -7,6 +7,7 @@ import { SongService } from '../../services/song.service';
 import { FavoritesService } from '../../services/favorites.service';
 
 import { Song } from '../../models/song.model';
+import { Album } from '../../models/album.model';
 import { Artist } from '../../models/artist.model';
 
 @Component({
@@ -37,6 +38,11 @@ export class SongViewComponent implements OnInit {
                     this.songTableData = new MatTableDataSource(songs);
                     this.songs = new Map();
                     songs.forEach((song: Song) => {
+                        this.songService.getSongAlbumInfo(song.id)
+                            .subscribe((album: Album) => {
+                                song.album = album;
+                            });
+
                         this.songs.set(song.id, song);
                         this.playButtonsVisibility.set(song.id, false);
 
