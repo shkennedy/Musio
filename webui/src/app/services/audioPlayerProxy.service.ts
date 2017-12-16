@@ -20,6 +20,7 @@ export class AudioPlayerProxyService {
     private static PLAY_SONG_TAG = 'PLAY_SONG';
     private static SET_PRIVATE_SESSION_TAG = 'SET_PRIVATE_SESSION';
     private static SET_USE_HIGH_BITRATE_TAG = 'SET_USE_HIGH_BITRATE';
+    private static SET_IS_PREMIUM_USER_TAG = 'SET_IS_PREMIUM_USER';
 
     private listeners = {};
 
@@ -29,7 +30,8 @@ export class AudioPlayerProxyService {
                              addArtistListener, playArtistListener,
                              addPlaylistListener, playPlaylistListener,
                              addSongListener, playSongListener,
-                             setPrivateSessionListener, setUseHighBitrateListener): void {
+                             setPrivateSessionListener, setUseHighBitrateListener,
+                             setIsPremiumUser): void {
         this.listeners[AudioPlayerProxyService.ADD_ALBUM_TAG] = addAlbumListener;
         this.listeners[AudioPlayerProxyService.PLAY_ALBUM_TAG] = playAlbumListener;
         this.listeners[AudioPlayerProxyService.ADD_ARTIST_TAG] = addArtistListener;
@@ -40,6 +42,7 @@ export class AudioPlayerProxyService {
         this.listeners[AudioPlayerProxyService.PLAY_SONG_TAG] = playSongListener;
         this.listeners[AudioPlayerProxyService.SET_PRIVATE_SESSION_TAG] = setPrivateSessionListener;
         this.listeners[AudioPlayerProxyService.SET_USE_HIGH_BITRATE_TAG] = setUseHighBitrateListener;
+        this.listeners[AudioPlayerProxyService.SET_IS_PREMIUM_USER_TAG] = setIsPremiumUser;
     }
 
     public addSongToQueue(songId: number): void {
@@ -80,5 +83,9 @@ export class AudioPlayerProxyService {
 
     public setUseHighBitrate(useHighBitrate: boolean): void {
         this.listeners[AudioPlayerProxyService.SET_USE_HIGH_BITRATE_TAG](useHighBitrate);
+    }
+
+    public setIsPremiumUser(isPremiumUser: boolean): void {
+        this.listeners[AudioPlayerProxyService.SET_IS_PREMIUM_USER_TAG](isPremiumUser);
     }
 }

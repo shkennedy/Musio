@@ -12,6 +12,8 @@ export class AdService {
     private static AD_URL = '/ad';
     private static AD_CLICK_URL: string = AdService.AD_URL + '/click';
 
+    private closeAdListener: () => void;
+
     constructor(
         private router: Router,
         private httpRequest: HttpRequestService
@@ -26,5 +28,13 @@ export class AdService {
 
     public recordAdClickById(adId: number): void {
         this.httpRequest.put(AdService.AD_CLICK_URL, adId);
+    }
+
+    public registerCloseAd(closeAdListener: () => void): void {
+        this.closeAdListener = closeAdListener;
+    }
+
+    public closeAd(): void {
+        this.closeAdListener();
     }
 }

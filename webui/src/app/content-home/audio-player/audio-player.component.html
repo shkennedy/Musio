@@ -6,9 +6,14 @@
                 <p style="color:#ddd; font-size:12px;">{{currentSong.title}}</p>
                 <p *ngIf="currentSong.artist" style="color:#ddd;">{{currentSong.artist.name}}</p>
             </div>
-            <button mat-icon-button>
+            <button *ngIf="!isFavorited; else currFavorited;" mat-icon-button (click)="favoriteCurrentSong()">
                 <mat-icon>add</mat-icon>
             </button>
+            <ng-template #currFavorited>
+                <button mat-icon-button (click)="unfavoriteCurrentSong()" (mouseenter)="" (mouseleave)="">
+                    <mat-icon>{getFavoritedIcon(song.id, song.isFavorited)</mat-icon>
+                </button>
+            </ng-template>
         </div>
     </div>
 
@@ -76,9 +81,11 @@
 
                         <!-- Duration Column -->
                         <ng-container matColumnDef="duration">
-                                <mat-header-cell *matHeaderCellDef mat-sort-header><mat-icon>schedule</mat-icon></mat-header-cell>
-                                <mat-cell *matCellDef="let song">{{song.durationString}}</mat-cell>
-                            </ng-container>
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                <mat-icon>schedule</mat-icon>
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let song">{{song.durationString}}</mat-cell>
+                        </ng-container>
 
                         <!-- Remove Button Column -->
                         <ng-container matColumnDef="removeButton">

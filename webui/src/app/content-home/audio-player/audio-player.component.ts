@@ -10,6 +10,7 @@ import { SongService } from '../../services/song.service';
 import { FileService } from '../../services/file.service';
 import { PlaylistService } from '../../services/playlist.service';
 import { UserService } from '../../services/user.service';
+import { FavoritesService } from '../../services/favorites.service';
 
 import { Album } from '../../models/album.model';
 import { Artist } from '../../models/artist.model';
@@ -28,12 +29,14 @@ export class AudioPlayerComponent implements OnInit {
 
     audio: Howl;
     useHighBitrate: boolean;
+    isPremiumUser: boolean;
     volume = 1.0;
     isMuted = false;
     isPlaying = false;
     isRepeating = false;
     isShuffling = false;
     isShowingLyrics = false;
+    isFavorited = false;
     songProgress = 0;
     prevSongProgress = 0;
     songTimer: any;
@@ -57,7 +60,8 @@ export class AudioPlayerComponent implements OnInit {
         private fileService: FileService,
         private playlistService: PlaylistService,
         private songService: SongService,
-        private userService: UserService
+        private userService: UserService,
+        private favoritesService: FavoritesService
     ) { }
 
     ngOnInit() {
@@ -67,11 +71,13 @@ export class AudioPlayerComponent implements OnInit {
             this.addArtistToQueue, this.playArtist,
             this.addPlaylistToQueue, this.playPlaylist,
             this.addSongToQueue, this.playSong,
-            this.setPrivateMode, this.setUseHighBitrate
+            this.setPrivateMode, this.setUseHighBitrate,
+            this.setIsPremiumUser
         );
 
         // Find user allowed bitrate
         this.userService.getIsPremium(this.setUseHighBitrate);
+        this.userService.getIsPremium(this.setIsPremiumUser);
 
         this.userService.getPrivateSession()
             .subscribe(
@@ -205,6 +211,10 @@ export class AudioPlayerComponent implements OnInit {
         this.useHighBitrate = useHighBitrate;
     }
 
+    public setIsPremiumUser = (isPremiumUser: boolean): void => {
+        this.isPremiumUser = isPremiumUser;
+    }
+
     private makeHowl(songFileURL: string): Howl {
         console.log(songFileURL);
         const newHowl: Howl = new Howl({
@@ -245,13 +255,24 @@ export class AudioPlayerComponent implements OnInit {
                 // this.currentSong.duration = this.currentSong.duration / 1000;
                 this.currentSong.duration = 30;
                 console.log(`song: ${this.currentSong.title} duration: ${this.currentSong.duration}`);
-                // Fetch song file
+
                 this.currentSong.audioFileUrl = this.fileService
                     .getSongFileURLByIdAndBitrate(song.id, this.useHighBitrate);
                 this.audio = this.makeHowl(this.currentSong.audioFileUrl);
                 this.songProgress = 0;
                 this.prevSongProgress = 0;
                 this.isPlaying = true;
+
+                this.isFavorited = false;
+                this.favoritesService.getFavoriteSongs()
+                    .subscribe((favoriteSongs: Song[]) => {
+                        favoriteSongs.forEach((favoriteSong: Song) => {
+                            if (favoriteSong.id === song.id) {
+                                console.log('FAVORITED YO');
+                                this.isFavorited = true;
+                            }
+                        });
+                    });
             },
             (error: any) => {
                 this.isPlaying = false;
@@ -395,6 +416,30 @@ export class AudioPlayerComponent implements OnInit {
         this.isShuffling = !this.isShuffling;
     }
 
+    private favoriteCurrentSong(): void {
+        if (this.currentSong) {
+            this.favoritesService.addFavoriteSongById(this.currentSong.id)
+                .subscribe((success: boolean) => {
+                    this.isFavorited = success;
+                },
+                (error: any) => {
+                    console.log('error favoriting current song');
+                });
+        }
+    }
+
+    private unfavoriteCurrentSong(): void {
+        if (this.currentSong) {
+            this.favoritesService.removeFavoriteSongById(this.currentSong.id)
+                .subscribe((success: boolean) => {
+                    this.isFavorited = !success;
+                },
+                (error: any) => {
+                    console.log('error favoriting current song');
+                });
+        }
+    }
+
     private showLyrics(): void {
         this.isShowingLyrics = !this.isShowingLyrics;
     }
@@ -427,12 +472,10 @@ export class AudioPlayerComponent implements OnInit {
     }
 
     private removeSongFromQueue(songId: number): void {
-        console.log(songId + " damnit");
         for (let i = 0; i < this.songQueue.length; i += 1) {
             if (this.songQueue[i].id === songId) {
                 this.songQueue.splice(i, 1);
                 this.queueTableData = new MatTableDataSource(this.songQueue);
-                // this.queueTableData.data.splice(i, 1);
             }
         }
     }
