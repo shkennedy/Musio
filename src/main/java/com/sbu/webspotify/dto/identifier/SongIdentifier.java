@@ -7,4 +7,5 @@ public interface SongIdentifier {
     String getArtistName();
     Integer getAlbumId();
     String getTitle();
+    Integer getDuration();
 }

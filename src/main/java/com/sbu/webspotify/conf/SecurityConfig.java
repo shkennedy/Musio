@@ -56,6 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             authorizeRequests()
                 .antMatchers("/login", "/logout").permitAll()
                 .antMatchers("/registration").permitAll()
+                // .antMatchers("/advertisement/*", "/resource/*/*").permitAll()
                 .antMatchers("/").hasAnyAuthority(appConfig.premiumUser, appConfig.basicUser, appConfig.adminUser, appConfig.labelUser, appConfig.artistUser).anyRequest()
                 .authenticated().and().csrf().disable().formLogin()
                 .loginPage("/login").failureUrl("/login?error=true")
