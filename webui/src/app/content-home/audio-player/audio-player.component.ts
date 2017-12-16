@@ -11,6 +11,7 @@ import { FileService } from '../../services/file.service';
 import { PlaylistService } from '../../services/playlist.service';
 import { UserService } from '../../services/user.service';
 import { FavoritesService } from '../../services/favorites.service';
+import { AdService } from '../../services/ad.service';
 
 import { Album } from '../../models/album.model';
 import { Artist } from '../../models/artist.model';
@@ -25,7 +26,9 @@ import { Song } from '../../models/song.model';
 })
 export class AudioPlayerComponent implements OnInit {
 
-    private static IN_PROGRESS_TIME = 1;
+    private static IN_PROGRESS_TIME = 3;
+    private static SONGS_PER_AD = 5;
+    songCount = 0;
 
     audio: Howl;
     useHighBitrate: boolean;
@@ -63,7 +66,8 @@ export class AudioPlayerComponent implements OnInit {
         private playlistService: PlaylistService,
         private songService: SongService,
         private userService: UserService,
-        private favoritesService: FavoritesService
+        private favoritesService: FavoritesService,
+        private adService: AdService
     ) { }
 
     ngOnInit() {
@@ -281,8 +285,7 @@ export class AudioPlayerComponent implements OnInit {
                 this.audio = null;
                 this.currentSong = null;
                 console.log('something went wrong ' + error.toString());
-            }
-            );
+            });
     }
 
     private startSongTimer = (): void => {
@@ -319,6 +322,32 @@ export class AudioPlayerComponent implements OnInit {
         }
     }
 
+    private makeAdHowl(): Howl {
+        const adFileURL = this.adService.getAudioAdUrl();
+        const newHowl: Howl = new Howl({
+            src: [adFileURL],
+            format: ['ogg'],
+            volume: this.volume,
+            autoplay: true,
+            html5: true,
+            onplay: this.startSongTimer,
+            onpause: this.stopSongTimer,
+            onend: this.playNext,
+            // mute: this.isMuted,
+            onloaderror: function () {
+                console.log('unable to load song');
+                this.errMsg = 'Unable to load song';
+            },
+            onplayerror: function () {
+                console.log('unable to play song');
+                this.errMsg = 'Unable to play song';
+            }
+        });
+        newHowl.mute(this.isMuted);
+
+        return newHowl;
+    }
+
     // UI Event Handlers -------------------------------------------------------------------
 
     private play(): void {
@@ -348,6 +377,12 @@ export class AudioPlayerComponent implements OnInit {
         }
 
         this.addSongToHistory(this.currentSong);
+
+        this.songCount += 1;
+        if (this.songCount === AudioPlayerComponent.SONGS_PER_AD) {
+            this.makeAdHowl();
+            return;
+        }
 
         let nextSong: Song;
         if (this.isRepeating) {
