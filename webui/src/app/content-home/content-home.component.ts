@@ -12,10 +12,12 @@ import { FollowedUsersBarComponent } from './followed-users-bar/followed-users-b
     styleUrls: ['./content-home.component.css']
 })
 export class ContentHomeComponent implements OnInit {
-
+    basic = true;
     constructor(
         private router: Router
-    ) { }
+    ) {
+        setTimeout(() => { this.basic = false; } , 2000);
+     }
 
     ngOnInit() {}
 }

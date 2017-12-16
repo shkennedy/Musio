@@ -46,10 +46,33 @@
 
 .content-container{
     background-color: #181818;
-    max-height: 83vh;
-    min-height: 83vh;
     width:100%;
     overflow-x: hidden;
     overflow-y: auto;
     color: #999999;
+}
+
+.ad_size{
+  max-height: 73vh;
+  min-height: 73vh;
+}
+
+.no_ad_size{
+  max-height: 83vh;
+  min-height: 83vh;
+}
+
+.ad{
+  max-height: 10vh;
+  min-height: 10vh;
+}
+
+.banner{
+/* width: 75vw;
+height:10vh;
+z-index: 2;
+position: absolute;
+bottom:10vh;
+right:15vw; */
+background-color:black;
 }
