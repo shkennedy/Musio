@@ -21,7 +21,6 @@ import { Song } from '../../../models/song.model';
 export class UsersComponent implements OnInit {
 
     private user: User;
-    private playlists: Playlist[];
 
     private history: Map<number, Song> = new Map();
     @ViewChild(MatSort) sort: any;
@@ -54,18 +53,6 @@ export class UsersComponent implements OnInit {
                         songs.forEach((song: Song) => {
                             this.history.set(song.id, song);
                             this.historyPlayButtonsVisibility.set(song.id, false);
-
-                            // // Get song album info
-                            // this.songService.getSongAlbumInfo(song.id)
-                            //     .subscribe((album: Album) => {
-                            //         this.history.get(song.id).album = album[0];
-                            //         console.log(this.history.get(song.id).album.title);
-
-                            //         this.historyAlbumInfoReturns -= 1;
-                            //         if (this.historyAlbumInfoReturns === 0) {
-                            //             this.historyTableData = new MatTableDataSource(songs);
-                            //         }
-                            //     });
 
                             song.duration = Math.floor(song.duration / 1000);
                             song.durationString = `${Math.floor(song.duration / 60)}:`;
@@ -124,11 +111,11 @@ export class UsersComponent implements OnInit {
         }
     }
 
-    private historyGetFavoritedIcon(songId: number, isFavorited: boolean): Object {
+    private historyGetFavoritedIcon(songId: number): Object {
         if (this.historyPlayButtonsVisibility.get(songId)) {
-            return (isFavorited) ? 'remove' : 'add';
+            return (this.history.get(songId).isFavorited) ? 'remove' : 'add';
         } else {
-            return (isFavorited) ? 'favorite' : 'add';
+            return (this.history.get(songId).isFavorited) ? 'favorite' : 'add';
         }
     }
 

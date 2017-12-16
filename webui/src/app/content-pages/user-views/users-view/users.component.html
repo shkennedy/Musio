@@ -39,14 +39,19 @@
 
         <div class="content">
             <section>
-                <mat-grid-list cols="4" gutterSize="15px">
-                    <mat-grid-tile *ngFor="let followedUser of user.followedUsers;">
-                        <div class="flex_column">
-                            <!-- <img src="{{followedUser.profileImage}}" class="followers"/> -->
-                            <div>{{followedUser.username}}</div>
-                        </div>
-                    </mat-grid-tile>
-                </mat-grid-list>
+                <div *ngIf="user.followedUsers.length === 0; else hasFollowedUsers;" class="center_text">
+                    <h3>No Followed Users.</h3>
+                </div>
+                <ng-template #hasFollowedUsers>
+                    <mat-grid-list cols="4" gutterSize="15px">
+                        <mat-grid-tile *ngFor="let followedUser of user.followedUsers;">
+                            <div class="flex_column">
+                                <!-- <img src="{{followedUser.profileImage}}" class="followers"/> -->
+                                <div>{{followedUser.username}}</div>
+                            </div>
+                        </mat-grid-tile>
+                    </mat-grid-list>
+                </ng-template>
             </section>
 
             <section>
@@ -95,30 +100,34 @@
                             <ng-container matColumnDef="favoriteButton">
                                 <mat-header-cell *matHeaderCellDef></mat-header-cell>
                                 <mat-cell *matCellDef="let song">
-                                    <button mat-icon-button class="song_favorite_button" (click)="favoriteOrUnfavoriteSong(song.id)">
+                                    <button mat-icon-button class="song_favorite_button" (click)="historyFavoriteOrUnfavoriteSong(song.id)">
                                         <mat-icon>{{historyGetFavoritedIcon(song.id, song.isFavorited)}}</mat-icon>
                                     </button>
                                 </mat-cell>
                             </ng-container>
 
                             <mat-header-row *matHeaderRowDef="['playButton', 'title', 'artist', 'album', 'duration', 'favoriteButton']"></mat-header-row>
-                            <mat-row *matRowDef="let row; columns: ['playButton', 'title', 'artist', 'album', 'duration', 'favoriteButton'];"
-                                (mouseenter)="historyShowPlay(row.id)" (mouseleave)="historyHidePlay(row.id)"></mat-row>
+                            <mat-row *matRowDef="let row; columns: ['playButton', 'title', 'artist', 'album', 'duration', 'favoriteButton'];" (mouseenter)="historyShowPlay(row.id)"
+                                (mouseleave)="historyHidePlay(row.id)"></mat-row>
                         </mat-table>
                     </div>
                 </div>
             </section>
 
             <section>
-                playlists commented out
-                <!-- <mat-grid-list cols="4" gutterSize="15px">
-                    <mat-grid-tile *ngFor="let playlist of playlists;">
-                        <div class="flex_column">
-                            <img src="{{playlist.playlistImageUrl}}" class="playlist"/>
-                            <div>{{playlist.username}}</div>
-                        </div>
-                    </mat-grid-tile>
-                </mat-grid-list> -->
+                <!-- <div *ngIf="user.favoritePlaylists.length === 0; else hasPlaylists;" , class="center_text">
+                    <h3>No Followed Users.</h3>
+                </div>
+                <ng-template #hasPlaylists>
+                    <mat-grid-list cols="4" gutterSize="15px">
+                        <mat-grid-tile *ngFor="let playlist of user.favoritePlaylists;">
+                            <div class="flex_column">
+                                <img src="{{playlist.playlistImageUrl}}" class="playlist" />
+                                <div>{{playlist.name}}</div>
+                            </div>
+                        </mat-grid-tile>
+                    </mat-grid-list>
+                </ng-template> -->
             </section>
         </div>
     </div>
