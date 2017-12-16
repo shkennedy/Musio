@@ -9,7 +9,8 @@ import { Ad } from '../models/ad.model';
 @Injectable()
 export class AdService {
 
-    private static AD_URL = '/ad';
+    private static AD_URL = '/advertisement';
+    private static RANDOM_AD_URL = AdService.AD_URL + '/getRandom';
     private static AD_CLICK_URL: string = AdService.AD_URL + '/click';
     private static AUDIO_AD_URLS = ['../../assets/audio/ad.ogg', '../../assets/audio/ad2.ogg'];
 
@@ -21,6 +22,14 @@ export class AdService {
         private router: Router,
         private httpRequest: HttpRequestService
     ) { }
+
+    public getRandomAd(): Observable<any> {
+        return this.httpRequest.get(AdService.RANDOM_AD_URL)
+        .map((response: ApiResponse) => {
+            console.log(response);
+            return response.responseData;
+        });
+    }
 
     public getVerticalBannerAds(): Observable<Ad[]> {
         return this.httpRequest.get(AdService.AD_URL)

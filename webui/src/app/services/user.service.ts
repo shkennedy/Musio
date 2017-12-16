@@ -24,6 +24,7 @@ export class UserService {
     private static DISABLE_PRIVATE_MODE_URL = UserService.USER_URL + '/disablePrivateMode';
     private static ENABLE_PRIVATE_MODE_URL = UserService.USER_URL + '/enablePrivateMode';
     private static LISTENING_HISTORY_URL = UserService.USER_URL + '/myListeningHistory';
+    private static HISTORY_BY_ID_URL = UserService.USER_URL + '/listeningHistoryForUser';
     private static ADD_TO_HISTORY_URL = UserService.USER_URL + '/addSongToHistory';
     private static PASSWORD_URL = UserService.USER_URL + '/password';
     private static PASSWORD_CHANGE_URL = UserService.PASSWORD_URL + '/requestChange';
@@ -47,8 +48,16 @@ export class UserService {
                                     callback(user);
                                 });
                         });
+                } else {
+                    callback(null);
                 }
-                callback(null);
+            });
+    }
+
+    public getUserByUsername(username: string): Observable<User> {
+        return this.httpRequest.get(UserService.GET_USER_BY_USERNAME_URL + '/' + username)
+            .map((response: ApiResponse) => {
+                return response.responseData;
             });
     }
 
@@ -145,6 +154,13 @@ export class UserService {
                     return response.responseData;
                 }
                 return null;
+            });
+    }
+
+    public getHistoryById(userId: number): Observable<Song[]> {
+        return this.httpRequest.get(UserService.HISTORY_BY_ID_URL, userId)
+            .map((response: ApiResponse) => {
+                return response.responseData;
             });
     }
 

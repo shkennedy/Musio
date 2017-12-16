@@ -29,6 +29,7 @@ export class AudioPlayerComponent implements OnInit {
     private static IN_PROGRESS_TIME = 3;
     private static SONGS_PER_AD = 5;
     songCount = 0;
+    adPlaying = false;
 
     audio: Howl;
     useHighBitrate: boolean;
@@ -325,14 +326,13 @@ export class AudioPlayerComponent implements OnInit {
     private makeAdHowl(): Howl {
         const adFileURL = this.adService.getAudioAdUrl();
         const newHowl: Howl = new Howl({
-            src: [adFileURL],
-            format: ['ogg'],
+            src: ['/assets/audio/ad.mp3'],
             volume: this.volume,
             autoplay: true,
             html5: true,
-            onplay: this.startSongTimer,
-            onpause: this.stopSongTimer,
-            onend: this.playNext,
+            onplay: this.startAd,
+            onpause: this.startSongTimer,
+            onend: this.finishAd,
             // mute: this.isMuted,
             onloaderror: function () {
                 console.log('unable to load song');
@@ -348,10 +348,38 @@ export class AudioPlayerComponent implements OnInit {
         return newHowl;
     }
 
+    private startAd = (): void => {
+        this.currentSong.duration = 13;
+        this.adPlaying = true;
+        this.stopSongTimer();
+        this.songTimer = setInterval(() => {
+            this.songProgress += 0.1;
+        }, 100);
+    }
+
+    private finishAd = (): void => {
+        this.currentSong.duration = 30;
+        this.adPlaying = false;
+        this.stopSongTimer();
+        this.playNext();
+    }
+
+    private playAd(): void {
+        const adSong = new Song();
+        adSong.duration = 13;
+        adSong.title = 'Musio Go Premium Ad';
+        adSong.album = new Album();
+        adSong.album.title = 'Musio Ads';
+        adSong.artist = new Artist();
+        adSong.artist.name = 'Musio';
+
+        this.audio = this.makeAdHowl();
+        this.adPlaying = true;
+    }
+
     // UI Event Handlers -------------------------------------------------------------------
 
     private play(): void {
-        console.log(this.songQueue);
         if (this.audio) {
             this.audio.play();
             this.isPlaying = true;
@@ -368,7 +396,7 @@ export class AudioPlayerComponent implements OnInit {
     }
 
     private playNext = (): void => {
-        if (!this.currentSong && this.songQueue.length === 0) {
+        if (!this.currentSong && this.songQueue.length === 0 || this.adPlaying) {
             return;
         }
 
@@ -378,12 +406,17 @@ export class AudioPlayerComponent implements OnInit {
 
         this.addSongToHistory(this.currentSong);
 
-        this.songCount += 1;
-        if (this.songCount === AudioPlayerComponent.SONGS_PER_AD) {
-            this.makeAdHowl();
-            return;
+        // Play ad after every 5th song if not premium
+        if (!this.isPremiumUser) {
+            this.songCount += 1;
+            if (this.songCount === AudioPlayerComponent.SONGS_PER_AD) {
+                this.songCount = 0;
+                this.playAd();
+                return;
+            }
         }
 
+        // Find next song to play
         let nextSong: Song;
         if (this.isRepeating) {
             nextSong = this.currentSong;
@@ -396,6 +429,7 @@ export class AudioPlayerComponent implements OnInit {
             }
         }
 
+        // Play next song if exists
         if (nextSong) {
             this.removeSongFromQueue(nextSong.id);
             this._playSong(nextSong.id);
@@ -407,6 +441,10 @@ export class AudioPlayerComponent implements OnInit {
     }
 
     private playLast(): void {
+        if (this.adPlaying) {
+            return;
+        }
+
         // If current song is in progress, restart
         if (this.audio && this.audio.seek() > AudioPlayerComponent.IN_PROGRESS_TIME) {
             this.songProgress = 0;
@@ -470,6 +508,10 @@ export class AudioPlayerComponent implements OnInit {
     }
 
     private seek(): void {
+        if (this.adPlaying) {
+            return;
+        }
+
         this.audio.seek(this.songProgress);
         this.prevSongProgress = this.songProgress;
     }

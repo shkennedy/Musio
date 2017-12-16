@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 
 import { AdService } from '../../services/ad.service';
 import { UserService } from '../../services/user.service';
+import { FileService } from '../../services/file.service';
 
 import { Ad } from '../../models/ad.model';
 
@@ -11,7 +12,7 @@ import { Ad } from '../../models/ad.model';
     templateUrl: './ad-banner.component.html',
     styleUrls: ['./ad-banner.component.css']
 })
-export class AdBannerComponent implements OnInit, OnDestroy {
+export class AdBannerComponent implements OnInit {
 
     private showAds: boolean;
     private ads: Ad[];
@@ -19,33 +20,40 @@ export class AdBannerComponent implements OnInit, OnDestroy {
     constructor(
         private router: Router,
         private userService: UserService,
-        private adService: AdService
+        private adService: AdService,
+        private fileService: FileService
     ) { }
 
     ngOnInit() {
         this.userService.getIsPremium(this.setIsPremium);
     }
 
-    ngOnDestroy() {
-        console.log('Destroying component');
-    }
-
     private setIsPremium = (isPremium: boolean): void => {
         this.showAds = !isPremium;
 
         if (this.showAds) {
-            this.adService.getVerticalBannerAds()
-            .subscribe(
-                (ads: Ad[]) => {
-                    this.ads = ads;
-                },
-                (error: any) => {
-                    console.log(error.toString());
-                });
+            // this.adService.getRandomAd()
+            // .subscribe((response: any) => {
+            //     console.log('inc');
+            //     console.log(response);
+            // },
+            // (error: any) => {
+            //     console.log('inc');
+            //     console.log(error);
+            // });
+
+            // this.adService.getVerticalBannerAds()
+            // .subscribe(
+            //     (ads: Ad[]) => {
+            //         this.ads = ads;
+            //     },
+            //     (error: any) => {
+            //         console.log(error.toString());
+            //     });
         }
     }
 
-    closeAd() {
+    private closeAd(): void {
         console.log('clicked');
         this.adService.closeAd();
     }
