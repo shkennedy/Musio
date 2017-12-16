@@ -419,6 +419,10 @@ p {
         border-radius:50px;
         margin-right:15px;
     }
+
+    .mat-column-popularityRank {
+        max-width: 32px;
+    }
     
     .mat-column-playButton {
         max-width: 32px;

@@ -54,7 +54,6 @@ export class AdBannerComponent implements OnInit {
     }
 
     private closeAd(): void {
-        console.log('clicked');
         this.adService.closeAd();
     }
 }

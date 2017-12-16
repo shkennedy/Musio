@@ -4,269 +4,291 @@
 <ng-template #loaded>
     <div class="tabs1">
 
-            <input type="radio" id="tab1" name="tab-control" checked>
-            <input type="radio" id="tab2" name="tab-control">
-            <input type="radio" id="tab3" name="tab-control">
-            <input type="radio" id="tab4" name="tab-control">
-    
-            <ul>
-                <li title="tab 1">
-                    <label for="tab1" role="button">
-                        <span>New Releases</span>
-                    </label>
-                </li>
-                <li title="tab 2">
-                    <label for="tab2" role="button">
-                        <span>Discover</span>
-                    </label>
-                </li>
-                <li title="tab 3">
-                    <label for="tab3" role="button">
-                        <span>Friends Favorites</span>
-                    </label>
-                </li>
-                <li title="tab 4">
-                    <label for="tab4" role="button">
-                        <span>Popular</span>
-                    </label>
-                </li>
-            </ul>
-            <div class="slider">
-                <div class="indicator"></div>
-            </div>
-    
-            <div class="content">
-                <section>
-                        <!-- Artists -->
-                
-                        <!-- Albums -->
-                        <mat-grid-list *ngIf="newReleases.albums.length !== 0" cols="4" gutterSize="15px" class="padded">
-                            <h3>Albums</h3>
-                            <mat-grid-tile *ngFor="let album of newReleases.albums" [routerLink]="['/albums', album.id]">
-                                <div class="col_flex">
-                                    <img class="routing_img" src="{{album.albumArtUrl}}" alt="{{album.title}}">
-                                    <p class="album_name">{{album.title}}</p>
-                                    <p class="artist_name">{{album.artistName}}</p>
-                                </div>
-                            </mat-grid-tile>
-                        </mat-grid-list>
-                
-                        <!-- Playlists -->
-                        <div *ngIf="newReleases.playlists.length !== 0">
-                            <h3>Playlists</h3>
-                            <mat-grid-tile *ngFor="let playlist of newReleases.playlists" [routerLink]="['/playlistss', playlist.id]">
-                                <div class="col_flex">
-                                    <img class="routing_img" src="{{playlist.albumArtUrl}}" alt="{{playlist.title}}">
-                                    <p class="album_name">{{playlist.title}}</p>
-                                    <p class="artist_name">{{playlist.artistName}}</p>
-                                </div>
-                            </mat-grid-tile>
-                            {{playlist.image}} {{playlist.name}}
-                        </div>
-                </section>
-    
-                <section>
-                        <!-- Artists -->
-                        <mat-grid-list *ngIf="discover.artists.length !== 0" cols="4" gutterSize="15px" class="padded">
-                            <h3>Artists</h3>
-                            <mat-grid-tile *ngFor="let artist of discover.artists" class="artist-card col-sm-3 center-block" [routerLink]="['/artists', artist.id]">
-                                <div style="margin-top: 20px;">
-                                    <img style="border-radius: 100px;" class="routing_img" src="{{artist.artistImageUrl}}" alt="{{artist.name}}">
-                                    <div style="text-align: center;">{{artist.name}}</div>
-                                </div>
-                            </mat-grid-tile>
-                        </mat-grid-list>
-                
-                        <!-- Albums -->
-                        <mat-grid-list *ngIf="discover.albums.length !== 0" cols="4" gutterSize="15px" class="padded">
-                            <h3>Albums</h3>
-                            <mat-grid-tile *ngFor="let album of discover.albums" [routerLink]="['/albums', album.id]">
-                                <div class="col_flex">
-                                    <img class="routing_img" src="{{album.albumArtUrl}}" alt="{{album.title}}">
-                                    <p class="album_name">{{album.title}}</p>
-                                    <p class="artist_name">{{album.artistName}}</p>
-                                </div>
-                            </mat-grid-tile>
-                        </mat-grid-list>
-                </section>
-    
-                <section>
-                        <!-- Artists -->
-                        <mat-grid-list *ngIf="friendsFavorites.artists.length !== 0" cols="4" gutterSize="15px" class="padded">
-                            <h3>Artists</h3>
-                            <mat-grid-tile *ngFor="let artist of friendsFavorites.artists" class="artist-card col-sm-3 center-block" [routerLink]="['/artists', artist.id]">
-                                <div style="margin-top: 20px;">
-                                    <img style="border-radius: 100px;" class="routing_img" src="{{artist.artistImageUrl}}" alt="{{artist.name}}">
-                                    <div style="text-align: center;">{{artist.name}}</div>
-                                </div>
-                            </mat-grid-tile>
-                        </mat-grid-list>
-                
-                        <!-- Albums -->
-                        <mat-grid-list *ngIf="friendsFavorites.albums.length !== 0" cols="4" gutterSize="15px" class="padded">
-                            <h3>Albums</h3>
-                            <mat-grid-tile *ngFor="let album of friendsFavorites.albums" [routerLink]="['/albums', album.id]">
-                                <div class="col_flex">
-                                    <img class="routing_img" src="{{album.albumArtUrl}}" alt="{{album.title}}">
-                                    <p class="album_name">{{album.title}}</p>
-                                    <p class="artist_name">{{album.artistName}}</p>
-                                </div>
-                            </mat-grid-tile>
-                        </mat-grid-list>
-                
-                        <!-- Playlists -->
-                        <div *ngIf="friendsFavorites.playlists.length !== 0">
-                            <h3>Playlists</h3>
-                            <mat-grid-tile *ngFor="let playlist of friendsFavorites.playlists" [routerLink]="['/playlistss', playlist.id]">
-                                <div class="col_flex">
-                                    <img class="routing_img" src="{{playlist.albumArtUrl}}" alt="{{playlist.title}}">
-                                    <p class="album_name">{{playlist.title}}</p>
-                                    <p class="artist_name">{{playlist.artistName}}</p>
-                                </div>
-                            </mat-grid-tile>
-                            {{playlist.image}} {{playlist.name}}
-                        </div>
-                
-                        <!-- Songs -->
-                        <div *ngIf="friendsFavorites.songs.size !== 0">
-                            <h3>Songs</h3>
-                            <div id="album-tracklist">
-                                <mat-table #table [dataSource]="friendsFavoritesSongTableData" matSort>
-                
-                                    <!-- Play Button Column -->
-                                    <ng-container matColumnDef="playButton">
-                                        <mat-header-cell *matHeaderCellDef></mat-header-cell>
-                                        <mat-cell *matCellDef="let song">
-                                            <button mat-icon-button class="song_play_button" [ngStyle]="getPlayVisibility(song.id)" (click)="playSong(song.id)">
-                                                <mat-icon>play_circle_filled</mat-icon>
-                                            </button>
-                                        </mat-cell>
-                                    </ng-container>
-                
-                                    <!-- Title Column -->
-                                    <ng-container matColumnDef="title">
-                                        <mat-header-cell *matHeaderCellDef mat-sort-header> Title </mat-header-cell>
-                                        <mat-cell *matCellDef="let song">{{song.title}}</mat-cell>
-                                    </ng-container>
-                
-                                    <!-- Artist Column -->
-                                    <ng-container matColumnDef="artist">
-                                        <mat-header-cell *matHeaderCellDef mat-sort-header> Artist </mat-header-cell>
-                                        <mat-cell *matCellDef="let song">{{song.artistName}}</mat-cell>
-                                    </ng-container>
-                
-                                    <!-- Album Column -->
-                                    <ng-container matColumnDef="album">
-                                        <mat-header-cell *matHeaderCellDef mat-sort-header> Album </mat-header-cell>
-                                        <mat-cell *matCellDef="let song">{{song.albumTitle}}</mat-cell>
-                                    </ng-container>
-                
-                                    <!-- Favorite Button Column -->
-                                    <ng-container matColumnDef="favoriteButton">
-                                        <mat-header-cell *matHeaderCellDef></mat-header-cell>
-                                        <mat-cell *matCellDef="let song">
-                                            <button mat-icon-button class="song_favorite_button" (click)="favoriteOrUnfavoriteSong(song.id)">
-                                                <mat-icon>{{getFavoritedIcon(song.id, song.isFavorited)}}</mat-icon>
-                                            </button>
-                                        </mat-cell>
-                                    </ng-container>
-                
-                                    <mat-header-row *matHeaderRowDef="['playButton', 'title', 'artist', 'album', 'favoriteButton']"></mat-header-row>
-                                    <mat-row *matRowDef="let row; columns: ['playButton', 'title', 'artist', 'album', 'favoriteButton'];" (mouseenter)="showPlay(row.id)"
-                                        (mouseleave)="hidePlay(row.id)"></mat-row>
-                                </mat-table>
-                            </div>
-                        </div>
-                </section>
+        <input type="radio" id="tab1" name="tab-control" checked>
+        <input type="radio" id="tab2" name="tab-control">
+        <input type="radio" id="tab3" name="tab-control">
+        <input type="radio" id="tab4" name="tab-control">
 
-                <section>
-                        <!-- Artists -->
-                        <mat-grid-list *ngIf="popular.artists.length !== 0" cols="4" gutterSize="15px" class="padded">
-                            <h3>Artists</h3>
-                            <mat-grid-tile *ngFor="let artist of popular.artists" class="artist-card col-sm-3 center-block" [routerLink]="['/artists', artist.id]">
-                                <div style="margin-top: 20px;">
-                                    <img style="border-radius: 100px;" class="routing_img" src="{{artist.artistImageUrl}}" alt="{{artist.name}}">
-                                    <div style="text-align: center;">{{artist.name}}</div>
-                                </div>
-                            </mat-grid-tile>
-                        </mat-grid-list>
-                
-                        <!-- Albums -->
-                        <mat-grid-list *ngIf="popular.albums.length !== 0" cols="4" gutterSize="15px" class="padded">
-                            <h3>Albums</h3>
-                            <mat-grid-tile *ngFor="let album of popular.albums" [routerLink]="['/albums', album.id]">
-                                <div class="col_flex">
-                                    <img class="routing_img" src="{{album.albumArtUrl}}" alt="{{album.title}}">
-                                    <p class="album_name">{{album.title}}</p>
-                                    <p class="artist_name">{{album.artistName}}</p>
-                                </div>
-                            </mat-grid-tile>
-                        </mat-grid-list>
-                
-                        <!-- Playlists -->
-                        <div *ngIf="popular.playlists.length !== 0">
-                            <h3>Playlists</h3>
-                            <mat-grid-tile *ngFor="let playlist of popular.playlists" [routerLink]="['/playlistss', playlist.id]">
-                                <div class="col_flex">
-                                    <img class="routing_img" src="{{playlist.albumArtUrl}}" alt="{{playlist.title}}">
-                                    <p class="album_name">{{playlist.title}}</p>
-                                    <p class="artist_name">{{playlist.artistName}}</p>
-                                </div>
-                            </mat-grid-tile>
-                            {{playlist.image}} {{playlist.name}}
-                        </div>
-                
-                        <!-- Songs -->
-                        <div *ngIf="popular.songs.size !== 0">
-                            <h3>Songs</h3>
-                            <div id="album-tracklist">
-                                <mat-table #table [dataSource]="popularSongTableData" matSort>
-                
-                                    <!-- Play Button Column -->
-                                    <ng-container matColumnDef="playButton">
-                                        <mat-header-cell *matHeaderCellDef></mat-header-cell>
-                                        <mat-cell *matCellDef="let song">
-                                            <button mat-icon-button class="song_play_button" [ngStyle]="getPlayVisibility(song.id)" (click)="playSong(song.id)">
-                                                <mat-icon>play_circle_filled</mat-icon>
-                                            </button>
-                                        </mat-cell>
-                                    </ng-container>
-                
-                                    <!-- Title Column -->
-                                    <ng-container matColumnDef="title">
-                                        <mat-header-cell *matHeaderCellDef mat-sort-header> Title </mat-header-cell>
-                                        <mat-cell *matCellDef="let song">{{song.title}}</mat-cell>
-                                    </ng-container>
-                
-                                    <!-- Artist Column -->
-                                    <ng-container matColumnDef="artist">
-                                        <mat-header-cell *matHeaderCellDef mat-sort-header> Artist </mat-header-cell>
-                                        <mat-cell *matCellDef="let song">{{song.artistName}}</mat-cell>
-                                    </ng-container>
-                
-                                    <!-- Album Column -->
-                                    <ng-container matColumnDef="album">
-                                        <mat-header-cell *matHeaderCellDef mat-sort-header> Album </mat-header-cell>
-                                        <mat-cell *matCellDef="let song">{{song.albumTitle}}</mat-cell>
-                                    </ng-container>
-                
-                                    <!-- Favorite Button Column -->
-                                    <ng-container matColumnDef="favoriteButton">
-                                        <mat-header-cell *matHeaderCellDef></mat-header-cell>
-                                        <mat-cell *matCellDef="let song">
-                                            <button mat-icon-button class="song_favorite_button" (click)="favoriteOrUnfavoriteSong(song.id)">
-                                                <mat-icon>{{getFavoritedIcon(song.id, song.isFavorited)}}</mat-icon>
-                                            </button>
-                                        </mat-cell>
-                                    </ng-container>
-                
-                                    <mat-header-row *matHeaderRowDef="['playButton', 'title', 'artist', 'album', 'favoriteButton']"></mat-header-row>
-                                    <mat-row *matRowDef="let row; columns: ['playButton', 'title', 'artist', 'album', 'favoriteButton'];" (mouseenter)="showPlay(row.id)"
-                                        (mouseleave)="hidePlay(row.id)"></mat-row>
-                                </mat-table>
-                            </div>
-                        </div>
-                </section>
-            </div>
+        <ul>
+            <li title="tab 1">
+                <label for="tab1" role="button">
+                    <span>New Releases</span>
+                </label>
+            </li>
+            <li title="tab 2">
+                <label for="tab2" role="button">
+                    <span>Discover</span>
+                </label>
+            </li>
+            <li title="tab 3">
+                <label for="tab3" role="button">
+                    <span>Friends Favorites</span>
+                </label>
+            </li>
+            <li title="tab 4">
+                <label for="tab4" role="button">
+                    <span>Popular</span>
+                </label>
+            </li>
+        </ul>
+        <div class="slider">
+            <div class="indicator"></div>
         </div>
+
+        <div class="content">
+            <section>
+                <!-- Artists -->
+
+                <!-- Albums -->
+                <mat-grid-list *ngIf="newReleases.albums.length !== 0" cols="4" gutterSize="15px" class="padded">
+                    <h3>Albums</h3>
+                    <mat-grid-tile *ngFor="let album of newReleases.albums" [routerLink]="['/albums', album.id]">
+                        <div class="col_flex">
+                            <img class="routing_img" src="{{album.albumArtUrl}}" alt="{{album.title}}">
+                            <p class="album_name">{{album.title}}</p>
+                            <p class="artist_name">{{album.artistName}}</p>
+                        </div>
+                    </mat-grid-tile>
+                </mat-grid-list>
+
+                <!-- Playlists -->
+                <div *ngIf="newReleases.playlists.length !== 0">
+                    <h3>Playlists</h3>
+                    <mat-grid-tile *ngFor="let playlist of newReleases.playlists" [routerLink]="['/playlistss', playlist.id]">
+                        <div class="col_flex">
+                            <img class="routing_img" src="{{playlist.albumArtUrl}}" alt="{{playlist.title}}">
+                            <p class="album_name">{{playlist.title}}</p>
+                            <p class="artist_name">{{playlist.artistName}}</p>
+                        </div>
+                    </mat-grid-tile>
+                    {{playlist.image}} {{playlist.name}}
+                </div>
+            </section>
+
+            <section>
+                <!-- Artists -->
+                <mat-grid-list *ngIf="discover.artists.length !== 0" cols="4" gutterSize="15px" class="padded">
+                    <h3>Artists</h3>
+                    <mat-grid-tile *ngFor="let artist of discover.artists" class="artist-card col-sm-3 center-block" [routerLink]="['/artists', artist.id]">
+                        <div style="margin-top: 20px;">
+                            <img style="border-radius: 100px;" class="routing_img" src="{{artist.artistImageUrl}}" alt="{{artist.name}}">
+                            <div style="text-align: center;">{{artist.name}}</div>
+                        </div>
+                    </mat-grid-tile>
+                </mat-grid-list>
+
+                <!-- Albums -->
+                <mat-grid-list *ngIf="discover.albums.length !== 0" cols="4" gutterSize="15px" class="padded">
+                    <h3>Albums</h3>
+                    <mat-grid-tile *ngFor="let album of discover.albums" [routerLink]="['/albums', album.id]">
+                        <div class="col_flex">
+                            <img class="routing_img" src="{{album.albumArtUrl}}" alt="{{album.title}}">
+                            <p class="album_name">{{album.title}}</p>
+                            <p class="artist_name">{{album.artistName}}</p>
+                        </div>
+                    </mat-grid-tile>
+                </mat-grid-list>
+            </section>
+
+            <section>
+                <!-- Artists -->
+                <mat-grid-list *ngIf="friendsFavorites.artists.length !== 0" cols="4" gutterSize="15px" class="padded">
+                    <h3>Artists</h3>
+                    <mat-grid-tile *ngFor="let artist of friendsFavorites.artists" class="artist-card col-sm-3 center-block" [routerLink]="['/artists', artist.id]">
+                        <div style="margin-top: 20px;">
+                            <img style="border-radius: 100px;" class="routing_img" src="{{artist.artistImageUrl}}" alt="{{artist.name}}">
+                            <div style="text-align: center;">{{artist.name}}</div>
+                        </div>
+                    </mat-grid-tile>
+                </mat-grid-list>
+
+                <!-- Albums -->
+                <mat-grid-list *ngIf="friendsFavorites.albums.length !== 0" cols="4" gutterSize="15px" class="padded">
+                    <h3>Albums</h3>
+                    <mat-grid-tile *ngFor="let album of friendsFavorites.albums" [routerLink]="['/albums', album.id]">
+                        <div class="col_flex">
+                            <img class="routing_img" src="{{album.albumArtUrl}}" alt="{{album.title}}">
+                            <p class="album_name">{{album.title}}</p>
+                            <p class="artist_name">{{album.artistName}}</p>
+                        </div>
+                    </mat-grid-tile>
+                </mat-grid-list>
+
+                <!-- Playlists -->
+                <div *ngIf="friendsFavorites.playlists.length !== 0">
+                    <h3>Playlists</h3>
+                    <mat-grid-tile *ngFor="let playlist of friendsFavorites.playlists" [routerLink]="['/playlistss', playlist.id]">
+                        <div class="col_flex">
+                            <img class="routing_img" src="{{playlist.albumArtUrl}}" alt="{{playlist.title}}">
+                            <p class="album_name">{{playlist.title}}</p>
+                            <p class="artist_name">{{playlist.artistName}}</p>
+                        </div>
+                    </mat-grid-tile>
+                    {{playlist.image}} {{playlist.name}}
+                </div>
+
+                <!-- Songs -->
+                <div *ngIf="friendsFavorites.songs.length !== 0">
+                    <h3>Songs</h3>
+                    <div id="album-tracklist">
+                        <mat-table #table [dataSource]="friendsFavoritesSongTableInfo.tableData" matSort>
+
+                            <!-- Play Button Column -->
+                            <ng-container matColumnDef="playButton">
+                                <mat-header-cell *matHeaderCellDef></mat-header-cell>
+                                <mat-cell *matCellDef="let song">
+                                    <button mat-icon-button class="song_play_button" [ngStyle]="friendsFavoritesSongTableInfo.getPlayVisibility(song.id)" (click)="playSong(song.id)">
+                                        <mat-icon>play_circle_filled</mat-icon>
+                                    </button>
+                                </mat-cell>
+                            </ng-container>
+
+                            <!-- Title Column -->
+                            <ng-container matColumnDef="title">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> Title </mat-header-cell>
+                                <mat-cell *matCellDef="let song">{{song.title}}</mat-cell>
+                            </ng-container>
+
+                            <!-- Artist Column -->
+                            <ng-container matColumnDef="artist">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> Artist </mat-header-cell>
+                                <mat-cell *matCellDef="let song">{{song.artistName}}</mat-cell>
+                            </ng-container>
+
+                            <!-- Album Column -->
+                            <ng-container matColumnDef="album">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> Album </mat-header-cell>
+                                <mat-cell *matCellDef="let song">{{song.albumTitle}}</mat-cell>
+                            </ng-container>
+
+                            <!-- Duration Column -->
+                            <ng-container matColumnDef="duration">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                    <mat-icon>schedule</mat-icon>
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let song"> {{song.durationString}} </mat-cell>
+                            </ng-container>
+
+                            <!-- Favorite Button Column -->
+                            <ng-container matColumnDef="favoriteButton">
+                                <mat-header-cell *matHeaderCellDef></mat-header-cell>
+                                <mat-cell *matCellDef="let song">
+                                    <button mat-icon-button class="song_favorite_button" (click)="friendsFavoritesSongTableInfo.favoriteOrUnfavoriteSong(song.id)">
+                                        <mat-icon>{{friendsFavoritesSongTableInfo.getFavoritedIcon(song.id, song.isFavorited)}}</mat-icon>
+                                    </button>
+                                </mat-cell>
+                            </ng-container>
+
+                            <mat-header-row *matHeaderRowDef="['playButton', 'title', 'artist', 'album', 'duration', 'favoriteButton']"></mat-header-row>
+                            <mat-row *matRowDef="let row; columns: ['playButton', 'title', 'artist', 'album', 'duration', 'favoriteButton'];" (mouseenter)="friendsFavoritesSongTableInfo.showPlay(row.id)"
+                                (mouseleave)="friendsFavoritesSongTableInfo.hidePlay(row.id)"></mat-row>
+                        </mat-table>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <!-- Artists -->
+                <mat-grid-list *ngIf="popular.artists.length !== 0" cols="4" gutterSize="15px" class="padded">
+                    <h3>Artists</h3>
+                    <mat-grid-tile *ngFor="let artist of popular.artists" class="artist-card col-sm-3 center-block" [routerLink]="['/artists', artist.id]">
+                        <div style="margin-top: 20px;">
+                            <img style="border-radius: 100px;" class="routing_img" src="{{artist.artistImageUrl}}" alt="{{artist.name}}">
+                            <div style="text-align: center;">{{artist.name}}</div>
+                        </div>
+                    </mat-grid-tile>
+                </mat-grid-list>
+
+                <!-- Albums -->
+                <mat-grid-list *ngIf="popular.albums.length !== 0" cols="4" gutterSize="15px" class="padded">
+                    <h3>Albums</h3>
+                    <mat-grid-tile *ngFor="let album of popular.albums" [routerLink]="['/albums', album.id]">
+                        <div class="col_flex">
+                            <img class="routing_img" src="{{album.albumArtUrl}}" alt="{{album.title}}">
+                            <p class="album_name">{{album.title}}</p>
+                            <p class="artist_name">{{album.artistName}}</p>
+                        </div>
+                    </mat-grid-tile>
+                </mat-grid-list>
+
+                <!-- Playlists -->
+                <div *ngIf="popular.playlists.length !== 0">
+                    <h3>Playlists</h3>
+                    <mat-grid-tile *ngFor="let playlist of popular.playlists" [routerLink]="['/playlistss', playlist.id]">
+                        <div class="col_flex">
+                            <img class="routing_img" src="{{playlist.albumArtUrl}}" alt="{{playlist.title}}">
+                            <p class="album_name">{{playlist.title}}</p>
+                            <p class="artist_name">{{playlist.artistName}}</p>
+                        </div>
+                    </mat-grid-tile>
+                    {{playlist.image}} {{playlist.name}}
+                </div>
+
+                <!-- Songs -->
+                <div *ngIf="popular.songs.length !== 0">
+                    <h3>Songs</h3>
+                    <div id="album-tracklist">
+                        <mat-table #table [dataSource]="popularSongTableInfo.tableData" matSort #popularSort="matSort">
+
+                            <!-- Popularity Rank Column -->
+                            <ng-container matColumnDef="popularityRank">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> Rank </mat-header-cell>
+                                <mat-cell *matCellDef="let song">{{song.trackNumber}}</mat-cell>
+                            </ng-container>
+
+                            <!-- Play Button Column -->
+                            <ng-container matColumnDef="playButton">
+                                <mat-header-cell *matHeaderCellDef></mat-header-cell>
+                                <mat-cell *matCellDef="let song">
+                                    <button mat-icon-button class="song_play_button" [ngStyle]="popularSongTableInfo.getPlayVisibility(song.id)" (click)="playSong(song.id)">
+                                        <mat-icon>play_circle_filled</mat-icon>
+                                    </button>
+                                </mat-cell>
+                            </ng-container>
+
+                            <!-- Title Column -->
+                            <ng-container matColumnDef="title">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> Title </mat-header-cell>
+                                <mat-cell *matCellDef="let song">{{song.title}}</mat-cell>
+                            </ng-container>
+
+                            <!-- Artist Column -->
+                            <ng-container matColumnDef="artist">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> Artist </mat-header-cell>
+                                <mat-cell *matCellDef="let song">{{song.artistName}}</mat-cell>
+                            </ng-container>
+
+                            <!-- Album Column -->
+                            <ng-container matColumnDef="album">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> Album </mat-header-cell>
+                                <mat-cell *matCellDef="let song">{{song.albumTitle}}</mat-cell>
+                            </ng-container>
+
+                            <!-- Duration Column -->
+                            <ng-container matColumnDef="duration">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                    <mat-icon>schedule</mat-icon>
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let song"> {{song.durationString}} </mat-cell>
+                            </ng-container>
+
+                            <!-- Favorite Button Column -->
+                            <ng-container matColumnDef="favoriteButton">
+                                <mat-header-cell *matHeaderCellDef></mat-header-cell>
+                                <mat-cell *matCellDef="let song">
+                                    <button mat-icon-button class="song_favorite_button" (click)="popularSongTableInfo.favoriteOrUnfavoriteSong(song.id)">
+                                        <mat-icon>{{popularSongTableInfo.getFavoritedIcon(song.id, song.isFavorited)}}</mat-icon>
+                                    </button>
+                                </mat-cell>
+                            </ng-container>
+
+                            <mat-header-row *matHeaderRowDef="['popularityRank', 'playButton', 'title', 'artist', 'album', 'duration', 'favoriteButton']"></mat-header-row>
+                            <mat-row *matRowDef="let row; columns: ['popularityRank', 'playButton', 'title', 'artist', 'album', 'duration', 'favoriteButton'];"
+                                (mouseenter)="popularSongTableInfo.showPlay(row.id)" (mouseleave)="popularSongTableInfo.hidePlay(row.id)"></mat-row>
+                        </mat-table>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
 </ng-template>

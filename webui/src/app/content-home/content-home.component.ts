@@ -36,6 +36,5 @@ export class ContentHomeComponent implements OnInit {
         this.closed_ad = true;
         setTimeout( () => { this.closed_ad = false; } , 120000);
         // setTimeout( () => { this.closed_ad = false; } , 3000);
-        console.log('callback');
     }
 }

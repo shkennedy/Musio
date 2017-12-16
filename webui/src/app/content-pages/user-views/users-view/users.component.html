@@ -107,8 +107,8 @@
                             </ng-container>
 
                             <mat-header-row *matHeaderRowDef="['playButton', 'title', 'artist', 'album', 'duration', 'favoriteButton']"></mat-header-row>
-                            <mat-row *matRowDef="let row; columns: ['playButton', 'title', 'artist', 'album', 'duration', 'favoriteButton'];" (mouseenter)="historyShowPlay(row.id)"
-                                (mouseleave)="historyHidePlay(row.id)"></mat-row>
+                            <mat-row *matRowDef="let row; columns: ['playButton', 'title', 'artist', 'album', 'duration', 'favoriteButton']; let i = index;" 
+                                (mouseenter)="historyShowPlay(row.id)" (mouseleave)="historyHidePlay(row.id)"></mat-row>
                         </mat-table>
                     </div>
                 </div>
