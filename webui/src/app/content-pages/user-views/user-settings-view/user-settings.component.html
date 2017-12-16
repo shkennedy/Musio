@@ -19,7 +19,7 @@
 </div> -->
 
 <!-- <mat-icon matPrefix>location_on</mat-icon> -->
-<div *ngIf="!user; else userLoaded">
+<div *ngIf="!user; else userLoaded" class="center_loading">
     <mat-spinner color="accent" class="center_loading"></mat-spinner>
 </div>
 <ng-template #userLoaded>
