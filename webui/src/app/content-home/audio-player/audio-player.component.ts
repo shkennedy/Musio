@@ -97,8 +97,12 @@ export class AudioPlayerComponent implements OnInit {
             .subscribe(
             (song: Song) => {
                 if (song) {
-                    this.songQueue.push(song);
-                    console.log(`${this.songQueue}`);
+                    this.songService.getSongAlbumInfo(song.id)
+                        .subscribe((album: Album) => {
+                            song.album = album;
+                            this.songQueue.push(song);
+                            console.log(`${this.songQueue}`);
+                        });
                 }
             },
             (error: any) => {
@@ -328,13 +332,14 @@ export class AudioPlayerComponent implements OnInit {
         } else if (this.songQueue.length !== 0) {
             if (this.isShuffling) {
                 const nextIndex = Math.floor(Math.random() * this.songQueue.length);
-                nextSong = this.songQueue.splice(nextIndex, 1)[0];
+                nextSong = this.songQueue[nextIndex];
             } else {
-                nextSong = this.songQueue.shift();
+                nextSong = this.songQueue[0];
             }
         }
 
         if (nextSong) {
+            this.removeSongFromQueue(nextSong.id);
             this._playSong(nextSong.id);
         } else {
             this.isPlaying = false;
@@ -399,7 +404,7 @@ export class AudioPlayerComponent implements OnInit {
         this.prevSongProgress = this.songProgress;
     }
 
-    qToggle() {
+    private qToggle(): void {
         if (this.lyricsToggle) {
             this.lyricsToggle = false;
         }
@@ -414,10 +419,21 @@ export class AudioPlayerComponent implements OnInit {
         console.log(this.songQueue);
     }
 
-    lToggle() {
+    private lToggle(): void {
         if (this.queueToggle) {
             this.queueToggle = false;
         }
         this.lyricsToggle = !this.lyricsToggle;
+    }
+
+    private removeSongFromQueue(songId: number): void {
+        console.log(songId + " damnit");
+        for (let i = 0; i < this.songQueue.length; i += 1) {
+            if (this.songQueue[i].id === songId) {
+                this.songQueue.splice(i, 1);
+                this.queueTableData = new MatTableDataSource(this.songQueue);
+                // this.queueTableData.data.splice(i, 1);
+            }
+        }
     }
 }

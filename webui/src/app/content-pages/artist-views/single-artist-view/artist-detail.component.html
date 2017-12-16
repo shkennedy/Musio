@@ -76,7 +76,7 @@
                                 <h3 class="album-title" (click)="gotoAlbum(album.id)">{{album.title}}</h3>
                             </div>
                             <div style="padding-left:4vw;">
-                                <button class="btn btn-green block-center">PLAY</button>
+                                <button class="btn btn-green block-center" (click)="playAlbum(album.id)">PLAY</button>
                                 <div *ngIf="album.isFavorited; else notFavorited">
                                     <button class="btn btn-black glyphicon glyphicon-heart" (click)="unfavoriteAlbum(album.id)"></button>
                                 </div>

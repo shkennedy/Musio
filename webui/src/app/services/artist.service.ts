@@ -49,6 +49,8 @@ export class ArtistService {
                 const albums: Album[] = response.responseData;
                 albums.forEach((album: Album) => {
                     for (let trackNumber = 0; trackNumber < album.songs.length; trackNumber += 1) {
+                        album.songs[trackNumber].artist = album.artists[0];
+                        album.songs[trackNumber].album = album;
                         album.songs[trackNumber].trackNumber = trackNumber + 1;
                         album.songs[trackNumber].duration = Math.floor(album.songs[trackNumber].duration / 1000);
                         album.songs[trackNumber].durationString =

@@ -52,9 +52,9 @@
 
         <div #queue id="queue" class="hidden_content" [ngClass]="queueToggle?'bingo':''">
             <div *ngIf="songQueue.length !== 0 else emptyQueue;">
-                <h3>Songs</h3>
+                <h3 style="margin-left: 10px;">Songs</h3>
                 <div id="album-tracklist">
-                    <mat-table #table [dataSource]="queueTableData" matSort>
+                    <mat-table #table [dataSource]="queueTableData" matSort style="background-color: transparent;">
 
                         <!-- Title Column -->
                         <ng-container matColumnDef="title">
@@ -65,13 +65,13 @@
                         <!-- Artist Column -->
                         <ng-container matColumnDef="artist">
                             <mat-header-cell *matHeaderCellDef mat-sort-header> Artist </mat-header-cell>
-                            <mat-cell *matCellDef="let song">{{song.artistName}}</mat-cell>
+                            <mat-cell *matCellDef="let song">{{song.artist.name}}</mat-cell>
                         </ng-container>
 
                         <!-- Album Column -->
                         <ng-container matColumnDef="album">
                             <mat-header-cell *matHeaderCellDef mat-sort-header> Album </mat-header-cell>
-                            <mat-cell *matCellDef="let song">{{song.albumTitle}}</mat-cell>
+                            <mat-cell *matCellDef="let song">{{song.album.title}}</mat-cell>
                         </ng-container>
 
                         <!-- Duration Column -->
@@ -96,7 +96,7 @@
                 </div>
             </div>
             <ng-template #emptyQueue>
-                Queue is empty.
+                <h3 style="margin-left: 10px;">Queue is empty.</h3>
             </ng-template>
         </div>
         <button mat-icon-button (click)="qToggle()">
