@@ -18,6 +18,8 @@ import { ContentHomeComponent } from './content-home/content-home.component';
 import { RadioViewComponent } from './content-pages/radio-view/radio-view.component';
 import { GoPremiumComponent } from './content-pages/go-premium/go-premium.component';
 import { UserSettingsComponent } from './content-pages/user-views/user-settings-view/user-settings.component';
+// This component is for user pages
+import { UsersComponent } from './content-pages/user-views/users-view/users.component';
 
 const appRoutes: Routes = [
   { path: '', component: ContentHomeComponent, children:
@@ -35,6 +37,7 @@ const appRoutes: Routes = [
       { path: 'browse', component: BrowseComponent },
       { path: 'search/:searchQuery', component: SearchComponent },
       { path: 'userSettings', component: UserSettingsComponent },
+      { path: 'user/:id', component: UsersComponent }
     ]
   },
   { path: 'login', component: LoginComponent },

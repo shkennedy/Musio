@@ -48,6 +48,7 @@ import { GoPremiumComponent } from './content-pages/go-premium/go-premium.compon
 import { SearchComponent } from './content-pages/search-view/search-view.component';
 import { FollowedUsersBarComponent } from './content-home/followed-users-bar/followed-users-bar.component';
 import { UserSettingsComponent } from './content-pages/user-views/user-settings-view/user-settings.component';
+import { UsersComponent } from './content-pages/user-views/users-view/users.component';
 
 import { AdService } from './services/ad.service';
 import { AlbumService } from './services/album.service';
@@ -98,7 +99,8 @@ import { PictureDialogComponent } from './dialogs/picture-dialog/picture-dialog/
         PasswordDialogComponent,
         DeleteDialogComponent,
         PictureDialogComponent,
-        CapitalizePipe
+        CapitalizePipe,
+        UsersComponent
     ],
     entryComponents: [PasswordDialogComponent,
                       DeleteDialogComponent,

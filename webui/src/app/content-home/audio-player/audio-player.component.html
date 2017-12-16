@@ -19,28 +19,28 @@
 
     <div class="flex_center">
 
-        <div class="height_normal flex_center" style="width: 100%;">
-            <button mat-icon-button>
-                <mat-icon>shuffle</mat-icon>
+        <div class="height_normal flex_bottom" style="width: 100%;">
+            <button mat-icon-button class="flex_center">
+                <mat-icon class="flex_center">shuffle</mat-icon>
             </button>
-            <button mat-icon-button (click)="playLast()">
-                <mat-icon>skip_previous</mat-icon>
+            <button mat-icon-button (click)="playLast()" class="flex_center">
+                <mat-icon class="flex_center">skip_previous</mat-icon>
             </button>
             <div *ngIf="isPlaying; else isPaused;">
-                <button class="play" mat-icon-button (click)="pause()">
-                    <mat-icon class="play">pause_circle_outline</mat-icon>
+                <button class="play flex_center" mat-icon-button (click)="pause()">
+                    <mat-icon class="play flex_center">pause_circle_outline</mat-icon>
                 </button>
             </div>
             <ng-template #isPaused>
-                <button class="play" mat-icon-button (click)="play()">
-                    <mat-icon class="play">play_circle_outline</mat-icon>
+                <button class="play flex_center" mat-icon-button (click)="play()">
+                    <mat-icon class="play flex_center">play_circle_outline</mat-icon>
                 </button>
             </ng-template>
-            <button mat-icon-button (click)="playNext()">
-                <mat-icon>skip_next</mat-icon>
+            <button mat-icon-button (click)="playNext()" class="flex_center">
+                <mat-icon class="flex_center">skip_next</mat-icon>
             </button>
-            <button mat-icon-button (click)="repeat()">
-                <mat-icon>repeat</mat-icon>
+            <button mat-icon-button (click)="repeat()" class="flex_center">
+                <mat-icon class="flex_center">repeat</mat-icon>
             </button>
         </div>
     </div>

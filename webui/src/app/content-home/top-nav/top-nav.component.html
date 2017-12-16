@@ -38,7 +38,9 @@
     </div>
     <!-- Item 3 -->
     <div *ngIf="user;" class="flex_row_end" style="padding-right:5px;">
-        <img src="assets/images/no_artist_picture.png" alt="Profile Picture" class="profile_picture">
+        <img src="assets/images/no_artist_picture.png" alt="Profile Picture" 
+             class="profile_picture"
+             [routerLink]="['/user/'+user.id]">
         <!-- Username -->
         <div *ngIf="user.username;else defaultName" class="light" style="margin-right:10px;">{{user.username}}</div>
         <ng-template #defaultName>

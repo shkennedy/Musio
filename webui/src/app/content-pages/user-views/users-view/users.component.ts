@@ -8,11 +8,11 @@ import { UserService } from '../../../services/user.service';
 import { User } from '../../../models/user.model';
 
 @Component({
-    selector: 'app-followed-users',
-    templateUrl: './followed-users.component.html',
-    styleUrls: ['./followed-users.component.css']
+    selector: 'app-users',
+    templateUrl: './users.component.html',
+    styleUrls: ['./users.component.css']
 })
-export class FollowedUsersComponent implements OnInit {
+export class UsersComponent implements OnInit {
 
     private followedUsers: User[];
 
@@ -26,16 +26,16 @@ export class FollowedUsersComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        // this.userService.getFollowedUsers()
-        // .subscribe(
-        //     (followedUsers: User[]) => {
-        //         this.followedUsers = followedUsers;
-        //     },
-        //     (error: any) => {
-        //         this.errorMessage = error;
-        //         console.log(error.toString());
-        //     }
-        // );
+        this.userService.getFollowedUsers()
+        .subscribe(
+            (followedUsers: User[]) => {
+                this.followedUsers = followedUsers;
+            },
+            (error: any) => {
+                this.errorMessage = error;
+                console.log(error.toString());
+            }
+        );
     }
 
     changeProfileImage() {

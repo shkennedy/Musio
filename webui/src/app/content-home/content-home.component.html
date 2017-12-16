@@ -28,8 +28,8 @@
     <div class="grid2">
         <app-left-nav></app-left-nav>
         <div>
-            <div class="content-container" [ngClass]="basic? 'ad_size' : 'no_ad_size'"><router-outlet></router-outlet></div>
-            <div class="banner ad" *ngIf="basic"><app-ad-banner></app-ad-banner></div>
+            <div class="content-container" [ngClass]="contentSize()"><router-outlet></router-outlet></div>
+            <div class="banner ad" [ngStyle]="{display: isAdOpen() }"><app-ad-banner></app-ad-banner></div>
         </div>
         <app-followed-users-bar></app-followed-users-bar>
     </div>

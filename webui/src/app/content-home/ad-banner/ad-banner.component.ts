@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy} from '@angular/core';
 import { Router } from '@angular/router';
 
 import { AdService } from '../../services/ad.service';
@@ -11,7 +11,7 @@ import { Ad } from '../../models/ad.model';
     templateUrl: './ad-banner.component.html',
     styleUrls: ['./ad-banner.component.css']
 })
-export class AdBannerComponent implements OnInit {
+export class AdBannerComponent implements OnInit, OnDestroy {
 
     private showAds: boolean;
     private ads: Ad[];
@@ -24,6 +24,10 @@ export class AdBannerComponent implements OnInit {
 
     ngOnInit() {
         this.userService.getIsPremium(this.setIsPremium);
+    }
+
+    ngOnDestroy() {
+        console.log('Destroying component');
     }
 
     private setIsPremium = (isPremium: boolean): void => {
@@ -39,5 +43,10 @@ export class AdBannerComponent implements OnInit {
                     console.log(error.toString());
                 });
         }
+    }
+
+    closeAd() {
+        console.log('clicked');
+        this.adService.closeAd();
     }
 }

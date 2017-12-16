@@ -1,0 +1,48 @@
+<div class="tabs1">
+
+        <input type="radio" id="tab1" name="tab-control" checked>
+        <input type="radio" id="tab2" name="tab-control">
+        <input type="radio" id="tab3" name="tab-control">
+
+        <ul>
+            <li title="tab 1">
+                <label for="tab1" role="button">
+                    <span>Following</span>
+                </label>
+            </li>
+            <li title="tab 2">
+                <label for="tab2" role="button">
+                    <span>History</span>
+                </label>
+            </li>
+            <li title="tab 3">
+                <label for="tab3" role="button">
+                    <span>Playlists</span>
+                </label>
+            </li>
+        </ul>
+        <div class="slider">
+            <div class="indicator"></div>
+        </div>
+
+        <div class="content">
+            <section>
+                <mat-grid-list cols="4">
+                    <mat-grid-tile *ngFor="let followedUser of followedUsers;">
+                        <div class="flex_column">
+                            <img src="{{followedUser.profileImage}}" class="followers"/>
+                            <div>{{followedUser.username}}</div>
+                        </div>
+                    </mat-grid-tile>
+                </mat-grid-list>
+            </section>
+
+            <section>
+                tab2
+            </section>
+
+            <section>
+                tab3
+            </section>
+        </div>
+    </div>
