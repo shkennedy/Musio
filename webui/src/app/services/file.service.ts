@@ -18,6 +18,7 @@ export class FileService {
     private static ALBUM_THUMB_URL: string = FileService.RESOURCE_URL + '/albumArtworkThumbnailFile';
     private static ARTIST_FULL_URL: string = FileService.RESOURCE_URL + '/artistImageFullFile';
     private static ARTIST_THUMB_URL: string = FileService.RESOURCE_URL + '/artistImageThumbnailFile';
+    private static USER_FULL_URL: string = FileService.RESOURCE_URL + '/userProfileImage';
     private static BASE_URL = 'http://localhost:8080';
 
     constructor(
@@ -29,12 +30,12 @@ export class FileService {
         return FileService.GENERIC_GET_URL + `/${fileId}`;
     }
 
-    public getAlbumImageURLByIdAndSize(albumId: number, useFullSize): string {
+    public getAlbumImageURLByIdAndSize(albumId: number, useFullSize: boolean): string {
         return FileService.BASE_URL +
         ((useFullSize) ? FileService.ALBUM_FULL_URL : FileService.ALBUM_THUMB_URL) + `/${albumId}`;
     }
 
-    public getArtistImageURLByIdAndSize(artistId: number, useFullSize): string {
+    public getArtistImageURLByIdAndSize(artistId: number, useFullSize: boolean): string {
         return FileService.BASE_URL +
         ((useFullSize) ? FileService.ARTIST_FULL_URL : FileService.ARTIST_THUMB_URL) + `/${artistId}`;
     }
@@ -44,64 +45,7 @@ export class FileService {
         ((useHighBitrate) ? FileService.SONG_HIBR_URL : FileService.SONG_LOBR_URL) + `/${songId}`;
     }
 
-    // public getImageFileById(fileId: number): Observable<File> {
-    //     return this.httpRequest.get(FileService.GENERIC_GET_URL, fileId)
-    //     .map((response: ApiResponse) => {
-    //         if (response.success) {
-    //             return response.responseData;
-    //         }
-    //         return null;
-    //     });
-    // }
-
-    // public getAlbumThumbnailImageById(albumImageId: number): Observable<File> {
-    //     return this.httpRequest.get(FileService.ALBUM_THUMB_URL, albumImageId)
-    //     .map((response: ApiResponse) => {
-    //         if (response.success) {
-    //             return response.responseData;
-    //         }
-    //         return null;
-    //     });
-    // }
-
-    // public getAlbumFullImageById(albumImageId: number): Observable<File> {
-    //     return this.httpRequest.get(FileService.ALBUM_FULL_URL, albumImageId)
-    //     .map((response: ApiResponse) => {
-    //         if (response.success) {
-    //             return response.responseData;
-    //         }
-    //         return null;
-    //     });
-    // }
-
-    // public getArtistThumbnailImageById(artistImageId: number): Observable<File> {
-    //     return this.httpRequest.get(FileService.ARTIST_THUMB_URL, artistImageId)
-    //     .map((response: ApiResponse) => {
-    //         if (response.success) {
-    //             return response.responseData;
-    //         }
-    //         return null;
-    //     });
-    // }
-
-    // public getArtistFullImageById(artistImageId: number): Observable<File> {
-    //     return this.httpRequest.get(FileService.ARTIST_FULL_URL, artistImageId)
-    //     .map((response: ApiResponse) => {
-    //         if (response.success) {
-    //             return response.responseData;
-    //         }
-    //         return null;
-    //     });
-    // }
-
-    // public getSongFileByIdAndBitrate(songId: number, useHighBitrate: boolean): Observable<File> {
-    //     const url = (useHighBitrate) ? FileService.SONG_HIBR_URL : FileService.SONG_LOBR_URL;
-    //     return this.httpRequest.get(url, songId)
-    //     .map((response: ApiResponse) => {
-    //         if (response.success) {
-    //             return response.responseData;
-    //         }
-    //         return null;
-    //     });
-    // }
+    public getUserImageURLByIdAndSize(userId: number): string {
+        return FileService.BASE_URL + FileService.USER_FULL_URL + `/${userId}`;
+    }
 }

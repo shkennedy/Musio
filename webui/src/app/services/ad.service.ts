@@ -11,6 +11,9 @@ export class AdService {
 
     private static AD_URL = '/ad';
     private static AD_CLICK_URL: string = AdService.AD_URL + '/click';
+    private static AUDIO_AD_URLS = ['../../assets/audio/ad.ogg', '../../assets/audio/ad2.ogg'];
+
+    private lastListenedAd = 0;
 
     private closeAdListener: () => void;
 
@@ -36,5 +39,15 @@ export class AdService {
 
     public closeAd(): void {
         this.closeAdListener();
+    }
+
+    public getAudioAdUrl(): string {
+        if (this.lastListenedAd === AdService.AUDIO_AD_URLS.length - 1) {
+            this.lastListenedAd = 0;
+        } else {
+            this.lastListenedAd += 1;
+        }
+
+        return AdService.AUDIO_AD_URLS[this.lastListenedAd];
     }
 }

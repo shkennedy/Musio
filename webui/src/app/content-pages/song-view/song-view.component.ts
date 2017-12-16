@@ -22,6 +22,8 @@ export class SongViewComponent implements OnInit {
     private songTableData: MatTableDataSource<Song>;
     private playButtonsVisibility: Map<number, boolean> = new Map();
 
+    private albumInfoReturns: number;
+
     constructor(
         private router: Router,
         private audioPlayerProxyService: AudioPlayerProxyService,
@@ -35,12 +37,18 @@ export class SongViewComponent implements OnInit {
             .subscribe(
             (songs: Song[]) => {
                 if (songs.length !== 0) {
-                    this.songTableData = new MatTableDataSource(songs);
                     this.songs = new Map();
+                    this.albumInfoReturns = songs.length;
                     songs.forEach((song: Song) => {
                         this.songService.getSongAlbumInfo(song.id)
                             .subscribe((album: Album) => {
-                                song.album = album;
+                                this.songs.get(song.id).album = album[0];
+                                console.log(this.songs.get(song.id).album.title);
+
+                                this.albumInfoReturns -= 1;
+                                if (this.albumInfoReturns === 0) {
+                                    this.songTableData = new MatTableDataSource(songs);
+                                }
                             });
 
                         this.songs.set(song.id, song);
@@ -56,7 +64,7 @@ export class SongViewComponent implements OnInit {
 
                     setTimeout(() => {
                         this.songTableData.sort = this.sort;
-                    }, 2000);
+                    }, 3000);
                 }
             },
             (error: any) => {
