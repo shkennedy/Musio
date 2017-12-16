@@ -7,9 +7,9 @@
     <mat-grid-list *ngIf="artists.length !== 0" cols="4" gutterSize="15px" class="padded">
         <h3>Artists</h3>
         <mat-grid-tile *ngFor="let artist of artists" class="artist-card col-sm-3 center-block" [routerLink]="['/artists', artist.id]">
-            <div class="col_flex">
+            <div style="margin-top: 20px;">
                 <img style="border-radius: 100px;" class="routing_img" src="{{artist.artistImageUrl}}" alt="{{artist.name}}">
-                <p>{{artist.name}}</p>
+                <div style="text-align: center;">{{artist.name}}</div>
             </div>
         </mat-grid-tile>
     </mat-grid-list>
