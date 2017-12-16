@@ -12,7 +12,10 @@ export class Album {
   public releaseDate: Date;
   public albumArt: Image;
 
+  public artistId: number;
+  public artistName: string;
   public albumArtId: number;
   public albumArtUrl: string;
   public isFavorited: boolean;
+  public fullFileId: number;
 }
