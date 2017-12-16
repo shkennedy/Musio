@@ -44,17 +44,32 @@ export class BrowseComponent implements OnInit {
 
     ngOnInit() {
         this.searchService.getBrowse()
-        .subscribe(
+            .subscribe(
             (browseData: BrowseResponse) => {
                 this.newReleases = browseData.newReleases;
                 this.friendsFavorites = browseData.friendsFavorites;
                 this.discover = browseData.discover;
                 this.popular = browseData.popular;
+
+                this.initBrowseResponseTab(this.newReleases);
+                this.initBrowseResponseTab(this.friendsFavorites);
+                this.initBrowseResponseTab(this.discover);
+                this.initBrowseResponseTab(this.popular);
             },
             (error: any) => {
                 this.errorMessage = error;
                 console.log(error.toString());
             }
-        );
+            );
+    }
+
+    private initBrowseResponseTab(browseData: BrowseResponseTab): void {
+        browseData.songs.forEach((song: Song) => {
+            song.duration = Math.floor(song.duration / 1000);
+            song.durationString =
+                `${Math.floor(song.duration / 60)}:`;
+            const seconds = song.duration % 60;
+            song.durationString += (seconds < 10) ? `0${seconds}` : seconds;
+        });
     }
 }
