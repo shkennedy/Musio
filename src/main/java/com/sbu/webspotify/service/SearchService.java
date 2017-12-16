@@ -93,7 +93,7 @@ public class SearchService {
 
         BrowseResults browseResults = new BrowseResults();
         
-        browseResults.setNewReleases(getNewReleases(user));
+        browseResults.setNewReleases(getNewReleases());
         browseResults.setFriendsFavorites(getFriendsFavorites(user));
         browseResults.setDiscover(getDiscover(user));
         browseResults.setPopular(getPopular());
@@ -101,10 +101,10 @@ public class SearchService {
 		return browseResults;
     }
     
-    private BrowseResult getNewReleases(User user) {
+    private BrowseResult getNewReleases() {
         Set<ArtistIdentifier> artists = new HashSet<ArtistIdentifier>();
         Set<PlaylistIdentifier> playlists = new HashSet<PlaylistIdentifier>();
-        Set<AlbumIdentifier> albums = albumRepository.findNewReleases(5);
+        Set<AlbumIdentifier> albums = albumRepository.findNewReleases(8);
         Set<SongIdentifier> songs = new HashSet<SongIdentifier>();
 
         return new BrowseResult(songs, artists, albums, playlists);

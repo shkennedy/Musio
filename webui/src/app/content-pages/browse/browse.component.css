@@ -1,7 +1,82 @@
+* {
+    background-color: transparent;
+}
+
+p {
+    margin-bottom: 0px;
+}
 .center_loading{
     height:100%;
     width:100%;
     display:flex;
     justify-content: center;
     align-items: center;
+}
+
+.artist-card{
+    display: table;
+    margin: 0 auto;
+    text-align: center;
+
+    width: 240px;
+    display: inline-block;
+    float: none;
+    padding: 20px;
+
+  }
+.artist-card > img{
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+  }
+
+.artist-card > p{
+    width: 200px;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 400;
+    padding-top: 15px;
+  }
+
+.album_name {
+  color: white;
+}
+
+.artist_name {
+  color: grey;
+}
+
+.album-collection-container{
+    text-align: center;
+  }
+
+  .col_flex{
+      display:flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+  }
+
+  .padded{
+      margin-top:10px;
+      margin-left:10px;
+      margin-right: 10px;
+  }
+
+.album_image {
+  width: 200px;
+  height: 200px;
+}
+
+.album_image:hover {
+  cursor: pointer;
+}
+
+.routing_img {
+    height: 180px;
+    width: 180px;
+}
+
+.routing_img:hover {
+    cursor: pointer;
 }

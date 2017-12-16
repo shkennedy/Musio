@@ -7,7 +7,7 @@
     <section>
         <h3>New Releases</h3>
         <!-- Artists -->
-        <mat-grid-list *ngIf="newReleases.artists.length !== 0" cols="4" gutterSize="15px" class="padded">
+        <mat-grid-list *ngIf="newReleases.artists.length !== 0" cols="4" gutterSize="15px">
             <h3>Artists</h3>
             <mat-grid-tile *ngFor="let artist of newReleases.artists" class="artist-card col-sm-3 center-block" [routerLink]="['/artists', artist.id]">
                 <div style="margin-top: 20px;">
