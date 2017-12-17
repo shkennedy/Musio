@@ -61,9 +61,9 @@ public class PlaylistController
     }
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET, headers = "Accept=application/json")
-	public @ResponseBody ApiResponseObject addPlaylist(HttpSession session) {
+	public @ResponseBody ApiResponseObject addPlaylist(HttpSession session, @RequestParam("playlistName") String playlistName) {
         User user = (User) session.getAttribute("user");
-        Playlist newPlaylist = playlistService.createPlaylist(user);
+        Playlist newPlaylist = playlistService.createPlaylist(user, playlistName);
         ApiResponseObject response = new ApiResponseObject();
         if (newPlaylist != null) {
             response.setSuccess(true);
@@ -91,7 +91,7 @@ public class PlaylistController
         return response;
     }
 
-    @RequestMapping(value = "/get/{id}/{isPrivate}", method = RequestMethod.GET, headers = "Accept=application/json")
+    @RequestMapping(value = "/setPrivate/{id}/{isPrivate}", method = RequestMethod.GET, headers = "Accept=application/json")
     public @ResponseBody ApiResponseObject setPlaylistPrivacy(@PathVariable("id") int id, @PathVariable("isPrivate") boolean isPrivate) {
         Playlist playlist = playlistService.getPlaylistById(id);
         ApiResponseObject response = new ApiResponseObject();
@@ -100,30 +100,30 @@ public class PlaylistController
             response.setMessage("No playlist found with ID "+id+".");
         }
         else {
-            playlistService.setPlaylistPrivacy(playlist, isPrivate);
             response.setSuccess(true);
-            response.setResponseData(playlist);
+            response.setResponseData(playlistService.setPlaylistPrivacy(playlist, isPrivate));
         }
         return response;
     }
     
-    @RequestMapping(value = "/update", method = RequestMethod.PUT, headers = "Accept=application/json")
-	public @ResponseBody ApiResponseObject updatePlaylist(@RequestBody Playlist playlist) {
-		Playlist updatedPlaylist = playlistRepository.save(playlist);
+    @RequestMapping(value = "/setCollaborative/{id}/{isCollaborative}", method = RequestMethod.GET, headers = "Accept=application/json")
+    public @ResponseBody ApiResponseObject setPlaylistCollab(@PathVariable("id") int id, @PathVariable("isCollaborative") boolean isCollaborative) {
+        Playlist playlist = playlistService.getPlaylistById(id);
         ApiResponseObject response = new ApiResponseObject();
-        if (updatedPlaylist != null) {
-            response.setSuccess(true);
-            response.setResponseData(updatedPlaylist);
-        } else {
+        if(playlist == null){
             response.setSuccess(false);
-            response.setMessage("Unable to update playlist.");
+            response.setMessage("No playlist found with ID "+id+".");
+        }
+        else {
+            response.setSuccess(true);
+            response.setResponseData(playlistService.setPlaylistCollab(playlist, isCollaborative));
         }
         return response;
     }
-    
+
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE, headers = "Accept=application/json")
 	public @ResponseBody ApiResponseObject deletePlaylist(@PathVariable("id") int id) {
-        // Need check for ownership of playlist
+        // TODO 
         playlistRepository.delete(id);
         ApiResponseObject response = new ApiResponseObject();
         response.setSuccess(true);
@@ -146,9 +146,9 @@ public class PlaylistController
         return response;
     }
 
-    @RequestMapping(value = "/removeSong", headers = "Accept=application/json")
-    public @ResponseBody ApiResponseObject removeSongFromPlaylist(@RequestParam("playlistId") int playlistId, @RequestParam("songId") int songId,
-                                                HttpSession session) {
+    @RequestMapping(value = "/removeSong/{playlistId}/{songId}", headers = "Accept=application/json")
+    public @ResponseBody ApiResponseObject removeSongFromPlaylist(@PathVariable("playlistId") int playlistId, @PathVariable("songId") int songId,
+                                                                    HttpSession session) {
         User user = (User) session.getAttribute("user");        
         Playlist updatedPlaylist = playlistService.removeSongFromPlaylist(user, playlistId, songId);
         ApiResponseObject response = new ApiResponseObject();
@@ -169,7 +169,7 @@ public class PlaylistController
     }
 
 
-    @RequestMapping(path="/updatePlaylistImage")
+    @RequestMapping(path="/updatePlaylistImage", method=RequestMethod.POST)
     public @ResponseBody ApiResponseObject updatePlaylistImage(@RequestParam("playlistId") int playlistId,
                                                                @RequestParam("playlistArtFile") MultipartFile playlistArtFile){
         ApiResponseObject response = new ApiResponseObject();
@@ -186,7 +186,7 @@ public class PlaylistController
             Playlist playlist = playlistRepository.findById(playlistId);
             MimeType mimeType = mimeTypeRepository.findBySubtype(appConfig.png);
             File artFile = fileService.uploadFile(playlistArtFile.getBytes(), mimeType);
-            playlist.setImageFileId(artFile.getId());
+            playlist.setImageFile(artFile);
             playlistRepository.save(playlist);
             playlistRepository.flush();
             
