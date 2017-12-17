@@ -51,6 +51,7 @@ export class UsersComponent implements OnInit {
         const url: string[] = this.router.url.split('/');
         this.userService.getUserByUsername(url[url.length - 1])
             .subscribe((user: User) => {
+                console.log(user);
                 this.user = user;
                 if (this.user.id === currUser.id) {
                     this.isSelf = true;

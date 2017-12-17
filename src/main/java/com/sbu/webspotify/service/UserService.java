@@ -2,6 +2,7 @@ package com.sbu.webspotify.service;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -14,6 +15,7 @@ import com.sbu.webspotify.dto.identifier.ArtistIdentifier;
 import com.sbu.webspotify.dto.identifier.PlaylistIdentifier;
 import com.sbu.webspotify.dto.identifier.SongIdentifier;
 import com.sbu.webspotify.dto.identifier.UserIdentifier;
+import com.sbu.webspotify.dto.identifier.UserHistoryItemIdentifier;
 import com.sbu.webspotify.model.Album;
 import com.sbu.webspotify.model.Artist;
 import com.sbu.webspotify.model.File;
@@ -360,11 +362,22 @@ public class UserService {
 
     public ApiResponseObject getFollowedUsersHistoryTails(User user) {
         ApiResponseObject response = new ApiResponseObject();
-        Map<Integer, SongIdentifier> historyTails = new HashMap<>(); 
+
+        ArrayList<UserHistoryItemIdentifier> historyTails = new ArrayList<>();
+
+        UserHistoryItemIdentifier historyItem;
         for (User followedUser : user.getFollowedUsers()) {
             SongIdentifier song = getListeningHistoryTail(followedUser.getId());
             if (song != null) {
-                historyTails.put(followedUser.getId(), song);
+                historyItem = new UserHistoryItemIdentifier();
+                historyItem.id = song.getId();
+                historyItem.userId = user.getId();
+                historyItem.albumId = song.getAlbumId();
+                historyItem.albumTitle = song.getAlbumTitle();
+                historyItem.duration = song.getDuration();
+                historyItem.artistName = song.getArtistName();
+                historyItem.artistId = song.getArtistId();
+                historyTails.add(historyItem);
             }
         }
         response.setSuccess(true);

@@ -46,7 +46,7 @@
 
         <div class="content">
             <section>
-                <div *ngIf="user.followedUsers.length === 0; else hasFollowedUsers;" class="center_text">
+                <div *ngIf="!user.followedUsers || user.followedUsers.length === 0; else hasFollowedUsers;" class="center_text">
                     <h3>No Followed Users.</h3>
                 </div>
                 <ng-template #hasFollowedUsers>

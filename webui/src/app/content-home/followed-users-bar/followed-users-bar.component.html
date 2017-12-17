@@ -48,7 +48,7 @@
                         </button>
                         <mat-menu #moreActionsMenu="matMenu">
                             <div>
-                                <button mat-menu-item [routerLink]="['/user/user.id']">
+                                <button mat-menu-item [routerLink]="['/user/', user.username]">
                                     <mat-icon>face</mat-icon>
                                     <span>Go to userpage</span>
                                 </button>
