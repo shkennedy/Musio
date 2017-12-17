@@ -24,7 +24,8 @@ import { Song } from '../../../models/song.model';
 export class UsersComponent implements OnInit {
 
     private user: User;
-    private isSelf: true;
+    private isSelf = true;
+    private isFollowed = false;
 
     private hasHistory = false;
     private historySongTableManager: SongTableManager;
@@ -43,12 +44,38 @@ export class UsersComponent implements OnInit {
     ) { }
 
     ngOnInit() {
+        this.userService.getUser(this.setCurrentUser);
+    }
+
+    public setCurrentUser = (currUser: User): void => {
         const url: string[] = this.router.url.split('/');
-        // this.artistService.getArtistById(Number(url[url.length - 1]))
         this.userService.getUserByUsername(url[url.length - 1])
             .subscribe((user: User) => {
                 this.user = user;
-                // Set user profile image to default url if none exist----------------------------------------
+                if (this.user.id === currUser.id) {
+                    this.isSelf = true;
+                } else {
+                    this.isSelf = false;
+                }
+
+                this.userService.getFollowedUsers()
+                .subscribe((followedUsers: User[]) => {
+                    followedUsers.forEach((followedUser: User) => {
+                        if (this.user.id === followedUser.id) {
+                            this.isFollowed = true;
+                        }
+                    });
+                });
+
+                // Set user profile image to default url if none exists
+                this.userService.getHasImageById(this.user.id)
+                .subscribe((hasImage: boolean) => {
+                    if (hasImage) {
+                        this.user.profileImageUrl = this.fileService.getUserImageURLById(this.user.id);
+                    } else {
+                        this.user.profileImageUrl = '/assets/images/no_artist_picture.png';
+                    }
+                });
 
                 // Get user history
                 this.userService.getHistoryById(user.id)
@@ -70,36 +97,31 @@ export class UsersComponent implements OnInit {
 
                         // Get song favorited status
                         this.favoritesService.getFavoriteSongs()
-                        .subscribe((favoritedSongs: Song[]) => {
-                            songs.forEach((song: Song) => {
-                                song.isFavorited = false;
-                                favoritedSongs.forEach((favoritedSong: Song) => {
-                                    if (song.id === favoritedSong.id) {
-                                        song.isFavorited = true;
-                                    }
+                            .subscribe((favoritedSongs: Song[]) => {
+                                songs.forEach((song: Song) => {
+                                    song.isFavorited = false;
+                                    favoritedSongs.forEach((favoritedSong: Song) => {
+                                        if (song.id === favoritedSong.id) {
+                                            song.isFavorited = true;
+                                        }
+                                    });
                                 });
                             });
-                        });
                     });
 
-                    // Get user playlists
-
+                // Get user playlists
+                // this.userService.
             });
     }
 
-    public setUser = (user: User): void => {
-        this.user = user;
-        this.getUserImage(this.user.id);
-        this.userService.getHistory();
-    }
-
-    public getUserImage(userId: number): void {
-        this.user.profileImageUrl = this.fileService.getUserImageURLById(userId);
-    }
-
     followUser() {
+        this.userService.followUser(this.user.id)
+        .subscribe((success: boolean) => {
+
+        });
     }
 
     unfollowUser() {
+
     }
 }
