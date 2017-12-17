@@ -3,6 +3,7 @@ package com.sbu.webspotify.controller;
 import java.io.IOException;
 import java.util.Set;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.sbu.webspotify.dto.ApiResponseObject;
@@ -89,15 +90,23 @@ public class UserController {
     }
     
     @RequestMapping(value={"/{userId}"}, method = RequestMethod.DELETE)
-    public @ResponseBody ApiResponseObject deleteUser(HttpSession session, @PathVariable int userId) {
+    public @ResponseBody ApiResponseObject deleteUser(HttpSession session, HttpServletRequest request, @PathVariable int userId) throws Exception {
         ApiResponseObject response = new ApiResponseObject();
-        User userToDelete = userService.findUserById(userId);
+		User userToDelete = userService.findUserById(userId);
+		if(userToDelete == null){
+			response.setSuccess(false);
+			response.setMessage("Could not find user with id "+userId+".");
+			return response;
+		}
         User currentUser = (User) session.getAttribute("user");
-        System.out.println("userToDelete " + userToDelete + " || currentUser " + currentUser);
-        if (userToDelete.equals(currentUser) || userService.getIsAdmin(currentUser)) {
-            userService.deleteUser(userToDelete);
+        if (currentUser.equals(userToDelete) || userService.getIsAdmin(currentUser)) {
+			userService.deleteUser(userToDelete);
+			if(currentUser.equals(userToDelete)) {
+				request.logout();
+			}
             response.setSuccess(true);
         } else {
+			response.setMessage("You do not have permission to delete this user.");
             response.setSuccess(false);
         }
         return response;

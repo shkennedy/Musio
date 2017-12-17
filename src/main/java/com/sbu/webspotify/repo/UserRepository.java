@@ -102,5 +102,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
 	@Query(value = "SELECT profile_image_id FROM user WHERE id = :userId", nativeQuery = true)    
 	Integer checkForProfileImage(@Param("userId") int userId);
-	
+
+	@Modifying
+	@Query(value = "DELETE FROM User WHERE id = :userId", nativeQuery = true)
+	@Transactional
+	void deleteUserById(@Param("userId") int userId);
+
 }
