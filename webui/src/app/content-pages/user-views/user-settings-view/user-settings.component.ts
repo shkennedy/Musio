@@ -106,8 +106,8 @@ export class UserSettingsComponent implements OnInit {
 
     private passwordDialog(): void {
         const dialogRef = this.dialog.open(PasswordDialogComponent, {
-            width: '800px',
-            height: '500px'
+            width: '400px',
+            height: '250px'
         });
     }
 
@@ -120,8 +120,8 @@ export class UserSettingsComponent implements OnInit {
 
     pictureDialog() {
         const dialogRef = this.dialog.open(PictureDialogComponent, {
-            width: '600px',
-            height: '200px'
+            width: '500px',
+            height: '150px'
         });
     }
 }

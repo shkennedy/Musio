@@ -39,6 +39,7 @@ import { AudioPlayerComponent } from './content-home/audio-player/audio-player.c
 import { ContentHomeComponent } from './content-home/content-home.component';
 import { PlaylistsViewComponent } from './content-pages/playlist-views/playlist-collection-view/playlists-view.component';
 import { PlaylistViewComponent } from './content-pages/playlist-views/single-playlist-view/playlist-view.component';
+import { CreatePlaylistViewComponent } from './content-pages/playlist-views/create-playlist-view/create-playlist-view.component';
 import { SongViewComponent } from './content-pages/song-view/song-view.component';
 import { BrowseComponent } from './content-pages/browse/browse.component';
 import { SongItemComponent } from './content-pages/song-view/song-item/song-item.component';
@@ -87,6 +88,7 @@ import { PremiumDialogComponent } from './dialogs/premium-dialog/premium-dialog/
         ContentHomeComponent,
         PlaylistsViewComponent,
         PlaylistViewComponent,
+        CreatePlaylistViewComponent,
         SongViewComponent,
         BrowseComponent,
         SongItemComponent,

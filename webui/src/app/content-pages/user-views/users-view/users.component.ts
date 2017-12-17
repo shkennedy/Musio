@@ -48,6 +48,7 @@ export class UsersComponent implements OnInit {
         this.userService.getUserByUsername(url[url.length - 1])
             .subscribe((user: User) => {
                 this.user = user;
+                // Set user profile image to default url if none exist----------------------------------------
 
                 // Get user history
                 this.userService.getHistoryById(user.id)

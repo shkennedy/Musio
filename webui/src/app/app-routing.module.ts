@@ -11,6 +11,7 @@ import { ArtistsViewComponent } from './content-pages/artist-views/artist-collec
 import { ArtistDetailComponent } from './content-pages/artist-views/single-artist-view/artist-detail.component';
 import { PlaylistsViewComponent } from './content-pages/playlist-views/playlist-collection-view/playlists-view.component';
 import { PlaylistViewComponent } from './content-pages/playlist-views/single-playlist-view/playlist-view.component';
+import { CreatePlaylistViewComponent } from './content-pages/playlist-views/create-playlist-view/create-playlist-view.component';
 import { SongViewComponent } from './content-pages/song-view/song-view.component';
 import { BrowseComponent } from './content-pages/browse/browse.component';
 import { SearchComponent } from './content-pages/search-view/search-view.component';
@@ -31,6 +32,7 @@ const appRoutes: Routes = [
       { path: 'artists/:id', component: ArtistDetailComponent },
       { path: 'playlists', component: PlaylistsViewComponent },
       { path: 'playlists/:id', component: PlaylistViewComponent },
+      { path: 'playlists/create', component: CreatePlaylistViewComponent },
       { path: 'songs', component: SongViewComponent },
       { path: 'instruments', component: InstrumentViewComponent },
       { path: 'go-premium', component: GoPremiumComponent },
