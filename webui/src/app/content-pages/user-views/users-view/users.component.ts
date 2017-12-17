@@ -24,6 +24,7 @@ import { Song } from '../../../models/song.model';
 export class UsersComponent implements OnInit {
 
     private user: User;
+    private isSelf: true;
 
     private hasHistory = false;
     private historySongTableManager: SongTableManager;
