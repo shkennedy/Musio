@@ -27,16 +27,14 @@
     </mat-grid-list>
 
     <!-- Playlists -->
-    <div *ngIf="newReleases && newReleases.playlists.length !== 0">
+    <div *ngIf="playlists.length !== 0">
         <h3>Playlists</h3>
-        <mat-grid-tile *ngFor="let playlist of newReleases.playlists" [routerLink]="['/playlists', playlist.id]">
+        <mat-grid-tile *ngFor="let playlist of playlists" [routerLink]="['/playlists', playlist.id]">
             <div class="col_flex">
-                <img class="routing_img" src="{{playlist.albumArtUrl}}" alt="{{playlist.title}}">
-                <p class="album_name">{{playlist.title}}</p>
-                <p class="artist_name">{{playlist.artistName}}</p>
+                <img class="routing_img" src="{{playlist.playlistImageUrl}}" alt="{{playlist.name}}">
+                <p class="album_name">{{playlist.name}}</p>
             </div>
         </mat-grid-tile>
-        {{playlist.image}} {{playlist.name}}
     </div>
 
     <!-- Songs -->
@@ -106,17 +104,27 @@
     <!-- Genres -->
     <div *ngIf="genres.length !== 0">
         <h3>Genres</h3>
-        <div *ngFor="let genre of genres">
+        <!-- <div *ngFor="let genre of genres">
             {{genre.image}} {{genre.name}}
-        </div>
+        </div> -->
+        <mat-grid-list cols="4" rowHeight="4:1">
+            <mat-grid-tile *ngFor="let genre of genres" class="hoverable">
+                {{genre.name}}
+            </mat-grid-tile>
+        </mat-grid-list>
     </div>
 
     <!-- Users -->
     <div *ngIf="users.length !== 0">
         <h3>Users</h3>
-        <div *ngFor="let user of users">
-            {{user.image}} {{user.username}}
-        </div>
+        <mat-grid-list cols="4" rowHeight="4:1">
+            <mat-grid-tile *ngFor="let user of users" class="hoverable" [routerLink]="['/user/',user.id]">
+                <div class="flex_col">
+                    <img [src]="user.profileImageUrl">
+                    <div>{{user.username}}</div>
+                </div>
+            </mat-grid-tile>
+        </mat-grid-list>
     </div>
 
 </ng-template>

@@ -1,0 +1,17 @@
+.full_size{
+    width:100%;
+    height:100%;
+}
+
+.flex_center{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hover{
+    cursor: pointer;
+}
+.hoverable:hover{
+    color:white;
+}

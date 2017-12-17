@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Instrument } from '../../models/instrument.model';
 
 @Component({
   selector: 'app-instrument-view',
@@ -7,6 +8,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InstrumentViewComponent implements OnInit {
 
+  private loading = true;
+  private instruments: Instrument[];
   constructor(
   ) { }
 

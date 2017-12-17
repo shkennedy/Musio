@@ -1,18 +1,19 @@
 <div class="row">
     <div *ngIf="isEmpty; else hasPlaylists">
         <p>No Playlists Found: Find some playlists in browse.</p>
-        <a [routerLink]="['/browse', '/artist']">Find Playlists</a>
+        <a [routerLink]="['/browse']">Find Playlists</a>
     </div>
 
     <ng-template #hasPlaylists>
-        <mat-grid-list cols="4" gutterSize="15px" class="padded">
-          <mat-grid-tile *ngFor="let playlist of playlists"
-                         [routerLink]="['/playlists', playlist.id]">
-              <div class="col_flex">
-                  <img src="{{playlist.image}}" alt="{{playlist.name}}">
-                  <p>{{playlist.name}}</p>
-              </div>
-          </mat-grid-tile>
+        <mat-grid-list cols="4" gutterSize="15px">
+            <mat-grid-tile *ngFor="let playlist of playlists" [routerLink]="['/playlists', playlist.id]">
+                <div class="col_flex">
+                    <div class="col_flex">
+                        <img src="{{playlist.playlistImageUrl}}" alt="{{playlist.name}}">
+                    </div>
+                    <div class="col_flex">{{playlist.name}}</div>
+                </div>
+            </mat-grid-tile>
         </mat-grid-list>
     </ng-template>
 
