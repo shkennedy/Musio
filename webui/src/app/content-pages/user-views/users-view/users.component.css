@@ -386,6 +386,7 @@ mat-row:hover {
     display:flex;
     justify-content: center;
     align-content: center;
+    align-items: center;
 }
 
 .flex_row_start{

@@ -48,10 +48,10 @@
     <div class="flex_center height_normal">
         <div #lyrics id="lyrics" class="hidden_content" [ngClass]="lyricsToggle?'bingo':''">
 
-            <h3>Lyrics</h3>
+            <h3 style="margin-left: 10px;">Lyrics</h3>
             <p *ngIf="currentSong; else noLyrics;" class="lyrics">{{currentSong.lyrics}}</p>
             <ng-template #noLyrics>
-                <p>No Current Song.</p>
+                <p style="margin-left: 10px;">No Current Song.</p>
             </ng-template>
         </div>
 

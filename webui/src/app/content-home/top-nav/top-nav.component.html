@@ -37,15 +37,11 @@
         </form>
     </div>
     <!-- Item 3 -->
-    <div *ngIf="user;" class="flex_row_end" style="padding-right:5px;">
-        <img src="assets/images/no_artist_picture.png" alt="Profile Picture" 
-             class="profile_picture"
-             [routerLink]="['/user/'+ user.username]">
+    <div *ngIf="user.profileImageUrl" class="flex_row_end" style="padding-right:5px;">
+        <img [src]="user.profileImageUrl" alt="Profile Picture" 
+             class="profile_picture" [routerLink]="['/user/'+ user.username]">
         <!-- Username -->
-        <div *ngIf="user.username;else defaultName" class="light" style="margin-right:10px;">{{user.username}}</div>
-        <ng-template #defaultName>
-            <div style="margin-right:10px;" class="light">Username</div>
-        </ng-template>
+        <div class="light" style="margin-right:10px;">{{user.username}}</div>
 
         <button mat-icon-button matTooltip="Settings" [routerLink]="['/userSettings']">
             <mat-icon class="light">settings</mat-icon>

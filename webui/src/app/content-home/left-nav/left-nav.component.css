@@ -48,3 +48,9 @@ li:hover{
 .light{
     color:#aaa;
 }
+
+.flex_row{
+    display:flex;
+    justify-content: flex-start;
+    align-items: center;
+}

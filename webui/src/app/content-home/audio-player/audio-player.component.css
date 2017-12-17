@@ -189,8 +189,8 @@ mat-slider.absolute{
     z-index: 1;
     position: absolute;
     top: 7vh;
-    /* bottom:10vh; */
     right:15vw;
+    /* left:10vw; */
 }
 
 #lyrics.bingo {

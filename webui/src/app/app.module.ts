@@ -45,7 +45,7 @@ import { BrowseComponent } from './content-pages/browse/browse.component';
 import { SongItemComponent } from './content-pages/song-view/song-item/song-item.component';
 import { AlbumItemComponent } from './content-pages/album-views/album-collection-view/album-item/album-item.component';
 import { ArtistItemComponent } from './content-pages/artist-views/artist-collection-view/artist-item/artist-item.component';
-import { RadioViewComponent } from './content-pages/radio-view/radio-view.component';
+import { InstrumentViewComponent } from './content-pages/instrument-view/instrument-view.component';
 import { GoPremiumComponent } from './content-pages/go-premium/go-premium.component';
 import { SearchComponent } from './content-pages/search-view/search-view.component';
 import { FollowedUsersBarComponent } from './content-home/followed-users-bar/followed-users-bar.component';
@@ -95,7 +95,7 @@ import { PremiumDialogComponent } from './dialogs/premium-dialog/premium-dialog/
         AlbumItemComponent,
         AlbumDetailComponent,
         AlbumSongComponent,
-        RadioViewComponent,
+        InstrumentViewComponent,
         GoPremiumComponent,
         SearchComponent,
         FollowedUsersBarComponent,

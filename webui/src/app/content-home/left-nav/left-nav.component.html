@@ -38,12 +38,12 @@
 <div id="side_nav" class="flex_column light">
     <div class="pointer" style="margin-top:20px;">
         <mat-icon ngClass="getClass('/browse')" style="margin-right:5px;">library_music</mat-icon>
-        <h4 [routerLink]="['/browse']">Browse</h4>
+        <h5 [routerLink]="['/browse']">Browse</h5>
     </div>
 
     <div class="pointer">
         <mat-icon ngClass="getClass('/radio')" style="margin-right:5px;">radio</mat-icon>
-        <h4 [routerLink]="['/radio']">Radio</h4>
+        <h5 [routerLink]="['/instruments']">Instruments</h5>
     </div>
 
     <!-- Music Library -->
@@ -51,21 +51,29 @@
 
     <div class="pointer">
         <mat-icon ngClass="getClass('/artists')" style="margin-right:5px;">recent_actors</mat-icon>
-        <h4 [routerLink]="['/artists']">Artists</h4>
+        <h5 [routerLink]="['/artists']">Artists</h5>
     </div>
 
     <div class="pointer">
         <mat-icon ngClass="getClass('/albums')" style="margin-right:5px;">album</mat-icon>
-        <h4 [routerLink]="['/albums']">Albums</h4>
+        <h5 [routerLink]="['/albums']">Albums</h5>
     </div>
 
     <div class="pointer">
         <mat-icon ngClass="getClass('/songs')" style="margin-right:5px;">music_video</mat-icon>
-        <h4 [routerLink]="['/songs']">Songs</h4>
+        <h5 [routerLink]="['/songs']">Songs</h5>
     </div>
 
     <!-- Playlists -->
-    <div class="nav_block_header">Playlists</div>
+    <div class="nav_block_header flex_row">
+        Playlists
+        <div style="padding-left:25px;">
+            <button mat-icon-button matTooltip="Add a New Playlist"
+                    [routerLink]="['/createPlaylist']">
+                <mat-icon>add</mat-icon>
+            </button>
+        </div>
+    </div>
 
     <div *ngFor="let playlist of playlists" class="pointer">
         <h4 ngClass="getClass('/playlist', playlist.id)" [routerLink]="['/playlist/playlist.id']">{{playlist.name}}</h4>
