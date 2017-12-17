@@ -37,7 +37,7 @@ export class SongTableManager {
         this.tableData.sort = sort;
     }
 
-    public addSongs(songs: Song[]): void {
+    public setSongs(songs: Song[]): void {
         songs.forEach((song: Song) => {
             this.songs.set(song.id, song);
         });

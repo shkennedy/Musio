@@ -93,7 +93,7 @@ export class BrowseComponent implements OnInit {
             const seconds = song.duration % 60;
             song.durationString += (seconds < 10) ? `0${seconds}` : seconds;
         });
-        tableManager.addSongs(browseData.songs);
+        tableManager.setSongs(browseData.songs);
         setTimeout(() => {
             tableManager.setSort(sort);
         }, 2000);
