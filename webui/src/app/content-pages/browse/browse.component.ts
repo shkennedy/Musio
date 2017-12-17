@@ -28,6 +28,7 @@ export class BrowseComponent implements OnInit {
     private newReleases: BrowseResponseTab;
     private newReleasesSongTableInfo: SongTableManager;
 
+    private hasFriendsContent: boolean;
     @ViewChild(MatSort) friendsFavoritesSort: MatSort;
     private friendsFavorites: BrowseResponseTab;
     private friendsFavoritesSongTableInfo: SongTableManager;

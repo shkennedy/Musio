@@ -15,6 +15,7 @@ export class UserService {
     private static GET_USER_URL = UserService.USER_URL + '/getUser';
     private static GET_USERNAME_URL = UserService.USER_URL + '/getUsername';
     private static GET_USER_BY_USERNAME_URL = UserService.USER_URL + '/get';
+    private static SEARCH_USERS_BY_USERNAME_URL = UserService.USER_URL + '/search';
     private static FOLLOWED_USERS_URL = UserService.USER_URL + '/followedUsers';
     private static FOLLOWED_USERS_HISTORY = UserService.FOLLOWED_USERS_URL + '/history';
     private static FOLLOW_URL = UserService.USER_URL + '/followUser';
@@ -176,6 +177,13 @@ export class UserService {
 
     public getFollowedUsersHistory(): Observable<Map<number, Song>> {
         return this.httpRequest.get(UserService.FOLLOWED_USERS_HISTORY)
+            .map((response: ApiResponse) => {
+                return response.responseData;
+            });
+    }
+
+    public searchUsersByUsername(username: string): Observable<User[]> {
+        return this.httpRequest.get(UserService.SEARCH_USERS_BY_USERNAME_URL + '/' + username)
             .map((response: ApiResponse) => {
                 return response.responseData;
             });

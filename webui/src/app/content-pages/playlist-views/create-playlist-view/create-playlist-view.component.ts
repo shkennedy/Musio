@@ -77,8 +77,10 @@ export class CreatePlaylistViewComponent implements OnInit {
                             .subscribe((album: Album) => {
                                 song.album = album[0];
 
+                                console.log(albumInfoReturns);
                                 albumInfoReturns -= 1;
                                 if (albumInfoReturns === 0) {
+                                    console.log('finished');
                                     this.notAddedTableManager.setSongs(songs);
                                     this.isLoaded = true;
                                 }
@@ -96,6 +98,8 @@ export class CreatePlaylistViewComponent implements OnInit {
                         this.notAddedTableManager.setSort(this.sort);
                         this.addedTableManager.setSort(this.sort);
                     }, 3000);
+                } else {
+                    this.isLoaded = true;
                 }
             },
             (error: any) => {
