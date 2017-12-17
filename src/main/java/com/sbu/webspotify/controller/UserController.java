@@ -66,7 +66,16 @@ public class UserController {
         response.setSuccess(user == null);
         response.setResponseData(user);
 		return response;
-	}
+    }
+    
+    @RequestMapping(path = "/search/{queryString}", method = RequestMethod.GET)
+    public @ResponseBody ApiResponseObject searchUsersByUsername(HttpSession session, @PathVariable("queryString") String queryString) {
+        ApiResponseObject response = new ApiResponseObject();
+        Set<UserIdentifier> users = userService.searchByUsername(queryString);
+        response.setSuccess(true);
+        response.setResponseData(users);
+        return response;
+    }
 
 	@GetMapping(path="/whoami")
 	public @ResponseBody User whoAmI(HttpSession session) {

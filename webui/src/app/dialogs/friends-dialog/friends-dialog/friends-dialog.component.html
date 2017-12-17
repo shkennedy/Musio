@@ -2,7 +2,7 @@
     <div *ngIf="loading;" class="full_size flex_center cover">
         <mat-spinner color="accent"></mat-spinner>
     </div>
-    <form (ngSubmit)="searchFriends(f)" #f="ngForm" style="margin-bottom:20px;">
+    <form (ngSubmit)="searchFriends(f.form.value.friend_name)" #f="ngForm" style="margin-bottom:20px;">
         <h3>Search by Username</h3>
         <input type="text" name="friend_name" ngModel required class="rounded half padding txt" 
             placeholder="Robert Kelly" pattern="^.+$">
