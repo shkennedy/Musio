@@ -13,68 +13,91 @@
     play current/last song
 </div> -->
 
-<div class="friends_bar" style="background-color:black;">
-    <mat-grid-list cols="1" rowHeight="90px">
-        <!-- Do something at the top -->
-        <mat-grid-tile class="border">
-            <div style="color:white;">
-                Friend's List
-            </div>
-        </mat-grid-tile>
+<div class="friends_bar_upper border">
+    <div style="height:40px; background-color:black;" class="flex_center">
+        <input type="text" placeholder="Search friend's list" style="background-color:black;color:white;border:none;">
+    </div>
+    <div class="friends_bar" style="background-color:black;">
+        <mat-grid-list cols="1" rowHeight="90px">
+            <!-- Do something at the top -->
 
-        <!-- All friend's here -->
-        <!-- <mat-grid-tile *ngFor="let i of [1,1,1,1,1,1,1,1]" style="background-color:red;">
-            <div class="flex_column flex_start" style="width:100%;height:100%;">
-                <div style="height:20px;width:100%;color:white;" class="flex_center">
-                    {{users[0].username}}
-                </div>
+            <!-- <mat-grid-tile>
+                    <div style="color:white;">
+                        Friend's List
+                    </div>
+                </mat-grid-tile> -->
 
-                <div class="flex_start" style="width:100%;height:100%;">
-                    Image
-                    <img *ngIf="users[0].profileImageUrl != null; else noProfilePicture" [src]="users[0].profileImageUrl" class="image_sized">
-                    <ng-template #noProfilePicture>
+            <!-- All friend's here -->
+            <!-- <mat-grid-tile *ngFor="let i of [1,1,1,1,1,1,1,1]" style="background-color:red;">
+                    <div class="flex_column flex_start" style="width:100%;height:100%;">
+                        <div style="height:20px;width:100%;color:white;" class="flex_center">
+                            {{users[0].username}}
+                        </div>
+        
+                        <div class="flex_start" style="width:100%;height:100%;">
+                            Image
+                            <img *ngIf="users[0].profileImageUrl != null; else noProfilePicture" [src]="users[0].profileImageUrl" class="image_sized">
+                            <ng-template #noProfilePicture>
+                                <mat-icon class="default image_sized">account_circle</mat-icon>
+                            </ng-template>
+        
+                            Name, etc.
+                            <div class="default flex_column">
+                                <div>something</div>
+                            </div>
+                        </div>
+                    </div>
+                </mat-grid-tile> -->
+
+            <mat-grid-tile *ngFor="let i of [1,1,1,1,1,1,1]" class="border">
+                <div class="grid hover">
+                    <div class="flex_center">
+                        <!-- <img *ngIf="users[0].profileImageUrl != null; else noProfilePicture" [src]="users[0].profileImageUrl" class="image_sized"> -->
+                        <!-- <img *ngIf="false; else noProfilePicture" src="fakepath" class="image_sized"> -->
+                        <!-- <ng-template #noProfilePicture> -->
                         <mat-icon class="default image_sized">account_circle</mat-icon>
-                    </ng-template>
+                        <!-- </ng-template> -->
+                    </div>
 
-                    Name, etc.
-                    <div class="default flex_column">
-                        <div>something</div>
+                    <div style="color:white;" class="grid2">
+                        <!-- {{users[0].username}} -->
+                        <div class="flex_start" style="font-size:80%;">name</div>
+                        <div class="flex_start ellipsis" style="font-size:60%;">
+                            <div style="width:100%;" class="ellipsis">
+                                aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+                            </div>
+                        </div>
+                        <div class="flex_start ellipsis" style="font-size:60%;">
+                            <mat-icon class="album" style="margin-right:2px;">album</mat-icon>
+                            <div style="width:100%;" class="ellipsis">
+                                aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex_center" style="color:white;">
+                        <button mat-icon-button [matMenuTriggerFor]="moreActionsMenu">
+                            <mat-icon>more_vert</mat-icon>
+                        </button>
+                        <mat-menu #moreActionsMenu="matMenu">
+                            <div>
+                                <button mat-menu-item>
+                                    <mat-icon>face</mat-icon>
+                                    <span>Go to userpage</span>
+                                </button>
+                            </div>
+
+                            <div>
+                                <button mat-menu-item>
+                                    <mat-icon>play_arrow</mat-icon>
+                                    <span>Play this song</span>
+                                </button>
+                            </div>
+                        </mat-menu>
                     </div>
                 </div>
-            </div>
-        </mat-grid-tile> -->
+            </mat-grid-tile>
 
-        <mat-grid-tile *ngFor="let i of [1,1,1,1,1,1,1]">
-            <div class="grid hover">
-                <div class="flex_center">
-                    <!-- <img *ngIf="users[0].profileImageUrl != null; else noProfilePicture" [src]="users[0].profileImageUrl" class="image_sized"> -->
-                    <!-- <img *ngIf="false; else noProfilePicture" src="fakepath" class="image_sized"> -->
-                    <!-- <ng-template #noProfilePicture> -->
-                        <mat-icon class="default image_sized">account_circle</mat-icon>
-                    <!-- </ng-template> -->
-                </div>
-
-                <div style="color:white;" class="grid2">
-                    <!-- {{users[0].username}} -->
-                    <div class="flex_start">name</div>
-                    <div class="flex_start">song</div>
-                </div>
-
-                <div class="flex_center" style="color:white;">3</div>
-                <!-- <div class="flex_center">
-                </div> -->
-
-                <!-- <div class="flex_column">
-                    <div>hi</div>
-                    <div>hey</div>
-                    <div>yo</div>
-                </div> -->
-
-                <!-- <div class="flex_center">
-                    options
-                </div> -->
-            </div>
-        </mat-grid-tile>
-
-    </mat-grid-list>
+        </mat-grid-list>
+    </div>
 </div>
