@@ -44,4 +44,10 @@ public interface ArtistRepository extends JpaRepository<Artist, Integer>
                     + "FROM Concert c, artist_concert_mapping acm "
                     + "WHERE acm.artist_id = :artistId AND c.id = acm.concert_id", nativeQuery=true)    
     Set<ConcertIdentifier> findConcertsForArtist(@Param("artistId") int artistId);
+
+    @Query(value = "SELECT i.full_file_id as fullFileId, a.id as id, a.name as name "
+                    + "FROM image i "
+                    + "RIGHT JOIN artist a ON a.artist_art_id = i.id ORDER BY RAND() LIMIT :numElements",
+                    nativeQuery = true)
+	Set<ArtistIdentifier> findNRandomArtists(@Param("numElements") int numElements);
 }

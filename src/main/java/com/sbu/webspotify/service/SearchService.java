@@ -175,7 +175,7 @@ public class SearchService {
                 }
             }
         } else {
-            
+            artists = artistService.getNRandomArtists(8);
         }
 
         return new BrowseResult(songs, artists, albums, playlists);
