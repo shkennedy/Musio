@@ -10,14 +10,14 @@
     </h1>
 
 
-    <div class="creditCardForm" style="margin-top:10px; padding-bottom:20px;">
-        <div class="heading">
-            <h2>Confirm Purchase</h2>
-        </div>
+    <div style="margin-top:10px; padding-bottom:20px;background-color: rgba(255, 255, 255, 0.18);">
+        <!-- <div class="heading">
+            <h2 style="text-align:center;">Confirm Purchase</h2>
+        </div> -->
         <div class="flex_col">
             <form (ngSubmit)="goPremium(f)" #f="ngForm">
 
-                <mat-form-field style="width:100%;">
+                <mat-form-field style="width:100%;padding-top:20px;">
                     <input matInput placeholder="Card Holder Name" name="name" pattern="^[A-Z]([A-Za-z])*( [A-Z][A-Za-z]*)? [A-Z][A-Za-z]*$"
                         ngModel required (change)="invalidChange()">
                 </mat-form-field>

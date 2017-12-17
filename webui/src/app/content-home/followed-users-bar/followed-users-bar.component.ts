@@ -4,6 +4,9 @@ import { Router } from '@angular/router';
 import { FavoritesService } from '../../services/favorites.service';
 import { UserService } from '../../services/user.service';
 
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { FriendsDialogComponent } from '../../dialogs/friends-dialog/friends-dialog/friends-dialog.component';
+
 import { Album } from '../../models/album.model';
 import { Artist } from '../../models/artist.model';
 import { User } from '../../models/user.model';
@@ -22,7 +25,8 @@ export class FollowedUsersBarComponent implements OnInit {
     constructor(
         private router: Router,
         private favoritesService: FavoritesService,
-        private userService: UserService
+        private userService: UserService,
+        private dialog: MatDialog
     ) {
         const u = new User();
         u.username = 'bingo';
@@ -46,5 +50,12 @@ export class FollowedUsersBarComponent implements OnInit {
             (error: any) => {
                 console.log(error.toString());
             });
+    }
+
+    findFriends() {
+        const dialogRef = this.dialog.open(FriendsDialogComponent, {
+            width: '400px',
+            height: '400px'
+        });
     }
 }

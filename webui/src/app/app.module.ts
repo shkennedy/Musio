@@ -69,6 +69,7 @@ import { PasswordDialogComponent } from './dialogs/password-dialog/password-dial
 import { DeleteDialogComponent } from './dialogs/delete-dialog/delete-dialog/delete-dialog.component';
 import { PictureDialogComponent } from './dialogs/picture-dialog/picture-dialog/picture-dialog.component';
 import { PremiumDialogComponent } from './dialogs/premium-dialog/premium-dialog/premium-dialog.component';
+import { FriendsDialogComponent } from './dialogs/friends-dialog/friends-dialog/friends-dialog.component';
 
 @NgModule({
     declarations: [
@@ -105,12 +106,14 @@ import { PremiumDialogComponent } from './dialogs/premium-dialog/premium-dialog/
         PictureDialogComponent,
         CapitalizePipe,
         UsersComponent,
-        PremiumDialogComponent
+        PremiumDialogComponent,
+        FriendsDialogComponent
     ],
     entryComponents: [PasswordDialogComponent,
                       DeleteDialogComponent,
                       PictureDialogComponent,
-                      PremiumDialogComponent],
+                      PremiumDialogComponent,
+                      FriendsDialogComponent],
     imports: [
         BrowserModule,
         FormsModule,

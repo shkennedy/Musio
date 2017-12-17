@@ -24,4 +24,5 @@ export class User {
     privateSession: boolean;
     useHighBitrate: boolean;
     isPremium: boolean;
+    isFollowed: boolean;
 }

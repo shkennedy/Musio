@@ -162,3 +162,33 @@
       transform: translateX(-250%);
     }
 }
+
+.flex_start_center{
+    display:flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+
+}
+
+.top_pad{
+    padding-top:20px;
+}
+
+.diagonal{
+    width:120%;
+    background-color:#222;
+    color:#222;
+    transform: rotate(-7deg);
+    position:absolute;
+}
+
+.relative{
+    position:relative;
+}
+
+.shadow{
+    -webkit-box-shadow: inset 0px 57px 168px -63px rgba(255,255,255,1);
+    -moz-box-shadow: inset 0px 57px 168px -63px rgba(255,255,255,1);
+    box-shadow: inset 0px 57px 168px -63px rgba(255,255,255,1);
+}

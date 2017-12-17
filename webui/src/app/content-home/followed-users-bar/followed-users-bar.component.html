@@ -13,7 +13,7 @@
     play current/last song
 </div> -->
 
-<div class="friends_bar_upper border">
+<div *ngIf="users==null;else noFriends" class="friends_bar_upper border">
     <div style="height:40px; background-color:black;" class="flex_center">
         <input type="text" placeholder="Search friend's list" style="background-color:black;color:white;border:none;">
     </div>
@@ -101,3 +101,29 @@
         </mat-grid-list>
     </div>
 </div>
+
+<ng-template #noFriends>
+    <div class="friends_bar_upper flex_start_center top_pad border relative shadow" style="color:#ddd;">
+        <div class="diagonal" style="top:0vh; height:20px;font-size:20px;">-</div>
+        <div class="diagonal" style="top:5vh; height:18px;font-size:18px;">-</div>
+        <div class="diagonal" style="top:10vh; height:16px;font-size:16px;">-</div>
+        <div class="diagonal" style="top:15vh;  height:14px;font-size:14px;">-</div>
+        <div class="diagonal" style="top:20vh;  height:12px;font-size:12px;">-</div>
+        <div class="diagonal" style="top:25vh;  height:10px;font-size:10px;">-</div>
+        <div class="diagonal" style="top:30vh;  height:8px;font-size:8px;">-</div>
+        <div class="diagonal" style="top:35vh;  height:6px;font-size:6px;">-</div>
+        <div class="diagonal" style="top:40vh;  height:4px;font-size:4px;">-</div>
+        <div class="diagonal" style="top:45vh;  height:3px;font-size:3px;">-</div>
+        <div class="diagonal" style="top:50vh;  height:2px;font-size:2px;">-</div>
+        <div class="diagonal" style="top:55vh;  height:1px;font-size:1px;">-</div>
+        <div class="diagonal" style="top:60vh;  height:1px;font-size:1px;">-</div>
+        <div class="diagonal" style="top:65vh;  height:1px;font-size:1px;">-</div>
+        <div class="diagonal" style="top:70vh;  height:1px;font-size:1px;">-</div>
+        <div class="diagonal" style="top:75vh;  height:1px;font-size:1px;">-</div>
+        <div class="diagonal" style="top:80vh;  height:1px;font-size:1px;">-</div>
+        <div class="diagonal" style="top:85vh;  height:1px;font-size:1px;">-</div>
+        <div style="z-index:2;">See what your friend's</div>
+        <div style="z-index:2;">are playing</div>
+        <button class="btn btn-black" style="z-index:2;" (click)="findFriends()">Find Friends</button>
+    </div>
+</ng-template>
