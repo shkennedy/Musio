@@ -1,0 +1,31 @@
+<div class="full_size" style="position:relative;">
+    <div *ngIf="loading;" class="full_size flex_center cover">
+        <mat-spinner color="accent"></mat-spinner>
+    </div>
+    <form (ngSubmit)="searchFriends(f)" #f="ngForm" style="margin-bottom:20px;">
+        <h3>Search by Username</h3>
+        <input type="text" name="friend_name" ngModel required class="rounded half padding txt" 
+            placeholder="Robert Kelly" pattern="^.+$">
+    </form>
+
+    <div *ngIf="users!=null">
+        <mat-grid-list cols="1" rowHeight="90px">
+            <mat-grid-tile *ngFor="let user of users">
+                <div class="grid">
+                    <div class="full_size flex_center">
+                        <img [src]="user.profileImageUrl" style="width:60px;height:60px;border-radius:50%;">
+                    </div>
+
+                    <div class="full_size flex_start" style="padding-left:10px;">
+                        {{user.username}}
+                    </div>
+
+                    <div class="full_size flex_center">
+                        <button *ngIf="!user.isFollowed;" class="btn btn-black" (click)="followUser(user)">FOLLOW</button>
+                        <button *ngIf="user.isFollowed;" class="btn btn-black" (click)="unfollowUser(user)">UNFOLLOW</button>
+                    </div>
+                </div>
+            </mat-grid-tile>
+        </mat-grid-list>
+    </div>
+</div>
