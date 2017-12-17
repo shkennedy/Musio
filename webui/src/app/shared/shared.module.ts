@@ -13,7 +13,6 @@ import {
     MatNativeDateModule,
     MatCheckboxModule,
     MatSnackBarModule,
-    MatMenuModule,
     MatSelectModule,
     MatRadioModule,
     MatDialogModule,
@@ -24,7 +23,8 @@ import {
     MatSliderModule,
     MatSlideToggleModule,
     MatStepperModule,
-    MatSortModule
+    MatSortModule,
+    MatMenuModule
 } from '@angular/material';
 @NgModule({
     imports: [MatToolbarModule,
@@ -40,7 +40,6 @@ import {
         MatNativeDateModule,
         MatCheckboxModule,
         MatSnackBarModule,
-        MatMenuModule,
         MatSelectModule,
         MatRadioModule,
         MatDialogModule,
@@ -51,7 +50,8 @@ import {
         MatSliderModule,
         MatSlideToggleModule,
         MatStepperModule,
-        MatSortModule],
+        MatSortModule,
+        MatMenuModule],
 
     exports: [MatToolbarModule,
         MatInputModule,
@@ -66,7 +66,6 @@ import {
         MatNativeDateModule,
         MatCheckboxModule,
         MatSnackBarModule,
-        MatMenuModule,
         MatSelectModule,
         MatRadioModule,
         MatDialogModule,
@@ -77,7 +76,8 @@ import {
         MatSliderModule,
         MatSlideToggleModule,
         MatStepperModule,
-        MatSortModule]
+        MatSortModule,
+        MatMenuModule]
 })
 
 export class SharedModule { }

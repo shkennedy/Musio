@@ -1,6 +1,7 @@
 import { Album } from './album.model';
 import { Artist } from './artist.model';
 import { Genre } from './genre.model';
+import { Playlist } from './playlist.model';
 
 export class Song {
     public id: number;
@@ -15,4 +16,6 @@ export class Song {
     public trackNumber: number;
     public audioFileUrl: string;
     public isFavorited: boolean;
+    public playlistsMap: Map<number, Playlist>;
+    public playlistsList: Playlist[];
 }

@@ -13,7 +13,8 @@ import { MatSliderModule,
          MatCardTitle,
          MatCardImage,
          MatCardActions,
-         MatSortModule } from '@angular/material';
+         MatSortModule,
+         MatMenu } from '@angular/material';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './shared/shared.module';
