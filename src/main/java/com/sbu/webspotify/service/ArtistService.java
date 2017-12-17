@@ -34,4 +34,8 @@ public class ArtistService {
     public Set<ArtistIdentifier> getNRelatedArtists(int id, int nResults) {
         return artistRepository.findMostRelatedArtists(id, nResults);
     }
+
+	public Set<ArtistIdentifier> getNRandomArtists(int numElements) {
+		return artistRepository.findNRandomArtists(numElements);
+	}
 }
