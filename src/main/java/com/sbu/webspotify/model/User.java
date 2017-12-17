@@ -276,6 +276,7 @@ public class User implements Serializable {
 			}
 	)
 	@JsonManagedReference
+	@JsonIgnore
 	public Set<User> getFollowedUsers() {
 		return this.followedUsers;
 	}

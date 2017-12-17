@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { AudioPlayerProxyService } from '../../services/audioPlayerProxy.service';
 import { FavoritesService } from '../../services/favorites.service';
 import { UserService } from '../../services/user.service';
+import { FollowedUsersBarProxyService } from '../../services/followedUsersBarProxy.service';
+import { AudioPlayerProxyService } from '../../services/audioPlayerProxy.service';
 
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FriendsDialogComponent } from '../../dialogs/friends-dialog/friends-dialog/friends-dialog.component';
@@ -25,29 +27,38 @@ export class FollowedUsersBarComponent implements OnInit {
 
     constructor(
         private router: Router,
+        private audioPlayerProxyService: AudioPlayerProxyService,
+        private followedUsersBarProxyService: FollowedUsersBarProxyService,
         private favoritesService: FavoritesService,
         private userService: UserService,
         private audioPlayerProxyService: AudioPlayerProxyService,
         private dialog: MatDialog
-    ) {
-        // const u = new User();
-        // u.username = 'bingo';
-        // this.users = [u];
-    }
+    ) { }
 
     ngOnInit() {
+        this.followedUsersBarProxyService.registerListeners(this.refreshFollowedUsers);
+        setInterval(this.getFollowedUsersHistory, 25000);
+        this.refreshFollowedUsers();
+    }
+
+    private refreshFollowedUsers = (): void => {
         this.userService.getFollowedUsers()
         .subscribe(
             (users: User[]) => {
                 this.users = users;
-                this.userService.getFollowedUsersHistory()
-                .subscribe(
-                    (userHistory: Map<number, Song>) => {
-                        this.userHistory = userHistory;
-                    },
-                    (error: any) => {
-                        console.log(error.toString());
-                    });
+                this.getFollowedUsersHistory();
+            },
+            (error: any) => {
+                console.log(error.toString());
+            });
+    }
+
+    private getFollowedUsersHistory = (): void => {
+        this.userService.getFollowedUsersHistory()
+        .subscribe(
+            (userHistory: Map<number, Song>) => {
+                console.log(userHistory);
+                this.userHistory = userHistory;
             },
             (error: any) => {
                 console.log(error.toString());

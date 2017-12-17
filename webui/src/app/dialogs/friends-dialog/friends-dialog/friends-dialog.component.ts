@@ -1,6 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
+import { FollowedUsersBarProxyService } from '../../../services/followedUsersBarProxy.service';
+
 import { User } from '../../../models/user.model';
 import { UserService } from '../../../services/user.service';
 import { FileService } from '../../../services/file.service';
@@ -15,6 +17,7 @@ export class FriendsDialogComponent implements OnInit {
     loading = false;
     users: User[];
     constructor(
+        private followedUsersBarProxyService: FollowedUsersBarProxyService,
         private userService: UserService,
         private fileService: FileService,
         public dialogRef: MatDialogRef<FriendsDialogComponent>,
@@ -71,6 +74,7 @@ export class FriendsDialogComponent implements OnInit {
         this.userService.followUser(user.id)
             .subscribe((success: boolean) => {
                 user.isFollowed = true;
+                this.followedUsersBarProxyService.refreshFollowedUsers();
             });
     }
 
@@ -78,6 +82,7 @@ export class FriendsDialogComponent implements OnInit {
         this.userService.unfollowUser(user.id)
             .subscribe((success: boolean) => {
                 user.isFollowed = false;
+                this.followedUsersBarProxyService.refreshFollowedUsers();
             });
     }
 }

@@ -134,13 +134,13 @@
                 <div *ngIf="friendsFavorites.songs.length !== 0">
                     <h3>Songs</h3>
                     <div id="album-tracklist">
-                        <mat-table #table [dataSource]="friendsFavoritesSongTableInfo.tableData" matSort>
+                        <mat-table #table [dataSource]="friendsFavoritesSongTableManager.tableData" matSort>
 
                             <!-- Play Button Column -->
                             <ng-container matColumnDef="playButton">
                                 <mat-header-cell *matHeaderCellDef></mat-header-cell>
                                 <mat-cell *matCellDef="let song">
-                                    <button mat-icon-button class="song_play_button" [ngStyle]="friendsFavoritesSongTableInfo.getPlayVisibility(song.id)" (click)="friendsFavoritesSongTableInfo.playSong(song.id)">
+                                    <button mat-icon-button class="song_play_button" [ngStyle]="friendsFavoritesSongTableManager.getButtonVisibility(song.id)" (click)="friendsFavoritesSongTableManager.playSong(song.id)">
                                         <mat-icon>play_circle_filled</mat-icon>
                                     </button>
                                 </mat-cell>
@@ -176,15 +176,15 @@
                             <ng-container matColumnDef="favoriteButton">
                                 <mat-header-cell *matHeaderCellDef></mat-header-cell>
                                 <mat-cell *matCellDef="let song">
-                                    <button mat-icon-button class="song_favorite_button" (click)="friendsFavoritesSongTableInfo.favoriteOrUnfavoriteSong(song.id)">
-                                        <mat-icon>{{friendsFavoritesSongTableInfo.getFavoritedIcon(song.id, song.isFavorited)}}</mat-icon>
+                                    <button mat-icon-button class="song_favorite_button" (click)="friendsFavoritesSongTableManager.favoriteOrUnfavoriteSong(song.id)">
+                                        <mat-icon>{{friendsFavoritesSongTableManager.getFavoritedIcon(song.id, song.isFavorited)}}</mat-icon>
                                     </button>
                                 </mat-cell>
                             </ng-container>
 
                             <mat-header-row *matHeaderRowDef="['playButton', 'title', 'artist', 'album', 'duration', 'favoriteButton']"></mat-header-row>
-                            <mat-row *matRowDef="let row; columns: ['playButton', 'title', 'artist', 'album', 'duration', 'favoriteButton'];" (mouseenter)="friendsFavoritesSongTableInfo.showPlay(row.id)"
-                                (mouseleave)="friendsFavoritesSongTableInfo.hidePlay(row.id)"></mat-row>
+                            <mat-row *matRowDef="let row; columns: ['playButton', 'title', 'artist', 'album', 'duration', 'favoriteButton'];" (mouseenter)="friendsFavoritesSongTableManager.showButtons(row.id)"
+                                (mouseleave)="friendsFavoritesSongTableManager.hideButtons(row.id)"></mat-row>
                         </mat-table>
                     </div>
                 </div>
