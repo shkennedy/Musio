@@ -1,60 +1,18 @@
-<!-- <div class="friend" *ngFor="let user of users;">
-    <img src="{{user.profileImageUrl}}" width="40" height="40">
-    <mat-icon style="color:#FFF;margin-left:10px;">account_circle</mat-icon>
-    <div>
-        <h2 style="color:white;">{{user.username}}</h2>
-        <h4 style="color:white;">{{userHistory[user.id].artists[0]}}</h4>
-        <h4 style="color:white;">{{userHistory[user.id].title}}</h4>
-    </div>
-    right click for more options
-    go to user page
-    go to artist page of current/last song
-    add current/last song to queue
-    play current/last song
-</div> -->
-
-<div *ngIf="users!=null;else noFriends" class="friends_bar_upper border">
+<div *ngIf="users!=null && users.length !== 0; else noFriends" class="friends_bar_upper border">
     <div style="height:40px; background-color:#222;" class="grid3">
         <div class="flex_center" style="margin-left:10px;">
             <input type="text" placeholder="Search friend's list" style="background-color:black;color:white;border:none;padding-left:5px;">
         </div>
         <div style="color:#ddd;" class="flex_center">
-            <button mat-icon-button matTooltip="Add Friends" matTooltipPosition='left' style="width:30px;height:30px;font-size:30px;" class="flex_center">
+            <button mat-icon-button (click)="findFriends()" matTooltip="Add Friends" matTooltipPosition='left' style="width:30px;height:30px;font-size:30px;"
+                class="flex_center">
                 <mat-icon style="font-size:20px;height:20px;width:20px;" class="flex_center">add</mat-icon>
             </button>
         </div>
     </div>
     <div class="friends_bar" style="background-color:black;">
         <mat-grid-list cols="1" rowHeight="90px">
-            <!-- Do something at the top -->
 
-            <!-- <mat-grid-tile>
-                    <div style="color:white;">
-                        Friend's List
-                    </div>
-                </mat-grid-tile> -->
-
-            <!-- All friend's here -->
-            <!-- <mat-grid-tile *ngFor="let i of [1,1,1,1,1,1,1,1]" style="background-color:red;">
-                    <div class="flex_column flex_start" style="width:100%;height:100%;">
-                        <div style="height:20px;width:100%;color:white;" class="flex_center">
-                            {{users[0].username}}
-                        </div>
-        
-                        <div class="flex_start" style="width:100%;height:100%;">
-                            Image
-                            <img *ngIf="users[0].profileImageUrl != null; else noProfilePicture" [src]="users[0].profileImageUrl" class="image_sized">
-                            <ng-template #noProfilePicture>
-                                <mat-icon class="default image_sized">account_circle</mat-icon>
-                            </ng-template>
-        
-                            Name, etc.
-                            <div class="default flex_column">
-                                <div>something</div>
-                            </div>
-                        </div>
-                    </div>
-                </mat-grid-tile> -->
 
             <mat-grid-tile *ngFor="let user of users" class="border">
                 <div class="grid hover">
@@ -69,15 +27,17 @@
                     <div style="color:white;" class="grid2">
                         <!-- {{users[0].username}} -->
                         <div class="flex_start" style="font-size:80%;">{{user.username}}</div>
-                        <div class="flex_start ellipsis" style="font-size:60%;">
-                            <div style="width:100%;" class="ellipsis">
-                                last song
+                        <div *ngIf="userHistory.get(user.id)">
+                            <div class="flex_start ellipsis" style="font-size:60%;">
+                                <div style="width:100%;" class="ellipsis">
+                                    {{userHistory.get(user.id).title}}
+                                </div>
                             </div>
-                        </div>
-                        <div class="flex_start ellipsis" style="font-size:60%;">
-                            <mat-icon class="album" style="margin-right:2px;">album</mat-icon>
-                            <div style="width:100%;" class="ellipsis">
-                                album
+                            <div class="flex_start ellipsis" style="font-size:60%;">
+                                <mat-icon class="album" style="margin-right:2px;">album</mat-icon>
+                                <div style="width:100%;" class="ellipsis">
+                                    {{userHistory.get(user.id)}}
+                                </div>
                             </div>
                         </div>
                     </div>
