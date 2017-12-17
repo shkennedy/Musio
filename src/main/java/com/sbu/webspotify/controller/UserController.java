@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.Set;
 
 import javax.servlet.http.HttpSession;
-import javax.swing.RepaintManager;
 
 import com.sbu.webspotify.dto.ApiResponseObject;
 import com.sbu.webspotify.dto.identifier.SongIdentifier;
@@ -378,7 +377,7 @@ public class UserController {
 	}
 
 	@RequestMapping(value="/followerCount/{userId}", method=RequestMethod.GET)
-	public @ResponseBody ApiResponseObject updateProfileImage(@PathVariable int userId){
+	public @ResponseBody ApiResponseObject getFollowerCount(@PathVariable int userId){
 		ApiResponseObject response = new ApiResponseObject();
 
 		if(userService.userExists(userId) == false) {
@@ -388,6 +387,22 @@ public class UserController {
 		}
 
 		response.setResponseData(userService.getFollowerCount(userId));
+		response.setSuccess(true);
+
+		return response;
+	}
+
+	@RequestMapping(value="/checkProfileImage/{userId}", method=RequestMethod.GET)
+	public @ResponseBody ApiResponseObject checkForProfileImage(@PathVariable int userId){
+		ApiResponseObject response = new ApiResponseObject();
+
+		if(userService.userExists(userId) == false) {
+			response.setSuccess(false);
+			response.setMessage("No user found with id "+userId+".");
+			return response;
+		}
+
+		response.setResponseData(userService.checkForProfileImage(userId));
 		response.setSuccess(true);
 
 		return response;

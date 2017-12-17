@@ -98,5 +98,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	
 	@Query(value = "SELECT COUNT(ufu.user_being_followed) FROM user_following_user ufu WHERE ufu.user_being_followed = :userId", nativeQuery = true)    
 	int findFollowerCountForUser(@Param("userId") int userId);
+
+
+	@Query(value = "SELECT profile_image_id FROM user WHERE id = :userId", nativeQuery = true)    
+	Integer checkForProfileImage(@Param("userId") int userId);
 	
 }

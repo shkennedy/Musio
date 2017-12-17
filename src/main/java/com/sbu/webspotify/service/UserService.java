@@ -438,5 +438,10 @@ public class UserService {
 		return userRepository.findFollowerCountForUser(userId);
 	}
 
+	public boolean checkForProfileImage(int userId) {
+		Integer result = userRepository.checkForProfileImage(userId);
+		return (result != null);
+	}
+
 
 }
