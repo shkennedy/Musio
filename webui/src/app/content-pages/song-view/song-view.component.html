@@ -7,8 +7,8 @@
         <mat-spinner color="accent"></mat-spinner>
     </div>
     <ng-template #songsLoaded>
-        <h3>Songs</h3>
-        <div id="album-tracklist">
+        <h3 style="margin-left: 20px;">Songs</h3>
+        <div id="album-tracklist" style="margin: 20px;">
             <mat-table #table [dataSource]="songTableManager.tableData" matSort>
 
                 <!-- Play Button Column -->
