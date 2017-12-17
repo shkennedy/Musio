@@ -67,7 +67,7 @@ public class UserController {
 	public @ResponseBody ApiResponseObject getAUser(@PathVariable String var) {
         ApiResponseObject response = new ApiResponseObject();
         User user = userService.findUserByUsername(var);
-        response.setSuccess(user == null);
+        response.setSuccess(user != null);
         response.setResponseData(user);
 		return response;
     }
