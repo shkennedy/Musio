@@ -1,6 +1,8 @@
 package com.sbu.webspotify.service;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import com.sbu.webspotify.conf.AppConfig;
@@ -159,12 +161,16 @@ public class SearchService {
 
         // Get not favorited items from favorited genres
         int nFavoriteArtists = user.getFavoriteArtists().size();
+        List<Integer> selectedArtists = new ArrayList<Integer>();
         if (nFavoriteArtists != 0) {
             int nRelatedPerItem =  appConfig.relatedArtistsToQuery / nFavoriteArtists;
             for (Artist favoriteArtist : user.getFavoriteArtists()) {
                 for (ArtistIdentifier artist : artistService.getNRelatedArtists(favoriteArtist.getId(), nRelatedPerItem)) {
                     if (artist.getId() != null) {
-                        artists.add(artist);
+                        if(!selectedArtists.contains(artist.getId())) {
+                            artists.add(artist);
+                            selectedArtists.add(artist.getId());
+                        }
                     }
                 }
             }
