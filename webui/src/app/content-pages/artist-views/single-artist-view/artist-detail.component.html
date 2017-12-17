@@ -58,7 +58,7 @@
 
         <div class="content">
             <section>
-                <div *ngIf="!albumTablesData; else albumsLoaded;" class="center_loading">
+                <div *ngIf="!isLoaded; else albumsLoaded;" class="center_loading">
                     <mat-spinner color="accent"></mat-spinner>
                 </div>
                 <ng-template #albumsLoaded>
@@ -88,29 +88,59 @@
                         </div>
 
                         <div id="album-tracklist" class="col-sm-8">
-                            <mat-table #table [dataSource]="getAlbumData(album.id)" matSort>
+                            <mat-table #table [dataSource]="getSongTableManager(album.id).tableData" matSort>
                                 <!-- Track Column -->
                                 <ng-container matColumnDef="trackNumber">
                                     <mat-header-cell *matHeaderCellDef mat-sort-header> No. </mat-header-cell>
                                     <mat-cell *matCellDef="let song">{{song.trackNumber}}</mat-cell>
                                 </ng-container>
-                
+
                                 <!-- Play Button Column -->
                                 <ng-container matColumnDef="playButton">
                                     <mat-header-cell *matHeaderCellDef></mat-header-cell>
                                     <mat-cell *matCellDef="let song">
-                                        <button mat-icon-button class="song_play_button" [ngStyle]="getPlayVisibility(song.id)" (click)="playSong(song.id)">
+                                        <button mat-icon-button class="song_play_button" [ngStyle]="getSongTableManager(album.id).getButtonVisibility(song.id)" (click)="songTableManager.playSong(song.id)">
                                             <mat-icon>play_circle_filled</mat-icon>
                                         </button>
                                     </mat-cell>
                                 </ng-container>
-                
+
                                 <!-- Title Column -->
                                 <ng-container matColumnDef="title">
                                     <mat-header-cell *matHeaderCellDef mat-sort-header> Title </mat-header-cell>
                                     <mat-cell *matCellDef="let song">{{song.title}}</mat-cell>
                                 </ng-container>
-                
+
+                                <!-- More Actions Button Column -->
+                                <ng-container matColumnDef="moreActionsButton">
+                                    <mat-header-cell *matHeaderCellDef></mat-header-cell>
+                                    <mat-cell *matCellDef="let song">
+                                        <button mat-icon-button [matMenuTriggerFor]="moreActionsMenu" [ngStyle]="getSongTableManager(album.id).getButtonVisibility(song.id)">
+                                            <mat-icon>more_vert</mat-icon>
+                                        </button>
+                                        <mat-menu #moreActionsMenu="matMenu">
+                                            <div *ngIf="!getSongTableManager(album.id).hasPlaylists()">
+                                                <button mat-menu-item [routerLink]="['/playlists']">
+                                                    <mat-icon>control_point</mat-icon>
+                                                    <span>Create a Playlist</span>
+                                                </button>
+                                            </div>
+                                            <div mat-menu-item *ngFor="let playlist of getSongTableManager(album.id).getPlaylistsWhereNotIn(song.id)">
+                                                <button mat-menu-item (click)="getSongTableManager(album.id).addSongToPlaylist(playlist.id, song.id)">
+                                                    <mat-icon>add</mat-icon>
+                                                    <span>Add To {{playlist.name}}</span>
+                                                </button>
+                                            </div>
+                                            <div mat-menu-item *ngFor="let playlist of getSongTableManager(album.id).getPlaylistsWhereIn(song.id)">
+                                                <button mat-menu-item (click)="getSongTableManager(album.id).addSongToPlaylist(playlist.id, song.id)">
+                                                    <mat-icon>remove</mat-icon>
+                                                    <span>Remove From {{playlist.name}}</span>
+                                                </button>
+                                            </div>
+                                        </mat-menu>
+                                    </mat-cell>
+                                </ng-container>
+
                                 <!-- Duration Column -->
                                 <ng-container matColumnDef="duration">
                                     <mat-header-cell *matHeaderCellDef mat-sort-header>
@@ -118,20 +148,20 @@
                                     </mat-header-cell>
                                     <mat-cell *matCellDef="let song"> {{song.durationString}} </mat-cell>
                                 </ng-container>
-                
+
                                 <!-- Favorite Button Column -->
                                 <ng-container matColumnDef="favoriteButton">
                                     <mat-header-cell *matHeaderCellDef></mat-header-cell>
                                     <mat-cell *matCellDef="let song">
-                                        <button mat-icon-button class="song_favorite_button" (click)="favoriteOrUnfavoriteSong(song.id)">
-                                            <mat-icon>{{getFavoritedIcon(song.id, song.isFavorited)}}</mat-icon>
+                                        <button mat-icon-button class="song_favorite_button" (click)="getSongTableManager(album.id).favoriteOrUnfavoriteSong(song.id)">
+                                            <mat-icon>{{getSongTableManager(album.id).getFavoritedIcon(song.id, song.isFavorited)}}</mat-icon>
                                         </button>
                                     </mat-cell>
                                 </ng-container>
-                
-                                <mat-header-row *matHeaderRowDef="['trackNumber', 'playButton', 'title', 'duration', 'favoriteButton']"></mat-header-row>
-                                <mat-row *matRowDef="let row; columns: ['trackNumber', 'playButton', 'title', 'duration', 'favoriteButton'];" 
-                                    (mouseenter)="showPlay(row.id)" (mouseleave)="hidePlay(row.id)"></mat-row>
+
+                                <mat-header-row *matHeaderRowDef="['trackNumber', 'playButton', 'title', 'moreActionsButton', 'duration', 'favoriteButton']"></mat-header-row>
+                                <mat-row *matRowDef="let row; columns: ['trackNumber', 'playButton', 'title', 'moreActionsButton', 'duration', 'favoriteButton'];" (mouseenter)="getSongTableManager(album.id).showButtons(row.id)"
+                                    (mouseleave)="getSongTableManager(album.id).hideButtons(row.id)"></mat-row>
                             </mat-table>
                         </div>
                     </div>
@@ -146,8 +176,7 @@
 
             <section>
                 <mat-grid-list cols="4" gutterSize="15px">
-                    <mat-grid-tile *ngFor="let relatedArtist of relatedArtists"
-                                   (click)="gotoRelatedArtist(relatedArtist.id)">
+                    <mat-grid-tile *ngFor="let relatedArtist of relatedArtists" (click)="gotoRelatedArtist(relatedArtist.id)">
                         <div class="flex_column">
                             <div *ngIf="relatedArtist.fullFileId; else defaultArt;">
                                 <img class="artist_card_img" src="{{relatedArtist.artistImageUrl}}" alt="{{relatedArtist.name}}">
