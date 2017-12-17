@@ -362,7 +362,10 @@ public class UserService {
         ApiResponseObject response = new ApiResponseObject();
         Map<Integer, SongIdentifier> historyTails = new HashMap<>(); 
         for (User followedUser : user.getFollowedUsers()) {
-            historyTails.put(followedUser.getId(), getListeningHistoryTail(followedUser.getId()));
+            SongIdentifier song = getListeningHistoryTail(followedUser.getId());
+            if (song != null) {
+                historyTails.put(followedUser.getId(), song);
+            }
         }
         response.setSuccess(true);
         response.setResponseData(historyTails);
@@ -424,7 +427,12 @@ public class UserService {
     }
     
     public SongIdentifier getListeningHistoryTail(int userId) {
-		return songRepository.getListeningHistoryForUser(userId, 1).iterator().next();
+        System.out.println("user: " + userId + " tail: " + songRepository.getListeningHistoryForUser(userId, 1));
+        Set<SongIdentifier> historyTail = songRepository.getListeningHistoryForUser(userId, 1);
+        if (!historyTail.isEmpty()) {
+            return historyTail.iterator().next();
+        }
+		return null;
     }
 
 	public Set<UserIdentifier> getFollowedUsers(int userId) {

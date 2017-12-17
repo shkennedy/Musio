@@ -26,16 +26,16 @@ export class BrowseComponent implements OnInit {
 
     @ViewChild(MatSort) newReleasesSort: MatSort;
     private newReleases: BrowseResponseTab;
-    private newReleasesSongTableInfo: SongTableManager;
+    private newReleasesSongTableManager: SongTableManager;
 
     private hasFriendsContent: boolean;
     @ViewChild(MatSort) friendsFavoritesSort: MatSort;
     private friendsFavorites: BrowseResponseTab;
-    private friendsFavoritesSongTableInfo: SongTableManager;
+    private friendsFavoritesSongTableManager: SongTableManager;
 
     @ViewChild(MatSort) discoverSort: MatSort;
     private discover: BrowseResponseTab;
-    private discoverSongTableInfo: SongTableManager;
+    private discoverSongTableManager: SongTableManager;
 
     @ViewChild('popularSort') popularSort: MatSort;
     private popular: BrowseResponseTab;
@@ -57,19 +57,19 @@ export class BrowseComponent implements OnInit {
             .subscribe(
             (browseData: BrowseResponse) => {
                 this.newReleases = browseData.newReleases;
-                this.newReleasesSongTableInfo =
+                this.newReleasesSongTableManager =
                     new SongTableManager(this.audioPlayerProxyService, this.favoritesService, this.playlistService);
-                this.initBrowseResponseTab(this.newReleases, this.newReleasesSongTableInfo, this.newReleasesSort);
+                this.initBrowseResponseTab(this.newReleases, this.newReleasesSongTableManager, this.newReleasesSort);
 
                 this.friendsFavorites = browseData.friendsFavorites;
-                this.friendsFavoritesSongTableInfo =
+                this.friendsFavoritesSongTableManager =
                     new SongTableManager(this.audioPlayerProxyService, this.favoritesService, this.playlistService);
-                this.initBrowseResponseTab(this.friendsFavorites, this.friendsFavoritesSongTableInfo, this.friendsFavoritesSort);
+                this.initBrowseResponseTab(this.friendsFavorites, this.friendsFavoritesSongTableManager, this.friendsFavoritesSort);
 
                 this.discover = browseData.discover;
-                this.discoverSongTableInfo =
+                this.discoverSongTableManager =
                     new SongTableManager(this.audioPlayerProxyService, this.favoritesService, this.playlistService);
-                this.initBrowseResponseTab(this.discover, this.discoverSongTableInfo, this.discoverSort);
+                this.initBrowseResponseTab(this.discover, this.discoverSongTableManager, this.discoverSort);
 
                 this.popular = browseData.popular;
                 for (let popularityRank = 1; popularityRank <= this.popular.songs.length; popularityRank += 1) {

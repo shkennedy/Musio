@@ -22,7 +22,7 @@ public class InstrumentController
     @Autowired
     private SearchService searchService;
 
-    
+
     @RequestMapping(value = "/browse/{instrumentId}", method = RequestMethod.GET)
     public @ResponseBody ApiResponseObject getBrowse(@PathVariable("instrumentId") int instrumentId) {
         ApiResponseObject response = new ApiResponseObject();

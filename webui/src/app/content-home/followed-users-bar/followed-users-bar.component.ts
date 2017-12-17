@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { FavoritesService } from '../../services/favorites.service';
 import { UserService } from '../../services/user.service';
 import { FollowedUsersBarProxyService } from '../../services/followedUsersBarProxy.service';
+import { AudioPlayerProxyService } from '../../services/audioPlayerProxy.service';
 
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FriendsDialogComponent } from '../../dialogs/friends-dialog/friends-dialog/friends-dialog.component';
@@ -25,6 +26,7 @@ export class FollowedUsersBarComponent implements OnInit {
 
     constructor(
         private router: Router,
+        private audioPlayerProxyService: AudioPlayerProxyService,
         private followedUsersBarProxyService: FollowedUsersBarProxyService,
         private favoritesService: FavoritesService,
         private userService: UserService,
@@ -42,6 +44,7 @@ export class FollowedUsersBarComponent implements OnInit {
         .subscribe(
             (users: User[]) => {
                 this.users = users;
+                this.getFollowedUsersHistory();
             },
             (error: any) => {
                 console.log(error.toString());
@@ -52,6 +55,7 @@ export class FollowedUsersBarComponent implements OnInit {
         this.userService.getFollowedUsersHistory()
         .subscribe(
             (userHistory: Map<number, Song>) => {
+                console.log(userHistory);
                 this.userHistory = userHistory;
             },
             (error: any) => {
@@ -60,7 +64,6 @@ export class FollowedUsersBarComponent implements OnInit {
     }
 
     findFriends() {
-        console.log('what');
         const dialogRef = this.dialog.open(FriendsDialogComponent, {
             width: '400px',
             height: '400px'

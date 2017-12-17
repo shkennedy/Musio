@@ -25,18 +25,18 @@
                     </div>
 
                     <div style="color:white;" class="grid2">
-                        <!-- {{users[0].username}} -->
+                        {{users[0].username}}
                         <div class="flex_start" style="font-size:80%;">{{user.username}}</div>
-                        <div *ngIf="userHistory.get(user.id)">
+                        <div *ngIf="userHistory">
                             <div class="flex_start ellipsis" style="font-size:60%;">
                                 <div style="width:100%;" class="ellipsis">
-                                    {{userHistory.get(user.id).title}}
+                                    <!-- {{userHistory.get(user.id).title}} -->
                                 </div>
                             </div>
                             <div class="flex_start ellipsis" style="font-size:60%;">
                                 <mat-icon class="album" style="margin-right:2px;">album</mat-icon>
                                 <div style="width:100%;" class="ellipsis">
-                                    {{userHistory.get(user.id)}}
+                                    <!-- {{userHistory.get(user.id).albumName}} -->
                                 </div>
                             </div>
                         </div>
@@ -54,7 +54,7 @@
                                 </button>
                             </div>
 
-                            <div *ngIf="userHistory.get(user.id)!=null">
+                            <div *ngIf="userHistory">
                                 <button mat-menu-item>
                                     <mat-icon>play_arrow</mat-icon>
                                     <span>Play this song</span>
