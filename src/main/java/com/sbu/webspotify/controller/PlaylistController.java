@@ -61,9 +61,9 @@ public class PlaylistController
     }
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET, headers = "Accept=application/json")
-	public @ResponseBody ApiResponseObject addPlaylist(HttpSession session) {
-        User user = (User) session.getAttribute("user");
-        Playlist newPlaylist = playlistService.createPlaylist(user);
+	public @ResponseBody ApiResponseObject addPlaylist(HttpSession session, @RequestParam("playlistName") String playlistName) {
+        int userId = (int) session.getAttribute("userId");
+        Playlist newPlaylist = playlistService.createPlaylist(userId, playlistName);
         ApiResponseObject response = new ApiResponseObject();
         if (newPlaylist != null) {
             response.setSuccess(true);
@@ -186,7 +186,7 @@ public class PlaylistController
             Playlist playlist = playlistRepository.findById(playlistId);
             MimeType mimeType = mimeTypeRepository.findBySubtype(appConfig.png);
             File artFile = fileService.uploadFile(playlistArtFile.getBytes(), mimeType);
-            playlist.setImageFileId(artFile.getId());
+            playlist.setImageFile(artFile);
             playlistRepository.save(playlist);
             playlistRepository.flush();
             

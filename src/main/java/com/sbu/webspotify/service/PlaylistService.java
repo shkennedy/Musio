@@ -32,12 +32,18 @@ public class PlaylistService {
         return new HashSet<Playlist>(playlistRepository.findAll());
     }
 
-	public Playlist createPlaylist(User user) {
+	public Playlist createPlaylist(int userId, String playlistName) {
         Playlist playlist = new Playlist();
-        playlist.setOwner(user);
+        User user = userService.findUserById(userId);
+
+        playlist.setOwnerId(user.getId());
+        playlist.setName(playlistName);
+        playlistRepository.save(playlist);
+        playlistRepository.flush();
+
         user.addPlaylistToFavorites(playlist);
         userService.persistUser(user);
-        playlist.setId(playlistRepository.save(playlist).getId());
+
         return playlist;
     }
     
@@ -58,7 +64,7 @@ public class PlaylistService {
         if(p == null || s == null) {
             return null;
         }
-        if(!p.getIsCollaborative() && !p.getOwner().equals(user)){
+        if( !p.getIsCollaborative() && !(p.getOwnerId() == user.getId()) ){
             return null;
         }
 
@@ -74,7 +80,7 @@ public class PlaylistService {
         if(p == null || s == null) {
             return null;
         }
-        if(!p.getIsCollaborative() && !p.getOwner().equals(user)){
+        if(!p.getIsCollaborative() && !(p.getOwnerId() == user.getId()) ) {
             return null;
         }
 
