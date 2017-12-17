@@ -124,46 +124,4 @@ export class AlbumDetailComponent implements OnInit {
     private addAlbumToQueue(): void {
         this.audioPlayerProxyService.addAlbumToQueue(this.album.id);
     }
-
-    private playSong(songId: number): void {
-        this.audioPlayerProxyService.playSong(songId);
-    }
-
-    private addSongToQueue(songId: number): void {
-        this.audioPlayerProxyService.addSongToQueue(songId);
-    }
-
-    private showPlay(songId: number): void {
-        this.playButtonsVisibility.set(songId, true);
-    }
-
-    private hidePlay(songId: number): void {
-        this.playButtonsVisibility.set(songId, false);
-    }
-
-    private getPlayVisibility(songId: number): Object {
-        return { 'visibility': this.playButtonsVisibility.get(songId) ? 'visible' : 'hidden' };
-    }
-
-    private favoriteOrUnfavoriteSong(songId: number): void {
-        if (this.songs.get(songId).isFavorited) {
-            this.favoritesService.removeFavoriteSongById(songId)
-                .subscribe((success: boolean) => {
-                    this.songs.get(songId).isFavorited = !success;
-                });
-        } else {
-            this.favoritesService.addFavoriteSongById(songId)
-                .subscribe((success: boolean) => {
-                    this.songs.get(songId).isFavorited = success;
-                });
-        }
-    }
-
-    private getFavoritedIcon(songId: number, isFavorited: boolean): Object {
-        if (this.playButtonsVisibility.get(songId)) {
-            return (isFavorited) ? 'remove' : 'add';
-        } else {
-            return (isFavorited) ? 'favorite' : 'add';
-        }
-    }
 }
