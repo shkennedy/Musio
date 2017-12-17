@@ -51,10 +51,19 @@ public class PlaylistService {
         playlistRepository.save(playlist);
     }
 
-    public void setPlaylistPrivacy(Playlist playlist, boolean isPrivate) {
+    public Playlist setPlaylistPrivacy(Playlist playlist, boolean isPrivate) {
         playlist.setIsPrivate(isPrivate);
         playlistRepository.save(playlist);
+        playlistRepository.flush();
+        return playlist;
     }
+
+    public Playlist setPlaylistCollab(Playlist playlist, boolean isCollaborative) {
+        playlist.setIsCollaborative(isCollaborative);
+        playlistRepository.save(playlist);
+        playlistRepository.flush();
+        return playlist;
+	}
 
 	public Playlist addSongToPlaylist(User user, int playlistId, int songId) {
         Playlist p = playlistRepository.findById(playlistId);
@@ -66,7 +75,7 @@ public class PlaylistService {
         if( !p.getIsCollaborative() && !(p.getOwnerId() == user.getId()) ){
             return null;
         }
-        
+
         if( !p.getSongs().contains(s) )
             p.addSong(s);
 
@@ -100,5 +109,7 @@ public class PlaylistService {
 	public Set<PlaylistIdentifier> searchByName(String query) {
 		return playlistRepository.findByNameContaining(query);
 	}
+
+	
 
 }

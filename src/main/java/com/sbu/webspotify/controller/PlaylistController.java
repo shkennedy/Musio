@@ -91,7 +91,7 @@ public class PlaylistController
         return response;
     }
 
-    @RequestMapping(value = "/get/{id}/{isPrivate}", method = RequestMethod.GET, headers = "Accept=application/json")
+    @RequestMapping(value = "/setPrivate/{id}/{isPrivate}", method = RequestMethod.GET, headers = "Accept=application/json")
     public @ResponseBody ApiResponseObject setPlaylistPrivacy(@PathVariable("id") int id, @PathVariable("isPrivate") boolean isPrivate) {
         Playlist playlist = playlistService.getPlaylistById(id);
         ApiResponseObject response = new ApiResponseObject();
@@ -100,16 +100,30 @@ public class PlaylistController
             response.setMessage("No playlist found with ID "+id+".");
         }
         else {
-            playlistService.setPlaylistPrivacy(playlist, isPrivate);
             response.setSuccess(true);
-            response.setResponseData(playlist);
+            response.setResponseData(playlistService.setPlaylistPrivacy(playlist, isPrivate));
         }
         return response;
     }
     
+    @RequestMapping(value = "/setCollaborative/{id}/{isCollaborative}", method = RequestMethod.GET, headers = "Accept=application/json")
+    public @ResponseBody ApiResponseObject setPlaylistCollab(@PathVariable("id") int id, @PathVariable("isCollaborative") boolean isCollaborative) {
+        Playlist playlist = playlistService.getPlaylistById(id);
+        ApiResponseObject response = new ApiResponseObject();
+        if(playlist == null){
+            response.setSuccess(false);
+            response.setMessage("No playlist found with ID "+id+".");
+        }
+        else {
+            response.setSuccess(true);
+            response.setResponseData(playlistService.setPlaylistCollab(playlist, isCollaborative));
+        }
+        return response;
+    }
+
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE, headers = "Accept=application/json")
 	public @ResponseBody ApiResponseObject deletePlaylist(@PathVariable("id") int id) {
-        // Need check for ownership of playlist
+        // TODO 
         playlistRepository.delete(id);
         ApiResponseObject response = new ApiResponseObject();
         response.setSuccess(true);
