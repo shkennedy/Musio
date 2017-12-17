@@ -17,6 +17,7 @@ import com.sbu.webspotify.model.Playlist;
 import com.sbu.webspotify.model.Song;
 import com.sbu.webspotify.model.Station;
 import com.sbu.webspotify.model.User;
+import com.sbu.webspotify.repo.UserRepository;
 import com.sbu.webspotify.service.SongService;
 import com.sbu.webspotify.service.UserService;
 
@@ -36,7 +37,10 @@ import org.springframework.web.multipart.MultipartFile;
 public class UserController {
 
     @Autowired
-    private UserService userService;
+	private UserService userService;
+	
+	@Autowired
+	UserRepository userRepository;
 
 	@Autowired
 	private SongService songService;
@@ -63,7 +67,7 @@ public class UserController {
 	public @ResponseBody ApiResponseObject getAUser(@PathVariable String var) {
         ApiResponseObject response = new ApiResponseObject();
         User user = userService.findUserByUsername(var);
-        response.setSuccess(user == null);
+        response.setSuccess(user != null);
         response.setResponseData(user);
 		return response;
     }
@@ -441,6 +445,33 @@ public class UserController {
         }
         
         return response;
-    }
+	}
+
+	@RequestMapping(value="/getMyFollowedUsers", method=RequestMethod.GET)
+	public @ResponseBody ApiResponseObject getMyFollowedUsers(HttpSession session){
+		ApiResponseObject response = new ApiResponseObject();
+
+		int userId = (int) session.getAttribute("userId");
+		response.setResponseData(userRepository.getFollowedUsers(userId));
+		response.setSuccess(true);
+
+		return response;
+	}
+
+	@RequestMapping(value="/getFollowedUsers/{userId}", method=RequestMethod.GET)
+	public @ResponseBody ApiResponseObject getFollowedUsers(@PathVariable int userId){
+		ApiResponseObject response = new ApiResponseObject();
+
+		if(userService.userExists(userId) == false) {
+			response.setSuccess(false);
+			response.setMessage("No user found with id "+userId+".");
+			return response;
+		}
+
+		response.setResponseData(userRepository.getFollowedUsers(userId));
+		response.setSuccess(true);
+
+		return response;
+	}
 
 }
