@@ -51,6 +51,10 @@ import { SearchComponent } from './content-pages/search-view/search-view.compone
 import { FollowedUsersBarComponent } from './content-home/followed-users-bar/followed-users-bar.component';
 import { UserSettingsComponent } from './content-pages/user-views/user-settings-view/user-settings.component';
 import { UsersComponent } from './content-pages/user-views/users-view/users.component';
+import { PasswordDialogComponent } from './dialogs/password-dialog/password-dialog.component';
+import { DeleteDialogComponent } from './dialogs/delete-dialog/delete-dialog/delete-dialog.component';
+import { PictureDialogComponent } from './dialogs/picture-dialog/picture-dialog/picture-dialog.component';
+import { PremiumDialogComponent } from './dialogs/premium-dialog/premium-dialog/premium-dialog.component';
 
 import { AdService } from './services/ad.service';
 import { AlbumService } from './services/album.service';
@@ -65,10 +69,7 @@ import { PlaylistService } from './services/playlist.service';
 import { SearchService } from './services/search.service';
 import { SongService } from './services/song.service';
 import { UserService } from './services/user.service';
-import { PasswordDialogComponent } from './dialogs/password-dialog/password-dialog.component';
-import { DeleteDialogComponent } from './dialogs/delete-dialog/delete-dialog/delete-dialog.component';
-import { PictureDialogComponent } from './dialogs/picture-dialog/picture-dialog/picture-dialog.component';
-import { PremiumDialogComponent } from './dialogs/premium-dialog/premium-dialog/premium-dialog.component';
+import { TopBarProxyService } from './services/topBarProxy.service';
 
 @NgModule({
     declarations: [
@@ -134,7 +135,8 @@ import { PremiumDialogComponent } from './dialogs/premium-dialog/premium-dialog/
         PlaylistService,
         SongService,
         SearchService,
-        UserService
+        UserService,
+        TopBarProxyService
     ],
     bootstrap: [AppComponent]
 })

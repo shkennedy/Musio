@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 import { FavoritesService } from '../../services/favorites.service';
 import { UserService } from '../../services/user.service';
 import { LoginService } from '../../services/login.service';
 import { FileService } from '../../services/file.service';
+import { TopBarProxyService } from '../../services/topBarProxy.service';
 
 import { PremiumDialogComponent } from '../../dialogs/premium-dialog/premium-dialog/premium-dialog.component';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 import { User } from '../../models/user.model';
 
@@ -19,10 +20,11 @@ import { User } from '../../models/user.model';
 })
 export class TopNavComponent implements OnInit {
 
-    private user: User = new User();
+    private user: User;
 
     constructor(
         private router: Router,
+        private topBarProxyService: TopBarProxyService,
         private userService: UserService,
         private loginService: LoginService,
         private favoritesService: FavoritesService,
@@ -32,18 +34,34 @@ export class TopNavComponent implements OnInit {
 
     ngOnInit() {
         this.userService.getUser(this.setUser);
-        this.userService.getIsPremium(this.setPremium);
+
+        this.topBarProxyService.registerListeners(this.setIsPremium, this.refreshUserImage);
     }
 
     public setUser = (user: User): void => {
         this.user = user;
-        const profile_picture = this.fileService.getUserImageURLById(this.user.id);
-        // use profile_picture?
-        this.user.profileImageUrl = 'assets/images/no_artist_picture.png';
+        this.user.isPremium = true;
+        this.userService.getIsPremium(this.setIsPremium);
+        this.refreshUserImage();
     }
 
-    public setPremium = (isPremium: boolean): void => {
+    public setIsPremium = (isPremium: boolean): void => {
         this.user.isPremium = isPremium;
+    }
+
+    public refreshUserImage = (): void => {
+        const profile_picture = this.fileService.getUserImageURLById(this.user.id);
+        this.userService.getHasImageById(this.user.id)
+        .subscribe((hasImage: boolean) => {
+            if (hasImage) {
+                this.user.profileImageUrl = this.fileService.getUserImageURLById(this.user.id);
+            } else {
+                this.user.profileImageUrl = 'assets/images/no_artist_picture.png';
+            }
+        },
+        (error: any) => {
+            console.log(error);
+        });
     }
 
     private search(searchQuery: string): void {
@@ -55,32 +73,8 @@ export class TopNavComponent implements OnInit {
         console.log('clicked profile');
     }
 
-    // goPremium() {
-    //     this.router.navigate(['/goPremium']);
-    //     console.log('clicked goPremium');
-    // }
-
     gotoSettings() {
         this.router.navigate(['/userSettings']);
-        // for (let i = 4; i < 100; i += 1) {
-        //     console.log(i);
-        //     this.favoritesService.addFavoriteAlbumById(i)
-        //     .subscribe((response: boolean) => {
-        //         console.log(response);
-        //     });
-        //     this.favoritesService.addFavoriteArtistById(i)
-        //     .subscribe((response: boolean) => {
-        //         console.log(response);
-        //     });
-        //     this.favoritesService.addFavoritePlaylistById(i)
-        //     .subscribe((response: boolean) => {
-        //         console.log(response);
-        //     });
-        //     this.favoritesService.addFavoriteSongById(i)
-        //     .subscribe((response: boolean) => {
-        //         console.log(response);
-        //     });
-        // }
     }
 
     gotoContact() {

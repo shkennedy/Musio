@@ -16,7 +16,6 @@ import com.sbu.webspotify.model.Playlist;
 import com.sbu.webspotify.model.Song;
 import com.sbu.webspotify.model.Station;
 import com.sbu.webspotify.model.User;
-import com.sbu.webspotify.repo.UserRepository;
 import com.sbu.webspotify.service.SongService;
 import com.sbu.webspotify.service.UserService;
 
@@ -28,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
@@ -411,7 +411,7 @@ public class UserController {
 	}
 
     @RequestMapping(value="/goPremium", method=RequestMethod.POST)
-    public @ResponseBody ApiResponseObject goPremium(HttpSession session, @RequestParam("creditCardInfo") CreditCardInfo creditCardInfo){
+    public @ResponseBody ApiResponseObject goPremium(HttpSession session, @RequestBody CreditCardInfo creditCardInfo){
         ApiResponseObject response = new ApiResponseObject();
         User user = (User) session.getAttribute("user");
         if (creditCardInfo.getIsValid()) {

@@ -43,7 +43,6 @@ export class HttpRequestService {
         if (id !== -1) {
             url += '/' + id.toString();
         }
-        console.log(JSON.stringify(body));
         return this.http.post(url, JSON.stringify(body), { headers: new HttpHeaders().set('Content-Type', 'application/json') })
             .catch(function (error: any) {
                 console.log('error: ' + error);

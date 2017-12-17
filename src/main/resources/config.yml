@@ -8,7 +8,7 @@ query.recentFavoritesToQuery: 3
 query.relatedArtistsToQuery: 20
 query.listeningHistoryToQuery: 25
 
-email.emailAddress:           "Musio.SBU@gmail.com"
+email.emailAddress:           "Musio.sbu@gmail.com"
 email.changePasswordSubject:  "Change Musio Password"
 email.changePasswordBody:     "Here is your one time security code for changing your password.\nPlease enter it into the confirmation dialog.\n\n"
 

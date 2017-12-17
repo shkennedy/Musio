@@ -29,8 +29,10 @@ export class DeleteDialogComponent implements OnInit {
     }
 
     deleteAccount() {
+        console.log('trying delete');
         this.userService.deleteUser(this.user.id)
             .subscribe((success: boolean) => {
+                console.log('succeeded');
                 window.location.href = '/logout';
             });
     }
