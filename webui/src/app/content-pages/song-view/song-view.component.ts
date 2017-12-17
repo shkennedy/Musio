@@ -21,6 +21,7 @@ import { Artist } from '../../models/artist.model';
 export class SongViewComponent implements OnInit {
 
     private hasSongs = false;
+    private isLoaded = false;
     @ViewChild(MatSort) sort: any;
     private songTableManager: SongTableManager;
 
@@ -51,6 +52,7 @@ export class SongViewComponent implements OnInit {
                                 albumInfoReturns -= 1;
                                 if (albumInfoReturns === 0) {
                                     this.songTableManager.setSongs(songs);
+                                    this.isLoaded = true;
                                 }
                             });
 

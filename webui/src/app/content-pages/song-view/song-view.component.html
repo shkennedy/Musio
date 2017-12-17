@@ -3,7 +3,7 @@
     <a [routerLink]="['/browse']">Find Songs</a>
 </div>
 <ng-template #notEmpty>
-    <div *ngIf="!songTableManager.tableData; else songsLoaded;" class="center_loading">
+    <div *ngIf="!isLoaded; else songsLoaded;" class="center_loading">
         <mat-spinner color="accent"></mat-spinner>
     </div>
     <ng-template #songsLoaded>
@@ -87,8 +87,8 @@
                     </mat-cell>
                 </ng-container>
 
-                <mat-header-row *matHeaderRowDef="['playButton', 'title', 'artist', 'album', 'duration', 'moreActionsButton', 'favoriteButton']"></mat-header-row>
-                <mat-row *matRowDef="let row; columns: ['playButton', 'title', 'artist', 'album', 'duration', 'moreActionsButton', 'favoriteButton'];"
+                <mat-header-row *matHeaderRowDef="['playButton', 'title', 'artist', 'album', 'moreActionsButton', 'duration', 'favoriteButton']"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: ['playButton', 'title', 'artist', 'album', 'moreActionsButton', 'duration', 'favoriteButton'];"
                     (mouseenter)="songTableManager.showButtons(row.id)" (mouseleave)="songTableManager.hideButtons(row.id)"></mat-row>
             </mat-table>
         </div>
