@@ -32,7 +32,6 @@ export class PlaylistViewComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        console.log('WTF');
         this.playlistService.getPlaylistById(this.playlistId)
             .subscribe(
                 (playlist: Playlist) => {

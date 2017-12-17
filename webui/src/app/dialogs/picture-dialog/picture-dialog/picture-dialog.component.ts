@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { UserService } from '../../../services/user.service';
 
 @Component({
     selector: 'app-picture-dialog',
@@ -9,7 +10,9 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 export class PictureDialogComponent implements OnInit {
     fileName = 'No File Selected';
     fileObject: any;
-    constructor(public dialogRef: MatDialogRef<PictureDialogComponent>,
+    constructor(
+        private userService: UserService,
+        public dialogRef: MatDialogRef<PictureDialogComponent>,
         @Inject(MAT_DIALOG_DATA) public data: any) { }
 
     ngOnInit() { }
@@ -29,9 +32,15 @@ export class PictureDialogComponent implements OnInit {
     }
 
     changeProfilePicture() {
-        // console.log(this.fileObject);
-        //do stuff
-        console.log("changed");
+        console.log('attempting image set');
+        this.userService.setUserProfileImage(this.fileObject)
+            .subscribe((success: boolean) => {
+                console.log('success');
+            },
+            (error: any) => {
+                console.log('unable to set image');
+                console.log(error);
+            });
     }
 
 }

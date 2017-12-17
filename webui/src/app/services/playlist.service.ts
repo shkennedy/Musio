@@ -36,10 +36,14 @@ export class PlaylistService {
             });
     }
 
-    public createPlaylist(playlist: Playlist): Observable<boolean> {
-        return this.httpRequest.post(PlaylistService.CREATE_URL, playlist)
+    public createPlaylist(): Observable<Playlist> {
+        // return this.httpRequest.get(PlaylistService.CREATE_URL)
+        // .map((response: ApiResponse) => {
+        //     return response.responseData;
+        // });
+        return this.httpRequest.get(PlaylistService.CREATE_URL)
             .map((response: ApiResponse) => {
-                return response.success;
+                return response.responseData;
             });
     }
 

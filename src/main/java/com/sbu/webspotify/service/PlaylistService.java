@@ -32,10 +32,36 @@ public class PlaylistService {
         return new HashSet<Playlist>(playlistRepository.findAll());
     }
 
-	public Playlist createPlaylist(Playlist playlist, User user) {
-        playlist.setOwner(user);
+	public Playlist createPlaylist(User user, String playlistName) {
+        Playlist playlist = new Playlist();
+
+        playlist.setOwnerId(user.getId());
+        playlist.setName(playlistName);
+        playlistRepository.save(playlist);
+        playlistRepository.flush();
+
         user.addPlaylistToFavorites(playlist);
         userService.persistUser(user);
+
+        return playlist;
+    }
+    
+    public void setPlaylistName(Playlist playlist, String name) {
+        playlist.setName(name);
+        playlistRepository.save(playlist);
+    }
+
+    public Playlist setPlaylistPrivacy(Playlist playlist, boolean isPrivate) {
+        playlist.setIsPrivate(isPrivate);
+        playlistRepository.save(playlist);
+        playlistRepository.flush();
+        return playlist;
+    }
+
+    public Playlist setPlaylistCollab(Playlist playlist, boolean isCollaborative) {
+        playlist.setIsCollaborative(isCollaborative);
+        playlistRepository.save(playlist);
+        playlistRepository.flush();
         return playlist;
 	}
 
@@ -46,11 +72,13 @@ public class PlaylistService {
         if(p == null || s == null) {
             return null;
         }
-        if(!p.getIsCollaborative() && !p.getOwner().equals(user)){
+        if( !p.getIsCollaborative() && !(p.getOwnerId() == user.getId()) ){
             return null;
         }
 
-        p.addSong(s);
+        if( !p.getSongs().contains(s) )
+            p.addSong(s);
+
         persistPlaylist(p);
         return p;
     }
@@ -62,7 +90,7 @@ public class PlaylistService {
         if(p == null || s == null) {
             return null;
         }
-        if(!p.getIsCollaborative() && !p.getOwner().equals(user)){
+        if(!p.getIsCollaborative() && !(p.getOwnerId() == user.getId()) ) {
             return null;
         }
 
@@ -81,5 +109,7 @@ public class PlaylistService {
 	public Set<PlaylistIdentifier> searchByName(String query) {
 		return playlistRepository.findByNameContaining(query);
 	}
+
+	
 
 }

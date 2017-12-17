@@ -29,6 +29,7 @@ export class UserService {
     private static PASSWORD_URL = UserService.USER_URL + '/password';
     private static PASSWORD_CHANGE_URL = UserService.PASSWORD_URL + '/requestChange';
     private static CHECK_HAS_IMAGE_URL = UserService.USER_URL + '/checkProfileImage';
+    private static SET_IMAGE_URL = UserService.USER_URL + '/uploadProfileImage';
 
     constructor(
         private router: Router,
@@ -111,7 +112,7 @@ export class UserService {
     public goPremium(paymentInfo: PaymentInfo): Observable<boolean> {
         return this.httpRequest.post(UserService.GO_PREMIUM_URL, paymentInfo)
             .map((response: ApiResponse) => {
-                return response.success;
+                return response.responseData;
             });
     }
 
@@ -123,6 +124,7 @@ export class UserService {
             for (let i = 0; i < user.roles.length; ++i) {
                 if (user.roles[i].role === 'PREMIUM_USER') {
                     callback(true);
+                    return;
                 }
             }
             callback(false);
@@ -176,6 +178,14 @@ export class UserService {
         return this.httpRequest.get(UserService.FOLLOWED_USERS_HISTORY)
             .map((response: ApiResponse) => {
                 return response.responseData;
+            });
+    }
+
+    public setUserProfileImage(profileImage: any): Observable<boolean> {
+        // return this.http.post(url, JSON.stringify(body), { headers: new HttpHeaders().set('Content-Type', 'application/json') })
+        return this.httpRequest.post(UserService.SET_IMAGE_URL, profileImage)
+            .map((response: ApiResponse) => {
+                return response.success;
             });
     }
 

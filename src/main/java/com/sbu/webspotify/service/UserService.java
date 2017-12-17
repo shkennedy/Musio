@@ -104,11 +104,8 @@ public class UserService {
 		userRepository.save(user);
     }
     
-    public ApiResponseObject deleteUser(User user) {
-        ApiResponseObject response = new ApiResponseObject();
-        userRepository.delete(user);
-        response.setSuccess(true);
-        return response;
+    public void deleteUser(User user) {
+        userRepository.deleteUserById(user.getId());
     }
 
     public ApiResponseObject sendChangePasswordEmail(User user, int securityCode) {
@@ -374,7 +371,7 @@ public class UserService {
     
     public boolean getIsAdmin(User user) {
         for (Role role : user.getRoles()) {
-            if (role.getRole() == "adminUser") {
+            if (role.getRole().equals(appConfig.adminUser)) {
                 return true;
             }
         }
@@ -383,7 +380,7 @@ public class UserService {
 
     public boolean makeUserPremium(User user) {
         for (Role role : user.getRoles()) {
-            if (role.getRole() == "PREMIUM_USER") {
+            if (role.getRole().equals(appConfig.premiumUser)) {
                 return false;
             }
         }

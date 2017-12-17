@@ -1,3 +1,4 @@
+package com.sbu.webspotify.model;
 
 public class CreditCardInfo {
 

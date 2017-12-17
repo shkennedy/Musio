@@ -57,23 +57,10 @@ export class UserSettingsComponent implements OnInit {
         });
     }
 
-    private changeProfileImage(profileImage: PickedFile): void {
-        // this.userService.setProfileImage(profileImage)
-        // .subscribe((success: boolean) => {
-        // });
-    }
-
     private setPrivateSession(): void {
         this.user.privateSession = !this.user.privateSession;
         this.userService.setPrivateSession(this.user.privateSession);
         this.audioPlayerProxyService.setPrivateSession(this.user.privateSession);
-    }
-
-    private deleteAccount(): void {
-        // Confirmation dialog
-
-        // Pleading/Survey of use
-
     }
 
     private audioToggle(data: any): void {

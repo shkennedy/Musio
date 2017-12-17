@@ -144,12 +144,17 @@ export class CreatePlaylistViewComponent implements OnInit {
     }
 
     private createPlaylist(): void {
-        const playlist: Playlist = new Playlist();
-        playlist.name = this.playlistName;
-        playlist.isPrivate = this.isPrivate;
-        playlist.songs = this.addedTableManager.getSongs();
-        playlist.isCollaborative = this.isCollaborative;
-
-        this.router.navigate(['/playlists', playlist.id]);
+        this.playlistService.createPlaylist()
+        .subscribe((newPlaylist: Playlist) => {
+            console.log(newPlaylist);
+            newPlaylist.name = this.playlistName;
+            newPlaylist.isPrivate = this.isPrivate;
+            newPlaylist.songs = this.addedTableManager.getSongs();
+            newPlaylist.isCollaborative = this.isCollaborative;
+            this.router.navigate(['/playlists']);
+        },
+        (error: any) => {
+            console.log(error);
+        });
     }
 }

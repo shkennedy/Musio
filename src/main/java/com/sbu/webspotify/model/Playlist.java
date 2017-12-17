@@ -2,6 +2,7 @@ package com.sbu.webspotify.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.*;
@@ -20,10 +21,10 @@ public class Playlist implements Serializable {
 	private boolean isCollaborative;
 	private boolean isPrivate;
 	private String  name;
-	private User    owner;
-	private int 	imageFileId;
+	private int     ownerId;
+	private File 	imageFile;
 
-	private List<Song> songs;
+	private List<Song> songs = new ArrayList<Song>();
 
 	public Playlist() {
 	}
@@ -62,16 +63,6 @@ public class Playlist implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	@ManyToOne
-	@JoinColumn(name="owner_id")
-	public User getOwner() {
-		return this.owner;
-	}
-
-	public void setOwner(User owner) {
-		this.owner = owner;
 	}
 
 	@ManyToMany(fetch=FetchType.EAGER,
@@ -116,18 +107,23 @@ public class Playlist implements Serializable {
 		return this.songs.remove(s);
 	}
 
-	/**
-	 * @return the imageFileId
-	 */
-	public int getImageFileId() {
-		return imageFileId;
+	@ManyToOne
+	@JoinColumn(name="image_file_id")
+	public File getImageFile() {
+		return this.imageFile;
 	}
 
-	/**
-	 * @param imageFileId the imageFileId to set
-	 */
-	public void setImageFileId(int imageFileId) {
-		this.imageFileId = imageFileId;
+	public void setImageFile(File imageFile) {
+		this.imageFile = imageFile;
+	}
+
+	@Column(name="owner_id")
+	public int getOwnerId() {
+		return ownerId;
+	}
+
+	public void setOwnerId(int ownerId) {
+		this.ownerId = ownerId;
 	}
 
 }

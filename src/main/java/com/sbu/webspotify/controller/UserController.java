@@ -3,6 +3,7 @@ package com.sbu.webspotify.controller;
 import java.io.IOException;
 import java.util.Set;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.sbu.webspotify.dto.ApiResponseObject;
@@ -16,7 +17,6 @@ import com.sbu.webspotify.model.Playlist;
 import com.sbu.webspotify.model.Song;
 import com.sbu.webspotify.model.Station;
 import com.sbu.webspotify.model.User;
-import com.sbu.webspotify.repo.UserRepository;
 import com.sbu.webspotify.service.SongService;
 import com.sbu.webspotify.service.UserService;
 
@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
@@ -90,15 +91,23 @@ public class UserController {
     }
     
     @RequestMapping(value={"/{userId}"}, method = RequestMethod.DELETE)
-    public @ResponseBody ApiResponseObject deleteUser(HttpSession session, @PathVariable int userId) {
+    public @ResponseBody ApiResponseObject deleteUser(HttpSession session, HttpServletRequest request, @PathVariable int userId) throws Exception {
         ApiResponseObject response = new ApiResponseObject();
-        User userToDelete = userService.findUserById(userId);
+		User userToDelete = userService.findUserById(userId);
+		if(userToDelete == null){
+			response.setSuccess(false);
+			response.setMessage("Could not find user with id "+userId+".");
+			return response;
+		}
         User currentUser = (User) session.getAttribute("user");
-        System.out.println("userToDelete " + userToDelete + " || currentUser " + currentUser);
-        if (userToDelete.equals(currentUser) || userService.getIsAdmin(currentUser)) {
-            userService.deleteUser(userToDelete);
+        if (currentUser.equals(userToDelete) || userService.getIsAdmin(currentUser)) {
+			userService.deleteUser(userToDelete);
+			if(currentUser.equals(userToDelete)) {
+				request.logout();
+			}
             response.setSuccess(true);
         } else {
+			response.setMessage("You do not have permission to delete this user.");
             response.setSuccess(false);
         }
         return response;
@@ -411,7 +420,7 @@ public class UserController {
 	}
 
     @RequestMapping(value="/goPremium", method=RequestMethod.POST)
-    public @ResponseBody ApiResponseObject goPremium(HttpSession session, @RequestParam("creditCardInfo") CreditCardInfo creditCardInfo){
+    public @ResponseBody ApiResponseObject goPremium(HttpSession session, @RequestBody CreditCardInfo creditCardInfo){
         ApiResponseObject response = new ApiResponseObject();
         User user = (User) session.getAttribute("user");
         if (creditCardInfo.getIsValid()) {
