@@ -107,20 +107,6 @@ public class PlaylistController
         return response;
     }
     
-    @RequestMapping(value = "/update", method = RequestMethod.PUT, headers = "Accept=application/json")
-	public @ResponseBody ApiResponseObject updatePlaylist(@RequestBody Playlist playlist) {
-		Playlist updatedPlaylist = playlistRepository.save(playlist);
-        ApiResponseObject response = new ApiResponseObject();
-        if (updatedPlaylist != null) {
-            response.setSuccess(true);
-            response.setResponseData(updatedPlaylist);
-        } else {
-            response.setSuccess(false);
-            response.setMessage("Unable to update playlist.");
-        }
-        return response;
-    }
-    
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE, headers = "Accept=application/json")
 	public @ResponseBody ApiResponseObject deletePlaylist(@PathVariable("id") int id) {
         // Need check for ownership of playlist
@@ -146,9 +132,9 @@ public class PlaylistController
         return response;
     }
 
-    @RequestMapping(value = "/removeSong", headers = "Accept=application/json")
-    public @ResponseBody ApiResponseObject removeSongFromPlaylist(@RequestParam("playlistId") int playlistId, @RequestParam("songId") int songId,
-                                                HttpSession session) {
+    @RequestMapping(value = "/removeSong/{playlistId}/{songId}", headers = "Accept=application/json")
+    public @ResponseBody ApiResponseObject removeSongFromPlaylist(@PathVariable("playlistId") int playlistId, @PathVariable("songId") int songId,
+                                                                    HttpSession session) {
         User user = (User) session.getAttribute("user");        
         Playlist updatedPlaylist = playlistService.removeSongFromPlaylist(user, playlistId, songId);
         ApiResponseObject response = new ApiResponseObject();
@@ -169,7 +155,7 @@ public class PlaylistController
     }
 
 
-    @RequestMapping(path="/updatePlaylistImage")
+    @RequestMapping(path="/updatePlaylistImage", method=RequestMethod.POST)
     public @ResponseBody ApiResponseObject updatePlaylistImage(@RequestParam("playlistId") int playlistId,
                                                                @RequestParam("playlistArtFile") MultipartFile playlistArtFile){
         ApiResponseObject response = new ApiResponseObject();

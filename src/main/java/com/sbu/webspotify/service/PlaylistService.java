@@ -66,8 +66,10 @@ public class PlaylistService {
         if( !p.getIsCollaborative() && !(p.getOwnerId() == user.getId()) ){
             return null;
         }
+        
+        if( !p.getSongs().contains(s) )
+            p.addSong(s);
 
-        p.addSong(s);
         persistPlaylist(p);
         return p;
     }
