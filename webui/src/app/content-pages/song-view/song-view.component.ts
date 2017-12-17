@@ -43,7 +43,6 @@ export class SongViewComponent implements OnInit {
                         this.songService.getSongAlbumInfo(song.id)
                             .subscribe((album: Album) => {
                                 this.songs.get(song.id).album = album[0];
-                                console.log(this.songs.get(song.id).album.title);
 
                                 this.albumInfoReturns -= 1;
                                 if (this.albumInfoReturns === 0) {

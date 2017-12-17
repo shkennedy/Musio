@@ -441,6 +441,10 @@ p {
         display: flex;
         align-content: center;
     }
+
+    .mat-column-moreActionsButton {
+        max-width: 48px;
+    }
     
     .mat-column-duration {
         max-width: 48px;
