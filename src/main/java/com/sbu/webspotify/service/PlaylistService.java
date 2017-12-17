@@ -32,12 +32,24 @@ public class PlaylistService {
         return new HashSet<Playlist>(playlistRepository.findAll());
     }
 
-	public Playlist createPlaylist(Playlist playlist, User user) {
+	public Playlist createPlaylist(User user) {
+        Playlist playlist = new Playlist();
         playlist.setOwner(user);
         user.addPlaylistToFavorites(playlist);
         userService.persistUser(user);
+        playlist.setId(playlistRepository.save(playlist).getId());
         return playlist;
-	}
+    }
+    
+    public void setPlaylistName(Playlist playlist, String name) {
+        playlist.setName(name);
+        playlistRepository.save(playlist);
+    }
+
+    public void setPlaylistPrivacy(Playlist playlist, boolean isPrivate) {
+        playlist.setIsPrivate(isPrivate);
+        playlistRepository.save(playlist);
+    }
 
 	public Playlist addSongToPlaylist(User user, int playlistId, int songId) {
         Playlist p = playlistRepository.findById(playlistId);

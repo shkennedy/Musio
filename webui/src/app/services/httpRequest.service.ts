@@ -43,7 +43,8 @@ export class HttpRequestService {
         if (id !== -1) {
             url += '/' + id.toString();
         }
-        return this.http.post(url, JSON.stringify(body), { headers: this.getHeaders() })
+        console.log(JSON.stringify(body));
+        return this.http.post(url, JSON.stringify(body), { headers: new HttpHeaders().set('Content-Type', 'application/json') })
             .catch(function (error: any) {
                 console.log('error: ' + error);
                 return Observable.throw(error || 'Server error');
@@ -76,7 +77,7 @@ export class HttpRequestService {
 
     private getHeaders(): HttpHeaders {
         const headers = new HttpHeaders();
-        headers.append('Content-Type', 'application/json');
+        headers.set('Content-Type', 'application/json');
         return headers;
     }
 }

@@ -60,10 +60,10 @@ public class PlaylistController
         return response;
     }
 
-	@RequestMapping(value = "/create", method = RequestMethod.POST, headers = "Accept=application/json")
-	public @ResponseBody ApiResponseObject addPlaylist(@RequestBody Playlist playlist, HttpSession session) {
+	@RequestMapping(value = "/create", method = RequestMethod.GET, headers = "Accept=application/json")
+	public @ResponseBody ApiResponseObject addPlaylist(HttpSession session) {
         User user = (User) session.getAttribute("user");
-        Playlist newPlaylist = playlistService.createPlaylist(playlist, user);
+        Playlist newPlaylist = playlistService.createPlaylist(user);
         ApiResponseObject response = new ApiResponseObject();
         if (newPlaylist != null) {
             response.setSuccess(true);
@@ -71,6 +71,38 @@ public class PlaylistController
         } else {
             response.setSuccess(false);
             response.setMessage("Unable to create new playlist.");
+        }
+        return response;
+    }
+
+    @RequestMapping(value = "/get/{id}/{name}", method = RequestMethod.GET, headers = "Accept=application/json")
+    public @ResponseBody ApiResponseObject setPlaylistName(@PathVariable("id") int id, @PathVariable("name") String name) {
+        Playlist playlist = playlistService.getPlaylistById(id);
+        ApiResponseObject response = new ApiResponseObject();
+        if(playlist == null){
+            response.setSuccess(false);
+            response.setMessage("No playlist found with ID "+id+".");
+        }
+        else {
+            playlistService.setPlaylistName(playlist, name);
+            response.setSuccess(true);
+            response.setResponseData(playlist);
+        }
+        return response;
+    }
+
+    @RequestMapping(value = "/get/{id}/{isPrivate}", method = RequestMethod.GET, headers = "Accept=application/json")
+    public @ResponseBody ApiResponseObject setPlaylistPrivacy(@PathVariable("id") int id, @PathVariable("isPrivate") boolean isPrivate) {
+        Playlist playlist = playlistService.getPlaylistById(id);
+        ApiResponseObject response = new ApiResponseObject();
+        if(playlist == null){
+            response.setSuccess(false);
+            response.setMessage("No playlist found with ID "+id+".");
+        }
+        else {
+            playlistService.setPlaylistPrivacy(playlist, isPrivate);
+            response.setSuccess(true);
+            response.setResponseData(playlist);
         }
         return response;
     }
@@ -98,10 +130,10 @@ public class PlaylistController
         return response;
     }	
 
-    @RequestMapping(value = "/addSong", headers = "Accept=application/json")
-    public @ResponseBody ApiResponseObject addSongToPlaylist(@RequestParam("playlistId") int playlistId, @RequestParam("songId") int songId,
+    @RequestMapping(value = "/addSong/{playlistId}/{songId}", headers = "Accept=application/json")
+    public @ResponseBody ApiResponseObject addSongToPlaylist(@PathVariable("playlistId") int playlistId, @PathVariable("songId") int songId,
                                                 HttpSession session) {
-        User user = (User) session.getAttribute("user");        
+        User user = (User) session.getAttribute("user");
         Playlist updatedPlaylist = playlistService.addSongToPlaylist(user, playlistId, songId);
         ApiResponseObject response = new ApiResponseObject();
         if (updatedPlaylist != null) {
@@ -112,7 +144,7 @@ public class PlaylistController
             response.setMessage("Unable to add song to playlist.");
         }
         return response;
-    }	
+    }
 
     @RequestMapping(value = "/removeSong", headers = "Accept=application/json")
     public @ResponseBody ApiResponseObject removeSongFromPlaylist(@RequestParam("playlistId") int playlistId, @RequestParam("songId") int songId,
@@ -128,7 +160,7 @@ public class PlaylistController
             response.setMessage("Unable to remove song from playlist.");
         }
         return response;
-    }	
+    }
 
     @GetMapping(path="/all")
     public @ResponseBody Iterable<Playlist> getAllPlaylists()
