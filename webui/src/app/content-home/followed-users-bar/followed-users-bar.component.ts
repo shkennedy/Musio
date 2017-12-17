@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { AudioPlayerProxyService } from '../../services/audioPlayerProxy.service';
 import { FavoritesService } from '../../services/favorites.service';
 import { UserService } from '../../services/user.service';
 
@@ -26,6 +27,7 @@ export class FollowedUsersBarComponent implements OnInit {
         private router: Router,
         private favoritesService: FavoritesService,
         private userService: UserService,
+        private audioPlayerProxyService: AudioPlayerProxyService,
         private dialog: MatDialog
     ) {
         // const u = new User();
@@ -57,5 +59,9 @@ export class FollowedUsersBarComponent implements OnInit {
             width: '400px',
             height: '400px'
         });
+    }
+
+    playSong(song: Song) {
+        this.audioPlayerProxyService.playSong(song.id);
     }
 }

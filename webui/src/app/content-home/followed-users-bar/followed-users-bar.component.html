@@ -88,14 +88,14 @@
                         </button>
                         <mat-menu #moreActionsMenu="matMenu">
                             <div>
-                                <button mat-menu-item>
+                                <button mat-menu-item [routerLink]="['/user/user.id']">
                                     <mat-icon>face</mat-icon>
                                     <span>Go to userpage</span>
                                 </button>
                             </div>
 
                             <div *ngIf="userHistory.get(user.id)!=null">
-                                <button mat-menu-item>
+                                <button mat-menu-item (click)="playSong()">
                                     <mat-icon>play_arrow</mat-icon>
                                     <span>Play this song</span>
                                 </button>
