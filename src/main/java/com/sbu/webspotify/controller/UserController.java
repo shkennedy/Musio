@@ -10,11 +10,13 @@ import com.sbu.webspotify.dto.identifier.SongIdentifier;
 import com.sbu.webspotify.dto.identifier.UserIdentifier;
 import com.sbu.webspotify.model.Album;
 import com.sbu.webspotify.model.Artist;
+import com.sbu.webspotify.model.CreditCardInfo;
 import com.sbu.webspotify.model.Genre;
 import com.sbu.webspotify.model.Playlist;
 import com.sbu.webspotify.model.Song;
 import com.sbu.webspotify.model.Station;
 import com.sbu.webspotify.model.User;
+import com.sbu.webspotify.repo.UserRepository;
 import com.sbu.webspotify.service.SongService;
 import com.sbu.webspotify.service.UserService;
 
@@ -408,5 +410,19 @@ public class UserController {
 		return response;
 	}
 
+    @RequestMapping(value="/goPremium", method=RequestMethod.POST)
+    public @ResponseBody ApiResponseObject goPremium(HttpSession session, @RequestParam("creditCardInfo") CreditCardInfo creditCardInfo){
+        ApiResponseObject response = new ApiResponseObject();
+        User user = (User) session.getAttribute("user");
+        if (creditCardInfo.getIsValid()) {
+            response.setSuccess(true);
+            response.setResponseData(userService.makeUserPremium(user));
+        } else {
+            response.setSuccess(false);
+            response.setMessage("Invalid credit card number.");
+        }
+        
+        return response;
+    }
 
 }

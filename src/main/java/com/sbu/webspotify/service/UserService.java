@@ -381,6 +381,19 @@ public class UserService {
         return false;
     }
 
+    public boolean makeUserPremium(User user) {
+        for (Role role : user.getRoles()) {
+            if (role.getRole() == "PREMIUM_USER") {
+                return false;
+            }
+        }
+
+        Role premiumUserRole = roleRepository.findByRole(appConfig.premiumUser);
+        user.setRoles(new HashSet<Role>(Arrays.asList(premiumUserRole)));
+        userRepository.save(user);
+        return true;
+    }
+
 	public boolean userExists(String username) {
 		return userRepository.existsByUsername(username);
 	}
