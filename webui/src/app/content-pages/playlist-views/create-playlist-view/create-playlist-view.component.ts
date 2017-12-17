@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatTableDataSource, MatRow, MatSort } from '@angular/material';
+import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 
 import { FavoritesService } from '../../../services/favorites.service';
 import { PlaylistService } from '../../../services/playlist.service';
@@ -17,20 +18,24 @@ import { SongService } from '../../../services/song.service';
     selector: 'app-create-playlist-view',
     templateUrl: './create-playlist-view.component.html',
     styleUrls: ['./create-playlist-view.component.css']
-  })
+})
 export class CreatePlaylistViewComponent implements OnInit {
 
     private playlists: Playlist[];
 
     private playlistName: string;
-    private isPrivate: boolean;
+    private isPrivate = false;
+    private isCollaborative = false;
     private playlistImage: any;
     private playlistImageName: string;
 
     private isLoaded = false;
+    private allowIsCollaborative = true;
     private hasSongs = false;
     @ViewChild(MatSort) sort: MatSort;
-    private songTableManager: SongTableManager;
+    private notAddedTableManager: SongTableManager;
+    private addedTableManager: SongTableManager;
+    private playlistIdentityFormGroup: FormGroup;
 
     private errorMessage: string;
 
@@ -39,19 +44,29 @@ export class CreatePlaylistViewComponent implements OnInit {
         private audioPlayerProxyService: AudioPlayerProxyService,
         private favoritesService: FavoritesService,
         private playlistService: PlaylistService,
-        private songService: SongService
+        private songService: SongService,
+        private formBuilder: FormBuilder,
     ) { }
 
     ngOnInit() {
+        this.playlistIdentityFormGroup = this.formBuilder.group({
+            playlistIdentityControl: ['', Validators.required]
+        });
+
+        this.notAddedTableManager =
+            new SongTableManager(this.audioPlayerProxyService, this.favoritesService, this.playlistService);
+        this.addedTableManager =
+            new SongTableManager(this.audioPlayerProxyService, this.favoritesService, this.playlistService);
+
         this.favoritesService.getFavoritePlaylists()
             .subscribe((playlists: Playlist[]) => {
-               this.playlists = playlists;
+                this.playlists = playlists;
             },
             (error: any) => {
                 this.errorMessage = error;
             });
 
-            this.favoritesService.getFavoriteSongs()
+        this.favoritesService.getFavoriteSongs()
             .subscribe(
             (songs: Song[]) => {
                 if (songs.length !== 0) {
@@ -64,7 +79,7 @@ export class CreatePlaylistViewComponent implements OnInit {
 
                                 albumInfoReturns -= 1;
                                 if (albumInfoReturns === 0) {
-                                    this.songTableManager.setSongs(songs);
+                                    this.notAddedTableManager.setSongs(songs);
                                     this.isLoaded = true;
                                 }
                             });
@@ -78,7 +93,8 @@ export class CreatePlaylistViewComponent implements OnInit {
                     });
 
                     setTimeout(() => {
-                        this.songTableManager.setSort(this.sort);
+                        this.notAddedTableManager.setSort(this.sort);
+                        this.addedTableManager.setSort(this.sort);
                     }, 3000);
                 }
             },
@@ -97,5 +113,43 @@ export class CreatePlaylistViewComponent implements OnInit {
                 this.playlistImageName = playlistImage.target.files[0].name;
             });
         }
+    }
+
+    private setIsPrivate(isPrivate: boolean): void {
+        this.isPrivate = isPrivate;
+        if (this.isPrivate) {
+            this.isCollaborative = false;
+            this.allowIsCollaborative = false;
+        } else {
+            this.allowIsCollaborative = true;
+        }
+    }
+
+    private setIsCollaborative(isCollaborative: boolean): void {
+        if (isCollaborative && this.allowIsCollaborative) {
+            this.isCollaborative = isCollaborative;
+        } else {
+            this.isCollaborative = false;
+        }
+    }
+
+    private addSongToPlaylist(song: Song): void {
+        this.notAddedTableManager.removeSong(song);
+        this.addedTableManager.addSong(song);
+    }
+
+    private removeSongFromPlaylist(song: Song): void {
+        this.addedTableManager.removeSong(song);
+        this.notAddedTableManager.addSong(song);
+    }
+
+    private createPlaylist(): void {
+        const playlist: Playlist = new Playlist();
+        playlist.name = this.playlistName;
+        playlist.isPrivate = this.isPrivate;
+        playlist.songs = this.addedTableManager.getSongs();
+        playlist.isCollaborative = this.isCollaborative;
+
+        this.router.navigate(['/playlists', playlist.id]);
     }
 }

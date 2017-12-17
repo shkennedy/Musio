@@ -1,0 +1,29 @@
+* {
+    background-color: transparent;
+}
+
+.mat-column-addButton {
+    max-width: 32px;
+}
+
+.mat-column-removeButton {
+    max-width: 32px;
+}
+
+.mat-column-playButton {
+    max-width: 28px;
+}
+
+.song_play_button {
+    max-width: 32px;
+    display: flex;
+    align-content: center;
+}
+
+.mat-column-duration {
+    max-width: 48px;
+}
+
+mat-row:hover {
+background-color: grey;
+}

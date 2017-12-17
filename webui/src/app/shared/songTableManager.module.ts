@@ -13,6 +13,7 @@ export class SongTableManager {
     private songs: Map<number, Song>;
     private playlists: Map<number, Playlist>;
     private tableData: MatTableDataSource<Song>;
+    private sort: MatSort;
     private buttonVisibilities: Map<number, boolean>;
 
     constructor(
@@ -34,7 +35,12 @@ export class SongTableManager {
     }
 
     public setSort(sort: MatSort): void {
+        this.sort = sort;
         this.tableData.sort = sort;
+    }
+
+    public getSongs(): Song[] {
+        return this.tableData.data;
     }
 
     public setSongs(songs: Song[]): void {
@@ -42,6 +48,21 @@ export class SongTableManager {
             this.songs.set(song.id, song);
         });
         this.tableData.data = songs;
+    }
+
+    public addSong(song: Song): void {
+        this.buttonVisibilities.set(song.id, false);
+        this.songs.set(song.id, song);
+        this.tableData.data.push(song);
+        this.tableData = new MatTableDataSource(this.tableData.data);
+        this.tableData.sort = this.sort;
+    }
+
+    public removeSong(song: Song): void {
+        this.songs.delete(song.id);
+        this.tableData.data.splice(this.tableData.data.indexOf(song), 1);
+        this.tableData = new MatTableDataSource(this.tableData.data);
+        this.tableData.sort = this.sort;
     }
 
     public hasPlaylists(): boolean {
