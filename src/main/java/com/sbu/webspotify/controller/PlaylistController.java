@@ -62,8 +62,8 @@ public class PlaylistController
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET, headers = "Accept=application/json")
 	public @ResponseBody ApiResponseObject addPlaylist(HttpSession session, @RequestParam("playlistName") String playlistName) {
-        int userId = (int) session.getAttribute("userId");
-        Playlist newPlaylist = playlistService.createPlaylist(userId, playlistName);
+        User user = (User) session.getAttribute("user");
+        Playlist newPlaylist = playlistService.createPlaylist(user, playlistName);
         ApiResponseObject response = new ApiResponseObject();
         if (newPlaylist != null) {
             response.setSuccess(true);

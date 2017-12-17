@@ -32,9 +32,8 @@ public class PlaylistService {
         return new HashSet<Playlist>(playlistRepository.findAll());
     }
 
-	public Playlist createPlaylist(int userId, String playlistName) {
+	public Playlist createPlaylist(User user, String playlistName) {
         Playlist playlist = new Playlist();
-        User user = userService.findUserById(userId);
 
         playlist.setOwnerId(user.getId());
         playlist.setName(playlistName);
