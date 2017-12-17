@@ -28,6 +28,7 @@ export class UserService {
     private static ADD_TO_HISTORY_URL = UserService.USER_URL + '/addSongToHistory';
     private static PASSWORD_URL = UserService.USER_URL + '/password';
     private static PASSWORD_CHANGE_URL = UserService.PASSWORD_URL + '/requestChange';
+    private static CHECK_HAS_IMAGE_URL = UserService.USER_URL + '/checkProfileImage';
 
     constructor(
         private router: Router,
@@ -173,6 +174,13 @@ export class UserService {
 
     public getFollowedUsersHistory(): Observable<Map<number, Song>> {
         return this.httpRequest.get(UserService.FOLLOWED_USERS_HISTORY)
+            .map((response: ApiResponse) => {
+                return response.responseData;
+            });
+    }
+
+    public getHasImageById(userId: number): Observable<boolean> {
+        return this.httpRequest.get(UserService.CHECK_HAS_IMAGE_URL, userId)
             .map((response: ApiResponse) => {
                 return response.responseData;
             });

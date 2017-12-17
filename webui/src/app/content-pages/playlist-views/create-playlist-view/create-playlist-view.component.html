@@ -1,10 +1,91 @@
-<!-- Add Playlist Information -->
-    <!-- Name textfield -->
-    <!-- File picker for image (optional) -->
-    <!-- Description (optional) -->
+<mat-horizontal-stepper linear>
+    <!-- Add Playlist Information -->
+    <mat-step [stepControl]="playlistIdentity">
+        <!-- Name textfield -->
+        <form [formGroup]="firstFormGroup" (ngSubmit)="storeNewPassword(passwordForm)" #passwordForm="ngForm">
+            <ng-template matStepLabel>Playlist Indentity</ng-template>
+            <p>Enter your new playlist's name.</p>
+            <mat-form-field>
+                <input matInput [ngModel]="playlistName" placeholder="Playlist Name" formControlName="playlistIdentityControl" required>
+            </mat-form-field>
+        </form>
 
-<!-- Pick initial songs (optional) -->
-    <!-- Search bar: live reload song table on text change -->
-    <!-- Recommended songs: guided by genre or instrument -->
+        <!-- Toggle button for private -->
+        <mat-slide-toggle (checked)="isPrivate">Private Playlist</mat-slide-toggle>
 
-<!-- Finish: navigate to playlist page-->
+        <!-- File picker for image (optional) -->
+        <button mat-raised-button class="sized" (click)="filePicker.click()" style="margin-right:20px;" type="button">Playlist Image</button>
+        <!-- Hidden file picker -->
+        <input type="file" style="display:none;" #filePicker (change)="fileSelected($event)" accept="image/*">
+        <!-- File Name display -->
+        <input type="text" readonly [ngModel]="fileName" style="background-color:transparent; border:none; border-bottom:1px solid white;">
+        <!-- Remove file button -->
+        <button mat-icon-button *ngIf="playlistImage" (click)="playlistImage=null; fileName='No File Selected';" style="width:36px;height:36px;">
+            <mat-icon>clear</mat-icon>
+        </button>
+        <div>
+            <button mat-button matStepperNext>Next
+                <mat-icon>chevron_right</mat-icon>
+            </button>
+        </div>
+    </mat-step>
+
+    <mat-step>
+        <!-- Pick initial songs (optional) Favorited songs with add button -->
+        <div *ngIf="!isLoaded; else songsLoaded;" class="center_loading">
+            <mat-spinner color="accent"></mat-spinner>
+        </div>
+        <ng-template #songsLoaded>
+            <h3>Songs</h3>
+            <div id="album-tracklist">
+                <mat-table #table [dataSource]="songTableManager.tableData" matSort>
+
+                    <!-- Play Button Column -->
+                    <ng-container matColumnDef="playButton">
+                        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+                        <mat-cell *matCellDef="let song">
+                            <button mat-icon-button class="song_play_button" [ngStyle]="songTableManager.getButtonVisibility(song.id)" (click)="songTableManager.playSong(song.id)">
+                                <mat-icon>play_circle_filled</mat-icon>
+                            </button>
+                        </mat-cell>
+                    </ng-container>
+
+                    <!-- Title Column -->
+                    <ng-container matColumnDef="title">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> Title </mat-header-cell>
+                        <mat-cell *matCellDef="let song">{{song.title}}</mat-cell>
+                    </ng-container>
+
+                    <!-- Artist Column -->
+                    <ng-container matColumnDef="artist">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> Artist </mat-header-cell>
+                        <mat-cell *matCellDef="let song">{{song.artist.name}}</mat-cell>
+                    </ng-container>
+
+                    <!-- Album Column -->
+                    <ng-container matColumnDef="album">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> Album </mat-header-cell>
+                        <mat-cell *matCellDef="let song">{{song.album.title}}</mat-cell>
+                    </ng-container>
+
+                    <!-- Duration Column -->
+                    <ng-container matColumnDef="duration">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>
+                            <mat-icon>schedule</mat-icon>
+                        </mat-header-cell>
+                        <mat-cell *matCellDef="let song"> {{song.durationString}} </mat-cell>
+                    </ng-container>
+
+                    <mat-header-row *matHeaderRowDef="['playButton', 'title', 'artist', 'album', 'duration']"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: ['playButton', 'title', 'artist', 'album', 'duration'];" (mouseenter)="songTableManager.showButtons(row.id)"
+                        (mouseleave)="songTableManager.hideButtons(row.id)"></mat-row>
+                </mat-table>
+            </div>
+
+            <!-- Finish: navigate to playlist page-->
+            <div style="margin-top:25px;">
+                <button mat-raised-button color="accent" [disabled]="fileName == 'No File Selected'" (click)="changeProfilePicture()">Submit</button>
+            </div>
+        </ng-template>
+    </mat-step>
+</mat-horizontal-stepper>
