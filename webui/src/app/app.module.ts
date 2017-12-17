@@ -55,6 +55,7 @@ import { PasswordDialogComponent } from './dialogs/password-dialog/password-dial
 import { DeleteDialogComponent } from './dialogs/delete-dialog/delete-dialog/delete-dialog.component';
 import { PictureDialogComponent } from './dialogs/picture-dialog/picture-dialog/picture-dialog.component';
 import { PremiumDialogComponent } from './dialogs/premium-dialog/premium-dialog/premium-dialog.component';
+import { FriendsDialogComponent } from './dialogs/friends-dialog/friends-dialog/friends-dialog.component';
 
 import { AdService } from './services/ad.service';
 import { AlbumService } from './services/album.service';
