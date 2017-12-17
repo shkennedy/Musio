@@ -2,7 +2,7 @@
     <!-- Add Playlist Information -->
     <mat-step [stepControl]="playlistIdentity">
         <!-- Name textfield -->
-        <form [formGroup]="firstFormGroup" (ngSubmit)="storeNewPassword(passwordForm)" #passwordForm="ngForm">
+        <form [formGroup]="firstFormGroup" (ngSubmit)="storeNewPassword(passwordForm)">
             <ng-template matStepLabel>Playlist Indentity</ng-template>
             <p>Enter your new playlist's name.</p>
             <mat-form-field>

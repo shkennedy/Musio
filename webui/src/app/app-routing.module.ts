@@ -32,7 +32,7 @@ const appRoutes: Routes = [
       { path: 'artists/:id', component: ArtistDetailComponent },
       { path: 'playlists', component: PlaylistsViewComponent },
       { path: 'playlists/:id', component: PlaylistViewComponent },
-      { path: 'playlists/create', component: CreatePlaylistViewComponent },
+      { path: 'createPlaylist', component: CreatePlaylistViewComponent },
       { path: 'songs', component: SongViewComponent },
       { path: 'radio', component: RadioViewComponent },
       { path: 'go-premium', component: GoPremiumComponent },

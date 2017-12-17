@@ -54,7 +54,7 @@
                 <!-- Playlists -->
                 <!-- <div *ngIf="newReleases.playlists.length !== 0">
                     <h3>Playlists</h3>
-                    <mat-grid-tile *ngFor="let playlist of newReleases.playlists" [routerLink]="['/playlistss', playlist.id]">
+                    <mat-grid-tile *ngFor="let playlist of newReleases.playlists" [routerLink]="['/playlists', playlist.id]">
                         <div class="col_flex">
                             <img class="routing_img" src="{{playlist.albumArtUrl}}" alt="{{playlist.title}}">
                             <p class="album_name">{{playlist.title}}</p>
@@ -117,7 +117,7 @@
                 <!-- Playlists -->
                 <div *ngIf="friendsFavorites.playlists.length !== 0">
                     <h3>Playlists</h3>
-                    <mat-grid-tile *ngFor="let playlist of friendsFavorites.playlists" [routerLink]="['/playlistss', playlist.id]">
+                    <mat-grid-tile *ngFor="let playlist of friendsFavorites.playlists" [routerLink]="['/playlists', playlist.id]">
                         <div class="col_flex">
                             <img class="routing_img" src="{{playlist.albumArtUrl}}" alt="{{playlist.title}}">
                             <p class="album_name">{{playlist.title}}</p>

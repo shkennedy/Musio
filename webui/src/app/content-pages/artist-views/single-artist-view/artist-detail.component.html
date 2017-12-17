@@ -120,7 +120,7 @@
                                         </button>
                                         <mat-menu #moreActionsMenu="matMenu">
                                             <div *ngIf="!getSongTableManager(album.id).hasPlaylists()">
-                                                <button mat-menu-item [routerLink]="['/playlists']">
+                                                <button mat-menu-item [routerLink]="['/createPlaylist']">
                                                     <mat-icon>control_point</mat-icon>
                                                     <span>Create a Playlist</span>
                                                 </button>
