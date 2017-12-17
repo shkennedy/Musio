@@ -5,8 +5,11 @@ import { MatTableDataSource, MatRow, MatSort } from '@angular/material';
 import { AudioPlayerProxyService } from '../../../services/audioPlayerProxy.service';
 import { FavoritesService } from '../../../services/favorites.service';
 import { FileService } from '../../../services/file.service';
+import { PlaylistService } from '../../../services/playlist.service';
 import { UserService } from '../../../services/user.service';
 import { SongService } from '../../../services/song.service';
+
+import { SongTableManager } from '../../../shared/songTableManager.module';
 
 import { Album } from '../../../models/album.model';
 import { User } from '../../../models/user.model';
@@ -22,10 +25,9 @@ export class UsersComponent implements OnInit {
 
     private user: User;
 
-    private history: Map<number, Song> = new Map();
+    private hasHistory = false;
+    private historySongTableManager: SongTableManager;
     @ViewChild(MatSort) sort: any;
-    private historyTableData: MatTableDataSource<Song>;
-    private historyPlayButtonsVisibility: Map<number, boolean> = new Map();
 
     private errorMessage: string;
 
@@ -34,6 +36,7 @@ export class UsersComponent implements OnInit {
         private audioPlayerProxyService: AudioPlayerProxyService,
         private fileService: FileService,
         private favoritesService: FavoritesService,
+        private playlistService: PlaylistService,
         private songService: SongService,
         private userService: UserService
     ) { }
@@ -48,12 +51,15 @@ export class UsersComponent implements OnInit {
                 // Get user history
                 this.userService.getHistoryById(user.id)
                     .subscribe((songs: Song[]) => {
-                        this.historyTableData = new MatTableDataSource(songs);
+                        if (songs.length > 0) {
+                            this.hasHistory = true;
+                        }
+
+                        this.historySongTableManager =
+                            new SongTableManager(this.audioPlayerProxyService, this.favoritesService, this.playlistService);
+                        this.historySongTableManager.setSongs(songs);
 
                         songs.forEach((song: Song) => {
-                            this.history.set(song.id, song);
-                            this.historyPlayButtonsVisibility.set(song.id, false);
-
                             song.duration = Math.floor(song.duration / 1000);
                             song.durationString = `${Math.floor(song.duration / 60)}:`;
                             const seconds = song.duration % 60;
@@ -64,10 +70,10 @@ export class UsersComponent implements OnInit {
                         this.favoritesService.getFavoriteSongs()
                         .subscribe((favoritedSongs: Song[]) => {
                             songs.forEach((song: Song) => {
-                                this.history.get(song.id).isFavorited = false;
+                                song.isFavorited = false;
                                 favoritedSongs.forEach((favoritedSong: Song) => {
                                     if (song.id === favoritedSong.id) {
-                                        this.history.get(song.id).isFavorited = true;
+                                        song.isFavorited = true;
                                     }
                                 });
                             });
@@ -87,47 +93,5 @@ export class UsersComponent implements OnInit {
 
     public getUserImage(userId: number): void {
         this.user.profileImageUrl = this.fileService.getUserImageURLById(userId);
-    }
-
-    private playSong(songId: number): void {
-        this.audioPlayerProxyService.playSong(songId);
-    }
-
-    private addSongToQueue(songId: number): void {
-        this.audioPlayerProxyService.addSongToQueue(songId);
-    }
-
-    private historyFavoriteOrUnfavoriteSong(songId: number): void {
-        if (this.history.get(songId).isFavorited) {
-            this.favoritesService.removeFavoriteSongById(songId)
-                .subscribe((success: boolean) => {
-                    this.history.get(songId).isFavorited = !success;
-                });
-        } else {
-            this.favoritesService.addFavoriteSongById(songId)
-                .subscribe((success: boolean) => {
-                    this.history.get(songId).isFavorited = success;
-                });
-        }
-    }
-
-    private historyGetFavoritedIcon(songId: number): Object {
-        if (this.historyPlayButtonsVisibility.get(songId)) {
-            return (this.history.get(songId).isFavorited) ? 'remove' : 'add';
-        } else {
-            return (this.history.get(songId).isFavorited) ? 'favorite' : 'add';
-        }
-    }
-
-    private historyShowPlay(songId: number): void {
-        this.historyPlayButtonsVisibility.set(songId, true);
-    }
-
-    private historyHidePlay(songId: number): void {
-        this.historyPlayButtonsVisibility.set(songId, false);
-    }
-
-    private historyGetPlayVisibility(songId: number): Object {
-        return { 'visibility': this.historyPlayButtonsVisibility.get(songId) ? 'visible' : 'hidden' };
     }
 }

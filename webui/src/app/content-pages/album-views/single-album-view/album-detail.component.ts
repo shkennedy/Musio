@@ -7,10 +7,13 @@ import { AlbumService } from '../../../services/album.service';
 import { FavoritesService } from '../../../services/favorites.service';
 import { FileService } from '../../../services/file.service';
 
+import { SongTableManager } from '../../../shared/songTableManager.module';
+
 import { Song } from '../../../models/song.model';
 import { Album } from '../../../models/album.model';
 import { Artist } from '../../../models/artist.model';
 import { timeout } from 'rxjs/operators/timeout';
+import { PlaylistService } from '../../../services/playlist.service';
 
 @Component({
     selector: 'app-album-detail',
@@ -27,8 +30,7 @@ export class AlbumDetailComponent implements OnInit {
     private ascendingOrder = true;
 
     @ViewChild(MatSort) sort: any;
-    private albumTableData: MatTableDataSource<Song>;
-    private playButtonsVisibility: Map<number, boolean> = new Map();
+    private albumSongTableManager: SongTableManager;
 
     private errorMessage = '';
 
@@ -37,7 +39,8 @@ export class AlbumDetailComponent implements OnInit {
         private albumService: AlbumService,
         private audioPlayerProxyService: AudioPlayerProxyService,
         private favoritesService: FavoritesService,
-        private fileService: FileService
+        private fileService: FileService,
+        private playlistService: PlaylistService
     ) { }
 
     ngOnInit() {
@@ -46,12 +49,13 @@ export class AlbumDetailComponent implements OnInit {
             .subscribe(
             (album: Album) => {
                 this.album = album;
-                this.albumTableData = new MatTableDataSource(album.songs);
+                this.albumSongTableManager =
+                    new SongTableManager(this.audioPlayerProxyService, this.favoritesService, this.playlistService);
 
-                album.songs.forEach((song: Song) => {
-                    this.songs.set(song.id, song);
-                    this.playButtonsVisibility.set(song.id, false);
-                });
+                this.albumSongTableManager.setSongs(this.album.songs);
+                setTimeout(() => {
+                    this.albumSongTableManager.setSort(this.sort);
+                }, 2000);
 
                 // Check if favorited
                 this.favoritesService.getFavoriteAlbums()
@@ -89,10 +93,6 @@ export class AlbumDetailComponent implements OnInit {
             (error: any) => {
                 this.errorMessage = error;
             });
-
-        setTimeout(() => {
-            this.albumTableData.sort = this.sort;
-        }, 2000);
     }
 
     private favoriteAlbum(): void {

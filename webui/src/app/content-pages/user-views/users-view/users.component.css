@@ -337,6 +337,10 @@
         max-width: 32px;
     }
 
+    .mat-column-moreActionsButton {
+        max-width: 48px;
+    }
+
     .mat-column-artist {
         max-width: 200px;
     }

@@ -33,6 +33,10 @@ mat-row:hover {
     max-width: 32px;
 }
 
+.mat-column-moreActionsButton {
+    max-width: 48px;
+}
+
 .song_play_button {
     max-width: 32px;
     display: flex;

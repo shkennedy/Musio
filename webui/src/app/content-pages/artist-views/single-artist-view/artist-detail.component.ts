@@ -7,6 +7,9 @@ import { ArtistService } from '../../../services/artist.service';
 import { AudioPlayerProxyService } from '../../../services/audioPlayerProxy.service';
 import { FavoritesService } from '../../../services/favorites.service';
 import { FileService } from '../../../services/file.service';
+import { PlaylistService } from '../../../services/playlist.service';
+
+import { SongTableManager } from '../../../shared/songTableManager.module';
 
 import { Artist } from '../../../models/artist.model';
 import { Album } from '../../../models/album.model';
@@ -21,18 +24,15 @@ import { Song } from '../../../models/song.model';
 })
 export class ArtistDetailComponent implements OnInit {
 
+    private isLoaded = false;
     private artist: Artist;
     private followerCount: number;
     private isFollowed = false;
     private relatedArtists: Artist[];
-    private titleSort = false;
-    private ascendingOrder = true;
 
+    private albums: Map<number, Album>;
     @ViewChild(MatSort) sort: any;
-    private albums: Map<number, Album> = new Map();
-    private songs: Map<number, Song> = new Map();
-    private albumTablesData: Map<number, MatTableDataSource<Song>>;
-    private playButtonsVisibility: Map<number, boolean> = new Map();
+    private albumSongTableManagers: Map<number, SongTableManager> = new Map();
 
     private errorMessage: string;
 
@@ -42,7 +42,8 @@ export class ArtistDetailComponent implements OnInit {
         private artistService: ArtistService,
         private audioPlayerProxyService: AudioPlayerProxyService,
         private favoritesService: FavoritesService,
-        private fileService: FileService
+        private fileService: FileService,
+        private playlistService: PlaylistService
     ) { }
 
     ngOnInit() {
@@ -55,14 +56,19 @@ export class ArtistDetailComponent implements OnInit {
                     .subscribe(
                     (albums: Album[]) => {
                         this.artist.albums = albums;
-                        this.albumTablesData = new Map();
+                        this.albums = new Map();
+
                         this.artist.albums.forEach((album: Album) => {
                             this.albums.set(album.id, album);
-                            this.albumTablesData.set(album.id, new MatTableDataSource(album.songs));
-                            album.songs.forEach((song: Song) => {
-                                this.songs.set(song.id, song);
-                                this.playButtonsVisibility.set(song.id, false);
-                            });
+
+                            const albumSongTableManager =
+                                new SongTableManager(this.audioPlayerProxyService, this.favoritesService, this.playlistService);
+                            albumSongTableManager.setSongs(album.songs);
+                            this.albumSongTableManagers.set(album.id, albumSongTableManager);
+
+                            setTimeout(() => {
+                                albumSongTableManager.setSort(this.sort);
+                            }, 3000);
                         });
 
                         // Check if favorited
@@ -70,7 +76,7 @@ export class ArtistDetailComponent implements OnInit {
                             .subscribe(
                             (favoriteAlbums: Album[]) => {
                                 if (albums) {
-                                    this.albums.forEach((album: Album) => {
+                                    albums.forEach((album: Album) => {
                                         album.isFavorited = false;
                                         favoriteAlbums.forEach((favoriteAlbum: Album) => {
                                             if (album.id === favoriteAlbum.id) {
@@ -86,19 +92,23 @@ export class ArtistDetailComponent implements OnInit {
 
                         this.favoritesService.getFavoriteSongs()
                             .subscribe(
-                            (songs: Song[]) => {
-                                this.songs.forEach((song: Song) => {
-                                    song.isFavorited = false;
-                                    songs.forEach((favoritedSong: Song) => {
-                                        if (favoritedSong.id === song.id) {
-                                            song.isFavorited = true;
-                                        }
+                            (favoriteSongs: Song[]) => {
+                                albums.forEach((album: Album) => {
+                                    album.songs.forEach((song: Song) => {
+                                        song.isFavorited = false;
+                                        favoriteSongs.forEach((favoritedSong: Song) => {
+                                            if (favoritedSong.id === song.id) {
+                                                song.isFavorited = true;
+                                            }
+                                        });
                                     });
                                 });
                             },
                             (error: any) => {
                                 console.log('error fetching favorite songs');
                             });
+
+                        this.isLoaded = true;
                     },
                     (error: any) => {
                         console.log(error.toString());
@@ -137,12 +147,6 @@ export class ArtistDetailComponent implements OnInit {
             (error: any) => {
                 this.errorMessage = error;
             });
-
-        setTimeout(() => {
-            this.artist.albums.forEach((album: Album) => {
-                this.albumTablesData.get(album.id).sort = this.sort;
-            });
-        }, 3000);
     }
 
     private followArtist(): void {
@@ -218,49 +222,7 @@ export class ArtistDetailComponent implements OnInit {
         this.audioPlayerProxyService.addAlbumToQueue(albumId);
     }
 
-    private playSong(songId: number): void {
-        this.audioPlayerProxyService.playSong(songId);
-    }
-
-    private addSongToQueue(songId: number): void {
-        this.audioPlayerProxyService.addSongToQueue(songId);
-    }
-
-    private showPlay(songId: number): void {
-        this.playButtonsVisibility.set(songId, true);
-    }
-
-    private hidePlay(songId: number): void {
-        this.playButtonsVisibility.set(songId, false);
-    }
-
-    private getPlayVisibility(songId: number): Object {
-        return { 'visibility': this.playButtonsVisibility.get(songId) ? 'visible' : 'hidden' };
-    }
-
-    private favoriteOrUnfavoriteSong(songId: number): void {
-        if (this.songs.get(songId).isFavorited) {
-            this.favoritesService.removeFavoriteSongById(songId)
-                .subscribe((success: boolean) => {
-                    this.songs.get(songId).isFavorited = !success;
-                });
-        } else {
-            this.favoritesService.addFavoriteSongById(songId)
-                .subscribe((success: boolean) => {
-                    this.songs.get(songId).isFavorited = success;
-                });
-        }
-    }
-
-    private getFavoritedIcon(songId: number, isFavorited: boolean): Object {
-        if (this.playButtonsVisibility.get(songId)) {
-            return (isFavorited) ? 'remove' : 'add';
-        } else {
-            return (isFavorited) ? 'favorite' : 'add';
-        }
-    }
-
-    private getAlbumData(albumId: number) {
-        return this.albumTablesData.get(albumId);
+    private getSongTableManager(albumId: number): SongTableManager {
+        return this.albumSongTableManagers.get(albumId);
     }
 }
