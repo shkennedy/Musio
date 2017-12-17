@@ -1,14 +1,80 @@
-<div class="friend" *ngFor="let user of users;">
-    <!-- <img src="{{user.profileImageUrl}}" width="40" height="40"> -->
+<!-- <div class="friend" *ngFor="let user of users;">
+    <img src="{{user.profileImageUrl}}" width="40" height="40">
     <mat-icon style="color:#FFF;margin-left:10px;">account_circle</mat-icon>
     <div>
         <h2 style="color:white;">{{user.username}}</h2>
         <h4 style="color:white;">{{userHistory[user.id].artists[0]}}</h4>
         <h4 style="color:white;">{{userHistory[user.id].title}}</h4>
     </div>
-    <!-- right click for more options -->
-    <!-- go to user page -->
-    <!-- go to artist page of current/last song -->
-    <!-- add current/last song to queue -->
-    <!-- play current/last song -->
+    right click for more options
+    go to user page
+    go to artist page of current/last song
+    add current/last song to queue
+    play current/last song
+</div> -->
+
+<div class="friends_bar" style="background-color:black;">
+    <mat-grid-list cols="1" rowHeight="90px">
+        <!-- Do something at the top -->
+        <mat-grid-tile class="border">
+            <div style="color:white;">
+                Friend's List
+            </div>
+        </mat-grid-tile>
+
+        <!-- All friend's here -->
+        <!-- <mat-grid-tile *ngFor="let i of [1,1,1,1,1,1,1,1]" style="background-color:red;">
+            <div class="flex_column flex_start" style="width:100%;height:100%;">
+                <div style="height:20px;width:100%;color:white;" class="flex_center">
+                    {{users[0].username}}
+                </div>
+
+                <div class="flex_start" style="width:100%;height:100%;">
+                    Image
+                    <img *ngIf="users[0].profileImageUrl != null; else noProfilePicture" [src]="users[0].profileImageUrl" class="image_sized">
+                    <ng-template #noProfilePicture>
+                        <mat-icon class="default image_sized">account_circle</mat-icon>
+                    </ng-template>
+
+                    Name, etc.
+                    <div class="default flex_column">
+                        <div>something</div>
+                    </div>
+                </div>
+            </div>
+        </mat-grid-tile> -->
+
+        <mat-grid-tile *ngFor="let i of [1,1,1,1,1,1,1]">
+            <div class="grid hover">
+                <div class="flex_center">
+                    <!-- <img *ngIf="users[0].profileImageUrl != null; else noProfilePicture" [src]="users[0].profileImageUrl" class="image_sized"> -->
+                    <!-- <img *ngIf="false; else noProfilePicture" src="fakepath" class="image_sized"> -->
+                    <!-- <ng-template #noProfilePicture> -->
+                        <mat-icon class="default image_sized">account_circle</mat-icon>
+                    <!-- </ng-template> -->
+                </div>
+
+                <div style="color:white;" class="grid2">
+                    <!-- {{users[0].username}} -->
+                    <div class="flex_start">name</div>
+                    <div class="flex_start">song</div>
+                </div>
+
+                <div class="flex_center" style="color:white;">3</div>
+                <!-- <div class="flex_center">
+                </div> -->
+
+                <!-- <div class="flex_column">
+                    <div>hi</div>
+                    <div>hey</div>
+                    <div>yo</div>
+                </div> -->
+
+                <!-- <div class="flex_center">
+                    options
+                </div> -->
+            </div>
+        </mat-grid-tile>
+
+    </mat-grid-list>
 </div>

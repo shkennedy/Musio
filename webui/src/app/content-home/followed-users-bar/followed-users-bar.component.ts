@@ -23,7 +23,11 @@ export class FollowedUsersBarComponent implements OnInit {
         private router: Router,
         private favoritesService: FavoritesService,
         private userService: UserService
-    ) { }
+    ) {
+        const u = new User();
+        u.username = 'bingo';
+        this.users = [u];
+    }
 
     ngOnInit() {
         this.userService.getFollowedUsers()
