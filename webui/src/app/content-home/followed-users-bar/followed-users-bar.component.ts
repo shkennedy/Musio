@@ -28,9 +28,9 @@ export class FollowedUsersBarComponent implements OnInit {
         private userService: UserService,
         private dialog: MatDialog
     ) {
-        const u = new User();
-        u.username = 'bingo';
-        this.users = [u];
+        // const u = new User();
+        // u.username = 'bingo';
+        // this.users = [u];
     }
 
     ngOnInit() {
