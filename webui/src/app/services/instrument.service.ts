@@ -9,6 +9,7 @@ import { Album } from '../models/album.model';
 import { Artist } from '../models/artist.model';
 import { Playlist } from '../models/playlist.model';
 import { Song } from '../models/song.model';
+import { Instrument } from '../models/instrument.model';
 
 export interface BrowseInstrumentResponse {
     songs: Song[];
@@ -31,6 +32,13 @@ export class InstrumentService {
 
     public getAlbumById(instrumentId: number): Observable<BrowseInstrumentResponse> {
         return this.httpRequest.get(InstrumentService.INSTRUMENT_URL + InstrumentService.BROWSE_URL, instrumentId)
+            .map((response: ApiResponse) => {
+                return response.responseData;
+            });
+    }
+
+    public getAllInstruments(): Observable<Instrument[]> {
+        return this.httpRequest.get(InstrumentService.INSTRUMENT_URL + '/getAll')
             .map((response: ApiResponse) => {
                 return response.responseData;
             });
