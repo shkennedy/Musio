@@ -42,8 +42,9 @@
                 <!-- Albums -->
                 <h3>Albums</h3>
                 <mat-grid-list *ngIf="newReleases.albums.length !== 0" cols="4" gutterSize="15px" class="padded">
-                    <mat-grid-tile *ngFor="let album of newReleases.albums" [routerLink]="['/albums', album.id]">
-                        <div class="col_flex">
+                    <mat-grid-tile *ngFor="let album of newReleases.albums" [routerLink]="['/albums', album.id]" 
+                                    style="padding-bottom:10px;">
+                        <div>
                             <img class="routing_img" src="{{album.albumArtUrl}}" alt="{{album.title}}">
                             <p class="album_name">{{album.title}}</p>
                             <p class="artist_name">{{album.artistName}}</p>
@@ -81,7 +82,7 @@
                 <h3>Albums</h3>
                 <mat-grid-list *ngIf="discover.albums.length !== 0" cols="4" gutterSize="15px" class="padded">
                     <mat-grid-tile *ngFor="let album of discover.albums" [routerLink]="['/albums', album.id]">
-                        <div class="col_flex">
+                        <div>
                             <img class="routing_img" src="{{album.albumArtUrl}}" alt="{{album.title}}">
                             <p class="album_name">{{album.title}}</p>
                             <p class="artist_name">{{album.artistName}}</p>
@@ -103,16 +104,18 @@
                 </mat-grid-list>
 
                 <!-- Albums -->
-                <h3>Albums</h3>
-                <mat-grid-list *ngIf="friendsFavorites.albums.length !== 0" cols="4" gutterSize="15px" class="padded">
-                    <mat-grid-tile *ngFor="let album of friendsFavorites.albums" [routerLink]="['/albums', album.id]">
-                        <div class="col_flex">
-                            <img class="routing_img" src="{{album.albumArtUrl}}" alt="{{album.title}}">
-                            <p class="album_name">{{album.title}}</p>
-                            <p class="artist_name">{{album.artistName}}</p>
-                        </div>
-                    </mat-grid-tile>
-                </mat-grid-list>
+                <div *ngIf="friendsFavorites.albums.length !== 0">
+                    <h3>Albums</h3>
+                    <mat-grid-list cols="4" gutterSize="15px" class="padded">
+                        <mat-grid-tile *ngFor="let album of friendsFavorites.albums" [routerLink]="['/albums', album.id]">
+                            <div class="col_flex">
+                                <img class="routing_img" src="{{album.albumArtUrl}}" alt="{{album.title}}">
+                                <p class="album_name">{{album.title}}</p>
+                                <p class="artist_name">{{album.artistName}}</p>
+                            </div>
+                        </mat-grid-tile>
+                    </mat-grid-list>
+                </div>
 
                 <!-- Playlists -->
                 <div *ngIf="friendsFavorites.playlists.length !== 0">

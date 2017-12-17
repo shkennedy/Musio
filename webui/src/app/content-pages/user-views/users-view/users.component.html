@@ -8,6 +8,16 @@
             <img src="/assets/images/no_artist_picture.png" class="followers">
         </ng-template>
         <div class="username" style="margin-left:20px;margin-top:auto;margin-bottom:auto;">{{user.username}}</div>
+        <div *ngIf="!isSelf" class="flex_row">
+            <button *ngIf="isFollowed; else notFollowed" 
+                    class="btn btn-black" (click)="unfollowUser()"
+                    style="margin-left:15px;">
+                UNFOLLOW
+            </button>
+            <ng-template #notFollowed>
+                <button class="btn btn-black flex_row" (click)="followUser()" style="margin-left:15px;">FOLLOW</button>
+            </ng-template>
+        </div>
     </div>
 
     <div class="tabs1">

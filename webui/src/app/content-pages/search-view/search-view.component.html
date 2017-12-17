@@ -27,7 +27,7 @@
     </mat-grid-list>
 
     <!-- Playlists -->
-    <div *ngIf="newReleases.playlists.length !== 0">
+    <div *ngIf="newReleases && newReleases.playlists.length !== 0">
         <h3>Playlists</h3>
         <mat-grid-tile *ngFor="let playlist of newReleases.playlists" [routerLink]="['/playlistss', playlist.id]">
             <div class="col_flex">

@@ -5,6 +5,7 @@ import { NgForm } from '@angular/forms';
 import { FavoritesService } from '../../services/favorites.service';
 import { UserService } from '../../services/user.service';
 import { LoginService } from '../../services/login.service';
+import { FileService } from '../../services/file.service';
 
 import { PremiumDialogComponent } from '../../dialogs/premium-dialog/premium-dialog/premium-dialog.component';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
@@ -25,6 +26,7 @@ export class TopNavComponent implements OnInit {
         private userService: UserService,
         private loginService: LoginService,
         private favoritesService: FavoritesService,
+        private fileService: FileService,
         private dialog: MatDialog
     ) {}
 
@@ -35,6 +37,9 @@ export class TopNavComponent implements OnInit {
 
     public setUser = (user: User): void => {
         this.user = user;
+        const profile_picture = this.fileService.getUserImageURLById(this.user.id);
+        // use profile_picture?
+        this.user.profileImageUrl = 'assets/images/no_artist_picture.png';
     }
 
     public setPremium = (isPremium: boolean): void => {

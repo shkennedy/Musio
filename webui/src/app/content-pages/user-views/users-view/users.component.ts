@@ -95,4 +95,10 @@ export class UsersComponent implements OnInit {
     public getUserImage(userId: number): void {
         this.user.profileImageUrl = this.fileService.getUserImageURLById(userId);
     }
+
+    followUser() {
+    }
+
+    unfollowUser() {
+    }
 }
