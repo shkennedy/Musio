@@ -55,16 +55,16 @@
             </section>
 
             <section>
-                <div *ngIf="history.size !== 0">
+                <div *ngIf="hasHistory">
                     <h3>Songs</h3>
                     <div id="album-tracklist">
-                        <mat-table #table [dataSource]="historyTableData" matSort>
+                        <mat-table #table [dataSource]="historySongTableManager.tableData" matSort>
 
                             <!-- Play Button Column -->
                             <ng-container matColumnDef="playButton">
                                 <mat-header-cell *matHeaderCellDef></mat-header-cell>
                                 <mat-cell *matCellDef="let song">
-                                    <button mat-icon-button class="song_play_button" [ngStyle]="historyGetPlayVisibility(song.id)" (click)="playSong(song.id)">
+                                    <button mat-icon-button class="song_play_button" [ngStyle]="historySongTableManager.getButtonVisibility(song.id)" (click)="historySongTableManager.playSong(song.id)">
                                         <mat-icon>play_circle_filled</mat-icon>
                                     </button>
                                 </mat-cell>
@@ -88,6 +88,36 @@
                                 <mat-cell *matCellDef="let song">{{song.albumTitle}}</mat-cell>
                             </ng-container>
 
+                            <!-- More Actions Button Column -->
+                            <ng-container matColumnDef="moreActionsButton">
+                                <mat-header-cell *matHeaderCellDef></mat-header-cell>
+                                <mat-cell *matCellDef="let song">
+                                    <button mat-icon-button [matMenuTriggerFor]="moreActionsMenu" [ngStyle]="historySongTableManager.getButtonVisibility(song.id)">
+                                        <mat-icon>more_vert</mat-icon>
+                                    </button>
+                                    <mat-menu #moreActionsMenu="matMenu">
+                                        <div *ngIf="!historySongTableManager.hasPlaylists()">
+                                            <button mat-menu-item [routerLink]="['/playlists']">
+                                                <mat-icon>control_point</mat-icon>
+                                                <span>Create a Playlist</span>
+                                            </button>
+                                        </div>
+                                        <div mat-menu-item *ngFor="let playlist of historySongTableManager.getPlaylistsWhereNotIn(song.id)">
+                                            <button mat-menu-item (click)="historySongTableManager.addSongToPlaylist(playlist.id, song.id)">
+                                                <mat-icon>add</mat-icon>
+                                                <span>Add To {{playlist.name}}</span>
+                                            </button>
+                                        </div>
+                                        <div mat-menu-item *ngFor="let playlist of historySongTableManager.getPlaylistsWhereIn(song.id)">
+                                            <button mat-menu-item (click)="historySongTableManager.addSongToPlaylist(playlist.id, song.id)">
+                                                <mat-icon>remove</mat-icon>
+                                                <span>Remove From {{playlist.name}}</span>
+                                            </button>
+                                        </div>
+                                    </mat-menu>
+                                </mat-cell>
+                            </ng-container>
+
                             <!-- Duration Column -->
                             <ng-container matColumnDef="duration">
                                 <mat-header-cell *matHeaderCellDef mat-sort-header>
@@ -100,15 +130,15 @@
                             <ng-container matColumnDef="favoriteButton">
                                 <mat-header-cell *matHeaderCellDef></mat-header-cell>
                                 <mat-cell *matCellDef="let song">
-                                    <button mat-icon-button class="song_favorite_button" (click)="historyFavoriteOrUnfavoriteSong(song.id)">
-                                        <mat-icon>{{historyGetFavoritedIcon(song.id, song.isFavorited)}}</mat-icon>
+                                    <button mat-icon-button class="song_favorite_button" (click)="historySongTableManager.favoriteOrUnfavoriteSong(song.id)">
+                                        <mat-icon>{{historySongTableManager.getFavoritedIcon(song.id, song.isFavorited)}}</mat-icon>
                                     </button>
                                 </mat-cell>
                             </ng-container>
 
-                            <mat-header-row *matHeaderRowDef="['playButton', 'title', 'artist', 'album', 'duration', 'favoriteButton']"></mat-header-row>
-                            <mat-row *matRowDef="let row; columns: ['playButton', 'title', 'artist', 'album', 'duration', 'favoriteButton']; let i = index;" 
-                                (mouseenter)="historyShowPlay(row.id)" (mouseleave)="historyHidePlay(row.id)"></mat-row>
+                            <mat-header-row *matHeaderRowDef="['playButton', 'title', 'artist', 'album', 'moreActionsButton', 'duration', 'favoriteButton']"></mat-header-row>
+                            <mat-row *matRowDef="let row; columns: ['playButton', 'title', 'artist', 'album', 'moreActionsButton', 'duration', 'favoriteButton'];"
+                                (mouseenter)="historySongTableManager.showButtons(row.id)" (mouseleave)="historySongTableManager.hideButtons(row.id)"></mat-row>
                         </mat-table>
                     </div>
                 </div>

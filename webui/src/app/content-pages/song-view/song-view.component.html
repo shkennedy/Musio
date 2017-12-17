@@ -81,7 +81,7 @@
                 <ng-container matColumnDef="favoriteButton">
                     <mat-header-cell *matHeaderCellDef></mat-header-cell>
                     <mat-cell *matCellDef="let song">
-                        <button mat-icon-button class="song_favorite_button" (click)="favoriteOrUnfavoriteSong(song.id)">
+                        <button mat-icon-button class="song_favorite_button" (click)="songTableManager.favoriteOrUnfavoriteSong(song.id)">
                             <mat-icon>{{songTableManager.getFavoritedIcon(song.id, song.isFavorited)}}</mat-icon>
                         </button>
                     </mat-cell>
