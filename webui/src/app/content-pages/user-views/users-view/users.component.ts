@@ -61,6 +61,7 @@ export class UsersComponent implements OnInit {
 
                 this.userService.getFollowedUsers()
                     .subscribe((followedUsers: User[]) => {
+                        this.user.followedUsers = followedUsers;
                         followedUsers.forEach((followedUser: User) => {
                             if (this.user.id === followedUser.id) {
                                 this.isFollowed = true;

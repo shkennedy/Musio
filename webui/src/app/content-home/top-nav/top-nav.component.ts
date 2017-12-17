@@ -8,6 +8,8 @@ import { UserService } from '../../services/user.service';
 import { LoginService } from '../../services/login.service';
 import { FileService } from '../../services/file.service';
 import { TopBarProxyService } from '../../services/topBarProxy.service';
+import { AdService } from '../../services/ad.service';
+import { AudioPlayerProxyService } from '../../services/audioPlayerProxy.service';
 
 import { PremiumDialogComponent } from '../../dialogs/premium-dialog/premium-dialog/premium-dialog.component';
 
@@ -29,6 +31,8 @@ export class TopNavComponent implements OnInit {
         private loginService: LoginService,
         private favoritesService: FavoritesService,
         private fileService: FileService,
+        private adService: AdService,
+        private audioPlayerProxyService: AudioPlayerProxyService,
         private dialog: MatDialog
     ) {}
 
@@ -47,6 +51,8 @@ export class TopNavComponent implements OnInit {
 
     public setIsPremium = (isPremium: boolean): void => {
         this.user.isPremium = isPremium;
+        this.adService.setShowAds(!isPremium);
+        this.audioPlayerProxyService.setIsPremiumUser(isPremium);
     }
 
     public refreshUserImage = (): void => {

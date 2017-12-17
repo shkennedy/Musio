@@ -13,8 +13,10 @@ import { FollowedUsersBarComponent } from './followed-users-bar/followed-users-b
     styleUrls: ['./content-home.component.css']
 })
 export class ContentHomeComponent implements OnInit {
-    basic = true;
+
+    basic = false;
     closed_ad = false;
+
     constructor(
         private router: Router,
         private adService: AdService
@@ -22,6 +24,7 @@ export class ContentHomeComponent implements OnInit {
 
     ngOnInit() {
         this.adService.registerCloseAd(this.closeAdCallback);
+        this.adService.registerSetShowAdsListener(this.setShowAds);
     }
 
     contentSize() {
@@ -36,5 +39,9 @@ export class ContentHomeComponent implements OnInit {
         this.closed_ad = true;
         setTimeout( () => { this.closed_ad = false; } , 120000);
         // setTimeout( () => { this.closed_ad = false; } , 3000);
+    }
+
+    public setShowAds = (showAds: boolean): void => {
+        this.basic = showAds;
     }
 }

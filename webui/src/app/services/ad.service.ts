@@ -17,6 +17,7 @@ export class AdService {
     private lastListenedAd = 0;
 
     private closeAdListener: () => void;
+    private setShowAdsListener: (shouldShowAds: boolean) => void;
 
     constructor(
         private router: Router,
@@ -44,6 +45,14 @@ export class AdService {
 
     public registerCloseAd(closeAdListener: () => void): void {
         this.closeAdListener = closeAdListener;
+    }
+
+    public registerSetShowAdsListener(setShowAdsListener: (shouldShowAds: boolean) => void): void {
+        this.setShowAdsListener = setShowAdsListener;
+    }
+
+    public setShowAds(shouldShowAds: boolean): void {
+        this.setShowAdsListener(shouldShowAds);
     }
 
     public closeAd(): void {
