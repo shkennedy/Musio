@@ -59,23 +59,23 @@ export class UsersComponent implements OnInit {
                 }
 
                 this.userService.getFollowedUsers()
-                .subscribe((followedUsers: User[]) => {
-                    followedUsers.forEach((followedUser: User) => {
-                        if (this.user.id === followedUser.id) {
-                            this.isFollowed = true;
-                        }
+                    .subscribe((followedUsers: User[]) => {
+                        followedUsers.forEach((followedUser: User) => {
+                            if (this.user.id === followedUser.id) {
+                                this.isFollowed = true;
+                            }
+                        });
                     });
-                });
 
                 // Set user profile image to default url if none exists
                 this.userService.getHasImageById(this.user.id)
-                .subscribe((hasImage: boolean) => {
-                    if (hasImage) {
-                        this.user.profileImageUrl = this.fileService.getUserImageURLById(this.user.id);
-                    } else {
-                        this.user.profileImageUrl = '/assets/images/no_artist_picture.png';
-                    }
-                });
+                    .subscribe((hasImage: boolean) => {
+                        if (hasImage) {
+                            this.user.profileImageUrl = this.fileService.getUserImageURLById(this.user.id);
+                        } else {
+                            this.user.profileImageUrl = '/assets/images/no_artist_picture.png';
+                        }
+                    });
 
                 // Get user history
                 this.userService.getHistoryById(user.id)
@@ -116,9 +116,9 @@ export class UsersComponent implements OnInit {
 
     followUser() {
         this.userService.followUser(this.user.id)
-        .subscribe((success: boolean) => {
+            .subscribe((success: boolean) => {
 
-        });
+            });
     }
 
     unfollowUser() {

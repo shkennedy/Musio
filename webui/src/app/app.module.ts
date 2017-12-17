@@ -69,11 +69,6 @@ import { PlaylistService } from './services/playlist.service';
 import { SearchService } from './services/search.service';
 import { SongService } from './services/song.service';
 import { UserService } from './services/user.service';
-import { PasswordDialogComponent } from './dialogs/password-dialog/password-dialog.component';
-import { DeleteDialogComponent } from './dialogs/delete-dialog/delete-dialog/delete-dialog.component';
-import { PictureDialogComponent } from './dialogs/picture-dialog/picture-dialog/picture-dialog.component';
-import { PremiumDialogComponent } from './dialogs/premium-dialog/premium-dialog/premium-dialog.component';
-import { FriendsDialogComponent } from './dialogs/friends-dialog/friends-dialog/friends-dialog.component';
 import { TopBarProxyService } from './services/topBarProxy.service';
 
 @NgModule({
