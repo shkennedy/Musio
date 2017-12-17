@@ -434,5 +434,9 @@ public class UserService {
 		persistUser(user);
 	}
 
+	public int getFollowerCount(int userId) {
+		return userRepository.findFollowerCountForUser(userId);
+	}
+
 
 }

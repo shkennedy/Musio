@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Set;
 
 import javax.servlet.http.HttpSession;
+import javax.swing.RepaintManager;
 
 import com.sbu.webspotify.dto.ApiResponseObject;
 import com.sbu.webspotify.dto.identifier.SongIdentifier;
@@ -372,6 +373,22 @@ public class UserController {
 			response.setMessage("Error uploading new profile image.");
 			response.setSuccess(false);
 		}
+
+		return response;
+	}
+
+	@RequestMapping(value="/followerCount/{userId}", method=RequestMethod.GET)
+	public @ResponseBody ApiResponseObject updateProfileImage(@PathVariable int userId){
+		ApiResponseObject response = new ApiResponseObject();
+
+		if(userService.userExists(userId) == false) {
+			response.setSuccess(false);
+			response.setMessage("No user found with id "+userId+".");
+			return response;
+		}
+
+		response.setResponseData(userService.getFollowerCount(userId));
+		response.setSuccess(true);
 
 		return response;
 	}
