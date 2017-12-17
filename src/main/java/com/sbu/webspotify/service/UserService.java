@@ -434,5 +434,14 @@ public class UserService {
 		persistUser(user);
 	}
 
+	public int getFollowerCount(int userId) {
+		return userRepository.findFollowerCountForUser(userId);
+	}
+
+	public boolean checkForProfileImage(int userId) {
+		Integer result = userRepository.checkForProfileImage(userId);
+		return (result != null);
+	}
+
 
 }

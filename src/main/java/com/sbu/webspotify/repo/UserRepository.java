@@ -94,5 +94,13 @@ public interface UserRepository extends JpaRepository<User, Long> {
     void deleteFollowingUserRecord(@Param("user1Id") int follower, @Param("user2Id") int user_being_followed);
     
     @Query(value = "SELECT u.id as id, u.username as username FROM User u WHERE u.username LIKE CONCAT('%' :queryString, '%')", nativeQuery = true)
-    Set<UserIdentifier> findByUsernameContaining(@Param("queryString") String queryString);
+	Set<UserIdentifier> findByUsernameContaining(@Param("queryString") String queryString);
+	
+	@Query(value = "SELECT COUNT(ufu.user_being_followed) FROM user_following_user ufu WHERE ufu.user_being_followed = :userId", nativeQuery = true)    
+	int findFollowerCountForUser(@Param("userId") int userId);
+
+
+	@Query(value = "SELECT profile_image_id FROM user WHERE id = :userId", nativeQuery = true)    
+	Integer checkForProfileImage(@Param("userId") int userId);
+	
 }

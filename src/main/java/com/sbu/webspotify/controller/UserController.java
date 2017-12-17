@@ -376,5 +376,37 @@ public class UserController {
 		return response;
 	}
 
+	@RequestMapping(value="/followerCount/{userId}", method=RequestMethod.GET)
+	public @ResponseBody ApiResponseObject getFollowerCount(@PathVariable int userId){
+		ApiResponseObject response = new ApiResponseObject();
+
+		if(userService.userExists(userId) == false) {
+			response.setSuccess(false);
+			response.setMessage("No user found with id "+userId+".");
+			return response;
+		}
+
+		response.setResponseData(userService.getFollowerCount(userId));
+		response.setSuccess(true);
+
+		return response;
+	}
+
+	@RequestMapping(value="/checkProfileImage/{userId}", method=RequestMethod.GET)
+	public @ResponseBody ApiResponseObject checkForProfileImage(@PathVariable int userId){
+		ApiResponseObject response = new ApiResponseObject();
+
+		if(userService.userExists(userId) == false) {
+			response.setSuccess(false);
+			response.setMessage("No user found with id "+userId+".");
+			return response;
+		}
+
+		response.setResponseData(userService.checkForProfileImage(userId));
+		response.setSuccess(true);
+
+		return response;
+	}
+
 
 }
