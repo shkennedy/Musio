@@ -116,6 +116,7 @@ export class AudioPlayerComponent implements OnInit {
                             this.songQueue.push(song);
                             console.log(`${this.songQueue}`);
                         });
+                    this.songService.setDurationString(song);
                 }
             },
             (error: any) => {
@@ -138,6 +139,7 @@ export class AudioPlayerComponent implements OnInit {
                                 song.album = album;
                                 this.songQueue.push(song);
                             });
+                        this.songService.setDurationString(song);
                     });
                 }
             });
@@ -161,6 +163,8 @@ export class AudioPlayerComponent implements OnInit {
                                 }
                                 this.songQueue.push(song);
                             });
+
+                        this.songService.setDurationString(song);
                     });
                 }
             });
@@ -171,7 +175,8 @@ export class AudioPlayerComponent implements OnInit {
             .subscribe((album: Album) => {
                 if (album) {
                     album.songs.forEach((song: Song) => {
-                        this.songQueue.unshift(song);
+                        this.songService.setDurationString(song);
+                        this.songQueue.push(song);
                     });
                 }
             });
@@ -185,8 +190,9 @@ export class AudioPlayerComponent implements OnInit {
                 if (album) {
                     const song = album.songs.shift();
                     this._playSong(song.id);
-                    album.songs.reverse().forEach((playlistSong: Song) => {
-                        this.songQueue.unshift(playlistSong);
+                    album.songs.forEach((albumSong: Song) => {
+                        this.songService.setDurationString(albumSong);
+                        this.songQueue.push(albumSong);
                     });
                 }
             });
@@ -198,6 +204,9 @@ export class AudioPlayerComponent implements OnInit {
             .subscribe((albums: Album[]) => {
                 albums.forEach((album: Album) => {
                     this.songQueue.concat(album.songs);
+                    album.songs.forEach((song: Song) => {
+                        this.songService.setDurationString(song);
+                    });
                 });
             });
     }
@@ -215,6 +224,10 @@ export class AudioPlayerComponent implements OnInit {
                         firstAlbum = false;
                     }
                     allAlbumSongs.concat(album.songs);
+
+                    album.songs.forEach((song: Song) => {
+                        this.songService.setDurationString(song);
+                    });
                 });
                 allAlbumSongs.forEach((playlistSong: Song) => {
                     this.songQueue.push(playlistSong);
@@ -271,10 +284,11 @@ export class AudioPlayerComponent implements OnInit {
             .subscribe(
             (song: Song) => {
                 this.currentSong = song;
+
                 // Convert duration to seconds from ms
                 // this.currentSong.duration = this.currentSong.duration / 1000;
                 this.currentSong.duration = 30;
-                console.log(`song: ${this.currentSong.title} duration: ${this.currentSong.duration}`);
+                this.songService.setDurationString(this.currentSong);
 
                 this.currentSong.audioFileUrl = this.fileService
                     .getSongFileURLByIdAndBitrate(song.id, this.useHighBitrate);
@@ -378,7 +392,7 @@ export class AudioPlayerComponent implements OnInit {
 
     private playAd(): void {
         const adSong = new Song();
-        adSong.duration = 13;
+        adSong.duration = 15;
         adSong.title = 'Musio Go Premium Ad';
         adSong.album = new Album();
         adSong.album.title = 'Musio Ads';
@@ -535,8 +549,6 @@ export class AudioPlayerComponent implements OnInit {
         if (!this.queueToggle) {
             this.queueTableData = new MatTableDataSource(this.songQueue);
             this.queueTableData.sort = this.sort;
-        } else {
-            this.queueTableData = null;
         }
 
         this.queueToggle = !this.queueToggle;

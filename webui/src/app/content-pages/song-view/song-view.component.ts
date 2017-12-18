@@ -47,7 +47,7 @@ export class SongViewComponent implements OnInit {
                     songs.forEach((song: Song) => {
                         this.songService.getSongAlbumInfo(song.id)
                             .subscribe((album: Album) => {
-                                song.album = album[0];
+                                song.album = album;
 
                                 albumInfoReturns -= 1;
                                 if (albumInfoReturns === 0) {
