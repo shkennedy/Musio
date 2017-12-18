@@ -1,11 +1,10 @@
-<div *ngIf="!isLoaded; else playlistLoaded;" class="center_loading">
+<div *ngIf="!isLoaded || !ownerFound; else playlistLoaded;" class="center_loading">
     <mat-spinner color="accent"></mat-spinner>
 </div>
 <ng-template #playlistLoaded>
     <div id="playlist-wrapper">
         <div id="playlist-info">
             <div class="flex_row">
-                <!-- <img src="{{playlist.playlistImageUrl}}"> -->
                 <img class="img_sized" src="/assets/images/default_art.png" style="width:180px;height:180px;border-radius:50px;">
             </div>
             <div class="flex_row">
@@ -23,8 +22,6 @@
                 </ng-template>
                 <button *ngIf="isOwner" class="btn btn-black" (click)="deletePlaylist()">DELETE</button>
             </div>
-
-
         </div>
 
         <div id="playlist-tracklist"></div>
