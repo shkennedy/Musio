@@ -149,37 +149,37 @@ export class CreatePlaylistViewComponent implements OnInit {
 
     private createPlaylist(): void {
         this.playlistService.createPlaylist(this.playlistName)
-        .subscribe((newPlaylist: Playlist) => {
-            let returns = this.addedTableManager.getSongs().length  + 2;
-            this.addedTableManager.getSongs().forEach((song: Song) => {
-                this.playlistService.addSong(newPlaylist.id, song.id)
-                .subscribe((playlist: Playlist) => {
-                    returns -= 1;
-                    if (returns === 0) {
-                        this.leftBarProxyService.refreshPlaylists();
-                        this.router.navigate(['/playlists']);
-                    }
+            .subscribe((newPlaylist: Playlist) => {
+                let returns = this.addedTableManager.getSongs().length + 2;
+                this.addedTableManager.getSongs().forEach((song: Song) => {
+                    this.playlistService.addSong(newPlaylist.id, song.id)
+                        .subscribe((playlist: Playlist) => {
+                            returns -= 1;
+                            if (returns === 0) {
+                                this.leftBarProxyService.refreshPlaylists();
+                                this.router.navigate(['/playlists', playlist.id]);
+                            }
+                        });
                 });
+                this.playlistService.setPlaylistCollaborationById(newPlaylist.id, this.isCollaborative)
+                    .subscribe((playlist: Playlist) => {
+                        returns -= 1;
+                        if (returns === 0) {
+                            this.leftBarProxyService.refreshPlaylists();
+                            this.router.navigate(['/playlists', playlist.id]);
+                        }
+                    });
+                this.playlistService.setPlaylistPrivacyById(newPlaylist.id, this.isPrivate)
+                    .subscribe((playlist: Playlist) => {
+                        returns -= 1;
+                        if (returns === 0) {
+                            this.leftBarProxyService.refreshPlaylists();
+                            this.router.navigate(['/playlists', playlist.id]);
+                        }
+                    });
+            },
+            (error: any) => {
+                console.log(error);
             });
-            this.playlistService.setPlaylistCollaborationById(newPlaylist.id, this.isCollaborative)
-            .subscribe((playlist: Playlist) => {
-                returns -= 1;
-                if (returns === 0) {
-                    this.leftBarProxyService.refreshPlaylists();
-                    this.router.navigate(['/playlists']);
-                }
-            });
-            this.playlistService.setPlaylistPrivacyById(newPlaylist.id, this.isPrivate)
-            .subscribe((playlist: Playlist) => {
-                returns -= 1;
-                if (returns === 0) {
-                    this.leftBarProxyService.refreshPlaylists();
-                    this.router.navigate(['/playlists']);
-                }
-            });
-        },
-        (error: any) => {
-            console.log(error);
-        });
     }
 }

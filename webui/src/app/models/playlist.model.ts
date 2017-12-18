@@ -7,7 +7,7 @@ export class Playlist {
     public isCollaborative: boolean;
     public isPrivate: boolean;
     public name: string;
-    public owner: User;
+    public ownerId: number;
     public songs: Song[];
     public playlistImageId: number;
 

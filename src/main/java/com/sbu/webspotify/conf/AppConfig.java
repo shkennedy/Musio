@@ -35,6 +35,9 @@ public class AppConfig {
     @Value("${email.emailAddress}")
     public String emailAddress;
 
+    @Value("${email.passwd}")
+    public String emailPassword;
+
     @Value("${email.changePasswordSubject}")
     public String changePasswordSubject;
 

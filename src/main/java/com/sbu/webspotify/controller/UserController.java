@@ -1,6 +1,7 @@
 package com.sbu.webspotify.controller;
 
 import java.io.IOException;
+import java.util.Random;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,6 +32,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.thymeleaf.util.StringUtils;
 
 @Controller
 @RequestMapping(path = "/user")
@@ -88,8 +90,9 @@ public class UserController {
 
     @GetMapping(path="/password/requestChange")
     public @ResponseBody ApiResponseObject updatePassword(HttpSession session) {
-        User user = (User) session.getAttribute("user");
-        int securityCode = user.hashCode();
+		User user = (User) session.getAttribute("user");
+		Random r = new Random();
+        int securityCode = r.nextInt(10000);
         session.setAttribute("securityCode", securityCode);
         return userService.sendChangePasswordEmail(user, securityCode);
     }
