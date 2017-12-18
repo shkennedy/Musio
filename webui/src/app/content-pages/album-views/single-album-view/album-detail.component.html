@@ -4,9 +4,9 @@
 </div>
 <ng-template #albumLoaded>
     <div id="album-wrapper col-sm-12">
-        <div id="album-info" class="col-sm-4">
+        <div id="album-info" class="col-sm-4 flex_column">
             <div class="col-sm-12">
-                <div *ngIf="album.albumArt; else defaultArt;">
+                <div *ngIf="album.albumArt; else defaultArt;" class="flex_column">
                     <img src="{{album.albumArtUrl}}" alt="{{album.title}}" style="width:200px; height:200px;">
                 </div>
                 <ng-template #defaultArt>
@@ -14,20 +14,20 @@
                 </ng-template>
             </div>
             <div class="col-sm-12">
-                <h3 class="album-title">{{album.title}}</h3>
+                <h3 class="album-title" style="text-align:center">{{album.title}}</h3>
 
-                <h5>By
+                <h5 style="text-align:center">By
                     <span id="artist-name" [routerLink]="['/artists', album.artists[0].id]">{{album.artists[0].name}}</span>
                 </h5>
             </div>
-            <button class="btn btn-green block-center" (click)="playAlbum()">PLAY</button>
+            <button class="btn btn-green block-center flex_row" (click)="playAlbum()">PLAY</button>
 
             <div>
                 <div *ngIf="isFavorited; else notFavorited">
-                    <button class="btn btn-black glyphicon glyphicon-heart" (click)="unfavoriteAlbum()" matTooltip="Unfavorite"></button>
+                    <button class="btn btn-black glyphicon glyphicon-heart flex_row" (click)="unfavoriteAlbum()" matTooltip="Unfavorite"></button>
                 </div>
                 <ng-template #notFavorited>
-                    <button class="btn btn-grey " (click)="favoriteAlbum()">FAVORITE</button>
+                    <button class="btn btn-grey flex_row" (click)="favoriteAlbum()">FAVORITE</button>
                 </ng-template>
             </div>
         </div>

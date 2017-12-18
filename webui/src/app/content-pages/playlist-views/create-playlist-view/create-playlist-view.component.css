@@ -27,3 +27,9 @@
 mat-row:hover {
 background-color: grey;
 }
+
+.flex_center{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
