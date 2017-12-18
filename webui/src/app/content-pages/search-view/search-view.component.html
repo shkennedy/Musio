@@ -118,7 +118,7 @@
     <div *ngIf="users.length !== 0">
         <h3>Users</h3>
         <mat-grid-list cols="4" rowHeight="4:1">
-            <mat-grid-tile *ngFor="let user of users" class="hoverable" [routerLink]="['/user/',user.id]">
+            <mat-grid-tile *ngFor="let user of users" class="hoverable" [routerLink]="['/user/',user.username]">
                 <div class="flex_col">
                     <img [src]="user.profileImageUrl">
                     <div>{{user.username}}</div>
