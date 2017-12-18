@@ -87,12 +87,12 @@ export class PlaylistViewComponent implements OnInit {
                 }
             },
             (error: any) => {
-                console.log(error.toString());
+                console.log(error);
             });
     }
 
     private getIsOwner = (user: User): void => {
-        this.isOwner = this.playlist.owner.id === user.id;
+        this.isOwner = this.playlist.ownerId === user.id;
         if (this.isOwner) {
             this.isEditable = true;
         }
@@ -112,21 +112,32 @@ export class PlaylistViewComponent implements OnInit {
 
     private followPlaylist(): void {
         this.favoritesService.addFavoritePlaylistById(this.playlist.id)
-        .subscribe((success: boolean) => {
-            if (success) {
-                this.isFavorited = true;
-                this.leftBarProxyService.refreshPlaylists();
-            }
-        });
+            .subscribe((success: boolean) => {
+                if (success) {
+                    this.isFavorited = true;
+                    this.leftBarProxyService.refreshPlaylists();
+                }
+            });
     }
 
     private unfollowPlaylist(): void {
         this.favoritesService.removeFavoritePlaylistById(this.playlist.id)
-        .subscribe((success: boolean) => {
-            if (success) {
-                this.isFavorited = false;
-                this.leftBarProxyService.refreshPlaylists();
-            }
-        });
+            .subscribe((success: boolean) => {
+                if (success) {
+                    this.isFavorited = false;
+                    this.leftBarProxyService.refreshPlaylists();
+                }
+            });
+    }
+
+    private removeSongFromPlaylist(song: Song): void {
+        this.songTableManager.removeSong(song);
+        this.playlistService.removeSong(this.playlist.id, song.id)
+            .subscribe((playlist: Playlist) => {
+            },
+            (error: any) => {
+                console.log(error);
+            });
+        // this.playlist.songs.splice(this.playlist.songs.indexOf(song), 1);
     }
 }
