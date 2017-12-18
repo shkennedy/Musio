@@ -29,11 +29,11 @@
     </div>
 
     <!-- Playlists -->
-    <div class="nav_block_header flex_row hover" [routerLink]="['/playlists']">
-        Playlists
+    <div class="nav_block_header flex_row">
+        <div [routerLink]="['/playlists']" class="hover">Playlists</div>
         <div style="padding-left:25px;">
             <button mat-icon-button matTooltip="Add a New Playlist"
-                    [routerLink]="['/createPlaylist']">
+                    [routerLink]="['/createPlaylist']" class="hover">
                 <mat-icon>add</mat-icon>
             </button>
         </div>
