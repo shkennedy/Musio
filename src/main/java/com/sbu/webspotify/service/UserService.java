@@ -474,5 +474,9 @@ public class UserService {
 		return (result != null);
 	}
 
+	public Set<PlaylistIdentifier> getPublicPlaylistsForUser(int userId) {
+		return playlistRepository.getPublicPlaylistsForUser(userId);
+	}
+
 
 }

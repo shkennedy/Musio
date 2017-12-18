@@ -24,4 +24,7 @@ public interface PlaylistRepository extends JpaRepository<Playlist, Integer>
 	@Query(value = "DELETE from playlist where id = :playlistId", nativeQuery = true)
 	@Transactional
 	void deleteByPlaylistId(@Param("playlistId") int playlistId);
+
+    @Query(value = "SELECT p.id as id, p.name as name FROM playlist p where p.is_private = 0 AND p.owner_id = :userId", nativeQuery = true)        
+	Set<PlaylistIdentifier> getPublicPlaylistsForUser(@Param("userId") int userId);
 }
