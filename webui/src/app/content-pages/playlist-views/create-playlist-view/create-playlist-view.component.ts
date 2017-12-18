@@ -23,7 +23,7 @@ export class CreatePlaylistViewComponent implements OnInit {
 
     private playlists: Playlist[];
 
-    private playlistName: string;
+    private playlistName = '';
     private isPrivate = false;
     private isCollaborative = false;
     private playlistImage: any;
@@ -77,10 +77,8 @@ export class CreatePlaylistViewComponent implements OnInit {
                             .subscribe((album: Album) => {
                                 song.album = album[0];
 
-                                console.log(albumInfoReturns);
                                 albumInfoReturns -= 1;
                                 if (albumInfoReturns === 0) {
-                                    console.log('finished');
                                     this.notAddedTableManager.setSongs(songs);
                                     this.isLoaded = true;
                                 }
@@ -148,10 +146,9 @@ export class CreatePlaylistViewComponent implements OnInit {
     }
 
     private createPlaylist(): void {
-        this.playlistService.createPlaylist()
+        this.playlistService.createPlaylist(this.playlistName)
         .subscribe((newPlaylist: Playlist) => {
             console.log(newPlaylist);
-            newPlaylist.name = this.playlistName;
             newPlaylist.isPrivate = this.isPrivate;
             newPlaylist.songs = this.addedTableManager.getSongs();
             newPlaylist.isCollaborative = this.isCollaborative;

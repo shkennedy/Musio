@@ -36,15 +36,11 @@ export class PlaylistService {
             });
     }
 
-    public createPlaylist(): Observable<Playlist> {
-        // return this.httpRequest.get(PlaylistService.CREATE_URL)
-        // .map((response: ApiResponse) => {
-        //     return response.responseData;
-        // });
-        return this.httpRequest.get(PlaylistService.CREATE_URL)
-            .map((response: ApiResponse) => {
-                return response.responseData;
-            });
+    public createPlaylist(playlistName: string): Observable<Playlist> {
+        return this.httpRequest.getWithUrlParams(PlaylistService.CREATE_URL, playlistName)
+        .map((response: ApiResponse) => {
+            return response.responseData;
+        });
     }
 
     public updatePlaylist(playlist: Playlist): Observable<Playlist> {
