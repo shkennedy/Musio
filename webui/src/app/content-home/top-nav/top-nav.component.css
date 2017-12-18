@@ -68,6 +68,10 @@ button,a{
     margin-right:15px;
 }
 
+.profile_picture:hover {
+    cursor: pointer;
+}
+
 #search_wrapper{
     min-height: 7vh;
     max-height: 7vh;

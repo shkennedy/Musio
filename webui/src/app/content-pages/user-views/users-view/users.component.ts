@@ -63,6 +63,14 @@ export class UsersComponent implements OnInit {
                     .subscribe((followedUsers: User[]) => {
                         this.user.followedUsers = followedUsers;
                         followedUsers.forEach((followedUser: User) => {
+                            this.userService.getHasImageById(followedUser.id)
+                            .subscribe((hasImage: boolean) => {
+                                if (hasImage) {
+                                    followedUser.profileImageUrl = this.fileService.getUserImageURLById(this.user.id);
+                                } else {
+                                    followedUser.profileImageUrl = '/assets/images/no_artist_picture.png';
+                                }
+                            });
                             if (this.user.id === followedUser.id) {
                                 this.isFollowed = true;
                             }
