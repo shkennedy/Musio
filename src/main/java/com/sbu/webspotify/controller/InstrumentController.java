@@ -3,11 +3,7 @@ package com.sbu.webspotify.controller;
 import com.sbu.webspotify.dto.ApiResponseObject;
 import com.sbu.webspotify.dto.SearchResults;
 import com.sbu.webspotify.repo.InstrumentRepository;
-import com.sbu.webspotify.service.InstrumentService;
 import com.sbu.webspotify.service.SearchService;
-import com.sbu.webspotify.model.Instrument;
-
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,9 +17,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping(path = "/instrument")
 public class InstrumentController
 {
-    @Autowired
-    private InstrumentService instrumentService;
-
     @Autowired
     private InstrumentRepository instrumentRepository;
 

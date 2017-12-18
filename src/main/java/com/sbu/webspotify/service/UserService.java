@@ -1,11 +1,9 @@
 package com.sbu.webspotify.service;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 import com.sbu.webspotify.conf.AppConfig;
@@ -14,8 +12,8 @@ import com.sbu.webspotify.dto.identifier.AlbumIdentifier;
 import com.sbu.webspotify.dto.identifier.ArtistIdentifier;
 import com.sbu.webspotify.dto.identifier.PlaylistIdentifier;
 import com.sbu.webspotify.dto.identifier.SongIdentifier;
-import com.sbu.webspotify.dto.identifier.UserIdentifier;
 import com.sbu.webspotify.dto.identifier.UserHistoryItemIdentifier;
+import com.sbu.webspotify.dto.identifier.UserIdentifier;
 import com.sbu.webspotify.model.Album;
 import com.sbu.webspotify.model.Artist;
 import com.sbu.webspotify.model.File;
