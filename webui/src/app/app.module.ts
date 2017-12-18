@@ -72,6 +72,7 @@ import { SongService } from './services/song.service';
 import { UserService } from './services/user.service';
 import { TopBarProxyService } from './services/topBarProxy.service';
 import { FollowedUsersBarProxyService } from './services/followedUsersBarProxy.service';
+import { InstrumentService } from './services/instrument.service';
 
 @NgModule({
     declarations: [
@@ -141,7 +142,8 @@ import { FollowedUsersBarProxyService } from './services/followedUsersBarProxy.s
         SearchService,
         UserService,
         TopBarProxyService,
-        FollowedUsersBarProxyService
+        FollowedUsersBarProxyService,
+        InstrumentService
     ],
     bootstrap: [AppComponent]
 })
