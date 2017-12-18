@@ -212,8 +212,8 @@
                                 </mat-cell>
                             </ng-container>
 
-                            <mat-header-row *matHeaderRowDef="['playButton', 'title', 'artist', 'album', 'duration', 'favoriteButton']"></mat-header-row>
-                            <mat-row *matRowDef="let row; columns: ['playButton', 'title', 'artist', 'album', 'duration', 'favoriteButton'];" (mouseenter)="friendsFavoritesSongTableManager.showButtons(row.id)"
+                            <mat-header-row *matHeaderRowDef="['playButton', 'title', 'artist', 'album', 'moreActionsButton', 'duration', 'favoriteButton']"></mat-header-row>
+                            <mat-row *matRowDef="let row; columns: ['playButton', 'title', 'artist', 'album', 'moreActionsButton', 'duration', 'favoriteButton'];" (mouseenter)="friendsFavoritesSongTableManager.showButtons(row.id)"
                                 (mouseleave)="friendsFavoritesSongTableManager.hideButtons(row.id)"></mat-row>
                         </mat-table>
                     </div>

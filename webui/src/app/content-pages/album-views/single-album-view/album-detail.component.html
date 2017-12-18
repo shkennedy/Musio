@@ -77,7 +77,7 @@
                                 </button>
                             </div>
                             <div mat-menu-item *ngFor="let playlist of albumSongTableManager.getPlaylistsWhereIn(song.id)">
-                                <button mat-menu-item (click)="albumSongTableManager.addSongToPlaylist(playlist.id, song.id)">
+                                <button mat-menu-item (click)="albumSongTableManager.removeSongFromPlaylist(playlist.id, song.id)">
                                     <mat-icon>remove</mat-icon>
                                     <span>Remove From {{playlist.name}}</span>
                                 </button>

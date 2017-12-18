@@ -8,6 +8,9 @@ import { FileService } from '../../services/file.service';
 import { SearchService, SearchResponse } from '../../services/search.service';
 import { BrowseResponse } from '../../services/search.service';
 import { UserService } from '../../services/user.service';
+import { PlaylistService } from '../../services/playlist.service';
+
+import { SongTableManager } from '../../shared/songTableManager.module';
 
 import { Song } from '../../models/song.model';
 import { Album } from '../../models/album.model';
@@ -31,12 +34,10 @@ export class SearchComponent implements OnInit {
     private genres: Genre[];
     private instruments: Instrument[];
     private playlists: Playlist[];
-    private songs: Map<number, Song>;
     private users: User[];
 
     @ViewChild(MatSort) sort: any;
-    private songTableData: MatTableDataSource<Song>;
-    private playButtonsVisibility: Map<number, boolean> = new Map();
+    private songTableManager: SongTableManager;
 
     private errorMessage: string;
 
@@ -46,6 +47,7 @@ export class SearchComponent implements OnInit {
         private audioPlayerProxyService: AudioPlayerProxyService,
         private favoritesService: FavoritesService,
         private fileService: FileService,
+        private playlistService: PlaylistService,
         private searchService: SearchService,
         private userService: UserService
     ) { }
@@ -96,15 +98,10 @@ export class SearchComponent implements OnInit {
                     });
                 }
 
-                this.songTableData = new MatTableDataSource(searchData.songs);
-                this.songs = new Map();
-                searchData.songs.forEach((song: Song) => {
-                    this.songs.set(song.id, song);
-                    this.playButtonsVisibility.set(song.id, false);
-                });
-
+                this.songTableManager = new SongTableManager(this.audioPlayerProxyService, this.favoritesService, this.playlistService);
+                this.songTableManager.setSongs(searchData.songs);
                 setTimeout(() => {
-                    this.songTableData.sort = this.sort;
+                    this.songTableManager.setSort(this.sort);
                 }, 2000);
 
                 this.users = searchData.users;
@@ -126,47 +123,5 @@ export class SearchComponent implements OnInit {
                 this.errorMessage = error;
                 console.log(error.toString());
             });
-    }
-
-    private playSong(songId: number): void {
-        this.audioPlayerProxyService.playSong(songId);
-    }
-
-    private addSongToQueue(songId: number): void {
-        this.audioPlayerProxyService.addSongToQueue(songId);
-    }
-
-    private favoriteOrUnfavoriteSong(songId: number): void {
-        if (this.songs.get(songId).isFavorited) {
-            this.favoritesService.removeFavoriteSongById(songId)
-                .subscribe((success: boolean) => {
-                    this.songs.get(songId).isFavorited = !success;
-                });
-        } else {
-            this.favoritesService.addFavoriteSongById(songId)
-                .subscribe((success: boolean) => {
-                    this.songs.get(songId).isFavorited = success;
-                });
-        }
-    }
-
-    private getFavoritedIcon(songId: number, isFavorited: boolean): Object {
-        if (this.playButtonsVisibility.get(songId)) {
-            return (isFavorited) ? 'remove' : 'add';
-        } else {
-            return (isFavorited) ? 'favorite' : 'add';
-        }
-    }
-
-    private showPlay(songId: number): void {
-        this.playButtonsVisibility.set(songId, true);
-    }
-
-    private hidePlay(songId: number): void {
-        this.playButtonsVisibility.set(songId, false);
-    }
-
-    private getPlayVisibility(songId: number): Object {
-        return { 'visibility': this.playButtonsVisibility.get(songId) ? 'visible' : 'hidden' };
     }
 }
