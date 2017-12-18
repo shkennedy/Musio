@@ -28,10 +28,10 @@ export class PlaylistViewComponent implements OnInit {
     private isOwner: boolean;
     private isEditable: boolean;
     private isFavorited: boolean;
-    private ascendingOrder: boolean;
 
-    private hasSongs = false;
+    private ownerFound = false;
     private isLoaded = false;
+    private hasSongs = false;
     @ViewChild(MatSort) sort: any;
     private songTableManager: SongTableManager;
 
@@ -83,6 +83,8 @@ export class PlaylistViewComponent implements OnInit {
                         const seconds = song.duration % 60;
                         song.durationString += (seconds < 10) ? `0${seconds}` : seconds;
                     });
+                } else {
+                    this.isLoaded = true;
                 }
             },
             (error: any) => {
@@ -95,6 +97,7 @@ export class PlaylistViewComponent implements OnInit {
         if (this.isOwner) {
             this.isEditable = true;
         }
+        this.ownerFound = true;
     }
 
     private renamePlaylist(): void {
@@ -128,6 +131,9 @@ export class PlaylistViewComponent implements OnInit {
 
     private removeSongFromPlaylist(song: Song): void {
         this.songTableManager.removeSong(song);
+        if (this.songTableManager.getSongs().length === 0) {
+            this.hasSongs = false;
+        }
         this.playlistService.removeSong(this.playlist.id, song.id)
             .subscribe((playlist: Playlist) => {
             },

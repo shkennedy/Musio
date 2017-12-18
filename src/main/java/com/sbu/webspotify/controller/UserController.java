@@ -18,6 +18,7 @@ import com.sbu.webspotify.model.Playlist;
 import com.sbu.webspotify.model.Song;
 import com.sbu.webspotify.model.Station;
 import com.sbu.webspotify.model.User;
+import com.sbu.webspotify.repo.PlaylistRepository;
 import com.sbu.webspotify.repo.UserRepository;
 import com.sbu.webspotify.service.SongService;
 import com.sbu.webspotify.service.UserService;
@@ -42,6 +43,9 @@ public class UserController {
 	
 	@Autowired
 	UserRepository userRepository;
+
+	@Autowired
+	PlaylistRepository playlistRepository;
 
 	@Autowired
 	private SongService songService;
@@ -472,6 +476,22 @@ public class UserController {
 
 		response.setResponseData(userRepository.getFollowedUsers(userId));
 		response.setSuccess(true);
+
+		return response;
+	}
+
+	@RequestMapping(value={"/getPublicPlaylists/{userId}"})
+	public @ResponseBody ApiResponseObject getPublicPlaylists(@PathVariable int userId) {
+		ApiResponseObject response = new ApiResponseObject();
+
+		if(userService.userExists(userId) == false) {
+			response.setSuccess(false);
+			response.setMessage("No user found with id "+userId+".");
+			return response;
+		}
+
+		response.setSuccess(true);
+		response.setResponseData(userService.getPublicPlaylistsForUser(userId));
 
 		return response;
 	}
