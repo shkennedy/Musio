@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs/Observable';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -12,6 +13,7 @@ import { Album } from '../../models/album.model';
 import { Artist } from '../../models/artist.model';
 import { User } from '../../models/user.model';
 import { Song } from '../../models/song.model';
+import { setInterval } from 'timers';
 
 @Component({
     selector: 'app-followed-users-bar',
@@ -20,7 +22,9 @@ import { Song } from '../../models/song.model';
 })
 export class FollowedUsersBarComponent implements OnInit {
 
+    private filter = '';
     private users: User[];
+    private filteredUsers: User[];
     private userHistory = new Map<number, Song>();
 
     constructor(
@@ -36,6 +40,8 @@ export class FollowedUsersBarComponent implements OnInit {
         this.followedUsersBarProxyService.registerListeners(this.refreshFollowedUsers);
         setInterval(this.getFollowedUsersHistory, 25000);
         this.refreshFollowedUsers();
+        // const obs = Observable.of(this.filter);
+        // obs.subscribe((str: string) => this.filterUsers());
     }
 
     private refreshFollowedUsers = (): void => {
@@ -43,6 +49,7 @@ export class FollowedUsersBarComponent implements OnInit {
         .subscribe(
             (users: User[]) => {
                 this.users = users;
+                this.filteredUsers = users;
                 this.getFollowedUsersHistory();
             },
             (error: any) => {
@@ -73,5 +80,14 @@ export class FollowedUsersBarComponent implements OnInit {
 
     playSong(song: Song) {
         this.audioPlayerProxyService.playSong(song.id);
+    }
+
+    filterUsers() {
+        this.filteredUsers = [];
+        this.users.forEach( (u) => {
+            if ( u.username.match(this.filter) ) {
+                this.filteredUsers.push(u);
+            }
+        });
     }
 }

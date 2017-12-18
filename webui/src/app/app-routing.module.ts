@@ -17,6 +17,7 @@ import { BrowseComponent } from './content-pages/browse/browse.component';
 import { SearchComponent } from './content-pages/search-view/search-view.component';
 import { ContentHomeComponent } from './content-home/content-home.component';
 import { InstrumentViewComponent } from './content-pages/instrument-view/instrument-view.component';
+import { InstrumentBrowseComponent } from './content-pages/instrument-browse/instrument-browse.component';
 import { GoPremiumComponent } from './content-pages/go-premium/go-premium.component';
 import { UserSettingsComponent } from './content-pages/user-views/user-settings-view/user-settings.component';
 // This component is for user pages
@@ -34,7 +35,8 @@ const appRoutes: Routes = [
       { path: 'playlists/:id', component: PlaylistViewComponent },
       { path: 'createPlaylist', component: CreatePlaylistViewComponent },
       { path: 'songs', component: SongViewComponent },
-      { path: 'instruments', component: InstrumentViewComponent },
+      { path: 'instruments', component: InstrumentBrowseComponent },
+      { path: 'instruments/:id', component: InstrumentViewComponent },
       { path: 'go-premium', component: GoPremiumComponent },
       { path: 'browse', component: BrowseComponent },
       { path: 'search/:searchQuery', component: SearchComponent },

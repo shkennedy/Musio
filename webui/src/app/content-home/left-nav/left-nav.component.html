@@ -1,40 +1,3 @@
-<!-- <div class="col-sm-2 left-sidenav style-2">
-  <ul class="sidenav-list">
-    <li class="sidenav-li Collapsable list-header">Main</li>
-    <li class="sidenav-li" [routerLink]="['/']"><img class="nav-icon" src="assets/images/browse-icon.png">Browse</li>
-    <li class="sidenav-li" [routerLink]="['/radio']"><img class="nav-icon" src="assets/images/radio-icon.png">Radio</li>
-  </ul>
-  <ul class="sidenav-list">
-    <li class="sidenav-li list-header Collapsable">Your Music</li>
-    <li class="sidenav-li" [routerLink]="['/songs']"><img class="nav-icon" src="assets/images/song-icon.png">Songs</li>
-    <li class="sidenav-li" [routerLink]="['/albums']"><img class="nav-icon" src="assets/images/albums-icon.png">Albums</li>
-    <li class="sidenav-li" [routerLink]="['/artists']"><img class="nav-icon" src="assets/images/artists-icon.png">Artists</li>
-  </ul>
-  <ul class="sidenav-list">
-    <li class="sidenav-li list-header Collapsable" (click)="getSong()">Playlists</li>
-
-    <li class="sidenav-li" *ngFor="let playlist of playlists" (click)="navigatePlaylist(playlist.id)">
-      <img class="nav-icon" src="assets/images/star-icon.png">{{playlist.name}}
-    </li>
-
-  </ul>
-</div> -->
-
-<!-- <div>
-  <table>
-    <tr (click)="navigateBrowse()"><td>Browse</td></tr>
-    <tr (click)="navigateRadio()"><td>Radio</td></tr>
-    <tr (click)="navigateSongs()" id="poop"><td>Songs</td></tr>
-    <tr (click)="navigateAlbums()"><td>Albums</td></tr>
-    <tr (click)="nagivateArtists()"><td>Artists</td></tr>
-    <tr><th><u>Playlists</u></th></tr>
-    <tr *ngFor="let playlist of playlists" (click)="navigatePlaylist(playlist.playlist_id)">
-      <td class="long_playlist">{{playlist.playlist_name}}</td>
-    </tr>
-
-  </table>
-</div> -->
-
 <div id="side_nav" class="flex_column light">
     <div class="hover" style="margin-top:20px;">
         <mat-icon ngClass="getClass('/browse')" style="margin-right:5px;">library_music</mat-icon>
@@ -43,8 +6,8 @@
 
     <div class="hover">
         <mat-icon ngClass="getClass('/radio')" style="margin-right:5px;">radio</mat-icon>
-        <!-- <h5 [routerLink]="['/instruments']">Instruments</h5> -->
-        <h5 [routerLink]="['/playlists']">Instruments</h5>
+        <h5 [routerLink]="['/instruments']">Instruments</h5>
+        <!-- <h5 [routerLink]="['/playlists']">Instruments</h5> -->
     </div>
 
     <!-- Music Library -->
@@ -66,7 +29,7 @@
     </div>
 
     <!-- Playlists -->
-    <div class="nav_block_header flex_row">
+    <div class="nav_block_header flex_row hover" [routerLink]="['/playlists']">
         Playlists
         <div style="padding-left:25px;">
             <button mat-icon-button matTooltip="Add a New Playlist"
@@ -77,6 +40,6 @@
     </div>
 
     <div *ngFor="let playlist of playlists" class="hover">
-        <h4 [routerLink]="['/playlist/playlist.id']">{{playlist.name}}</h4>
+        <h4 [routerLink]="['/playlists', playlist.id]">{{playlist.name}}</h4>
     </div>
 </div>

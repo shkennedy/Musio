@@ -11,6 +11,7 @@ import { Song } from '../models/song.model';
 export class PlaylistService {
 
     private static PLAYLIST_URL = '/playlist';
+    private static GET_URL = PlaylistService.PLAYLIST_URL  + '/get';
     private static CREATE_URL = PlaylistService.PLAYLIST_URL + '/create';
     private static ADD_SONG_URL = PlaylistService.PLAYLIST_URL + '/addSong';
     private static REMOVE_SONG_URL = PlaylistService.PLAYLIST_URL + '/removeSong';
@@ -23,16 +24,18 @@ export class PlaylistService {
     ) { }
 
     public getPlaylistById(playlistId: number): Observable<Playlist> {
-        return this.httpRequest.get(PlaylistService.PLAYLIST_URL, playlistId)
+        return this.httpRequest.get(PlaylistService.GET_URL, playlistId)
             .map((response: ApiResponse) => {
                 const playlist: Playlist = response.responseData;
+                console.log(playlist.songs);
                 for (let trackNumber = 1; trackNumber <= playlist.songs.length; trackNumber += 1) {
-                    playlist.songs[trackNumber].trackNumber = trackNumber;
-                    playlist.songs[trackNumber].duration = Math.floor(playlist.songs[trackNumber].duration / 1000);
-                    playlist.songs[trackNumber].durationString =
-                        `${Math.floor(playlist.songs[trackNumber].duration / 60)}:`;
-                    const seconds = playlist.songs[trackNumber].duration % 60;
-                    playlist.songs[trackNumber].durationString += (seconds < 10) ? `0${seconds}` : seconds;
+                    console.log(trackNumber);
+                    playlist.songs[trackNumber - 1].trackNumber = trackNumber;
+                    playlist.songs[trackNumber - 1].duration = Math.floor(playlist.songs[trackNumber - 1].duration / 1000);
+                    playlist.songs[trackNumber - 1].durationString =
+                        `${Math.floor(playlist.songs[trackNumber - 1].duration / 60)}:`;
+                    const seconds = playlist.songs[trackNumber - 1].duration % 60;
+                    playlist.songs[trackNumber - 1].durationString += (seconds < 10) ? `0${seconds}` : seconds;
                 }
                 return playlist;
             });

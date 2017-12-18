@@ -69,6 +69,9 @@ export class PlaylistViewComponent implements OnInit {
                                 albumInfoReturns -= 1;
                                 if (albumInfoReturns === 0) {
                                     this.songTableManager.setSongs(playlist.songs);
+                                    setTimeout(() => {
+                                        this.songTableManager.setSort(this.sort);
+                                    }, 3000);
                                     this.isLoaded = true;
                                 }
                             });
@@ -80,19 +83,15 @@ export class PlaylistViewComponent implements OnInit {
                         const seconds = song.duration % 60;
                         song.durationString += (seconds < 10) ? `0${seconds}` : seconds;
                     });
-
-                    setTimeout(() => {
-                        this.songTableManager.setSort(this.sort);
-                    }, 3000);
                 }
             },
             (error: any) => {
-                console.log(error.toString());
+                console.log(error);
             });
     }
 
     private getIsOwner = (user: User): void => {
-        this.isOwner = this.playlist.owner.id === user.id;
+        this.isOwner = this.playlist.ownerId === user.id;
         if (this.isOwner) {
             this.isEditable = true;
         }
@@ -100,33 +99,48 @@ export class PlaylistViewComponent implements OnInit {
 
     private renamePlaylist(): void {
         if (this.isEditable) {
-            this.playlistService.updatePlaylist(this.playlist);
-        }
-    }
-
-    private deletePlaylist(): void {
-        if (this.isOwner) {
-            this.playlistService.deletePlaylist(this.playlist.id);
+            this.playlistService.updatePlaylist(this.playlist)
+                .subscribe((playlist: Playlist) => {
+                    console.log('changed name');
+                });
         }
     }
 
     private followPlaylist(): void {
         this.favoritesService.addFavoritePlaylistById(this.playlist.id)
-        .subscribe((success: boolean) => {
-            if (success) {
-                this.isFavorited = true;
-                this.leftBarProxyService.refreshPlaylists();
-            }
-        });
+            .subscribe((success: boolean) => {
+                if (success) {
+                    this.isFavorited = true;
+                    this.leftBarProxyService.refreshPlaylists();
+                }
+            });
     }
 
     private unfollowPlaylist(): void {
         this.favoritesService.removeFavoritePlaylistById(this.playlist.id)
-        .subscribe((success: boolean) => {
-            if (success) {
-                this.isFavorited = false;
-                this.leftBarProxyService.refreshPlaylists();
-            }
-        });
+            .subscribe((success: boolean) => {
+                if (success) {
+                    this.isFavorited = false;
+                    this.leftBarProxyService.refreshPlaylists();
+                }
+            });
+    }
+
+    private removeSongFromPlaylist(song: Song): void {
+        this.songTableManager.removeSong(song);
+        this.playlistService.removeSong(this.playlist.id, song.id)
+            .subscribe((playlist: Playlist) => {
+            },
+            (error: any) => {
+                console.log(error);
+            });
+    }
+
+    private deletePlaylist(): void {
+        this.playlistService.deletePlaylist(this.playlist.id)
+            .subscribe((success: boolean) => {
+                console.log(`deleted playlist ${success}`);
+                this.router.navigate(['/playlists']);
+            });
     }
 }

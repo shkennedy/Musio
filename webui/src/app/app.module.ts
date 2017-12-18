@@ -46,6 +46,7 @@ import { SongItemComponent } from './content-pages/song-view/song-item/song-item
 import { AlbumItemComponent } from './content-pages/album-views/album-collection-view/album-item/album-item.component';
 import { ArtistItemComponent } from './content-pages/artist-views/artist-collection-view/artist-item/artist-item.component';
 import { InstrumentViewComponent } from './content-pages/instrument-view/instrument-view.component';
+import { InstrumentBrowseComponent } from './content-pages/instrument-browse/instrument-browse.component';
 import { GoPremiumComponent } from './content-pages/go-premium/go-premium.component';
 import { SearchComponent } from './content-pages/search-view/search-view.component';
 import { FollowedUsersBarComponent } from './content-home/followed-users-bar/followed-users-bar.component';
@@ -101,6 +102,7 @@ import { LeftBarProxyService } from './services/leftBarProxy.service';
         AlbumDetailComponent,
         AlbumSongComponent,
         InstrumentViewComponent,
+        InstrumentBrowseComponent,
         GoPremiumComponent,
         SearchComponent,
         FollowedUsersBarComponent,
