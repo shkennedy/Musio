@@ -20,7 +20,6 @@ export class InstrumentBrowseComponent implements OnInit {
         this.instrumentService.getAllInstruments()
             .subscribe((instrumentList: Instrument[]) => {
                 this.capital(instrumentList);
-                console.log(instrumentList);
                 this.instruments = this.alphabeticalSort(instrumentList);
                 this.loading = false;
             });

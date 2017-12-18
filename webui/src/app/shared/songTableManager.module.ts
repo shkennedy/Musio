@@ -51,7 +51,6 @@ export class SongTableManager {
             this.playlists.forEach((playlist: Playlist) => {
                 playlist.songs.forEach((playlistSong: Song) => {
                     if (song.id === playlistSong.id) {
-                        console.log(song.title + 'found in playlist' + playlist.name);
                         song.playlistsMap.set(playlist.id, playlist);
                         song.playlistsList.push(playlist);
                     }
