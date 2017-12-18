@@ -46,6 +46,14 @@ export class SongTableManager {
     public setSongs(songs: Song[]): void {
         songs.forEach((song: Song) => {
             this.songs.set(song.id, song);
+            song.playlistsMap = new Map();
+            this.playlists.forEach((playlist: Playlist) => {
+                playlist.songs.forEach((playlistSong: Song) => {
+                    if (song.id === playlistSong.id) {
+                        song.playlistsMap.set(playlist.id, playlist);
+                    }
+                });
+            });
         });
         this.tableData.data = songs;
     }

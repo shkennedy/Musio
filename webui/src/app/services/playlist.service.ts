@@ -14,6 +14,7 @@ export class PlaylistService {
     private static CREATE_URL = PlaylistService.PLAYLIST_URL + '/create';
     private static ADD_SONG_URL = PlaylistService.PLAYLIST_URL + '/addsong';
     private static REMOVE_SONG_URL = PlaylistService.PLAYLIST_URL + '/removesong';
+    private static SET_COLLABORATION_URL = PlaylistService.PLAYLIST_URL + '/setCollaborative';
 
     constructor(
         private router: Router,
@@ -38,9 +39,16 @@ export class PlaylistService {
 
     public createPlaylist(playlistName: string): Observable<Playlist> {
         return this.httpRequest.getWithUrlParams(PlaylistService.CREATE_URL, playlistName)
-        .map((response: ApiResponse) => {
-            return response.responseData;
-        });
+            .map((response: ApiResponse) => {
+                return response.responseData;
+            });
+    }
+
+    public setPlaylistCollaborationById(playlistId: number, isCollaboartive): Observable<Playlist> {
+        return this.httpRequest.get(PlaylistService.SET_COLLABORATION_URL + '/' + playlistId + '/' + isCollaboartive)
+            .map((response: ApiResponse) => {
+                return response.responseData;
+            });
     }
 
     public updatePlaylist(playlist: Playlist): Observable<Playlist> {

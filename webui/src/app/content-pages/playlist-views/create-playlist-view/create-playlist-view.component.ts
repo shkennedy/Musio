@@ -148,7 +148,6 @@ export class CreatePlaylistViewComponent implements OnInit {
     private createPlaylist(): void {
         this.playlistService.createPlaylist(this.playlistName)
         .subscribe((newPlaylist: Playlist) => {
-            console.log(newPlaylist);
             newPlaylist.isPrivate = this.isPrivate;
             newPlaylist.songs = this.addedTableManager.getSongs();
             newPlaylist.isCollaborative = this.isCollaborative;
