@@ -40,8 +40,8 @@ export class FollowedUsersBarComponent implements OnInit {
         this.followedUsersBarProxyService.registerListeners(this.refreshFollowedUsers);
         setInterval(this.getFollowedUsersHistory, 25000);
         this.refreshFollowedUsers();
-        const obs = Observable.of(this.filter);
-        obs.subscribe((str: string) => this.filterUsers());
+        // const obs = Observable.of(this.filter);
+        // obs.subscribe((str: string) => this.filterUsers());
     }
 
     private refreshFollowedUsers = (): void => {
@@ -82,7 +82,12 @@ export class FollowedUsersBarComponent implements OnInit {
         this.audioPlayerProxyService.playSong(song.id);
     }
 
-    filterUsers(str: string) {
-        console.log('here');
+    filterUsers() {
+        this.filteredUsers = [];
+        this.users.forEach( (u) => {
+            if ( u.username.match(this.filter) ) {
+                this.filteredUsers.push(u);
+            }
+        });
     }
 }
