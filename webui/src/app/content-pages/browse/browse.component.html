@@ -117,16 +117,16 @@
                 </div>
 
                 <!-- Playlists -->
-                <div *ngIf="friendsFavorites.playlists.length !== 0">
+                <div *ngIf="friendsFavorites.playlists && friendsFavorites.playlists.length !== 0">
                     <h3>Playlists</h3>
-                    <mat-grid-tile *ngFor="let playlist of friendsFavorites.playlists" [routerLink]="['/playlists', playlist.id]">
-                        <div class="col_flex">
-                            <img class="routing_img" src="{{playlist.albumArtUrl}}" alt="{{playlist.title}}">
-                            <p class="album_name">{{playlist.title}}</p>
-                            <p class="artist_name">{{playlist.artistName}}</p>
-                        </div>
-                    </mat-grid-tile>
-                    {{playlist.image}} {{playlist.name}}
+                    <mat-grid-list cols="4" class="padded">
+                        <mat-grid-tile *ngFor="let playlist of friendsFavorites.playlists" [routerLink]="['/playlists', playlist.id]">
+                            <div class="col_flex">
+                                <img class="routing_img" src="{{playlist.playlistImageUrl}}" alt="{{playlist.name}}">
+                                <p class="album_name">{{playlist.name}}</p>
+                            </div>
+                        </mat-grid-tile>
+                    </mat-grid-list>
                 </div>
 
                 <!-- Songs -->

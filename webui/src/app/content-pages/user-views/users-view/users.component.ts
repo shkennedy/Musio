@@ -59,7 +59,7 @@ export class UsersComponent implements OnInit {
                     this.isSelf = false;
                 }
 
-                this.userService.getFollowedUsers()
+                this.userService.getUserFollowedUsers(this.user.id)
                     .subscribe((followedUsers: User[]) => {
                         this.user.followedUsers = followedUsers;
                         followedUsers.forEach((followedUser: User) => {
@@ -120,7 +120,11 @@ export class UsersComponent implements OnInit {
                     });
 
                 // Get user playlists
-                // this.userService.
+                this.userService.getUserPublicPlaylistsById(user.id)
+                .subscribe((playlists: Playlist[]) => {
+                    console.log(playlists);
+                    this.user.favoritePlaylists = playlists;
+                });
             });
     }
 

@@ -4,9 +4,10 @@ import { Observable } from 'rxjs/Rx';
 
 import { HttpRequestService, ApiResponse } from './httpRequest.service';
 import { PaymentInfo } from '../models/paymentInfo.model';
-import { User } from '../models/user.model';
+import { Playlist } from '../models/playlist.model';
 import { Role } from '../models/role.model';
 import { Song } from '../models/song.model';
+import { User } from '../models/user.model';
 
 @Injectable()
 export class UserService {
@@ -30,7 +31,9 @@ export class UserService {
     private static PASSWORD_URL = UserService.USER_URL + '/password';
     private static PASSWORD_CHANGE_URL = UserService.PASSWORD_URL + '/requestChange';
     private static CHECK_HAS_IMAGE_URL = UserService.USER_URL + '/checkProfileImage';
+    private static GET_USER_FOLLOWED_USERS_URL = UserService.USER_URL + '/getFollowedUsers';
     private static SET_IMAGE_URL = UserService.USER_URL + '/uploadProfileImage';
+    private static PUBLIC_PLAYLISTS_URL = UserService.USER_URL + '/getPublicPlaylists';
 
     constructor(
         private router: Router,
@@ -199,6 +202,20 @@ export class UserService {
 
     public getHasImageById(userId: number): Observable<boolean> {
         return this.httpRequest.get(UserService.CHECK_HAS_IMAGE_URL, userId)
+            .map((response: ApiResponse) => {
+                return response.responseData;
+            });
+    }
+
+    public getUserFollowedUsers(userId: number): Observable<User[]> {
+        return this.httpRequest.get(UserService.GET_USER_FOLLOWED_USERS_URL, userId)
+            .map((response: ApiResponse) => {
+                return response.responseData;
+            });
+    }
+
+    public getUserPublicPlaylistsById(userId: number): Observable<Playlist[]> {
+        return this.httpRequest.get(UserService.PUBLIC_PLAYLISTS_URL, userId)
             .map((response: ApiResponse) => {
                 return response.responseData;
             });

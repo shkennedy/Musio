@@ -48,4 +48,8 @@ export class FileService {
     public getUserImageURLById(userId: number): string {
         return FileService.BASE_URL + FileService.USER_FULL_URL + `/${userId}`;
     }
+
+    public getPlaylistImageURLByImageId(playlistImageId: number): string {
+        return FileService.BASE_URL + FileService.GENERIC_GET_URL + `/${playlistImageId}`;
+    }
 }

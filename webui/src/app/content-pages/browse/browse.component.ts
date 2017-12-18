@@ -107,8 +107,9 @@ export class BrowseComponent implements OnInit {
             artist.artistImageUrl = this.fileService.getArtistImageURLByIdAndSize(artist.id, true);
         });
 
-        // browseData.playlists.forEach((playlist: Playlist) => {
-        //     playlist.playlistImageUrl = this.fileService.getPlaylistImageURLById(playlist.id);
-        // });
+        browseData.playlists.forEach((playlist: Playlist) => {
+            // playlist.playlistImageUrl = this.fileService.getPlaylistImageURLByImageId(playlist.playlistImageId);
+            playlist.playlistImageUrl = '/assets/images/default_art.png'
+        });
     }
 }
