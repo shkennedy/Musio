@@ -12,9 +12,10 @@ export class PlaylistService {
 
     private static PLAYLIST_URL = '/playlist';
     private static CREATE_URL = PlaylistService.PLAYLIST_URL + '/create';
-    private static ADD_SONG_URL = PlaylistService.PLAYLIST_URL + '/addsong';
+    private static ADD_SONG_URL = PlaylistService.PLAYLIST_URL + '/addSong';
     private static REMOVE_SONG_URL = PlaylistService.PLAYLIST_URL + '/removesong';
     private static SET_COLLABORATION_URL = PlaylistService.PLAYLIST_URL + '/setCollaborative';
+    private static SET_PRIVACY_URL = PlaylistService.PLAYLIST_URL + '/setPrivate';
 
     constructor(
         private router: Router,
@@ -44,8 +45,15 @@ export class PlaylistService {
             });
     }
 
-    public setPlaylistCollaborationById(playlistId: number, isCollaboartive): Observable<Playlist> {
+    public setPlaylistCollaborationById(playlistId: number, isCollaboartive: boolean): Observable<Playlist> {
         return this.httpRequest.get(PlaylistService.SET_COLLABORATION_URL + '/' + playlistId + '/' + isCollaboartive)
+            .map((response: ApiResponse) => {
+                return response.responseData;
+            });
+    }
+
+    public setPlaylistPrivacyById(playlistId: number, isPrivate: boolean): Observable<Playlist> {
+        return this.httpRequest.get(PlaylistService.SET_PRIVACY_URL + '/' + playlistId + '/' + isPrivate)
             .map((response: ApiResponse) => {
                 return response.responseData;
             });
@@ -65,12 +73,19 @@ export class PlaylistService {
             });
     }
 
-    public addSong(playlistId: number, songId: number): Observable<boolean> {
-        const body = {
-            'playlistId': playlistId,
-            'songId': songId
-        };
-        return this.httpRequest.post(PlaylistService.ADD_SONG_URL, body)
+    // public addSong(playlistId: number, songId: number): Observable<boolean> {
+    //     const body = {
+    //         'playlistId': playlistId,
+    //         'songId': songId
+    //     };
+    //     return this.httpRequest.post(PlaylistService.ADD_SONG_URL, body)
+    //         .map((response: ApiResponse) => {
+    //             return response.responseData;
+    //         });
+    // }
+
+    public addSong(playlistId: number, songId: number): Observable<Playlist> {
+        return this.httpRequest.get(PlaylistService.ADD_SONG_URL + '/' + playlistId + '/' + songId)
             .map((response: ApiResponse) => {
                 return response.responseData;
             });
