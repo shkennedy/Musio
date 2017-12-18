@@ -36,17 +36,6 @@ public class AdController
     @Autowired
     private AppConfig appConfig;
 
-    @RequestMapping(value = "/getRandom", method = RequestMethod.GET, headers = "Accept=application/json")
-    public @ResponseBody ApiResponseObject getRandomAd() {
-        ApiResponseObject response = new ApiResponseObject();
-
-        Advertisement ad = adRepository.findRandomAd();
-        response.setResponseData(ad);
-        response.setSuccess(true);
-
-        return response;
-    }
-
     @RequestMapping(value = "/deleteById")
     public @ResponseBody ApiResponseObject getRandomAd(@RequestParam("advertisementId") int advertisementId) {
         ApiResponseObject response = new ApiResponseObject();

@@ -7,6 +7,8 @@ import com.sbu.webspotify.model.File;
 import com.sbu.webspotify.model.Image;
 import com.sbu.webspotify.model.Song;
 import com.sbu.webspotify.model.User;
+import com.sbu.webspotify.model.Advertisement;
+import com.sbu.webspotify.repo.AdRepository;
 import com.sbu.webspotify.repo.FileRepository;
 import com.sbu.webspotify.service.AlbumService;
 import com.sbu.webspotify.service.ArtistService;
@@ -38,6 +40,15 @@ public class ResourceController
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    AdRepository adRepository;
+
+    @RequestMapping(value = "/getRandom", method = RequestMethod.GET, headers = "Accept=application/json")
+    public @ResponseBody byte[] getRandomAd() {
+        Advertisement ad = adRepository.findRandomAd();
+        return fileRepository.findById(ad.getFile()).getBytes();
+    }
 
     @RequestMapping(value = "/get/{fileId}", method = RequestMethod.GET)
     public @ResponseBody byte[] getResource(@PathVariable("fileId") int fileId) {
