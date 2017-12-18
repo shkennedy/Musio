@@ -39,13 +39,8 @@
 
     <div *ngIf="songTableManager.tableData.data.length !== 0">
         <h3>Songs</h3>
-        <div class="col-sm-8">
-            <mat-table #table [dataSource]="songTableManager.tableData" matSort>
-                <!-- Track Column -->
-                <ng-container matColumnDef="trackNumber">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header> No. </mat-header-cell>
-                    <mat-cell *matCellDef="let song">{{song.trackNumber}}</mat-cell>
-                </ng-container> -->
+        <div>
+            <mat-table #table [dataSource]="songTableManager.tableData" matSort style="margin: 20px;">
 
                 <!-- Play Button Column -->
                  <ng-container matColumnDef="playButton">
@@ -61,6 +56,18 @@
                 <ng-container matColumnDef="title">
                     <mat-header-cell *matHeaderCellDef mat-sort-header> Title </mat-header-cell>
                     <mat-cell *matCellDef="let song">{{song.title}}</mat-cell>
+                </ng-container>
+
+                <!-- Artist Column -->
+                <ng-container matColumnDef="artist">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Artist </mat-header-cell>
+                    <mat-cell *matCellDef="let song">{{song.artistName}}</mat-cell>
+                </ng-container>
+
+                <!-- Album Column -->
+                <ng-container matColumnDef="album">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Album </mat-header-cell>
+                    <mat-cell *matCellDef="let song">{{song.albumTitle}}</mat-cell>
                 </ng-container>
 
                 <!-- More Actions Button Column -->
@@ -111,8 +118,8 @@
                     </mat-cell>
                 </ng-container>
 
-                <mat-header-row *matHeaderRowDef="['trackNumber', 'playButton', 'title', 'moreActionsButton', 'duration', 'favoriteButton']"></mat-header-row>
-                <mat-row *matRowDef="let row; columns: ['trackNumber', 'playButton', 'title', 'moreActionsButton', 'duration', 'favoriteButton'];"
+                <mat-header-row *matHeaderRowDef="['playButton', 'title', 'artist', 'album', 'moreActionsButton', 'duration', 'favoriteButton']"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: ['playButton', 'title', 'artist', 'album', 'moreActionsButton', 'duration', 'favoriteButton'];"
                     (mouseenter)="songTableManager.showButtons(row.id)" (mouseleave)="songTableManager.hideButtons(row.id)"></mat-row>
             </mat-table>
         </div>
