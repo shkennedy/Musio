@@ -95,9 +95,9 @@
                 <!-- Artists -->
                 <mat-grid-list *ngIf="friendsFavorites.artists.length !== 0" cols="4" gutterSize="15px" class="padded">
                     <h3>Artists</h3>
-                    <mat-grid-tile *ngFor="let artist of friendsFavorites.artists" class="artist-card col-sm-3 center-block" [routerLink]="['/artists', artist.id]">
+                    <mat-grid-tile *ngFor="let artist of friendsFavorites.artists" class="center-block" [routerLink]="['/artists', artist.id]">
                         <div style="margin-top: 20px;">
-                            <img style="border-radius: 100px;" class="routing_img" src="{{artist.artistImageUrl}}" alt="{{artist.name}}">
+                            <img style="border-radius:50%;" class="routing_img" src="{{artist.artistImageUrl}}" alt="{{artist.name}}">
                             <div style="text-align: center;">{{artist.name}}</div>
                         </div>
                     </mat-grid-tile>
@@ -110,8 +110,8 @@
                         <mat-grid-tile *ngFor="let album of friendsFavorites.albums" [routerLink]="['/albums', album.id]">
                             <div class="col_flex">
                                 <img class="routing_img" src="{{album.albumArtUrl}}" alt="{{album.title}}">
-                                <p class="album_name">{{album.title}}</p>
-                                <p class="artist_name">{{album.artistName}}</p>
+                                <p>{{album.title}}</p>
+                                <p>{{album.artistName}}</p>
                             </div>
                         </mat-grid-tile>
                     </mat-grid-list>

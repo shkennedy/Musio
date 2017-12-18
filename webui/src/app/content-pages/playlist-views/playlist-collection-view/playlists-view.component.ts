@@ -14,6 +14,7 @@ import { Song } from '../../../models/song.model';
 })
 export class PlaylistsViewComponent implements OnInit {
 
+    private loading = true;
     private playlists: Playlist[];
     private isEmpty = true;
 
@@ -29,10 +30,12 @@ export class PlaylistsViewComponent implements OnInit {
         this.favoritesService.getFavoritePlaylists()
         .subscribe(
             (playlists: Playlist[]) => {
+                this.loading = false;
                 this.playlists = playlists;
                 this.isEmpty = false;
             },
             (error: any) => {
+                this.loading = false;
                 this.errorMessage = error;
             }
         );
