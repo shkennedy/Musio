@@ -122,7 +122,8 @@ public class UserService {
                                                int securityCode, String newPassword) {
         ApiResponseObject response = new ApiResponseObject();
         if (knownSecurityCode == securityCode) {
-            user.setPassword(newPassword);
+			user.setPassword(newPassword);
+            user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
             userRepository.save(user);
             response.setSuccess(true);
         } else {
