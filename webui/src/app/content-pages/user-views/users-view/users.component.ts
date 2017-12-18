@@ -127,7 +127,6 @@ export class UsersComponent implements OnInit {
     followUser() {
         this.userService.followUser(this.user.id)
             .subscribe((success: boolean) => {
-
             });
     }
 
