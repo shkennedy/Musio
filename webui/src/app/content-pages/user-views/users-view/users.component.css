@@ -421,3 +421,11 @@ mat-row:hover {
     width: 100%;
     text-align: center;
 }
+
+.hoverable{
+    cursor:pointer;
+}
+
+.hoverable:hover{
+    color:white;
+}

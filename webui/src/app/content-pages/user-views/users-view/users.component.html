@@ -52,9 +52,9 @@
                 <ng-template #hasFollowedUsers>
                     <mat-grid-list cols="4" gutterSize="15px">
                         <mat-grid-tile *ngFor="let followedUser of user.followedUsers;">
-                            <div class="flex_column">
-                                <!-- <img src="{{followedUser.profileImage}}" class="followers"/> -->
-                                <div>{{followedUser.username}}</div>
+                            <div class="flex_column hoverable">
+                                <img [src]="followedUser.profileImageUrl" class="followers"/>
+                                <div class="flex_column" style="text-align:center">{{followedUser.username}}</div>
                             </div>
                         </mat-grid-tile>
                     </mat-grid-list>
