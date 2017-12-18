@@ -18,10 +18,10 @@
     <mat-grid-list *ngIf="albums.length !== 0" cols="4" gutterSize="15px" class="padded">
         <h3>Albums</h3>
         <mat-grid-tile *ngFor="let album of albums" [routerLink]="['/albums', album.id]">
-            <div class="col_flex">
+            <div class="flex_col ellipsis">
                 <img class="routing_img" src="{{album.albumArtUrl}}" alt="{{album.title}}">
-                <p class="album_name">{{album.title}}</p>
-                <p class="artist_name">{{album.artistName}}</p>
+                <div class="ellipsis flex_col">{{album.title}}</div>
+                <p class="artist_name" style="text-align:center;">{{album.artistName}}</p>
             </div>
         </mat-grid-tile>
     </mat-grid-list>
@@ -133,7 +133,7 @@
         </div>
         <mat-grid-list cols="4" rowHeight="4:1">
             <mat-grid-tile *ngFor="let instrument of instruments" class="hoverable">
-                {{instrument.name}}
+                {{instrument.name | capitalize}}
             </mat-grid-tile>
         </mat-grid-list>
     </div>
@@ -146,7 +146,7 @@
         </div> -->
         <mat-grid-list cols="4" rowHeight="4:1">
             <mat-grid-tile *ngFor="let genre of genres" class="hoverable">
-                {{genre.name}}
+                {{genre.name | capitalize}}
             </mat-grid-tile>
         </mat-grid-list>
     </div>
@@ -154,10 +154,10 @@
     <!-- Users -->
     <div *ngIf="users.length !== 0">
         <h3>Users</h3>
-        <mat-grid-list cols="4" rowHeight="4:1">
+        <mat-grid-list cols="4">
             <mat-grid-tile *ngFor="let user of users" class="hoverable" [routerLink]="['/user/',user.username]">
                 <div class="flex_col">
-                    <img [src]="user.profileImageUrl">
+                    <img [src]="user.profileImageUrl" class="routing_img" style="border-radius:50%;border:none;">
                     <div>{{user.username}}</div>
                 </div>
             </mat-grid-tile>

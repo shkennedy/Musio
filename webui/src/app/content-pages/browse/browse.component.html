@@ -46,8 +46,8 @@
                                     style="padding-bottom:10px;">
                         <div>
                             <img class="routing_img" src="{{album.albumArtUrl}}" alt="{{album.title}}">
-                            <p class="album_name">{{album.title}}</p>
-                            <p class="artist_name">{{album.artistName}}</p>
+                            <p class="album_name" style="text-align:center;">{{album.title}}</p>
+                            <p class="artist_name" style="text-align:center;">{{album.artistName}}</p>
                         </div>
                     </mat-grid-tile>
                 </mat-grid-list>
@@ -106,12 +106,12 @@
                 <!-- Albums -->
                 <div *ngIf="friendsFavorites.albums.length !== 0">
                     <h3>Albums</h3>
-                    <mat-grid-list cols="4" gutterSize="15px" class="padded">
+                    <mat-grid-list cols="4" class="padded">
                         <mat-grid-tile *ngFor="let album of friendsFavorites.albums" [routerLink]="['/albums', album.id]">
                             <div class="col_flex">
                                 <img class="routing_img" src="{{album.albumArtUrl}}" alt="{{album.title}}">
                                 <p>{{album.title}}</p>
-                                <p>{{album.artistName}}</p>
+                                <p class="artist_name">{{album.artistName}}</p>
                             </div>
                         </mat-grid-tile>
                     </mat-grid-list>

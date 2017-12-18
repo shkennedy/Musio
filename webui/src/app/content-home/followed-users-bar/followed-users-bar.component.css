@@ -197,3 +197,10 @@
     display:grid;
     grid-template-columns: 8fr 2fr; 
 }
+
+.flexy_col{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}

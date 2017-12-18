@@ -6,6 +6,7 @@ import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { FavoritesService } from '../../../services/favorites.service';
 import { PlaylistService } from '../../../services/playlist.service';
 import { AudioPlayerProxyService } from '../../../services/audioPlayerProxy.service';
+import { LeftBarProxyService } from '../../../services/leftBarProxy.service';
 
 import { SongTableManager } from '../../../shared/songTableManager.module';
 
@@ -46,6 +47,7 @@ export class CreatePlaylistViewComponent implements OnInit {
         private playlistService: PlaylistService,
         private songService: SongService,
         private formBuilder: FormBuilder,
+        private leftBarProxyService: LeftBarProxyService
     ) { }
 
     ngOnInit() {
@@ -154,6 +156,7 @@ export class CreatePlaylistViewComponent implements OnInit {
                 .subscribe((playlist: Playlist) => {
                     returns -= 1;
                     if (returns === 0) {
+                        this.leftBarProxyService.refreshPlaylists();
                         this.router.navigate(['/playlists']);
                     }
                 });
@@ -162,6 +165,7 @@ export class CreatePlaylistViewComponent implements OnInit {
             .subscribe((playlist: Playlist) => {
                 returns -= 1;
                 if (returns === 0) {
+                    this.leftBarProxyService.refreshPlaylists();
                     this.router.navigate(['/playlists']);
                 }
             });
@@ -169,6 +173,7 @@ export class CreatePlaylistViewComponent implements OnInit {
             .subscribe((playlist: Playlist) => {
                 returns -= 1;
                 if (returns === 0) {
+                    this.leftBarProxyService.refreshPlaylists();
                     this.router.navigate(['/playlists']);
                 }
             });
