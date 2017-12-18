@@ -175,7 +175,7 @@ export class UserService {
             });
     }
 
-    public getFollowedUsersHistory(): Observable<Map<number, Song>> {
+    public getFollowedUsersHistory(): Observable<any> {
         return this.httpRequest.get(UserService.FOLLOWED_USERS_HISTORY)
             .map((response: ApiResponse) => {
                 return response.responseData;

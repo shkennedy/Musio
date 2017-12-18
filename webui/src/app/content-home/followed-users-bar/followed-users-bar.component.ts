@@ -53,9 +53,11 @@ export class FollowedUsersBarComponent implements OnInit {
     private getFollowedUsersHistory = (): void => {
         this.userService.getFollowedUsersHistory()
         .subscribe(
-            (userHistory: Map<number, Song>) => {
-                console.log(userHistory);
-                this.userHistory = userHistory;
+            (userHistoryItems: any) => {
+                userHistoryItems.forEach((historyItem: any) => {
+                    this.userHistory.set(historyItem.userId, historyItem);
+                });
+                // this.userHistory = userHistory;
             },
             (error: any) => {
                 console.log(error.toString());

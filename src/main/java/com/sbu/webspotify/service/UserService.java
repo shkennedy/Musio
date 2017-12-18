@@ -371,7 +371,8 @@ public class UserService {
             if (song != null) {
                 historyItem = new UserHistoryItemIdentifier();
                 historyItem.id = song.getId();
-                historyItem.userId = user.getId();
+                historyItem.title = song.getTitle();
+                historyItem.userId = followedUser.getId();
                 historyItem.albumId = song.getAlbumId();
                 historyItem.albumTitle = song.getAlbumTitle();
                 historyItem.duration = song.getDuration();
