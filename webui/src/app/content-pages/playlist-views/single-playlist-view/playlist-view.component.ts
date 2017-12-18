@@ -145,7 +145,7 @@ export class PlaylistViewComponent implements OnInit {
     private deletePlaylist(): void {
         this.playlistService.deletePlaylist(this.playlist.id)
             .subscribe((success: boolean) => {
-                console.log(`deleted playlist ${success}`);
+                this.leftBarProxyService.refreshPlaylists();
                 this.router.navigate(['/playlists']);
             });
     }

@@ -51,7 +51,7 @@
             <h3 style="margin-left: 10px;">Lyrics</h3>
             <p *ngIf="currentSong; else noLyrics;" class="lyrics">{{currentSong.lyrics}}</p>
             <ng-template #noLyrics>
-                <p style="margin-left: 10px;">No Current Song.</p>
+                <p class="lyrics">No Current Song.</p>
             </ng-template>
         </div>
 

@@ -13,6 +13,7 @@ export class PlaylistService {
     private static PLAYLIST_URL = '/playlist';
     private static GET_URL = PlaylistService.PLAYLIST_URL  + '/get';
     private static CREATE_URL = PlaylistService.PLAYLIST_URL + '/create';
+    private static DELETE_URL = PlaylistService.PLAYLIST_URL + '/delete';
     private static ADD_SONG_URL = PlaylistService.PLAYLIST_URL + '/addSong';
     private static REMOVE_SONG_URL = PlaylistService.PLAYLIST_URL + '/removeSong';
     private static SET_COLLABORATION_URL = PlaylistService.PLAYLIST_URL + '/setCollaborative';
@@ -70,7 +71,7 @@ export class PlaylistService {
     }
 
     public deletePlaylist(playlistId: number): Observable<boolean> {
-        return this.httpRequest.delete(PlaylistService.PLAYLIST_URL, playlistId)
+        return this.httpRequest.delete(PlaylistService.DELETE_URL, playlistId)
             .map((response: ApiResponse) => {
                 return response.success;
             });

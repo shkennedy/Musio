@@ -344,7 +344,7 @@ export class AudioPlayerComponent implements OnInit {
         if (!this.privateMode) {
             this.userService.addSongIdToHistory(song.id)
                 .subscribe(() => {
-                    console.log(`added ${song.id} to history`);
+                    // console.log(`added ${song.id} to history`);
                 });
         }
     }
