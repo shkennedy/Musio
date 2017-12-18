@@ -10,8 +10,8 @@
         </div>
     
         <ng-template #hasPlaylists>
-            <mat-grid-list cols="4" gutterSize="15px">
-                <mat-grid-tile *ngFor="let playlist of playlists" [routerLink]="['/playlists', playlist.id]">
+            <mat-grid-list cols="4" gutterSize="15px" style="margin-left:20px;margin-right:20px;">
+                <mat-grid-tile *ngFor="let playlist of playlists" [routerLink]="['/playlists', playlist.id]" class="hover">
                     <div class="col_flex">
                         <div class="col_flex">
                             <!-- <img [src]="playlist.playlistImageUrl" alt="{{playlist.name}}"> -->

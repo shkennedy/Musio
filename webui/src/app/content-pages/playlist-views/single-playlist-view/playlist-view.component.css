@@ -35,3 +35,16 @@
 mat-row:hover {
 background-color: grey;
 }
+
+
+.img_sized{
+    height:180px;
+    width:180px;
+    border-radius: 50px;
+}
+
+.flex_row{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
