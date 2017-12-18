@@ -14,10 +14,10 @@ public interface PlaylistRepository extends JpaRepository<Playlist, Integer>
 {
     Playlist findById(int id);
 
-    @Query("SELECT p.id as id, p.name as name FROM Playlist p WHERE p.name LIKE CONCAT('%', :queryString, '%')")
+    @Query(value = "SELECT p.image_file_id as artworkFileId, p.id as id, p.name as name FROM Playlist p WHERE p.name LIKE CONCAT('%', :queryString, '%')", nativeQuery=true)
     Set<PlaylistIdentifier> findByNameContaining(@Param("queryString") String queryString);
 
-    @Query(value = "SELECT p.id as id, p.name as name FROM user_favorite_playlist ufp, playlist p WHERE ufp.playlist_id = p.id and ufp.user_id = :userId ORDER BY timestamp DESC LIMIT :numElements", nativeQuery = true)    
+    @Query(value = "SELECT p.image_file_id as artworkFileId, p.id as id, p.name as name FROM user_favorite_playlist ufp, playlist p WHERE ufp.playlist_id = p.id and ufp.user_id = :userId ORDER BY timestamp DESC LIMIT :numElements", nativeQuery = true)    
 	Set<PlaylistIdentifier> findRecentlyFavoritedPlaylistsByUser(@Param("userId") int userId, @Param("numElements") int numElements);
     
     @Modifying
@@ -25,6 +25,6 @@ public interface PlaylistRepository extends JpaRepository<Playlist, Integer>
 	@Transactional
 	void deleteByPlaylistId(@Param("playlistId") int playlistId);
 
-    @Query(value = "SELECT p.id as id, p.name as name FROM playlist p where p.is_private = 0 AND p.owner_id = :userId", nativeQuery = true)        
+    @Query(value = "SELECT p.image_file_id as artworkFileId, p.id as id, p.name as name FROM playlist p where p.is_private = 0 AND p.owner_id = :userId", nativeQuery = true)        
 	Set<PlaylistIdentifier> getPublicPlaylistsForUser(@Param("userId") int userId);
 }
