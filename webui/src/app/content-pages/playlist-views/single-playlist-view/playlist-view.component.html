@@ -21,6 +21,8 @@
                 </ng-template>
             </div>
 
+            <button *ngIf="isOwner" class="btn btn-red" (click)="deletePlaylist()">DELETE</button>
+
         </div>
 
         <div id="playlist-tracklist"></div>

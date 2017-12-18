@@ -30,7 +30,7 @@ export class InstrumentService {
         private httpRequest: HttpRequestService
     ) { }
 
-    public getAlbumById(instrumentId: number): Observable<BrowseInstrumentResponse> {
+    public getBrowseByInstrumentId(instrumentId: number): Observable<BrowseInstrumentResponse> {
         return this.httpRequest.get(InstrumentService.INSTRUMENT_URL + InstrumentService.BROWSE_URL, instrumentId)
             .map((response: ApiResponse) => {
                 return response.responseData;
