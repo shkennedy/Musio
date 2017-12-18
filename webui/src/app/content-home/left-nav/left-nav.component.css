@@ -54,3 +54,11 @@ li:hover{
     justify-content: flex-start;
     align-items: center;
 }
+
+.hover{
+    cursor: pointer;
+}
+
+.hover:hover{
+    color:white;
+}
