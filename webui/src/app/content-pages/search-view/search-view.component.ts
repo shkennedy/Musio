@@ -7,6 +7,7 @@ import { FavoritesService } from '../../services/favorites.service';
 import { FileService } from '../../services/file.service';
 import { SearchService, SearchResponse } from '../../services/search.service';
 import { BrowseResponse } from '../../services/search.service';
+import { UserService } from '../../services/user.service';
 
 import { Song } from '../../models/song.model';
 import { Album } from '../../models/album.model';
@@ -45,7 +46,8 @@ export class SearchComponent implements OnInit {
         private audioPlayerProxyService: AudioPlayerProxyService,
         private favoritesService: FavoritesService,
         private fileService: FileService,
-        private searchService: SearchService
+        private searchService: SearchService,
+        private userService: UserService
     ) { }
 
     ngOnInit() {
@@ -109,8 +111,15 @@ export class SearchComponent implements OnInit {
                 this.users = searchData.users;
                 if (this.users) {
                     this.users.forEach((user: User) => {
-                        // user.profileImageUrl =
-                        // this.fileService.getAlbumImageURLByIdAndSize(user.id, false);
+                        // Set user profile image to default url if none exists
+                        this.userService.getHasImageById(user.id)
+                            .subscribe((hasImage: boolean) => {
+                                if (hasImage) {
+                                    user.profileImageUrl = this.fileService.getUserImageURLById(user.id);
+                                } else {
+                                    user.profileImageUrl = '/assets/images/no_artist_picture.png';
+                                }
+                            });
                     });
                 }
             },
