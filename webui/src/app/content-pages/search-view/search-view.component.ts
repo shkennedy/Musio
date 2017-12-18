@@ -59,7 +59,6 @@ export class SearchComponent implements OnInit {
     }
 
     private search(): void {
-        console.log(this.searchQuery);
         this.searchService.search(this.searchQuery)
             .subscribe(
             (searchData: SearchResponse) => {
