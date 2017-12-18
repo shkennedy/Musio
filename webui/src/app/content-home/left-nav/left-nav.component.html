@@ -43,8 +43,8 @@
 
     <div class="hover">
         <mat-icon ngClass="getClass('/radio')" style="margin-right:5px;">radio</mat-icon>
-        <!-- <h5 [routerLink]="['/instruments']">Instruments</h5> -->
-        <h5 [routerLink]="['/playlists']">Instruments</h5>
+        <h5 [routerLink]="['/instruments']">Instruments</h5>
+        <!-- <h5 [routerLink]="['/playlists']">Instruments</h5> -->
     </div>
 
     <!-- Music Library -->
@@ -66,7 +66,7 @@
     </div>
 
     <!-- Playlists -->
-    <div class="nav_block_header flex_row">
+    <div class="nav_block_header flex_row hover" [routerLink]="['/playlists']">
         Playlists
         <div style="padding-left:25px;">
             <button mat-icon-button matTooltip="Add a New Playlist"

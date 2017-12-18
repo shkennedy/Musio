@@ -14,7 +14,8 @@
                 <mat-grid-tile *ngFor="let playlist of playlists" [routerLink]="['/playlists', playlist.id]">
                     <div class="col_flex">
                         <div class="col_flex">
-                            <img [src]="playlist.playlistImageUrl" alt="{{playlist.name}}">
+                            <!-- <img [src]="playlist.playlistImageUrl" alt="{{playlist.name}}"> -->
+                            <img src="/assets/images/default_art.png" alt="{{playlist.name}}" class="img_sized">
                         </div>
                         <div class="col_flex">{{playlist.name}}</div>
                     </div>
