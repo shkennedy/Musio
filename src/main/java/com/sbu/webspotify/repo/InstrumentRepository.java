@@ -22,8 +22,8 @@ public interface InstrumentRepository extends JpaRepository<Instrument, Integer>
 	Instrument findById(int id);
 
 	@Query(value = "SELECT img.full_file_id as fullFileId, a.id as id, a.name as name "
-					+"FROM artist_instrument_mapping aim, artist a, Image img, Instrument ins "
-					+"WHERE aim.artist_id = a.id AND aim.instrument_id = ins.id AND ins.id = :instrumentId "
+					+"FROM artist_instrument_mapping aim, artist a, Image img "
+					+"WHERE aim.artist_id = a.id AND aim.instrument_id = :instrumentId "
 					+"AND a.artist_art_id = img.id ", 
 						nativeQuery = true)      
 	Set<ArtistIdentifier> findArtistsByInstrument(@Param("instrumentId") int instrumentId);
@@ -35,7 +35,7 @@ public interface InstrumentRepository extends JpaRepository<Instrument, Integer>
 					nativeQuery = true)
 	Set<AlbumIdentifier> findAlbumsByInstrument(@Param("instrumentId") int instrumentId);
 
-	@Query(value = "SELECT alb.id as id, alb.title as albumTitle, art.id as artistId, art.name as artistName, s.id as albumId, s.title as title "
+	@Query(value = "SELECT alb.id as id, alb.title as albumTitle, art.id as artistId, art.name as artistName, s.duration as duration, s.id as albumId, s.title as title "
 					+ "FROM Song s, Album alb, Artist art, song_album_mapping sam, album_artist_mapping aam, song_instrument_mapping sim, Instrument ins "
 					+ "WHERE s.id = sam.song_id AND sam.album_id = alb.id AND aam.artist_id = art.id AND aam.album_id = alb.id "
 					+ "AND sim.song_id = s.id AND sim.instrument_id = ins.id AND ins.id = :instrumentId ",
