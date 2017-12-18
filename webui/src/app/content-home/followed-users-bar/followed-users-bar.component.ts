@@ -55,7 +55,6 @@ export class FollowedUsersBarComponent implements OnInit {
         .subscribe(
             (userHistoryItems: any) => {
                 userHistoryItems.forEach((historyItem: any) => {
-                    console.log(historyItem);
                     this.userHistory.set(historyItem.userId, historyItem);
                 });
                 // this.userHistory = userHistory;
