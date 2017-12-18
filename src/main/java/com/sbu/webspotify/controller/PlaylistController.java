@@ -120,10 +120,9 @@ public class PlaylistController
         return response;
     }
 
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE, headers = "Accept=application/json")
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public @ResponseBody ApiResponseObject deletePlaylist(@PathVariable("id") int id) {
-        // TODO 
-        playlistRepository.delete(id);
+        playlistRepository.deleteByPlaylistId(id);
         ApiResponseObject response = new ApiResponseObject();
         response.setSuccess(true);
         return response;
