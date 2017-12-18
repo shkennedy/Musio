@@ -26,17 +26,17 @@
 
                     <div style="color:white;" class="grid2">
                         {{user.username}}
-                        <div *ngIf="userHistory">
+                        <div *ngIf="userHistory && userHistory.get(user.id)">
                             <!-- <div class="flex_start" style="font-size:80%;">{{}}</div> -->
                             <div class="flex_start ellipsis" style="font-size:60%;">
-                                <div style="width:100%;" class="ellipsis">
-                                    <!-- {{userHistory.get(user.id).title}} -->
+                                <div style="width:100%;">
+                                    {{userHistory.get(user.id).title}}
                                 </div>
                             </div>
                             <div class="flex_start ellipsis" style="font-size:60%;">
-                                <mat-icon class="album" style="margin-right:2px;">album</mat-icon>
-                                <div style="width:100%;" class="ellipsis">
-                                    <!-- {{userHistory.get(user.id).albumName}} -->
+                                <mat-icon class="album" style="margin-right:2px;">face</mat-icon>
+                                <div style="width:100%;">
+                                    {{userHistory.get(user.id).artistName}}
                                 </div>
                             </div>
                         </div>
