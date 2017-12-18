@@ -39,16 +39,16 @@
 
     <div *ngIf="songTableManager.tableData.data.length !== 0">
         <h3>Songs</h3>
-        <div id="album-tracklist" class="col-sm-8">
+        <div class="col-sm-8">
             <mat-table #table [dataSource]="songTableManager.tableData" matSort>
                 <!-- Track Column -->
                 <ng-container matColumnDef="trackNumber">
                     <mat-header-cell *matHeaderCellDef mat-sort-header> No. </mat-header-cell>
                     <mat-cell *matCellDef="let song">{{song.trackNumber}}</mat-cell>
-                </ng-container>
+                </ng-container> -->
 
                 <!-- Play Button Column -->
-                <ng-container matColumnDef="playButton">
+                 <ng-container matColumnDef="playButton">
                     <mat-header-cell *matHeaderCellDef></mat-header-cell>
                     <mat-cell *matCellDef="let song">
                         <button mat-icon-button class="song_play_button" [ngStyle]="songTableManager.getButtonVisibility(song.id)" (click)="songTableManager.playSong(song.id)">
