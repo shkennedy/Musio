@@ -133,21 +133,34 @@ export class AudioPlayerComponent implements OnInit {
             .subscribe((playlist: Playlist) => {
                 if (playlist) {
                     playlist.songs.forEach((song: Song) => {
-                        this.songQueue.unshift(song);
+                        this.songService.getSongAlbumInfo(song.id)
+                            .subscribe((album: Album) => {
+                                song.album = album;
+                                this.songQueue.push(song);
+                            });
                     });
                 }
             });
     }
 
     public playPlaylist = (playlistId: number): void => {
+        console.log('start');
         this.addSongToHistory(this.currentSong);
         this.playlistService.getPlaylistById(playlistId)
             .subscribe((playlist: Playlist) => {
+                console.log(playlist);
                 if (playlist) {
-                    const song = playlist.songs.shift();
-                    this._playSong(song.id);
-                    playlist.songs.reverse().forEach((playlistSong: Song) => {
-                        this.songQueue.unshift(playlistSong);
+                    let firstSong = true;
+                    playlist.songs.forEach((song: Song) => {
+                        this.songService.getSongAlbumInfo(song.id)
+                            .subscribe((album: Album) => {
+                                song.album = album;
+                                if (firstSong) {
+                                    firstSong = false;
+                                    this._playSong(song.id);
+                                }
+                                this.songQueue.push(song);
+                            });
                     });
                 }
             });
@@ -203,8 +216,8 @@ export class AudioPlayerComponent implements OnInit {
                     }
                     allAlbumSongs.concat(album.songs);
                 });
-                allAlbumSongs.reverse().forEach((playlistSong: Song) => {
-                    this.songQueue.unshift(playlistSong);
+                allAlbumSongs.forEach((playlistSong: Song) => {
+                    this.songQueue.push(playlistSong);
                 });
             });
     }
@@ -275,7 +288,6 @@ export class AudioPlayerComponent implements OnInit {
                     .subscribe((favoriteSongs: Song[]) => {
                         favoriteSongs.forEach((favoriteSong: Song) => {
                             if (favoriteSong.id === song.id) {
-                                console.log('FAVORITED YO');
                                 this.isFavorited = true;
                             }
                         });
