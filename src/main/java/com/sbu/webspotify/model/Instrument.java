@@ -17,12 +17,6 @@ public class Instrument implements Serializable {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 
-	@Lob
-	private String description;
-
-	@Column(name="image_id")
-	private int imageId;
-
 	private String name;
 
 	public Instrument() {
@@ -34,22 +28,6 @@ public class Instrument implements Serializable {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public String getDescription() {
-		return this.description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public int getImageId() {
-		return this.imageId;
-	}
-
-	public void setImageId(int imageId) {
-		this.imageId = imageId;
 	}
 
 	public String getName() {

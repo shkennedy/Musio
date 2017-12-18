@@ -49,11 +49,10 @@ public class InstrumentController
     }
 
     @GetMapping(value = "/getAll")
-    public @ResponseBody ApiResponseObject getBrowse() {
+    public @ResponseBody ApiResponseObject getAllInstruments() {
         ApiResponseObject response = new ApiResponseObject();
-        Set<Instrument> instruments = instrumentService.findAll();
         response.setSuccess(true);
-        response.setResponseData(instruments);
+        response.setResponseData(instrumentRepository.findAll());
         return response;
     }
 
