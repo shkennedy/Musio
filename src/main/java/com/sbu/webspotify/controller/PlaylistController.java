@@ -121,9 +121,21 @@ public class PlaylistController
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE, headers = "Accept=application/json")
-	public @ResponseBody ApiResponseObject deletePlaylist(@PathVariable("id") int id) {
-        playlistRepository.deleteByPlaylistId(id);
+	public @ResponseBody ApiResponseObject deletePlaylist(@PathVariable("id") int id, HttpSession session) {
         ApiResponseObject response = new ApiResponseObject();
+        User user = (User) session.getAttribute("user"); 
+
+        boolean playlistExists = playlistRepository.exists(id);
+        if(playlistExists == false) {
+            response.setSuccess(false);
+            response.setMessage("No playlist found with id "+id+".");
+            return response;
+        }
+
+        Playlist p = playlistRepository.findById(id);
+        user.removePlaylistFromFavorites(p);
+
+        playlistRepository.deleteByPlaylistId(id);
         response.setSuccess(true);
         return response;
     }	
