@@ -28,7 +28,7 @@ export class UserService {
     private static LISTENING_HISTORY_URL = UserService.USER_URL + '/myListeningHistory';
     private static HISTORY_BY_ID_URL = UserService.USER_URL + '/listeningHistoryForUser';
     private static ADD_TO_HISTORY_URL = UserService.USER_URL + '/addSongToHistory';
-    private static PASSWORD_URL = UserService.USER_URL + '/password';
+    private static PASSWORD_URL = UserService.USER_URL + '/password/change';
     private static PASSWORD_CHANGE_URL = UserService.PASSWORD_URL + '/requestChange';
     private static CHECK_HAS_IMAGE_URL = UserService.USER_URL + '/checkProfileImage';
     private static GET_USER_FOLLOWED_USERS_URL = UserService.USER_URL + '/getFollowedUsers';
@@ -82,11 +82,7 @@ export class UserService {
     }
 
     public changePassword(securityCode: number, newPassword: string): Observable<boolean> {
-        const body = {
-            'securityCode': securityCode,
-            'newPassword': newPassword
-        };
-        return this.httpRequest.put(UserService.PASSWORD_URL, body)
+        return this.httpRequest.get(UserService.PASSWORD_URL + '/' + securityCode + '/' + newPassword)
             .map((response: ApiResponse) => {
                 return response.success;
             });

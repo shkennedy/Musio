@@ -46,12 +46,12 @@ export class PasswordDialogComponent implements OnInit {
     }
 
     storeNewPassword(passwordNgForm: NgForm): void {
-        this.newPassword = passwordNgForm.form.value;
+        this.newPassword = passwordNgForm.form.value.password;
     }
 
     checkCode(ngForm: NgForm) {
         console.log(ngForm.form.value);
-        this.userService.changePassword(ngForm.form.value, this.newPassword)
+        this.userService.changePassword(ngForm.form.value.code, this.newPassword)
         .subscribe((success: boolean) => {
             if (success) {
                 this.success = true;

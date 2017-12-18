@@ -26,6 +26,7 @@ import com.sbu.webspotify.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -100,10 +101,10 @@ public class UserController {
         return userService.sendChangePasswordEmail(user, securityCode);
     }
 
-    @RequestMapping(value="/password", method = RequestMethod.PUT, headers = "Accept=application/json")
+    @RequestMapping(value="/password/change/{securityCode}/{newPassword}", method = RequestMethod.GET, headers = "Accept=application/json")
     public @ResponseBody ApiResponseObject updatePassword(HttpSession session, 
-                                                          @RequestParam int securityCode,
-                                                          @RequestParam String newPassword) {
+                                                          @PathVariable int securityCode,
+                                                          @PathVariable String newPassword) {
         User user = (User) session.getAttribute("user");
         int knownSecurityCode = (Integer) session.getAttribute("securityCode");
         return userService.tryChangePassword(user, knownSecurityCode, securityCode, newPassword);
