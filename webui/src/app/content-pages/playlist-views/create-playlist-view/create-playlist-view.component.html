@@ -3,7 +3,7 @@
     <mat-step [stepControl]="playlistIdentityFormGroup">
 
         <!-- Name textfield -->
-        <div>
+        <div style="padding-left:20px;">
             <form #playlistNameForm [formGroup]="playlistIdentityFormGroup" (ngSubmit)="setPlaylistName(playlistNameForm)">
                 <ng-template matStepLabel>Playlist Indentity</ng-template>
                 <h3>Enter your new playlist's name.</h3>
@@ -14,7 +14,7 @@
         </div>
 
         <!-- File picker for image (optional) -->
-        <div>
+        <div style="padding-left:20px;">
             <h3>Give your playlist a picture (Optional).</h3>
             <button mat-raised-button class="sized" (click)="filePicker.click()" style="margin-right:20px;" type="button">Playlist Image</button>
             <!-- Hidden file picker -->
@@ -28,18 +28,18 @@
         </div>
 
         <!-- Toggle button for private -->
-        <div>
+        <div style="padding-left:20px;">
             <h3>Allow followers to see this playlist.</h3>
             <mat-slide-toggle #privateSlider (click)="setIsPrivate(!privateSlider.checked)">{{(this.isPrivate) ? 'Private' : 'Public'}}</mat-slide-toggle>
         </div>
 
         <!-- Toggle button for private -->
-        <div>
+        <div style="padding-left:20px;">
             <h3>Allow others to edit this playlist.</h3>
             <mat-slide-toggle #collaborativeSlider (click)="setIsCollaborative(!collaborativeSlider.checked)" [disabled]="!allowIsCollaborative">{{(isCollaborative) ? 'Collaborative' : 'Not Collaborative'}}</mat-slide-toggle>
         </div>
 
-        <div>
+        <div style="padding-left:20px;">
             <button mat-button matStepperNext>Next
                 <mat-icon>chevron_right</mat-icon>
             </button>
