@@ -13,7 +13,6 @@ import { Album } from '../../models/album.model';
 import { Artist } from '../../models/artist.model';
 import { User } from '../../models/user.model';
 import { Song } from '../../models/song.model';
-import { setInterval } from 'timers';
 
 @Component({
     selector: 'app-followed-users-bar',

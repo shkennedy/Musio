@@ -15,7 +15,6 @@ export interface BrowseInstrumentResponse {
     songs: Song[];
     artists: Artist[];
     albums: Album[];
-    playlists: Playlist[];
 }
 
 @Injectable()
