@@ -166,9 +166,9 @@
                     <mat-grid-list cols="4" gutterSize="15px">
                         <mat-grid-tile *ngFor="let playlist of user.favoritePlaylists;" [routerLink]="['/playlists', playlist.id]">
                             <div class="flex_column">
-                                <img src="/assets/images/default_art.png" class="playlist"/>
+                                <img src="/assets/images/default_art.png" style="border-radius:50px;" class="playlist"/>
                                 <!-- <img src="{{playlist.playlistImageUrl}}" class="playlist" /> -->
-                                <div>{{playlist.name}}</div>
+                                <div style="text-align:center;">{{playlist.name}}</div>
                             </div>
                         </mat-grid-tile>
                     </mat-grid-list>

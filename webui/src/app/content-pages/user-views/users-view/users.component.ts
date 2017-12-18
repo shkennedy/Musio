@@ -15,6 +15,7 @@ import { Album } from '../../../models/album.model';
 import { User } from '../../../models/user.model';
 import { Playlist } from '../../../models/playlist.model';
 import { Song } from '../../../models/song.model';
+import { FollowedUsersBarProxyService } from '../../../services/followedUsersBarProxy.service';
 
 @Component({
     selector: 'app-users',
@@ -40,7 +41,8 @@ export class UsersComponent implements OnInit {
         private favoritesService: FavoritesService,
         private playlistService: PlaylistService,
         private songService: SongService,
-        private userService: UserService
+        private userService: UserService,
+        private followedUsersBarProxyService: FollowedUsersBarProxyService
     ) { }
 
     ngOnInit() {
@@ -63,14 +65,21 @@ export class UsersComponent implements OnInit {
                     .subscribe((followedUsers: User[]) => {
                         this.user.followedUsers = followedUsers;
                         followedUsers.forEach((followedUser: User) => {
+                            console.log(followedUser);
                             this.userService.getHasImageById(followedUser.id)
-                            .subscribe((hasImage: boolean) => {
-                                if (hasImage) {
-                                    followedUser.profileImageUrl = this.fileService.getUserImageURLById(this.user.id);
-                                } else {
-                                    followedUser.profileImageUrl = '/assets/images/no_artist_picture.png';
-                                }
-                            });
+                                .subscribe((hasImage: boolean) => {
+                                    if (hasImage) {
+                                        followedUser.profileImageUrl = this.fileService.getUserImageURLById(this.user.id);
+                                    } else {
+                                        followedUser.profileImageUrl = '/assets/images/no_artist_picture.png';
+                                    }
+                                });
+                        });
+                    });
+
+                this.userService.getFollowedUsers()
+                    .subscribe((followedUsers: User[]) => {
+                        followedUsers.forEach((followedUser: User) => {
                             if (this.user.id === followedUser.id) {
                                 this.isFollowed = true;
                             }
@@ -121,20 +130,26 @@ export class UsersComponent implements OnInit {
 
                 // Get user playlists
                 this.userService.getUserPublicPlaylistsById(user.id)
-                .subscribe((playlists: Playlist[]) => {
-                    console.log(playlists);
-                    this.user.favoritePlaylists = playlists;
-                });
+                    .subscribe((playlists: Playlist[]) => {
+                        console.log(playlists);
+                        this.user.favoritePlaylists = playlists;
+                    });
             });
     }
 
     followUser() {
         this.userService.followUser(this.user.id)
             .subscribe((success: boolean) => {
+                this.isFollowed = true;
+                this.followedUsersBarProxyService.refreshFollowedUsers();
             });
     }
 
     unfollowUser() {
-
+        this.userService.unfollowUser(this.user.id)
+            .subscribe((success: boolean) => {
+                this.isFollowed = false;
+                this.followedUsersBarProxyService.refreshFollowedUsers();
+            });
     }
 }
