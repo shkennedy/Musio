@@ -118,34 +118,43 @@ public class SearchService {
         Set<AlbumIdentifier> albums = new HashSet<AlbumIdentifier>();
         Set<SongIdentifier> songs = new HashSet<SongIdentifier>();
 
+        List<Integer> selectedAlbums = new ArrayList<Integer>();
+        List<Integer> selectedSongs = new ArrayList<Integer>();
+        List<Integer> selectedArtists = new ArrayList<Integer>();
+        List<Integer> selectedPlaylists = new ArrayList<Integer>();
+
         // Go through the user's friends list and get some most recently favorited items.
         for(User friend : user.getFollowedUsers())
         {            
             Set<SongIdentifier> queriedSongs = userService.getMostRecentlyFavoritedSongs(friend.getId(), appConfig.recentFavoritesToQuery);
             for(SongIdentifier song : queriedSongs) {
-                if(song.getId() != null) {
+                if(song.getId() != null && !selectedSongs.contains(song.getId())) {
                     songs.add(song);
+                    selectedSongs.add(song.getId());
                 }
             }
 
             Set<AlbumIdentifier> queriedAlbums = userService.getMostRecentlyFavoritedAlbums(friend.getId(), appConfig.recentFavoritesToQuery);
             for(AlbumIdentifier album : queriedAlbums) {
-                if(album.getId() != null) {
+                if(album.getId() != null && !selectedAlbums.contains(album.getId())) {
                     albums.add(album);
+                    selectedAlbums.add(album.getId());
                 }
             }
             
             Set<ArtistIdentifier> queriedArtists = userService.getMostRecentlyFavoritedArtists(friend.getId(), appConfig.recentFavoritesToQuery);
             for(ArtistIdentifier artist : queriedArtists) {
-                if(artist.getId() != null) {
+                if(artist.getId() != null && !selectedArtists.contains(artist.getId())) {
                     artists.add(artist);
+                    selectedArtists.add(artist.getId());
                 }
             }
 
             Set<PlaylistIdentifier> queriedPlaylists = userService.getMostRecentlyFavoritedPlaylists(friend.getId(), appConfig.recentFavoritesToQuery);
             for(PlaylistIdentifier playlist : queriedPlaylists) {
-                if(playlist.getId() != null) {
+                if(playlist.getId() != null && !selectedPlaylists.contains(playlist.getId())) {
                     playlists.add(playlist);
+                    selectedPlaylists.add(playlist.getId());
                 }
             }
         }
