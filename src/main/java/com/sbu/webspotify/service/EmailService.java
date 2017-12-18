@@ -22,6 +22,12 @@ public class EmailService {
     private AppConfig appConfig;
 	
     public boolean sendSimpleEmailToUser(User user, String subject, String body) {
+
+        mailSender.setHost("smtp.gmail.com");
+        mailSender.setPort(587);
+        mailSender.setUsername(appConfig.emailAddress);
+        mailSender.setPassword(appConfig.emailPassword);
+
         System.out.println("Start of email send");
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(user.getEmail());
