@@ -47,10 +47,13 @@ export class SongTableManager {
         songs.forEach((song: Song) => {
             this.songs.set(song.id, song);
             song.playlistsMap = new Map();
+            song.playlistsList = [];
             this.playlists.forEach((playlist: Playlist) => {
                 playlist.songs.forEach((playlistSong: Song) => {
                     if (song.id === playlistSong.id) {
+                        console.log(song.title + 'found in playlist' + playlist.name);
                         song.playlistsMap.set(playlist.id, playlist);
+                        song.playlistsList.push(playlist);
                     }
                 });
             });
@@ -82,12 +85,14 @@ export class SongTableManager {
     }
 
     public getPlaylistsWhereNotIn(songId: number): Playlist[] {
+        // console.log('started where not in');
         const song = this.songs.get(songId);
         const playlists: Playlist[] = [];
         const allPlaylistsIds = Array.from(this.playlists.keys());
         for (let i = 0; i < allPlaylistsIds.length; i += 1) {
+            // console.log(allPlaylistsIds[i]);
             const playlistId = Number(allPlaylistsIds[i]);
-            if (song.playlistsMap.has(playlistId)) {
+            if (!song.playlistsMap.has(playlistId)) {
                 playlists.push(this.playlists.get(playlistId));
             }
         }
@@ -144,7 +149,7 @@ export class SongTableManager {
 
     public addSongToPlaylist(playlistId: number, songId: number): void {
         this.playlistService.addSong(playlistId, songId)
-            .subscribe((success: boolean) => {
+            .subscribe(() => {
                 const song = this.songs.get(songId);
                 const playlist = this.playlists.get(playlistId);
                 song.playlistsMap.set(playlistId, playlist);
@@ -154,7 +159,7 @@ export class SongTableManager {
 
     public removeSongFromPlaylist(playlistId: number, songId: number): void {
         this.playlistService.removeSong(playlistId, songId)
-            .subscribe((success: boolean) => {
+            .subscribe(() => {
                 const song = this.songs.get(songId);
                 const playlist = this.playlists.get(playlistId);
                 song.playlistsMap.delete(playlistId);

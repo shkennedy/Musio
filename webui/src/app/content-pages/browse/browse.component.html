@@ -164,6 +164,36 @@
                                 <mat-cell *matCellDef="let song">{{song.albumTitle}}</mat-cell>
                             </ng-container>
 
+                            <!-- More Actions Button Column -->
+                            <ng-container matColumnDef="moreActionsButton">
+                                <mat-header-cell *matHeaderCellDef></mat-header-cell>
+                                <mat-cell *matCellDef="let song">
+                                    <button mat-icon-button [matMenuTriggerFor]="moreActionsMenu" [ngStyle]="friendsFavoritesSongTableManager.getButtonVisibility(song.id)">
+                                        <mat-icon>more_vert</mat-icon>
+                                    </button>
+                                    <mat-menu #moreActionsMenu="matMenu">
+                                        <div *ngIf="!friendsFavoritesSongTableManager.hasPlaylists()">
+                                            <button mat-menu-item [routerLink]="['/playlists']">
+                                                <mat-icon>control_point</mat-icon>
+                                                <span>Create a Playlist</span>
+                                            </button>
+                                        </div>
+                                        <div mat-menu-item *ngFor="let playlist of friendsFavoritesSongTableManager.getPlaylistsWhereNotIn(song.id)">
+                                            <button mat-menu-item (click)="friendsFavoritesSongTableManager.addSongToPlaylist(playlist.id, song.id)">
+                                                <mat-icon>add</mat-icon>
+                                                <span>Add To {{playlist.name}}</span>
+                                            </button>
+                                        </div>
+                                        <div mat-menu-item *ngFor="let playlist of friendsFavoritesSongTableManager.getPlaylistsWhereIn(song.id)">
+                                            <button mat-menu-item (click)="friendsFavoritesSongTableManager.removeSongFromPlaylist(playlist.id, song.id)">
+                                                <mat-icon>remove</mat-icon>
+                                                <span>Remove From {{playlist.name}}</span>
+                                            </button>
+                                        </div>
+                                    </mat-menu>
+                                </mat-cell>
+                            </ng-container>
+
                             <!-- Duration Column -->
                             <ng-container matColumnDef="duration">
                                 <mat-header-cell *matHeaderCellDef mat-sort-header>
@@ -288,7 +318,7 @@
                                             </button>
                                         </div>
                                         <div mat-menu-item *ngFor="let playlist of popularSongTableManager.getPlaylistsWhereIn(song.id)">
-                                            <button mat-menu-item (click)="popularSongTableManager.addSongToPlaylist(playlist.id, song.id)">
+                                            <button mat-menu-item (click)="popularSongTableManager.removeSongFromPlaylist(playlist.id, song.id)">
                                                 <mat-icon>remove</mat-icon>
                                                 <span>Remove From {{playlist.name}}</span>
                                             </button>

@@ -13,7 +13,7 @@ export class PlaylistService {
     private static PLAYLIST_URL = '/playlist';
     private static CREATE_URL = PlaylistService.PLAYLIST_URL + '/create';
     private static ADD_SONG_URL = PlaylistService.PLAYLIST_URL + '/addSong';
-    private static REMOVE_SONG_URL = PlaylistService.PLAYLIST_URL + '/removesong';
+    private static REMOVE_SONG_URL = PlaylistService.PLAYLIST_URL + '/removeSong';
     private static SET_COLLABORATION_URL = PlaylistService.PLAYLIST_URL + '/setCollaborative';
     private static SET_PRIVACY_URL = PlaylistService.PLAYLIST_URL + '/setPrivate';
 
@@ -91,12 +91,8 @@ export class PlaylistService {
             });
     }
 
-    public removeSong(playlistId: number, songId: number): Observable<boolean> {
-        const body = {
-            'playlistId': playlistId,
-            'songId': songId
-        };
-        return this.httpRequest.post(PlaylistService.REMOVE_SONG_URL, body)
+    public removeSong(playlistId: number, songId: number): Observable<Playlist> {
+        return this.httpRequest.get(PlaylistService.REMOVE_SONG_URL + '/' + playlistId + '/' + songId)
             .map((response: ApiResponse) => {
                 return response.responseData;
             });
