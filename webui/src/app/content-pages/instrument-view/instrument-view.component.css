@@ -12,6 +12,6 @@
 .hover{
     cursor: pointer;
 }
-.hoverable:hover{
+.hover:hover{
     color:white;
 }

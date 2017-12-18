@@ -4,8 +4,9 @@
 
 <ng-template #loaded></ng-template>
 <div class="full_size">
+    <h3 style="padding-left:20px;">Instruments</h3>
     <mat-grid-list cols="4" rowHeight="4:1">
-        <mat-grid-tile *ngFor="let instrument of instruments" class="flex_center">
+        <mat-grid-tile *ngFor="let instrument of instruments" class="flex_center hover">
             {{instrument.name}}
         </mat-grid-tile>
     </mat-grid-list>
