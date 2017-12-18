@@ -68,6 +68,12 @@
                             <mat-icon>more_vert</mat-icon>
                         </button>
                         <mat-menu #moreActionsMenu="matMenu">
+                            <div mat-menu-item>
+                                <button mat-menu-item (click)="songTableManager.addSongToQueue(song.id)">
+                                    <mat-icon>playlist_add</mat-icon>
+                                    <span>Add to Queue</span>
+                                </button>
+                            </div>
                             <div *ngIf="!songTableManager.hasPlaylists()">
                                 <button mat-menu-item [routerLink]="['/createPlaylist']">
                                     <mat-icon>control_point</mat-icon>

@@ -42,8 +42,7 @@
                 <!-- Albums -->
                 <h3>Albums</h3>
                 <mat-grid-list *ngIf="newReleases.albums.length !== 0" cols="4" gutterSize="15px" class="padded">
-                    <mat-grid-tile *ngFor="let album of newReleases.albums" [routerLink]="['/albums', album.id]" 
-                                    style="padding-bottom:10px;">
+                    <mat-grid-tile *ngFor="let album of newReleases.albums" [routerLink]="['/albums', album.id]" style="padding-bottom:10px;">
                         <div>
                             <img class="routing_img" src="{{album.albumArtUrl}}" alt="{{album.title}}">
                             <p class="album_name" style="text-align:center;">{{album.title}}</p>
@@ -140,7 +139,8 @@
                             <ng-container matColumnDef="playButton">
                                 <mat-header-cell *matHeaderCellDef></mat-header-cell>
                                 <mat-cell *matCellDef="let song">
-                                    <button mat-icon-button class="song_play_button" [ngStyle]="friendsFavoritesSongTableManager.getButtonVisibility(song.id)" (click)="friendsFavoritesSongTableManager.playSong(song.id)">
+                                    <button mat-icon-button class="song_play_button" [ngStyle]="friendsFavoritesSongTableManager.getButtonVisibility(song.id)"
+                                        (click)="friendsFavoritesSongTableManager.playSong(song.id)">
                                         <mat-icon>play_circle_filled</mat-icon>
                                     </button>
                                 </mat-cell>
@@ -172,6 +172,12 @@
                                         <mat-icon>more_vert</mat-icon>
                                     </button>
                                     <mat-menu #moreActionsMenu="matMenu">
+                                        <div mat-menu-item>
+                                            <button mat-menu-item (click)="friendsFavoritesSongTableManager.addSongToQueue(song.id)">
+                                                <mat-icon>playlist_add</mat-icon>
+                                                <span>Add to Queue</span>
+                                            </button>
+                                        </div>
                                         <div *ngIf="!friendsFavoritesSongTableManager.hasPlaylists()">
                                             <button mat-menu-item [routerLink]="['/playlists']">
                                                 <mat-icon>control_point</mat-icon>
@@ -213,8 +219,8 @@
                             </ng-container>
 
                             <mat-header-row *matHeaderRowDef="['playButton', 'title', 'artist', 'album', 'moreActionsButton', 'duration', 'favoriteButton']"></mat-header-row>
-                            <mat-row *matRowDef="let row; columns: ['playButton', 'title', 'artist', 'album', 'moreActionsButton', 'duration', 'favoriteButton'];" (mouseenter)="friendsFavoritesSongTableManager.showButtons(row.id)"
-                                (mouseleave)="friendsFavoritesSongTableManager.hideButtons(row.id)"></mat-row>
+                            <mat-row *matRowDef="let row; columns: ['playButton', 'title', 'artist', 'album', 'moreActionsButton', 'duration', 'favoriteButton'];"
+                                (mouseenter)="friendsFavoritesSongTableManager.showButtons(row.id)" (mouseleave)="friendsFavoritesSongTableManager.hideButtons(row.id)"></mat-row>
                         </mat-table>
                     </div>
                 </div>
@@ -305,6 +311,12 @@
                                         <mat-icon>more_vert</mat-icon>
                                     </button>
                                     <mat-menu #moreActionsMenu="matMenu">
+                                        <div mat-menu-item>
+                                            <button mat-menu-item (click)="popularSongTableManager.addSongToQueue(song.id)">
+                                                <mat-icon>playlist_add</mat-icon>
+                                                <span>Add to Queue</span>
+                                            </button>
+                                        </div>
                                         <div *ngIf="!popularSongTableManager.hasPlaylists()">
                                             <button mat-menu-item [routerLink]="['/playlists']">
                                                 <mat-icon>control_point</mat-icon>

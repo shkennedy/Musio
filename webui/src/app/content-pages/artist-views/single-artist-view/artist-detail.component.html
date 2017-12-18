@@ -119,6 +119,12 @@
                                             <mat-icon>more_vert</mat-icon>
                                         </button>
                                         <mat-menu #moreActionsMenu="matMenu">
+                                            <div mat-menu-item>
+                                                <button mat-menu-item (click)="getSongTableManager(album.id).addSongToQueue(song.id)">
+                                                    <mat-icon>playlist_add</mat-icon>
+                                                    <span>Add to Queue</span>
+                                                </button>
+                                            </div>
                                             <div *ngIf="!getSongTableManager(album.id).hasPlaylists()">
                                                 <button mat-menu-item [routerLink]="['/createPlaylist']">
                                                     <mat-icon>control_point</mat-icon>
@@ -160,8 +166,8 @@
                                 </ng-container>
 
                                 <mat-header-row *matHeaderRowDef="['trackNumber', 'playButton', 'title', 'moreActionsButton', 'duration', 'favoriteButton']"></mat-header-row>
-                                <mat-row *matRowDef="let row; columns: ['trackNumber', 'playButton', 'title', 'moreActionsButton', 'duration', 'favoriteButton'];" (mouseenter)="getSongTableManager(album.id).showButtons(row.id)"
-                                    (mouseleave)="getSongTableManager(album.id).hideButtons(row.id)"></mat-row>
+                                <mat-row *matRowDef="let row; columns: ['trackNumber', 'playButton', 'title', 'moreActionsButton', 'duration', 'favoriteButton'];"
+                                    (mouseenter)="getSongTableManager(album.id).showButtons(row.id)" (mouseleave)="getSongTableManager(album.id).hideButtons(row.id)"></mat-row>
                             </mat-table>
                         </div>
                     </div>

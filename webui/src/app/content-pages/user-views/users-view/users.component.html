@@ -6,9 +6,7 @@
         <img src="{{user.profileImageUrl}}" class="followers">
         <div class="username" style="margin-left:20px;margin-top:auto;margin-bottom:auto;">{{user.username}}</div>
         <div *ngIf="!isSelf" class="flex_row">
-            <button *ngIf="isFollowed; else notFollowed" 
-                    class="btn btn-black" (click)="unfollowUser()"
-                    style="margin-left:15px;">
+            <button *ngIf="isFollowed; else notFollowed" class="btn btn-black" (click)="unfollowUser()" style="margin-left:15px;">
                 UNFOLLOW
             </button>
             <ng-template #notFollowed>
@@ -53,7 +51,7 @@
                     <mat-grid-list cols="4" gutterSize="15px">
                         <mat-grid-tile *ngFor="let followedUser of user.followedUsers;">
                             <div class="flex_column hoverable">
-                                <img [src]="followedUser.profileImageUrl" class="followers"/>
+                                <img [src]="followedUser.profileImageUrl" class="followers" />
                                 <div class="flex_column" style="text-align:center">{{followedUser.username}}</div>
                             </div>
                         </mat-grid-tile>
@@ -103,6 +101,12 @@
                                         <mat-icon>more_vert</mat-icon>
                                     </button>
                                     <mat-menu #moreActionsMenu="matMenu">
+                                        <div mat-menu-item>
+                                            <button mat-menu-item (click)="historySongTableManager.addSongToQueue(song.id)">
+                                                <mat-icon>playlist_add</mat-icon>
+                                                <span>Add to Queue</span>
+                                            </button>
+                                        </div>
                                         <div *ngIf="!historySongTableManager.hasPlaylists()">
                                             <button mat-menu-item [routerLink]="['/playlists']">
                                                 <mat-icon>control_point</mat-icon>

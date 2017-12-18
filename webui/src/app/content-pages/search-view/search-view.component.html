@@ -43,7 +43,7 @@
             <mat-table #table [dataSource]="songTableManager.tableData" matSort style="margin: 20px;">
 
                 <!-- Play Button Column -->
-                 <ng-container matColumnDef="playButton">
+                <ng-container matColumnDef="playButton">
                     <mat-header-cell *matHeaderCellDef></mat-header-cell>
                     <mat-cell *matCellDef="let song">
                         <button mat-icon-button class="song_play_button" [ngStyle]="songTableManager.getButtonVisibility(song.id)" (click)="songTableManager.playSong(song.id)">
@@ -78,6 +78,12 @@
                             <mat-icon>more_vert</mat-icon>
                         </button>
                         <mat-menu #moreActionsMenu="matMenu">
+                            <div mat-menu-item>
+                                <button mat-menu-item (click)="songTableManager.addSongToQueue(song.id)">
+                                    <mat-icon>playlist_add</mat-icon>
+                                    <span>Add to Queue</span>
+                                </button>
+                            </div>
                             <div *ngIf="!songTableManager.hasPlaylists()">
                                 <button mat-menu-item [routerLink]="['/createPlaylist']">
                                     <mat-icon>control_point</mat-icon>
